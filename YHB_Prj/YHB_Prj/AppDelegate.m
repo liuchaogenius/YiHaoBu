@@ -7,18 +7,24 @@
 //
 
 #import "AppDelegate.h"
-
+#import "RootTabBarController.h"
+ 
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
 
+@synthesize rootvc;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    rootvc = [[RootTabBarController alloc] init];
+    rootvc.view.frame = self.window.bounds;
+    
+    self.window.rootViewController = rootvc;
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -31,6 +37,12 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+//    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^(){
+//        //程序在10分钟内未被系统关闭或者强制关闭，则程序会调用此代码块，可以在这里做一些保存或者清理工作
+//        if ([HbhUser sharedHbhUser].isLogin) {
+//            [[HbhUser sharedHbhUser] writeUserInfoToFile];
+//        }
+//    }];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
