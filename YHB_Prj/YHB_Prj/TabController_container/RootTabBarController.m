@@ -14,7 +14,8 @@
 #import "FBKVOController.h"
 #import "ViewInteraction.h"
 #import "FifthViewController.h"
-
+#import "YHBUser.h"
+#import "YHBLoginViewController.h"
 
 @interface RootTabBarController ()
 {
@@ -37,8 +38,8 @@
     
     BOOL isGoBack;
 }
-//@property (nonatomic, strong) HbhLoginViewController *loginVC;
-//@property (nonatomic, strong) UINavigationController *loginNav;
+@property (nonatomic, strong)  YHBLoginViewController *loginVC;
+@property (nonatomic, strong) UINavigationController *loginNav;
 @end
 
 @implementation RootTabBarController
@@ -137,49 +138,49 @@
 - (void)showLoginViewController:(NSNotification *)aNotification
 {
     
-//    if(aNotification.object)
-//    {
-//        isGoBack = [[aNotification object] boolValue]; ///yes为goback  其他的不处理
-//    }
-//    __weak RootTabBarController *weakself = self;
-//    if (![HbhUser sharedHbhUser].isLogin)
-//    {
-//        if(!self.loginVC)
-//        {
-//            self.loginVC = [[HbhLoginViewController alloc] init];
-//        }
-//        if(!self.loginNav)
-//        {
-//            self.loginNav = [[UINavigationController alloc] initWithRootViewController:self.loginVC];
-//            
-//        }
-//
-//        [self presentViewController:self.loginNav animated:YES completion:^{
-//            
-//        }];
-//        if(!loginObserver)
-//        {
-//            loginObserver = [[FBKVOController alloc] initWithObserver:self];
-//        }
-//        [loginObserver observe:self.loginVC keyPath:@"type" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change) {
-//            int type = [[change objectForKey:@"new"] intValue];
-//            if(type == eLoginSucc)
-//            {
-//
-//            }
-//            else if(type == eLoginBack)
-//            {
-//                if(isGoBack)
-//                {
-//                    weakself.selectedIndex = oldSelectIndex;
-//                    isGoBack = NO;
-//                }
-//            }
-//            [weakself.loginNav dismissViewControllerAnimated:YES completion:^{
-//                
-//            }];
-//        }];
-//    }
+    if(aNotification.object)
+    {
+        isGoBack = [[aNotification object] boolValue]; ///yes为goback  其他的不处理
+    }
+    __weak RootTabBarController *weakself = self;
+    if (![YHBUser sharedYHBUser].isLogin)
+    {
+        if(!self.loginVC)
+        {
+            self.loginVC = [[YHBLoginViewController alloc] init];
+        }
+        if(!self.loginNav)
+        {
+            self.loginNav = [[UINavigationController alloc] initWithRootViewController:self.loginVC];
+            
+        }
+
+        [self presentViewController:self.loginNav animated:YES completion:^{
+            
+        }];
+        if(!loginObserver)
+        {
+            loginObserver = [[FBKVOController alloc] initWithObserver:self];
+        }
+        [loginObserver observe:self.loginVC keyPath:@"type" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change) {
+            int type = [[change objectForKey:@"new"] intValue];
+            if(type == eLoginSucc)
+            {
+
+            }
+            else if(type == eLoginBack)
+            {
+                if(isGoBack)
+                {
+                    weakself.selectedIndex = oldSelectIndex;
+                    isGoBack = NO;
+                }
+            }
+            [weakself.loginNav dismissViewControllerAnimated:YES completion:^{
+                
+            }];
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
