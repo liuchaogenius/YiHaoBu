@@ -7,8 +7,12 @@
 //
 
 #import "YHBUserCellsView.h"
-
 #define cellFont 16
+
+@interface YHBUserCellsView ()
+@property (strong, nonatomic) UIButton *button;
+@end
+
 @implementation YHBUserCellsView
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -32,8 +36,11 @@
 #pragma mark - Action
 - (void)touchCellButton : (UIButton *)sender
 {
-    
+    if ([self.delegate respondsToSelector:@selector(touchCellWithTag:)]) {
+        [self.delegate touchCellWithTag:sender.tag];
+    }
 }
+
 
 - (UIView *)customCellWithNum : (int)num title : (NSString *)title frame : (CGRect)frame;
 {
@@ -42,11 +49,10 @@
     cellView.backgroundColor = [UIColor whiteColor];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    cellView.frame = CGRectMake(0, 0, cellView.width, cellView.height);
+    button.frame = cellView.frame;
     [button addTarget:self action:@selector(touchCellButton:) forControlEvents:UIControlEventTouchUpInside];
-    [cellView addSubview:button];
     button.tag = num;
-    
+    [cellView addSubview:button];
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, (KcellHeight-20)/2.0, 20, 20)];
     //设置图片
     imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"UserCellIcon_%d",num]];
@@ -56,10 +62,9 @@
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.font = [UIFont systemFontOfSize:cellFont];
     titleLabel.text = title;
-    MLOG(@"%@",title);
+    //MLOG(@"%@",title);
     
     [cellView addSubview:titleLabel];
-    
     return cellView;
 }
 

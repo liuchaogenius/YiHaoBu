@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B986A431A19C69D00FFA9D8 /* YHBShopInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B986A421A19C69D00FFA9D8 /* YHBShopInfoViewController.m */; };
+		5BB4A9181A1721F300DB4636 /* YHBUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB4A9171A1721F300DB4636 /* YHBUserManager.m */; };
+		5BB4A9211A172A2600DB4636 /* YHBFindPswViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB4A9201A172A2600DB4636 /* YHBFindPswViewController.m */; };
 		5BCE1F5F1A1496980004BE32 /* YHBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE1F5E1A1496980004BE32 /* YHBUser.m */; };
 		5BCE1F621A1497F00004BE32 /* YHBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE1F611A1497F00004BE32 /* YHBLoginViewController.m */; };
 		5BD8F96C1A1374A500B3A4F2 /* YHBUserHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD8F96B1A1374A500B3A4F2 /* YHBUserHeadView.m */; };
@@ -76,6 +79,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5B986A411A19C69D00FFA9D8 /* YHBShopInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBShopInfoViewController.h; sourceTree = "<group>"; };
+		5B986A421A19C69D00FFA9D8 /* YHBShopInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBShopInfoViewController.m; sourceTree = "<group>"; };
+		5BB4A9161A1721F300DB4636 /* YHBUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBUserManager.h; sourceTree = "<group>"; };
+		5BB4A9171A1721F300DB4636 /* YHBUserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUserManager.m; sourceTree = "<group>"; };
+		5BB4A91F1A172A2600DB4636 /* YHBFindPswViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBFindPswViewController.h; sourceTree = "<group>"; };
+		5BB4A9201A172A2600DB4636 /* YHBFindPswViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBFindPswViewController.m; sourceTree = "<group>"; };
 		5BCE1F5C1A1496550004BE32 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
 		5BCE1F5D1A1496980004BE32 /* YHBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBUser.h; sourceTree = "<group>"; };
 		5BCE1F5E1A1496980004BE32 /* YHBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUser.m; sourceTree = "<group>"; };
@@ -229,6 +238,8 @@
 		5BD8F9681A13727B00B3A4F2 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				5BB4A9161A1721F300DB4636 /* YHBUserManager.h */,
+				5BB4A9171A1721F300DB4636 /* YHBUserManager.m */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -533,6 +544,10 @@
 				FF2A6C9B1A0F3D30001607AC /* FourthViewController.m */,
 				5BCE1F601A1497F00004BE32 /* YHBLoginViewController.h */,
 				5BCE1F611A1497F00004BE32 /* YHBLoginViewController.m */,
+				5BB4A91F1A172A2600DB4636 /* YHBFindPswViewController.h */,
+				5BB4A9201A172A2600DB4636 /* YHBFindPswViewController.m */,
+				5B986A411A19C69D00FFA9D8 /* YHBShopInfoViewController.h */,
+				5B986A421A19C69D00FFA9D8 /* YHBShopInfoViewController.m */,
 			);
 			path = FourthViewController;
 			sourceTree = "<group>";
@@ -685,10 +700,12 @@
 				FF2A6C0C1A0F3A01001607AC /* UIImage+ImageEffects.m in Sources */,
 				FF2A6C791A0F3B7B001607AC /* UIImageView+WebCache.m in Sources */,
 				FF2A6C021A0F398D001607AC /* BaseViewController.m in Sources */,
+				5B986A431A19C69D00FFA9D8 /* YHBShopInfoViewController.m in Sources */,
 				FF2A6C301A0F3B50001607AC /* AFXMLRequestOperation.m in Sources */,
 				FF2A6C6C1A0F3B7B001607AC /* NSData+ImageContentType.m in Sources */,
 				FF2A6C701A0F3B7B001607AC /* SDWebImageDownloader.m in Sources */,
 				FF2A6C481A0F3B72001607AC /* JSONKit.m in Sources */,
+				5BB4A9211A172A2600DB4636 /* YHBFindPswViewController.m in Sources */,
 				FF2A6C2D1A0F3B50001607AC /* AFNetworkActivityIndicatorManager.m in Sources */,
 				FF2A6C781A0F3B7B001607AC /* UIImageView+HighlightedWebCache.m in Sources */,
 				FF2A6C2A1A0F3B50001607AC /* AFHTTPRequestOperation.m in Sources */,
@@ -697,6 +714,7 @@
 				FF2A6C311A0F3B50001607AC /* MyHttpClient.m in Sources */,
 				FF2A6C7A1A0F3B7B001607AC /* UIView+WebCacheOperation.m in Sources */,
 				FF2A6C6E1A0F3B7B001607AC /* SDWebImageCompat.m in Sources */,
+				5BB4A9181A1721F300DB4636 /* YHBUserManager.m in Sources */,
 				FF2A6C2B1A0F3B50001607AC /* AFImageRequestOperation.m in Sources */,
 				5BCE1F621A1497F00004BE32 /* YHBLoginViewController.m in Sources */,
 				FF2A6C6B1A0F3B7B001607AC /* MKAnnotationView+WebCache.m in Sources */,

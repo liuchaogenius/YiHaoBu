@@ -66,9 +66,9 @@
     [mutaDict removeAllObjects];
 }
 
-- (void)setUserid:(NSString *)aUserid
+- (void)setUserid:(NSInteger)aUserid
 {
-    strUserid = aUserid;
+    strUserid = [NSString stringWithFormat:@"%ld",(long)aUserid];
 }
 
 - (void)setLat:(float)alat

@@ -34,11 +34,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
     self = [super init];
     _isLogin = NO;
     _nickName = nil;
-    _userID = nil;
+    _userid = 0;
     _photoUrl = nil;
-    _QRCodeUrl = nil;
     _phone = nil;
-    _point = 0;
+    _role = 0;
+    _shopid = 0;
     _encodedToken = nil;
     _localPhoto = nil;
     _statusIsChanged = NO;
@@ -56,7 +56,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
             
             if (encodedToken.length) {
                 [self loadUserInfoWithDictionary:userDic];
-                [[NetManager shareInstance] setUserid:self.userID];
+                [[NetManager shareInstance] setUserid:self.userid];
             }
         }
     }
@@ -82,31 +82,28 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
 {
     _isLogin = YES;
     self.nickName = userDic[@"nickName"];
-    int uid = [[userDic objectForKey:@"id"] intValue];
-    self.userID = [NSString stringWithFormat:@"%d",uid];
+    self.userid = [[userDic objectForKey:@"id"] integerValue];
     //    if(self.userID)
     //    {
     //        [[NetManager shareInstance] setUserid:self.userID];
     //    }
     self.photoUrl = userDic[@"photoUrl"];
     self.phone = userDic[@"phone"];
-    self.point = [userDic[@"point"] integerValue];
-    self.QRCodeUrl = userDic[@"QRCodeUrl"];
     self.encodedToken = userDic[@"encodedToken"];
     self.localPhoto = userDic[@"localPhoto"];
+    self.role = [[userDic objectForKey:@"role"] integerValue];
+    self.shopid = [[userDic objectForKey:@"shopid"] integerValue];
 }
 
 //保存用户信息文件至沙箱
 - (void)writeUserInfoToFile
 {
     self.nickName = self.nickName?:@"";
-    self.userID = self.userID?:@"";
     self.photoUrl = self.photoUrl?:@"";
     self.phone = self.phone?:@"";
-    self.QRCodeUrl = self.QRCodeUrl?:@"";
     self.encodedToken = self.encodedToken?:@"";
     self.localPhoto = self.localPhoto ? :@"";
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"nickName":self.nickName, @"id":self.userID, @"photoUrl":self.photoUrl, @"phone":self.phone, @"point":[NSNumber numberWithInteger:self.point],@"QRCodeUrl":self.QRCodeUrl,@"encodedToken":self.encodedToken,@"localPhoto":self.localPhoto}];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"nickName":self.nickName, @"userid":[NSNumber numberWithInteger:self.userid], @"photoUrl":self.photoUrl, @"phone":self.phone, @"role":[NSNumber numberWithInteger:self.role],@"shopid":[NSNumber numberWithInteger:self.shopid],@"encodedToken":self.encodedToken,@"localPhoto":self.localPhoto}];
     [dic writeToFile:self.userFilePath atomically:YES];
     //MLOG(@"%@",self.userFilePath);
 }

@@ -16,7 +16,7 @@
 @interface NetManager : NSObject
 
 + (NetManager *)shareInstance;
-- (void)setUserid:(NSString *)aUserid;
+- (void)setUserid:(NSInteger)aUserid;
 - (void)setLat:(float)alat;
 - (void)setLon:(float)alon;
 - (void)setAreaId:(NSString *)aAreaId;

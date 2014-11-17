@@ -9,6 +9,7 @@
 #import "FourthViewController.h"
 #import "YHBUserHeadView.h"
 #import "YHBUserCellsView.h"
+#import "YHBShopInfoViewController.h"
 #define kHeadHeight 110
 #define kBtnsViewHeight 65
 #define kBtnImageWidth 25
@@ -20,7 +21,8 @@ enum Button_Type
     Button_supply,//我的供应
     Button_lookStore//浏览商店
 };
-@interface FourthViewController ()
+@interface FourthViewController ()<userCellsDelegate
+>
 
 @property (strong, nonatomic) UIBarButtonItem *loginItem;
 @property (strong, nonatomic) YHBUserHeadView *userHeadView;
@@ -74,6 +76,7 @@ enum Button_Type
 
 - (void)creatCellsView {
     self.userCellsView = [[YHBUserCellsView alloc] initWithFrame:CGRectMake(0, self.buttonsView.bottom+10, kMainScreenWidth, KcellHeight * 6)];
+    self.userCellsView.delegate = self;
     [self.scollView addSubview:self.userCellsView];
 }
 
@@ -107,6 +110,46 @@ enum Button_Type
     MLOG(@"登陆");
     [[NSNotificationCenter defaultCenter] postNotificationName:kLoginForUserMessage object:[NSNumber numberWithBool:NO]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessItem) name:kLoginSuccessMessae object:nil];
+}
+
+#pragma mark - delegate
+- (void)touchCellWithTag:(NSInteger)tag
+{
+    switch (tag) {
+        case Cell_shopInfo:
+        {
+            YHBShopInfoViewController *shopInfoVC = [[YHBShopInfoViewController alloc] init];
+            [self.navigationController pushViewController:shopInfoVC animated:YES];
+        }
+            break;
+        case Cell_certification:
+        {
+            
+        }
+            break;
+        case Cell_private:
+        {
+            
+        }
+            break;
+        case Cell_aboutUs:
+        {
+            
+        }
+            break;
+        case Cell_clause:
+        {
+            
+        }
+            break;
+        case Cell_tips:
+        {
+            
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark 登录成功返回调用方法

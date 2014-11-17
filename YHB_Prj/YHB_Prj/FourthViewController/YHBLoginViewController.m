@@ -7,7 +7,8 @@
 //
 
 #import "YHBLoginViewController.h"
-//#import "HbhUserManager.h"
+#import "YHBUserManager.h"
+#import "YHBFindPswViewController.h"
 #import "YHBUser.h"
 #import "SVProgressHUD.h"
 #define sgmButtonHeight 40
@@ -31,6 +32,8 @@ enum TextField_Type
 {
     int _secondCountDown;
 }
+
+
 @property (nonatomic,strong) UIButton *sgmLoginButton; //登陆选项按钮
 @property (nonatomic,strong) UIButton *sgmRegisterButton; //注册选项按钮
 @property (nonatomic,strong) UIView *loginView;//注册界面
@@ -50,6 +53,8 @@ enum TextField_Type
 @property (nonatomic, weak) UIButton *checkCodeButton;//验证码按钮
 @property (nonatomic, strong) NSString *checkCode;//验证码
 @property (nonatomic, strong) NSTimer *checkCodeTimer; //计时器
+
+@property (strong, nonatomic) UIView *forgetPswView; //忘记密码view
 @end
 
 @implementation YHBLoginViewController
@@ -130,6 +135,7 @@ enum TextField_Type
         
         _forgetPasswordBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_forgetPasswordBtn setTitle:@"忘记密码" forState:UIControlStateNormal];
+        [_forgetPasswordBtn addTarget:self action:@selector(touchForgetPswBtn) forControlEvents:UIControlEventTouchUpInside];
         [_forgetPasswordBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         [_forgetPasswordBtn setFrame:CGRectMake(kMainScreenWidth - 20-50, 125+85+20, 50, 20)];
         _forgetPasswordBtn.titleLabel.font = kFont12;
@@ -254,13 +260,13 @@ enum TextField_Type
 
 #pragma mark 点击登陆按钮
 - (void)touchLoginButton
-{/*
+{
     [self resignAllKeybord];
     if (self.phoneNumberTextField.text.length && self.passwordTextField.text.length) {
         [SVProgressHUD showWithStatus:@"登录中" cover:YES offsetY:kMainScreenHeight/2.0];
-        [HbhUserManager loginWithPhone:self.phoneNumberTextField.text andPassWord:self.passwordTextField.text withSuccess:^{
+        [[YHBUserManager sharedManager] loginWithPhone:self.phoneNumberTextField.text andPassWord:self.passwordTextField.text withSuccess:^{
             //登陆状态处理
-            [HbhUser sharedHbhUser].statusIsChanged = YES;
+            [YHBUser sharedYHBUser].statusIsChanged = YES;
             [SVProgressHUD dismissWithSuccess:@"登陆成功！"];
             self.type = eLoginSucc;
             [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSuccessMessae object:nil];
@@ -271,16 +277,16 @@ enum TextField_Type
         }];
     }else{
         [SVProgressHUD showErrorWithStatus:@"请输入完整" cover:YES offsetY:kMainScreenHeight/2.0];
-    }*/
+    }
 }
 
 #pragma mark 点击获取验证码按钮
 - (void)getCheckCode
 {
-    /*
+    
     if (self.rgPhoneNumberTextField.text && self.rgPhoneNumberTextField.text.length) {
         [SVProgressHUD showWithStatus:@"验证码发送中" cover:YES offsetY:kMainScreenHeight/2.0];
-        [HbhUserManager getCheckCodeWithPhone:self.rgPhoneNumberTextField.text Success:^(){
+        [[YHBUserManager sharedManager] getCheckCodeWithPhone:self.rgPhoneNumberTextField.text Success:^(){
             [SVProgressHUD dismissWithSuccess:@"验证码已发送到您的手机"];
             self.checkCodeButton.enabled = NO;
             _secondCountDown = 90;
@@ -294,17 +300,17 @@ enum TextField_Type
     }else{
         [SVProgressHUD showErrorWithStatus:@"请输入手机号" cover:YES offsetY:kMainScreenHeight/2.0];
     }
-     */
+    
 }
 
 #pragma mark 点击注册按钮
 - (void)touchRegisterButton
 {
-    /*
+    
     [self resignAllKeybord];
     if (self.rgPasswordTextField.text.length && self.rgPhoneNumberTextField.text.length && self.checkCodeTextField.text.length) {
         [SVProgressHUD showWithStatus:@"信息提交中" cover:YES offsetY:kMainScreenHeight/2.0];
-        [HbhUserManager registerWithPhone:self.rgPhoneNumberTextField.text checkCode:self.checkCodeTextField.text passWord:self.rgPasswordTextField.text withSuccess:^{
+        [[YHBUserManager sharedManager] registerWithPhone:self.rgPhoneNumberTextField.text checkCode:self.checkCodeTextField.text passWord:self.rgPasswordTextField.text withSuccess:^{
             [SVProgressHUD dismissWithSuccess:@"注册成功!"];
             self.type = eLoginSucc;
             [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSuccessMessae object:nil];
@@ -314,7 +320,15 @@ enum TextField_Type
     }else{
         [SVProgressHUD showErrorWithStatus:@"请输入完整" cover:YES offsetY:kMainScreenHeight/2.0];
     }
-     */
+    
+}
+
+#pragma mark touch忘记密码按钮
+- (void)touchForgetPswBtn
+{
+    YHBFindPswViewController *findVC = [[YHBFindPswViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:findVC];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 #pragma mark 倒计时
