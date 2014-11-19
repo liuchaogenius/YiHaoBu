@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B26533D1A1B17C200D0C418 /* YHBAboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B26533C1A1B17C200D0C418 /* YHBAboutUsViewController.m */; };
+		5B2653401A1B214500D0C418 /* YHBShopMallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B26533F1A1B214500D0C418 /* YHBShopMallViewController.m */; };
 		5B986A431A19C69D00FFA9D8 /* YHBShopInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B986A421A19C69D00FFA9D8 /* YHBShopInfoViewController.m */; };
 		5BB4A9181A1721F300DB4636 /* YHBUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB4A9171A1721F300DB4636 /* YHBUserManager.m */; };
 		5BB4A9211A172A2600DB4636 /* YHBFindPswViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB4A9201A172A2600DB4636 /* YHBFindPswViewController.m */; };
+		5BB990901A1C8E6D00AE0B36 /* YHBShopMallHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB9908F1A1C8E6D00AE0B36 /* YHBShopMallHeadView.m */; };
+		5BB990991A1CAE7A00AE0B36 /* YHBShopMallCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB990981A1CAE7A00AE0B36 /* YHBShopMallCell.m */; };
 		5BCE1F5F1A1496980004BE32 /* YHBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE1F5E1A1496980004BE32 /* YHBUser.m */; };
 		5BCE1F621A1497F00004BE32 /* YHBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE1F611A1497F00004BE32 /* YHBLoginViewController.m */; };
 		5BD8F96C1A1374A500B3A4F2 /* YHBUserHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD8F96B1A1374A500B3A4F2 /* YHBUserHeadView.m */; };
@@ -79,12 +83,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5B26533B1A1B17C200D0C418 /* YHBAboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBAboutUsViewController.h; sourceTree = "<group>"; };
+		5B26533C1A1B17C200D0C418 /* YHBAboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBAboutUsViewController.m; sourceTree = "<group>"; };
+		5B26533E1A1B214500D0C418 /* YHBShopMallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBShopMallViewController.h; sourceTree = "<group>"; };
+		5B26533F1A1B214500D0C418 /* YHBShopMallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBShopMallViewController.m; sourceTree = "<group>"; };
 		5B986A411A19C69D00FFA9D8 /* YHBShopInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBShopInfoViewController.h; sourceTree = "<group>"; };
 		5B986A421A19C69D00FFA9D8 /* YHBShopInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBShopInfoViewController.m; sourceTree = "<group>"; };
 		5BB4A9161A1721F300DB4636 /* YHBUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBUserManager.h; sourceTree = "<group>"; };
 		5BB4A9171A1721F300DB4636 /* YHBUserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUserManager.m; sourceTree = "<group>"; };
 		5BB4A91F1A172A2600DB4636 /* YHBFindPswViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBFindPswViewController.h; sourceTree = "<group>"; };
 		5BB4A9201A172A2600DB4636 /* YHBFindPswViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBFindPswViewController.m; sourceTree = "<group>"; };
+		5BB9908E1A1C8E6D00AE0B36 /* YHBShopMallHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBShopMallHeadView.h; sourceTree = "<group>"; };
+		5BB9908F1A1C8E6D00AE0B36 /* YHBShopMallHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBShopMallHeadView.m; sourceTree = "<group>"; };
+		5BB990971A1CAE7A00AE0B36 /* YHBShopMallCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBShopMallCell.h; sourceTree = "<group>"; };
+		5BB990981A1CAE7A00AE0B36 /* YHBShopMallCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBShopMallCell.m; sourceTree = "<group>"; };
 		5BCE1F5C1A1496550004BE32 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
 		5BCE1F5D1A1496980004BE32 /* YHBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBUser.h; sourceTree = "<group>"; };
 		5BCE1F5E1A1496980004BE32 /* YHBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUser.m; sourceTree = "<group>"; };
@@ -224,6 +236,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5BB9908D1A1C8E4000AE0B36 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5BB990971A1CAE7A00AE0B36 /* YHBShopMallCell.h */,
+				5BB990981A1CAE7A00AE0B36 /* YHBShopMallCell.m */,
+				5BB9908E1A1C8E6D00AE0B36 /* YHBShopMallHeadView.h */,
+				5BB9908F1A1C8E6D00AE0B36 /* YHBShopMallHeadView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		5BD8F9671A13726E00B3A4F2 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -548,6 +571,8 @@
 				5BB4A9201A172A2600DB4636 /* YHBFindPswViewController.m */,
 				5B986A411A19C69D00FFA9D8 /* YHBShopInfoViewController.h */,
 				5B986A421A19C69D00FFA9D8 /* YHBShopInfoViewController.m */,
+				5B26533B1A1B17C200D0C418 /* YHBAboutUsViewController.h */,
+				5B26533C1A1B17C200D0C418 /* YHBAboutUsViewController.m */,
 			);
 			path = FourthViewController;
 			sourceTree = "<group>";
@@ -573,8 +598,11 @@
 		FF2A6C901A0F3CC9001607AC /* FirstViewController */ = {
 			isa = PBXGroup;
 			children = (
+				5BB9908D1A1C8E4000AE0B36 /* View */,
 				FF2A6C911A0F3CEB001607AC /* FirstViewController.h */,
 				FF2A6C921A0F3CEB001607AC /* FirstViewController.m */,
+				5B26533E1A1B214500D0C418 /* YHBShopMallViewController.h */,
+				5B26533F1A1B214500D0C418 /* YHBShopMallViewController.m */,
 			);
 			path = FirstViewController;
 			sourceTree = "<group>";
@@ -681,6 +709,7 @@
 				FF2A6C751A0F3B7B001607AC /* UIImage+GIF.m in Sources */,
 				FF2A6CA41A0F40B0001607AC /* ThreadSafeMutableArry.m in Sources */,
 				FF2A6C881A0F3B8A001607AC /* UIScrollView+SVInfiniteScrolling.m in Sources */,
+				5BB990991A1CAE7A00AE0B36 /* YHBShopMallCell.m in Sources */,
 				FF2A6C3A1A0F3B59001607AC /* NSData+Base64.m in Sources */,
 				FF2A6C2F1A0F3B50001607AC /* AFURLConnectionOperation.m in Sources */,
 				FF2A6C331A0F3B50001607AC /* UIImageView+AFNetworking.m in Sources */,
@@ -688,6 +717,7 @@
 				FF2A6C9C1A0F3D30001607AC /* FourthViewController.m in Sources */,
 				FF2A6C871A0F3B8A001607AC /* DataOC.mm in Sources */,
 				FF2A6C861A0F3B8A001607AC /* DataCenterDeal.mm in Sources */,
+				5BB990901A1C8E6D00AE0B36 /* YHBShopMallHeadView.m in Sources */,
 				FF2A6C961A0F3D06001607AC /* SecondViewController.m in Sources */,
 				FF2A6C031A0F398D001607AC /* RootTabBarController.m in Sources */,
 				FF2A6C741A0F3B7B001607AC /* UIButton+WebCache.m in Sources */,
@@ -698,6 +728,7 @@
 				FF2A6C6F1A0F3B7B001607AC /* SDWebImageDecoder.m in Sources */,
 				FF2A6CA51A0F40B0001607AC /* ThreadSafeMutableDictionary.m in Sources */,
 				FF2A6C0C1A0F3A01001607AC /* UIImage+ImageEffects.m in Sources */,
+				5B2653401A1B214500D0C418 /* YHBShopMallViewController.m in Sources */,
 				FF2A6C791A0F3B7B001607AC /* UIImageView+WebCache.m in Sources */,
 				FF2A6C021A0F398D001607AC /* BaseViewController.m in Sources */,
 				5B986A431A19C69D00FFA9D8 /* YHBShopInfoViewController.m in Sources */,
@@ -715,6 +746,7 @@
 				FF2A6C7A1A0F3B7B001607AC /* UIView+WebCacheOperation.m in Sources */,
 				FF2A6C6E1A0F3B7B001607AC /* SDWebImageCompat.m in Sources */,
 				5BB4A9181A1721F300DB4636 /* YHBUserManager.m in Sources */,
+				5B26533D1A1B17C200D0C418 /* YHBAboutUsViewController.m in Sources */,
 				FF2A6C2B1A0F3B50001607AC /* AFImageRequestOperation.m in Sources */,
 				5BCE1F621A1497F00004BE32 /* YHBLoginViewController.m in Sources */,
 				FF2A6C6B1A0F3B7B001607AC /* MKAnnotationView+WebCache.m in Sources */,

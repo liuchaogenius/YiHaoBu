@@ -10,6 +10,7 @@
 #import "YHBUserHeadView.h"
 #import "YHBUserCellsView.h"
 #import "YHBShopInfoViewController.h"
+#import "YHBAboutUsViewController.h"
 #define kHeadHeight 110
 #define kBtnsViewHeight 65
 #define kBtnImageWidth 25
@@ -119,6 +120,7 @@ enum Button_Type
         case Cell_shopInfo:
         {
             YHBShopInfoViewController *shopInfoVC = [[YHBShopInfoViewController alloc] init];
+            shopInfoVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:shopInfoVC animated:YES];
         }
             break;
@@ -134,7 +136,9 @@ enum Button_Type
             break;
         case Cell_aboutUs:
         {
-            
+            YHBAboutUsViewController *aboutVC = [[YHBAboutUsViewController alloc] init];
+            aboutVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:aboutVC animated:YES];
         }
             break;
         case Cell_clause:

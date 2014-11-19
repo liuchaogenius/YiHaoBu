@@ -7,7 +7,7 @@
 //
 
 #import "FirstViewController.h"
-
+#import "YHBShopMallViewController.h"
 @interface FirstViewController ()
 
 @end
@@ -17,6 +17,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+#warning 首页ui未定
+    UIButton *shopsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    shopsBtn.frame = CGRectMake((kMainScreenWidth-100)/2.0f, 100, 100, 50);
+    [shopsBtn setTitle:@"商城" forState:UIControlStateNormal];
+    [shopsBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [shopsBtn addTarget:self action:@selector(touchShopsBtn) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:shopsBtn];
+}
+
+
+#pragma mark - action
+- (void)touchShopsBtn
+{
+    YHBShopMallViewController *shopMallVC = [[YHBShopMallViewController alloc] init];
+    shopMallVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:shopMallVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

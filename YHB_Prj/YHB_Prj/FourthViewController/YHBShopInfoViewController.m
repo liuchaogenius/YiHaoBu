@@ -21,6 +21,9 @@
 @property (strong ,nonatomic) UIView *headBackView;
 @property (strong, nonatomic) UIButton *confirmButton;
 
+@property (strong, nonatomic) NSMutableArray *textFieldArray; 
+@property (weak, nonatomic) UITextView *mProductTextView;//主营产品
+
 @end
 
 @implementation YHBShopInfoViewController
@@ -89,6 +92,7 @@
         textField.delegate = self;
         textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         [cellView addSubview:textField];
+        self.textFieldArray[i] = textField;
     }else{
         UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(titleLabel.left, titleLabel.bottom+5, kMainScreenWidth-titleLabel.left*2, cellView.height-titleLabel.bottom-10)];
         textView.backgroundColor = [UIColor whiteColor];
@@ -99,6 +103,7 @@
         //textView.text = @"羊毛，羊毛，羊毛，羊毛，羊毛，羊毛，羊毛，羊毛，羊毛，羊毛，羊毛";
         [textView setTextAlignment:NSTextAlignmentLeft];
         [cellView addSubview:textView];
+        self.mProductTextView = textView;
     }
     
     return cellView;
@@ -124,6 +129,7 @@
     self.scrollView.backgroundColor = kViewBackgroundColor;
     [self.view addSubview:self.scrollView];
     
+    _textFieldArray = [NSMutableArray arrayWithCapacity:3];
     //ui
     [self.scrollView addSubview:self.headBackView];
     [self.scrollView addSubview:self.cellsView];
