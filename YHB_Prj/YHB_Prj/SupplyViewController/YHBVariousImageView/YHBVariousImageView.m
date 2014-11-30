@@ -141,16 +141,37 @@
 {
     [self.photoScrollView removeSubviews];
     int endWidth = 0;
-    for (int i=0; i<self.myPhotoArray.count; i++)
+    if (self.myPhotoArray.count>0)
     {
-        UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake(interval+(interval+photoHeight)*i, interval, photoHeight, photoHeight)];
-        [photoBtn setBackgroundImage:[self.myPhotoArray objectAtIndex:i] forState:UIControlStateNormal];
-        [photoBtn addTarget:self action:@selector(touchPhoto:) forControlEvents:UIControlEventTouchUpInside];
-        photoBtn.tag = 1000+i;
-        [self.photoScrollView addSubview:photoBtn];
-        endWidth = photoBtn.right+5;
+        for (int i=0; i<self.myPhotoArray.count; i++)
+        {
+            UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake(interval+(interval+photoHeight)*i, interval, photoHeight, photoHeight)];
+            [photoBtn setBackgroundImage:[self.myPhotoArray objectAtIndex:i] forState:UIControlStateNormal];
+            [photoBtn addTarget:self action:@selector(touchPhoto:) forControlEvents:UIControlEventTouchUpInside];
+            photoBtn.tag = 1000+i;
+            [self.photoScrollView addSubview:photoBtn];
+            endWidth = photoBtn.right+5;
+        }
+        self.photoScrollView.contentSize = CGSizeMake(endWidth, 110);
     }
-    self.photoScrollView.contentSize = CGSizeMake(endWidth, 110);
+    else
+    {
+        [self.photoScrollView addSubview:self.noPhotoView];
+    }
+}
+
+- (UIView *)noPhotoView
+{
+    if (!_noPhotoView) {
+        _noPhotoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width/2-50, self.frame.size.height/2-10, 100, 20)];
+        label.font = kFont15;
+        label.textColor = [UIColor lightGrayColor];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.text = @"无相关图片";
+        [_noPhotoView addSubview:label];
+    }
+    return _noPhotoView;
 }
 
 - (void)touchPhoto:(UIButton *)aBtn

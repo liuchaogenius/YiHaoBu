@@ -26,6 +26,8 @@
 		ABE5BBBD1A2AD511000F5505 /* YHBEditSupplyView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBBC1A2AD511000F5505 /* YHBEditSupplyView.m */; };
 		ABE5BBC11A2AD592000F5505 /* YHBContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBC01A2AD592000F5505 /* YHBContactView.m */; };
 		ABE5BBC71A2AD77A000F5505 /* YHBPublishSupplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBC61A2AD77A000F5505 /* YHBPublishSupplyViewController.m */; };
+		ABE5BBCA1A2AEF05000F5505 /* YHBSupplyDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBC91A2AEF05000F5505 /* YHBSupplyDetailViewController.m */; };
+		ABE5BBCE1A2AF036000F5505 /* YHBSupplyDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBCD1A2AF036000F5505 /* YHBSupplyDetailView.m */; };
 		FF2A6BE01A0F3780001607AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2A6BDF1A0F3780001607AC /* main.m */; };
 		FF2A6BE31A0F3780001607AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2A6BE21A0F3780001607AC /* AppDelegate.m */; };
 		FF2A6BE51A0F3780001607AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF2A6BE41A0F3780001607AC /* Images.xcassets */; };
@@ -130,6 +132,10 @@
 		ABE5BBC01A2AD592000F5505 /* YHBContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBContactView.m; sourceTree = "<group>"; };
 		ABE5BBC51A2AD77A000F5505 /* YHBPublishSupplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPublishSupplyViewController.h; sourceTree = "<group>"; };
 		ABE5BBC61A2AD77A000F5505 /* YHBPublishSupplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBPublishSupplyViewController.m; sourceTree = "<group>"; };
+		ABE5BBC81A2AEF05000F5505 /* YHBSupplyDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBSupplyDetailViewController.h; sourceTree = "<group>"; };
+		ABE5BBC91A2AEF05000F5505 /* YHBSupplyDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBSupplyDetailViewController.m; sourceTree = "<group>"; };
+		ABE5BBCC1A2AF036000F5505 /* YHBSupplyDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBSupplyDetailView.h; sourceTree = "<group>"; };
+		ABE5BBCD1A2AF036000F5505 /* YHBSupplyDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBSupplyDetailView.m; sourceTree = "<group>"; };
 		FF2A6BDA1A0F3780001607AC /* YHB_Prj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YHB_Prj.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF2A6BDE1A0F3780001607AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF2A6BDF1A0F3780001607AC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -304,12 +310,15 @@
 		ABE5BBA81A2AD3C2000F5505 /* SupplyViewController */ = {
 			isa = PBXGroup;
 			children = (
+				ABE5BBCB1A2AF017000F5505 /* YHBSupplyDetailView */,
 				ABE5BBBE1A2AD57D000F5505 /* YHBContactView */,
 				ABE5BBBA1A2AD511000F5505 /* YHBEditSupplyView */,
 				ABE5BBB61A2AD491000F5505 /* YHBVariousView */,
 				ABE5BBA91A2AD42E000F5505 /* YHBVariousImageView */,
 				ABE5BBC51A2AD77A000F5505 /* YHBPublishSupplyViewController.h */,
 				ABE5BBC61A2AD77A000F5505 /* YHBPublishSupplyViewController.m */,
+				ABE5BBC81A2AEF05000F5505 /* YHBSupplyDetailViewController.h */,
+				ABE5BBC91A2AEF05000F5505 /* YHBSupplyDetailViewController.m */,
 			);
 			path = SupplyViewController;
 			sourceTree = "<group>";
@@ -354,6 +363,15 @@
 				ABE5BBC01A2AD592000F5505 /* YHBContactView.m */,
 			);
 			path = YHBContactView;
+			sourceTree = "<group>";
+		};
+		ABE5BBCB1A2AF017000F5505 /* YHBSupplyDetailView */ = {
+			isa = PBXGroup;
+			children = (
+				ABE5BBCC1A2AF036000F5505 /* YHBSupplyDetailView.h */,
+				ABE5BBCD1A2AF036000F5505 /* YHBSupplyDetailView.m */,
+			);
+			path = YHBSupplyDetailView;
 			sourceTree = "<group>";
 		};
 		FF2A6BD11A0F3780001607AC = {
@@ -800,6 +818,7 @@
 				FF2A6C871A0F3B8A001607AC /* DataOC.mm in Sources */,
 				FF2A6C861A0F3B8A001607AC /* DataCenterDeal.mm in Sources */,
 				5BB990901A1C8E6D00AE0B36 /* YHBShopMallHeadView.m in Sources */,
+				ABE5BBCA1A2AEF05000F5505 /* YHBSupplyDetailViewController.m in Sources */,
 				FF2A6C961A0F3D06001607AC /* SecondViewController.m in Sources */,
 				FF2A6C031A0F398D001607AC /* RootTabBarController.m in Sources */,
 				FF2A6C741A0F3B7B001607AC /* UIButton+WebCache.m in Sources */,
@@ -837,6 +856,7 @@
 				5BCE1F621A1497F00004BE32 /* YHBLoginViewController.m in Sources */,
 				ABE5BBC11A2AD592000F5505 /* YHBContactView.m in Sources */,
 				FF2A6C6B1A0F3B7B001607AC /* MKAnnotationView+WebCache.m in Sources */,
+				ABE5BBCE1A2AF036000F5505 /* YHBSupplyDetailView.m in Sources */,
 				FF2A6C3E1A0F3B66001607AC /* UIViewAdditions.m in Sources */,
 				FF2A6C931A0F3CEB001607AC /* FirstViewController.m in Sources */,
 				5BD8F96C1A1374A500B3A4F2 /* YHBUserHeadView.m in Sources */,

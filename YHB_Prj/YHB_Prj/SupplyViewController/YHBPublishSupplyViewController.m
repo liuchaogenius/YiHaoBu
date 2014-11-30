@@ -10,6 +10,7 @@
 #import "YHBVariousImageView.h"
 #import "YHBEditSupplyView.h"
 #import "YHBContactView.h"
+#import "YHBSupplyDetailViewController.h"
 
 @interface YHBPublishSupplyViewController ()
 {
@@ -21,6 +22,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(dismissSelf)];
+    
     self.title = @"发布供应";
     self.view.backgroundColor = RGBCOLOR(241, 241, 241);
     
@@ -40,10 +43,27 @@
     publishBtn.layer.cornerRadius = 2.5;
     publishBtn.backgroundColor = KColor;
     [publishBtn setTitle:@"发 布" forState:UIControlStateNormal];
+    [publishBtn addTarget:self action:@selector(TouchPublish)
+         forControlEvents:UIControlEventTouchUpInside];
+    publishBtn.titleLabel.font = kFont15;
     [scrollView addSubview:publishBtn];
     
     scrollView.contentSize = CGSizeMake(kMainScreenWidth, publishBtn.bottom+10);
 }
+
+- (void)dismissSelf
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+- (void)TouchPublish
+{
+    YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -37,8 +37,9 @@
 - (void)touchSupplyBtn
 {
     YHBPublishSupplyViewController *supplyVC = [[YHBPublishSupplyViewController alloc] init];
-    supplyVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:supplyVC animated:YES];
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:supplyVC] animated:YES completion:^{
+        
+    }];
 }
 
 #pragma mark - action

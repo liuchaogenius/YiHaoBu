@@ -1,5 +1,5 @@
 //
-//  YHBPublishSupplyViewController.h
+//  YHBSupplyDetailView.h
 //  YHB_Prj
 //
 //  Created by Johnny's on 14/11/30.
@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YHBPublishSupplyViewController : BaseViewController
+@interface YHBSupplyDetailView : UIView
+
+- (instancetype)initWithFrame:(CGRect)frame;
 
 @end

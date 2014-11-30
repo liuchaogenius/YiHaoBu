@@ -17,6 +17,7 @@
 - (void)changeEdit;
 
 @property(nonatomic, assign) BOOL isAllowEdit;
+@property(nonatomic, strong) UIView *noPhotoView;
 @property(nonatomic, strong) UIAlertView *deleteAlertView;
 @property(nonatomic, assign) long deleteBtnIndex;
 @property(nonatomic, strong) NSMutableArray *myPhotoArray;
