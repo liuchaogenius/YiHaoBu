@@ -12,6 +12,10 @@
 #define kMainScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kMainScreenWidth  [UIScreen mainScreen].bounds.size.width
 @interface YHBPhotoViewController ()<UITableViewDataSource, UITableViewDelegate>
+{
+    NSArray *temPhotoArray;
+    UIActivityIndicatorView *activityView;
+}
 @property(nonatomic, strong) void(^ myBlock)(NSArray *array);
 @property(nonatomic, assign) int photoCount;
 
@@ -29,7 +33,7 @@
 - (instancetype)initWithPhotoArray:(NSArray *)aPhotoArray andTitle:(NSString *)aTitle andBlock:(void(^)(NSArray *aArray))aBlock andPhotoCount:(int)aPhotoCount
 {
     if (self = [super init]) {
-        self.photoArray = aPhotoArray;
+        temPhotoArray = aPhotoArray;
         self.myTitle = aTitle;
         self.title = aTitle;
         self.myBlock = aBlock;
@@ -54,6 +58,20 @@
     self.showPhotoTableView.tableFooterView = [UIView new];
     self.showPhotoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.showPhotoTableView];
+    
+    activityView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2-20, 40, 40)];
+    activityView.color = [UIColor blackColor];
+    [activityView startAnimating];
+    [self.view addSubview:activityView];
+    
+    [self performSelector:@selector(reloadTableView) withObject:nil afterDelay:0.1];
+}
+
+- (void)reloadTableView
+{
+    self.photoArray = temPhotoArray;
+    [self.showPhotoTableView reloadData];
+    [activityView stopAnimating];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

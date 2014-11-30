@@ -119,14 +119,18 @@
     
     UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(albumLabel.left, albumLabel.bottom, 80, 10)];
     countLabel.font = [UIFont systemFontOfSize:12];
-    NSMutableArray *array = [self.photoArray objectAtIndex:indexPath.row];
-    countLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)array.count];
+    NSArray *array = [self.photoArray objectAtIndex:indexPath.row];
+    if (array.count>0)
+    {
+        countLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)array.count];
+        
+        ALAsset *asset = [array objectAtIndex:0];
+        CGImageRef cgImage = [asset thumbnail];
+        UIImage *image = [UIImage imageWithCGImage:cgImage];
+        
+        imgView.image = image;
+    }
     
-    ALAsset *asset = [array objectAtIndex:0];
-    CGImageRef cgImage = [asset thumbnail];
-    UIImage *image = [UIImage imageWithCGImage:cgImage];
-    
-    imgView.image = image;
     
     [cell addSubview:countLabel];
     [cell addSubview:albumLabel];
