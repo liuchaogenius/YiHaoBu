@@ -8,6 +8,7 @@
 
 #import "FirstViewController.h"
 #import "YHBShopMallViewController.h"
+#import "YHBPublishSupplyViewController.h"
 @interface FirstViewController ()
 
 @end
@@ -24,8 +25,21 @@
     [shopsBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [shopsBtn addTarget:self action:@selector(touchShopsBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:shopsBtn];
+    
+    UIButton *supplyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    supplyBtn.frame = CGRectMake((kMainScreenWidth-100)/2.0f, 200, 100, 50);
+    [supplyBtn setTitle:@"发供" forState:UIControlStateNormal];
+    [supplyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [supplyBtn addTarget:self action:@selector(touchSupplyBtn) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:supplyBtn];
 }
 
+- (void)touchSupplyBtn
+{
+    YHBPublishSupplyViewController *supplyVC = [[YHBPublishSupplyViewController alloc] init];
+    supplyVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:supplyVC animated:YES];
+}
 
 #pragma mark - action
 - (void)touchShopsBtn

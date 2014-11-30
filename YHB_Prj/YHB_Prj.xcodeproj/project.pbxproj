@@ -18,6 +18,14 @@
 		5BCE1F621A1497F00004BE32 /* YHBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE1F611A1497F00004BE32 /* YHBLoginViewController.m */; };
 		5BD8F96C1A1374A500B3A4F2 /* YHBUserHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD8F96B1A1374A500B3A4F2 /* YHBUserHeadView.m */; };
 		5BD8F96F1A13874D00B3A4F2 /* YHBUserCellsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD8F96E1A13874D00B3A4F2 /* YHBUserCellsView.m */; };
+		ABE5BBB21A2AD452000F5505 /* YHBAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBAB1A2AD452000F5505 /* YHBAlbumViewController.m */; };
+		ABE5BBB31A2AD452000F5505 /* YHBPhotoButton.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBAD1A2AD452000F5505 /* YHBPhotoButton.m */; };
+		ABE5BBB41A2AD452000F5505 /* YHBPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBAF1A2AD452000F5505 /* YHBPhotoViewController.m */; };
+		ABE5BBB51A2AD452000F5505 /* YHBVariousImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBB11A2AD452000F5505 /* YHBVariousImageView.m */; };
+		ABE5BBB91A2AD4A7000F5505 /* YHBVariousView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBB81A2AD4A7000F5505 /* YHBVariousView.m */; };
+		ABE5BBBD1A2AD511000F5505 /* YHBEditSupplyView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBBC1A2AD511000F5505 /* YHBEditSupplyView.m */; };
+		ABE5BBC11A2AD592000F5505 /* YHBContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBC01A2AD592000F5505 /* YHBContactView.m */; };
+		ABE5BBC71A2AD77A000F5505 /* YHBPublishSupplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBC61A2AD77A000F5505 /* YHBPublishSupplyViewController.m */; };
 		FF2A6BE01A0F3780001607AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2A6BDF1A0F3780001607AC /* main.m */; };
 		FF2A6BE31A0F3780001607AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2A6BE21A0F3780001607AC /* AppDelegate.m */; };
 		FF2A6BE51A0F3780001607AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF2A6BE41A0F3780001607AC /* Images.xcassets */; };
@@ -106,6 +114,22 @@
 		5BD8F96B1A1374A500B3A4F2 /* YHBUserHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUserHeadView.m; sourceTree = "<group>"; };
 		5BD8F96D1A13874D00B3A4F2 /* YHBUserCellsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBUserCellsView.h; sourceTree = "<group>"; };
 		5BD8F96E1A13874D00B3A4F2 /* YHBUserCellsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUserCellsView.m; sourceTree = "<group>"; };
+		ABE5BBAA1A2AD452000F5505 /* YHBAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBAlbumViewController.h; sourceTree = "<group>"; };
+		ABE5BBAB1A2AD452000F5505 /* YHBAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBAlbumViewController.m; sourceTree = "<group>"; };
+		ABE5BBAC1A2AD452000F5505 /* YHBPhotoButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPhotoButton.h; sourceTree = "<group>"; };
+		ABE5BBAD1A2AD452000F5505 /* YHBPhotoButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBPhotoButton.m; sourceTree = "<group>"; };
+		ABE5BBAE1A2AD452000F5505 /* YHBPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPhotoViewController.h; sourceTree = "<group>"; };
+		ABE5BBAF1A2AD452000F5505 /* YHBPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBPhotoViewController.m; sourceTree = "<group>"; };
+		ABE5BBB01A2AD452000F5505 /* YHBVariousImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBVariousImageView.h; sourceTree = "<group>"; };
+		ABE5BBB11A2AD452000F5505 /* YHBVariousImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBVariousImageView.m; sourceTree = "<group>"; };
+		ABE5BBB71A2AD4A7000F5505 /* YHBVariousView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBVariousView.h; sourceTree = "<group>"; };
+		ABE5BBB81A2AD4A7000F5505 /* YHBVariousView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBVariousView.m; sourceTree = "<group>"; };
+		ABE5BBBB1A2AD511000F5505 /* YHBEditSupplyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBEditSupplyView.h; sourceTree = "<group>"; };
+		ABE5BBBC1A2AD511000F5505 /* YHBEditSupplyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBEditSupplyView.m; sourceTree = "<group>"; };
+		ABE5BBBF1A2AD592000F5505 /* YHBContactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBContactView.h; sourceTree = "<group>"; };
+		ABE5BBC01A2AD592000F5505 /* YHBContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBContactView.m; sourceTree = "<group>"; };
+		ABE5BBC51A2AD77A000F5505 /* YHBPublishSupplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPublishSupplyViewController.h; sourceTree = "<group>"; };
+		ABE5BBC61A2AD77A000F5505 /* YHBPublishSupplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBPublishSupplyViewController.m; sourceTree = "<group>"; };
 		FF2A6BDA1A0F3780001607AC /* YHB_Prj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YHB_Prj.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF2A6BDE1A0F3780001607AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF2A6BDF1A0F3780001607AC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -275,6 +299,61 @@
 				5BCE1F5E1A1496980004BE32 /* YHBUser.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		ABE5BBA81A2AD3C2000F5505 /* SupplyViewController */ = {
+			isa = PBXGroup;
+			children = (
+				ABE5BBBE1A2AD57D000F5505 /* YHBContactView */,
+				ABE5BBBA1A2AD511000F5505 /* YHBEditSupplyView */,
+				ABE5BBB61A2AD491000F5505 /* YHBVariousView */,
+				ABE5BBA91A2AD42E000F5505 /* YHBVariousImageView */,
+				ABE5BBC51A2AD77A000F5505 /* YHBPublishSupplyViewController.h */,
+				ABE5BBC61A2AD77A000F5505 /* YHBPublishSupplyViewController.m */,
+			);
+			path = SupplyViewController;
+			sourceTree = "<group>";
+		};
+		ABE5BBA91A2AD42E000F5505 /* YHBVariousImageView */ = {
+			isa = PBXGroup;
+			children = (
+				ABE5BBAA1A2AD452000F5505 /* YHBAlbumViewController.h */,
+				ABE5BBAB1A2AD452000F5505 /* YHBAlbumViewController.m */,
+				ABE5BBAC1A2AD452000F5505 /* YHBPhotoButton.h */,
+				ABE5BBAD1A2AD452000F5505 /* YHBPhotoButton.m */,
+				ABE5BBAE1A2AD452000F5505 /* YHBPhotoViewController.h */,
+				ABE5BBAF1A2AD452000F5505 /* YHBPhotoViewController.m */,
+				ABE5BBB01A2AD452000F5505 /* YHBVariousImageView.h */,
+				ABE5BBB11A2AD452000F5505 /* YHBVariousImageView.m */,
+			);
+			path = YHBVariousImageView;
+			sourceTree = "<group>";
+		};
+		ABE5BBB61A2AD491000F5505 /* YHBVariousView */ = {
+			isa = PBXGroup;
+			children = (
+				ABE5BBB71A2AD4A7000F5505 /* YHBVariousView.h */,
+				ABE5BBB81A2AD4A7000F5505 /* YHBVariousView.m */,
+			);
+			path = YHBVariousView;
+			sourceTree = "<group>";
+		};
+		ABE5BBBA1A2AD511000F5505 /* YHBEditSupplyView */ = {
+			isa = PBXGroup;
+			children = (
+				ABE5BBBB1A2AD511000F5505 /* YHBEditSupplyView.h */,
+				ABE5BBBC1A2AD511000F5505 /* YHBEditSupplyView.m */,
+			);
+			path = YHBEditSupplyView;
+			sourceTree = "<group>";
+		};
+		ABE5BBBE1A2AD57D000F5505 /* YHBContactView */ = {
+			isa = PBXGroup;
+			children = (
+				ABE5BBBF1A2AD592000F5505 /* YHBContactView.h */,
+				ABE5BBC01A2AD592000F5505 /* YHBContactView.m */,
+			);
+			path = YHBContactView;
 			sourceTree = "<group>";
 		};
 		FF2A6BD11A0F3780001607AC = {
@@ -539,6 +618,7 @@
 		FF2A6C8B1A0F3C58001607AC /* UIParty */ = {
 			isa = PBXGroup;
 			children = (
+				ABE5BBA81A2AD3C2000F5505 /* SupplyViewController */,
 				FF2A6C8C1A0F3CC9001607AC /* FifthViewController */,
 				FF2A6C8D1A0F3CC9001607AC /* FourthViewController */,
 				FF2A6C8E1A0F3CC9001607AC /* ThirdViewController */,
@@ -708,6 +788,7 @@
 			files = (
 				FF2A6C751A0F3B7B001607AC /* UIImage+GIF.m in Sources */,
 				FF2A6CA41A0F40B0001607AC /* ThreadSafeMutableArry.m in Sources */,
+				ABE5BBB21A2AD452000F5505 /* YHBAlbumViewController.m in Sources */,
 				FF2A6C881A0F3B8A001607AC /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				5BB990991A1CAE7A00AE0B36 /* YHBShopMallCell.m in Sources */,
 				FF2A6C3A1A0F3B59001607AC /* NSData+Base64.m in Sources */,
@@ -715,6 +796,7 @@
 				FF2A6C331A0F3B50001607AC /* UIImageView+AFNetworking.m in Sources */,
 				FF2A6BE31A0F3780001607AC /* AppDelegate.m in Sources */,
 				FF2A6C9C1A0F3D30001607AC /* FourthViewController.m in Sources */,
+				ABE5BBC71A2AD77A000F5505 /* YHBPublishSupplyViewController.m in Sources */,
 				FF2A6C871A0F3B8A001607AC /* DataOC.mm in Sources */,
 				FF2A6C861A0F3B8A001607AC /* DataCenterDeal.mm in Sources */,
 				5BB990901A1C8E6D00AE0B36 /* YHBShopMallHeadView.m in Sources */,
@@ -725,10 +807,13 @@
 				5BCE1F5F1A1496980004BE32 /* YHBUser.m in Sources */,
 				FF2A6C761A0F3B7B001607AC /* UIImage+MultiFormat.m in Sources */,
 				FF2A6C2E1A0F3B50001607AC /* AFPropertyListRequestOperation.m in Sources */,
+				ABE5BBB91A2AD4A7000F5505 /* YHBVariousView.m in Sources */,
+				ABE5BBB41A2AD452000F5505 /* YHBPhotoViewController.m in Sources */,
 				FF2A6C6F1A0F3B7B001607AC /* SDWebImageDecoder.m in Sources */,
 				FF2A6CA51A0F40B0001607AC /* ThreadSafeMutableDictionary.m in Sources */,
 				FF2A6C0C1A0F3A01001607AC /* UIImage+ImageEffects.m in Sources */,
 				5B2653401A1B214500D0C418 /* YHBShopMallViewController.m in Sources */,
+				ABE5BBB31A2AD452000F5505 /* YHBPhotoButton.m in Sources */,
 				FF2A6C791A0F3B7B001607AC /* UIImageView+WebCache.m in Sources */,
 				FF2A6C021A0F398D001607AC /* BaseViewController.m in Sources */,
 				5B986A431A19C69D00FFA9D8 /* YHBShopInfoViewController.m in Sources */,
@@ -747,8 +832,10 @@
 				FF2A6C6E1A0F3B7B001607AC /* SDWebImageCompat.m in Sources */,
 				5BB4A9181A1721F300DB4636 /* YHBUserManager.m in Sources */,
 				5B26533D1A1B17C200D0C418 /* YHBAboutUsViewController.m in Sources */,
+				ABE5BBBD1A2AD511000F5505 /* YHBEditSupplyView.m in Sources */,
 				FF2A6C2B1A0F3B50001607AC /* AFImageRequestOperation.m in Sources */,
 				5BCE1F621A1497F00004BE32 /* YHBLoginViewController.m in Sources */,
+				ABE5BBC11A2AD592000F5505 /* YHBContactView.m in Sources */,
 				FF2A6C6B1A0F3B7B001607AC /* MKAnnotationView+WebCache.m in Sources */,
 				FF2A6C3E1A0F3B66001607AC /* UIViewAdditions.m in Sources */,
 				FF2A6C931A0F3CEB001607AC /* FirstViewController.m in Sources */,
@@ -761,6 +848,7 @@
 				FF2A6C721A0F3B7B001607AC /* SDWebImageManager.m in Sources */,
 				5BD8F96F1A13874D00B3A4F2 /* YHBUserCellsView.m in Sources */,
 				FF2A6C891A0F3B8A001607AC /* UIScrollView+SVPullToRefresh.m in Sources */,
+				ABE5BBB51A2AD452000F5505 /* YHBVariousImageView.m in Sources */,
 				FF2A6C991A0F3D1C001607AC /* ThirdViewController.m in Sources */,
 				FF2A6C771A0F3B7B001607AC /* UIImage+WebP.m in Sources */,
 				FF2A6C9F1A0F3D41001607AC /* FifthViewController.m in Sources */,
