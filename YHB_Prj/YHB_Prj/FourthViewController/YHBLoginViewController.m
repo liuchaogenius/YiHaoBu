@@ -262,14 +262,22 @@ enum TextField_Type
 - (void)touchLoginButton
 {
     [self resignAllKeybord];
+    __weak YHBLoginViewController *weakself = self;
     if (self.phoneNumberTextField.text.length && self.passwordTextField.text.length) {
         [SVProgressHUD showWithStatus:@"登录中" cover:YES offsetY:kMainScreenHeight/2.0];
         [[YHBUserManager sharedManager] loginWithPhone:self.phoneNumberTextField.text andPassWord:self.passwordTextField.text withSuccess:^{
-            //登陆状态处理
-            [YHBUser sharedYHBUser].statusIsChanged = YES;
-            [SVProgressHUD dismissWithSuccess:@"登陆成功！"];
-            self.type = eLoginSucc;
-            [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSuccessMessae object:nil];
+            
+            [[YHBUserManager sharedManager] getUserInfoWithToken:[YHBUser sharedYHBUser].token orUserId:nil Success:^(NSDictionary *dataDic) {
+                //登陆状态处理
+                [[YHBUser sharedYHBUser] loginUserWithUserDictionnary:dataDic];
+                [YHBUser sharedYHBUser].statusIsChanged = YES;
+                [SVProgressHUD dismissWithSuccess:@"登陆成功！"];
+                weakself.type = eLoginSucc;
+                [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSuccessMessae object:nil];
+            } failure:^{
+                [SVProgressHUD dismissWithError:@"登陆失败"];
+            }];
+            
         } failure:^(int result, NSString *errorStr) {
             [SVProgressHUD dismissWithError:errorStr];
             //self.type = eLoginFail;

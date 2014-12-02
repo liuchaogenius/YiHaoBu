@@ -7,6 +7,7 @@
 //
 
 #import "YHBUser.h"
+#import "YHBUserInfo.h"
 #import "SynthesizeSingleton.h"
 #import "NetManager.h"
 @interface YHBUser()
@@ -33,14 +34,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
     MLOG(@"%@",self.userFilePath);
     self = [super init];
     _isLogin = NO;
-    _nickName = nil;
-    _userid = 0;
-    _photoUrl = nil;
-    _phone = nil;
-    _role = 0;
-    _shopid = 0;
-    _encodedToken = nil;
-    _localPhoto = nil;
+    _userInfo = nil;
     _statusIsChanged = NO;
     [self loadLocalUserInfo]; //判断沙箱是否有数据，并修改数据
     return self;
@@ -51,13 +45,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
 {
     if ([[NSFileManager defaultManager] fileExistsAtPath:self.userFilePath]) {
         NSDictionary *userDic = [NSDictionary dictionaryWithContentsOfFile:self.userFilePath];
-        if (userDic[@"encodedToken"]) {
-            NSString *encodedToken = userDic[@"encodedToken"];
-            
-            if (encodedToken.length) {
-                [self loadUserInfoWithDictionary:userDic];
-                [[NetManager shareInstance] setUserid:self.userid];
-            }
+        NSString *token = userDic[@"token"];
+        NSData *infoData = userDic[@"userinfo"];
+        NSDictionary *infoDic = [NSKeyedUnarchiver unarchiveObjectWithData:infoData];
+        if (token.length && infoDic) {
+            [self loadUserInfoWithDictionary:userDic];
+            _isLogin = YES;
+            [[NetManager shareInstance] setUserid:self.userInfo.userid];
         }
     }
 }
@@ -68,11 +62,19 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
     [self writeUserInfoToFile];
 }
 
+//登陆用户-传token
+- (void)loginUserWithUserToken:(NSString *)token
+{
+    self.token = token;
+    _isLogin = YES;
+    [self writeUserInfoToFile];
+}
+
 //退出登录
 - (void)logoutUser
 {
     _isLogin = NO;
-    _encodedToken = @"";
+    _token = @"";
     [self writeUserInfoToFile];
     
 }
@@ -81,29 +83,21 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
 - (void)loadUserInfoWithDictionary:(NSDictionary *)userDic
 {
     _isLogin = YES;
-    self.nickName = userDic[@"nickName"];
-    self.userid = [[userDic objectForKey:@"id"] integerValue];
-    //    if(self.userID)
-    //    {
-    //        [[NetManager shareInstance] setUserid:self.userID];
-    //    }
-    self.photoUrl = userDic[@"photoUrl"];
-    self.phone = userDic[@"phone"];
-    self.encodedToken = userDic[@"encodedToken"];
-    self.localPhoto = userDic[@"localPhoto"];
-    self.role = [[userDic objectForKey:@"role"] integerValue];
-    self.shopid = [[userDic objectForKey:@"shopid"] integerValue];
+    self.token = userDic[@"token"];
+    self.userInfo = [YHBUserInfo modelObjectWithDictionary:userDic];
 }
 
 //保存用户信息文件至沙箱
 - (void)writeUserInfoToFile
 {
-    self.nickName = self.nickName?:@"";
-    self.photoUrl = self.photoUrl?:@"";
-    self.phone = self.phone?:@"";
-    self.encodedToken = self.encodedToken?:@"";
-    self.localPhoto = self.localPhoto ? :@"";
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"nickName":self.nickName, @"userid":[NSNumber numberWithInteger:self.userid], @"photoUrl":self.photoUrl, @"phone":self.phone, @"role":[NSNumber numberWithInteger:self.role],@"shopid":[NSNumber numberWithInteger:self.shopid],@"encodedToken":self.encodedToken,@"localPhoto":self.localPhoto}];
+    self.token = self.token ? :@"";
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:2];
+    [dic setObject:self.token forKey:@"token"];
+    if (self.userInfo.userid ) {
+#warning have problem to be tested
+        NSData *info = [NSKeyedArchiver archivedDataWithRootObject:self.userInfo];
+        [dic setObject:info forKey:@"userInfo"];
+    }
     [dic writeToFile:self.userFilePath atomically:YES];
     //MLOG(@"%@",self.userFilePath);
 }

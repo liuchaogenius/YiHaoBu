@@ -10,6 +10,6 @@
 
 @interface YHBUserHeadView : UIView
 
-@property (assign, nonatomic) BOOL isLogin;
+- (void)refreshViewWithIslogin:(BOOL)isLogin vcompany:(int)vcompany sell:(NSInteger)sell buy:(NSInteger)buy;//刷新view
 
 @end

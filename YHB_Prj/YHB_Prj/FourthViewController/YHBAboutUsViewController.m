@@ -26,6 +26,7 @@
         _textView = [[UITextView alloc] initWithFrame:CGRectMake(5, 10, kMainScreenWidth-10, kMainScreenHeight-20-44-10)];
         _textView.backgroundColor = kViewBackgroundColor;
         _textView.font = kFont13;
+        _textView.editable = NO;
     }
     return _textView;
 }

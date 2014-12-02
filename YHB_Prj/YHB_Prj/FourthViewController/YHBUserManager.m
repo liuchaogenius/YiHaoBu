@@ -24,9 +24,8 @@
 
 - (instancetype)init
 {
-    if (self = [self init]) {
-        
-    }
+    self = [super init];
+    
     return self;
 }
 
@@ -34,13 +33,14 @@
 - (void)loginWithPhone:(NSString *)phone andPassWord:(NSString *)password withSuccess:(void(^)())sBlock failure:(void(^)(int result, NSString *errorStr))fBlock
 {
     NSString *loginUrl = nil;
-    kYHBRequestUrl(@"login.aspx", loginUrl);
-    NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:phone ? phone:@"",@"phone",password ? :@"",@"password", nil];
+    kYHBRequestUrl(@"login.php", loginUrl);
+    NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:phone ? phone:@"",@"mobile",password ? :@"",@"password", nil];
     
     [NetManager requestWith:postDic url:loginUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         if ([successDict[@"result"] intValue] == 1) {
-            NSDictionary *userDic = successDict[@"user"];
-            [[YHBUser sharedYHBUser] loginUserWithUserDictionnary:userDic];
+            NSDictionary *data = successDict[@"data"];
+            [[YHBUser sharedYHBUser] loginUserWithUserToken:data[@"token"]];
+            //[[YHBUser sharedYHBUser] loginUserWithUserDictionnary:userDic];
             sBlock();
         }else if ([successDict[@"result"] intValue] == 0){
             fBlock(0,@"账号或密码错误");
@@ -49,6 +49,29 @@
         MLOG(@"%@",error.localizedDescription);
         if (fBlock){
             fBlock(-2,@"网络错误，请检查网络");
+        }
+    }];
+}
+
+- (void)getUserInfoWithToken:(NSString *)token orUserId:(NSString *)userId Success:(void(^)(NSDictionary *dataDic))sBlock failure:(void(^)())fBlock
+{
+    NSString *url = nil;
+    kYHBRequestUrl(@"getUser.php", url);
+    NSMutableDictionary *postDic = [NSMutableDictionary dictionaryWithCapacity:2];
+    if(token) [postDic setObject:token forKey:@"token"];
+    if(userId) [postDic setObject:userId forKey:@"userid"];
+    [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
+        NSInteger result = [successDict[@"result"] integerValue];
+        if (result) {
+            NSDictionary *dataDic = successDict[@"data"];
+            //[[YHBUser sharedYHBUser] loginUserWithUserDictionnary:dataDic];
+            if (sBlock) {
+                sBlock(dataDic);
+            }
+        }
+    } failure:^(NSDictionary *failDict, NSError *error) {
+        if (fBlock) {
+            fBlock();
         }
     }];
 }

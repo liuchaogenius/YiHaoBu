@@ -11,6 +11,9 @@
 #import "YHBUserCellsView.h"
 #import "YHBShopInfoViewController.h"
 #import "YHBAboutUsViewController.h"
+#import "YHBUser.h"
+#import "YHBUserInfo.h"
+#import "SVProgressHUD.h"
 #define kHeadHeight 110
 #define kBtnsViewHeight 65
 #define kBtnImageWidth 25
@@ -22,8 +25,7 @@ enum Button_Type
     Button_supply,//我的供应
     Button_lookStore//浏览商店
 };
-@interface FourthViewController ()<userCellsDelegate
->
+@interface FourthViewController ()<userCellsDelegate>
 
 @property (strong, nonatomic) UIBarButtonItem *loginItem;
 @property (strong, nonatomic) YHBUserHeadView *userHeadView;
@@ -37,15 +39,16 @@ enum Button_Type
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"我的";
+    [self setTitle:@"我的"];
     
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight-64)];
     scrollView.backgroundColor = RGBCOLOR(240, 240, 242);
-    scrollView.contentSize = CGSizeMake(kMainScreenWidth, 600);
+    scrollView.contentSize = CGSizeMake(kMainScreenWidth, kMainScreenHeight);
     _scollView = scrollView;
     [self.view addSubview:scrollView];
     
-    UIBarButtonItem *loginItem = [[UIBarButtonItem alloc] initWithTitle:@"登陆" style:UIBarButtonItemStylePlain target:self action:@selector(touchLoginItem)];
+    NSString *btnTitle = [YHBUser sharedYHBUser].isLogin ? @"注销" : @"登陆";
+    UIBarButtonItem *loginItem = [[UIBarButtonItem alloc] initWithTitle:btnTitle style:UIBarButtonItemStylePlain target:self action:@selector(touchLoginItem)];
     loginItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = loginItem;
     self.loginItem = loginItem;
@@ -59,6 +62,8 @@ enum Button_Type
 #pragma mark - UI
 - (void)creatHeadView {
     _userHeadView = [[YHBUserHeadView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kHeadHeight)];
+    YHBUser *user = [YHBUser sharedYHBUser];
+    [self.userHeadView refreshViewWithIslogin:YES vcompany:user.userInfo.vcompany sell:user.userInfo.selltotal buy:user.userInfo.buytotal];
     [self.scollView addSubview:self.userHeadView];
 }
 
@@ -108,9 +113,20 @@ enum Button_Type
 #pragma mark 登陆或注销
 - (void)touchLoginItem
 {
-    MLOG(@"登陆");
-    [[NSNotificationCenter defaultCenter] postNotificationName:kLoginForUserMessage object:[NSNumber numberWithBool:NO]];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessItem) name:kLoginSuccessMessae object:nil];
+    if (![YHBUser sharedYHBUser].isLogin) {
+        MLOG(@"登陆");
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLoginForUserMessage object:[NSNumber numberWithBool:NO]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessItem) name:kLoginSuccessMessae object:nil];
+    }else{
+        //注销
+        [[YHBUser sharedYHBUser] logoutUser];
+        if (![YHBUser sharedYHBUser].isLogin) {
+            [SVProgressHUD showSuccessWithStatus:@"退出登录成功" cover:YES offsetY:0];
+            [self.loginItem setTitle:@"登陆"];
+            [self.userHeadView refreshViewWithIslogin:NO vcompany:0 sell:0 buy:0];
+        }
+    }
+    
 }
 
 #pragma mark - delegate
@@ -161,6 +177,13 @@ enum Button_Type
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginSuccessMessae object:nil];
     //数据刷新
+    if ([YHBUser sharedYHBUser].isLogin) {
+        [self.loginItem setTitle:@"注销"];
+        YHBUser *user = [YHBUser sharedYHBUser];
+        [self.userHeadView refreshViewWithIslogin:YES vcompany:user.userInfo.vcompany sell:user.userInfo.selltotal buy:user.userInfo.buytotal];
+    }
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
