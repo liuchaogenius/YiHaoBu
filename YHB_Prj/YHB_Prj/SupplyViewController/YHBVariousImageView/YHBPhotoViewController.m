@@ -8,10 +8,11 @@
 
 #import "YHBPhotoViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
-#import "YHBPhotoButton.h"
+#import "YHBPhotoTableViewCell.h"
+#import "YHBPhotoImageView.h"
 #define kMainScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kMainScreenWidth  [UIScreen mainScreen].bounds.size.width
-@interface YHBPhotoViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface YHBPhotoViewController ()<UITableViewDataSource, UITableViewDelegate, YHBPhotoCellDelegate>
 {
     NSArray *temPhotoArray;
     UIActivityIndicatorView *activityView;
@@ -56,6 +57,7 @@
     self.showPhotoTableView.delegate = self;
     self.showPhotoTableView.dataSource = self;
     self.showPhotoTableView.tableFooterView = [UIView new];
+    self.showPhotoTableView.allowsSelection = NO;
     self.showPhotoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.showPhotoTableView];
     
@@ -86,24 +88,73 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    YHBPhotoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        cell = [[YHBPhotoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        cell.delegate = self;
     }
+    cell.row = (int)indexPath.row;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    for (int i=0; i<self.photoArray.count-indexPath.row*4; i++)
+    cell.imgcount = 0;
+    for (int i=0; i<4; i++)
     {
-        YHBPhotoButton *btn = [[YHBPhotoButton alloc] initWithFrame:CGRectMake((_interval+_photoHeight)*i, 0, _photoHeight, _photoHeight)];
-        ALAsset *asset = [self.photoArray objectAtIndex:indexPath.row*4+i];
-        CGImageRef cgImage = [asset thumbnail];
-        UIImage *image = [UIImage imageWithCGImage:cgImage];
-        btn.tag = 100+i+indexPath.row*4;
-        [btn setBackgroundImage:image forState:UIControlStateNormal];
-        [btn addTarget:self action:@selector(touchPhoto:) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:btn];
+        YHBPhotoImageView *photoImageView = (YHBPhotoImageView *)[cell viewWithTag:i+1];
+        photoImageView.isSelected = NO;
+        [photoImageView hiddenMaskingView];
+        if (i<self.photoArray.count-indexPath.row*4)
+        {
+            ALAsset *asset = [self.photoArray objectAtIndex:indexPath.row*4+i];
+            CGImageRef cgImage = [asset thumbnail];
+            UIImage *image = [UIImage imageWithCGImage:cgImage];
+            [photoImageView setImage:image];
+            cell.imgcount++;
+        }
+        else
+        {
+            [photoImageView setImage:[UIImage imageNamed:@""]];
+        }
+        NSArray *keyArray = [_photoDictionary allKeys];
+        for (int j=0; j<keyArray.count; j++)
+        {
+            NSString *temKey = [keyArray objectAtIndex:j];
+            if (indexPath.row*4+i==[temKey intValue])
+            {
+                YHBPhotoImageView *photoImageView = (YHBPhotoImageView *)[cell viewWithTag:i+1];
+                photoImageView.isSelected = YES;
+                [photoImageView showMaskingView];
+            }
+        }
+        
     }
     
     return cell;
+}
+
+- (void)selectCellWithRow:(int)aRow index:(int)aIndex andCell:(YHBPhotoTableViewCell *)aCell
+{
+    MLOG(@"%d, %d, %d", aRow, aIndex, aCell.imgcount);
+    if (aIndex<aCell.imgcount)
+    {
+        YHBPhotoImageView *temImgView = (YHBPhotoImageView *)[aCell viewWithTag:aIndex+1];
+        if (temImgView.isSelected==NO && _currentSelectCount<_photoCount)
+        {
+            [temImgView changeSelected];
+            _currentSelectCount++;
+            int index = aRow*4+aIndex;
+            ALAsset *asset = [self.photoArray objectAtIndex:index];
+            CGImageRef cgImage = [asset thumbnail];
+            UIImage *image = [UIImage imageWithCGImage:cgImage];
+            [_photoDictionary setObject:image forKey:[NSString stringWithFormat:@"%d", index]];
+        }
+        else if(temImgView.isSelected==YES)
+        {
+            [temImgView changeSelected];
+            _currentSelectCount--;
+            int index = aRow*4+aIndex;
+            [_photoDictionary removeObjectForKey:[NSString stringWithFormat:@"%d", index]];
+        }
+        [self setTitle];
+    }
 }
 
 - (void)done
@@ -113,30 +164,30 @@
     }];
 }
 
-- (void)touchPhoto:(YHBPhotoButton *)aBtn
-{
-    if (aBtn.isSelected == NO)
-    {
-        if (_currentSelectCount<_photoCount)
-        {
-            _currentSelectCount++;
-            aBtn.isSelected = !aBtn.isSelected;
-            long index = aBtn.tag-100;
-            ALAsset *asset = [self.photoArray objectAtIndex:index];
-            CGImageRef cgImage = [asset thumbnail];
-            UIImage *image = [UIImage imageWithCGImage:cgImage];
-            [_photoDictionary setObject:image forKey:[NSString stringWithFormat:@"%ld", index]];
-        }
-    }
-    else
-    {
-        aBtn.isSelected = !aBtn.isSelected;
-        _currentSelectCount--;
-        long index = aBtn.tag-100;
-        [_photoDictionary removeObjectForKey:[NSString stringWithFormat:@"%ld", index]];
-    }
-    [self setTitle];
-}
+//- (void)touchPhoto:(YHBPhotoButton *)aBtn
+//{
+//    if (aBtn.isSelected == NO)
+//    {
+//        if (_currentSelectCount<_photoCount)
+//        {
+//            _currentSelectCount++;
+//            aBtn.isSelected = !aBtn.isSelected;
+//            long index = aBtn.tag-100;
+//            ALAsset *asset = [self.photoArray objectAtIndex:index];
+//            CGImageRef cgImage = [asset thumbnail];
+//            UIImage *image = [UIImage imageWithCGImage:cgImage];
+//            [_photoDictionary setObject:image forKey:[NSString stringWithFormat:@"%ld", index]];
+//        }
+//    }
+//    else
+//    {
+//        aBtn.isSelected = !aBtn.isSelected;
+//        _currentSelectCount--;
+//        long index = aBtn.tag-100;
+//        [_photoDictionary removeObjectForKey:[NSString stringWithFormat:@"%ld", index]];
+//    }
+//    [self setTitle];
+//}
 
 - (void)setTitle
 {
