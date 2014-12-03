@@ -7,11 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-@class FirstViewController;
-@class SecondViewController;
-@class ThirdViewController;
-@class FourthViewController;
-@class FifthViewController;
 
 @interface RootTabBarController : UITabBarController<UITabBarControllerDelegate,UITabBarDelegate>
 

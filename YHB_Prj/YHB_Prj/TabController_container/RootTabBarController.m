@@ -7,28 +7,18 @@
 //
 
 #import "RootTabBarController.h"
-#import "FirstViewController.h"
-#import "SecondViewController.h"
-#import "ThirdViewController.h"
-#import "FourthViewController.h"
 #import "FBKVOController.h"
 #import "ViewInteraction.h"
-#import "FifthViewController.h"
-
+#import "FactoryModel.h"
+#import "LSNavigationController.h"
 
 @interface RootTabBarController ()
 {
-    UINavigationController *firstNav;
-    UINavigationController *secondNav;
-    UINavigationController *thirdNav;
-    UINavigationController *fourthNav;
-    UINavigationController *fifthNav;
-    
-    FirstViewController *firstVC;
-    SecondViewController *secondVC;
-    ThirdViewController *thirdVC;
-    FourthViewController *fourthVC;
-    FifthViewController *fifthVC;
+    LSNavigationController *firstNav;
+    LSNavigationController *secondNav;
+    LSNavigationController *thirdNav;
+    LSNavigationController *fourthNav;
+    LSNavigationController *fifthNav;
     
     NSInteger newSelectIndex;
     NSInteger oldSelectIndex;
@@ -37,8 +27,6 @@
     
     BOOL isGoBack;
 }
-//@property (nonatomic, strong) HbhLoginViewController *loginVC;
-//@property (nonatomic, strong) UINavigationController *loginNav;
 @end
 
 @implementation RootTabBarController
@@ -63,21 +51,19 @@
 
 - (void)initTabViewController
 {
-    firstVC = [[FirstViewController alloc] init];
-    firstNav = [[UINavigationController alloc] initWithRootViewController:firstVC];
+    UIViewController* firstVC = [[FactoryModel shareFactoryModel] getFirstViewController];
+    firstNav = [[LSNavigationController alloc] initWithRootViewController:firstVC];
     
-    secondVC = [[SecondViewController alloc] init];
-    secondNav = [[UINavigationController alloc] initWithRootViewController:secondVC];
+    UIViewController* secondVC = [[FactoryModel shareFactoryModel] getSecondViewController];
+    secondNav = [[LSNavigationController alloc] initWithRootViewController:secondVC];
     
-    thirdVC = [[ThirdViewController alloc] init];
-    thirdNav = [[UINavigationController alloc] initWithRootViewController:thirdVC];
+    UIViewController* thirdVC = [[FactoryModel shareFactoryModel] getThirdViewController];
+    thirdNav = [[LSNavigationController alloc] initWithRootViewController:thirdVC];
     
-    fourthVC = [[FourthViewController alloc] init];
-    fourthNav = [[UINavigationController alloc] initWithRootViewController:fourthVC];
-    
-    fifthVC = [[FifthViewController alloc] init];
-    fifthNav = [[UINavigationController alloc] initWithRootViewController:fifthVC];
-    self.viewControllers = @[firstNav,secondNav,thirdNav,fourthNav,fifthNav];
+    UIViewController* fourthVC = [[FactoryModel shareFactoryModel] getFourthViewController];
+    fourthNav = [[LSNavigationController alloc] initWithRootViewController:fourthVC];
+
+    self.viewControllers = @[firstNav,secondNav,thirdNav,fourthNav];
 }
 
 - (void)initTabBarItem
@@ -88,7 +74,7 @@
         UIImage *img = [[UIImage imageNamed:@"tabbarBG"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
         [[UITabBar appearance] setBackgroundImage:img];
     }
-    for(int i=0; i<5;i++)
+    for(int i=0; i<4;i++)
     {
         UITabBarItem *tabBarItem = self.tabBar.items[i];
         UIImage *norimg = [UIImage imageNamed:[NSString stringWithFormat:@"TabBarItem_nor_%d",i+1]];
@@ -121,14 +107,14 @@
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
-    MLOG(@"shouldtabsel = %ld", tabBarController.selectedIndex);
+    MLOG(@"shouldtabsel = %lu", (unsigned long)tabBarController.selectedIndex);
     oldSelectIndex = tabBarController.selectedIndex;
     return YES;
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
-    MLOG(@"tabsel = %ld", tabBarController.selectedIndex);
+    MLOG(@"tabsel = %ld", (unsigned long)tabBarController.selectedIndex);
     newSelectIndex = tabBarController.selectedIndex;
 }
 

@@ -59,6 +59,8 @@
 		FF2A6C9F1A0F3D41001607AC /* FifthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2A6C9E1A0F3D41001607AC /* FifthViewController.m */; };
 		FF2A6CA41A0F40B0001607AC /* ThreadSafeMutableArry.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2A6CA11A0F40B0001607AC /* ThreadSafeMutableArry.m */; };
 		FF2A6CA51A0F40B0001607AC /* ThreadSafeMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2A6CA31A0F40B0001607AC /* ThreadSafeMutableDictionary.m */; };
+		FF3C20011A2EE6D30081D3C7 /* LSNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3C20001A2EE6D30081D3C7 /* LSNavigationController.m */; };
+		FF3C20041A2EE7480081D3C7 /* FactoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3C20031A2EE7480081D3C7 /* FactoryModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,6 +184,10 @@
 		FF2A6CA11A0F40B0001607AC /* ThreadSafeMutableArry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadSafeMutableArry.m; sourceTree = "<group>"; };
 		FF2A6CA21A0F40B0001607AC /* ThreadSafeMutableDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadSafeMutableDictionary.h; sourceTree = "<group>"; };
 		FF2A6CA31A0F40B0001607AC /* ThreadSafeMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadSafeMutableDictionary.m; sourceTree = "<group>"; };
+		FF3C1FFF1A2EE6D30081D3C7 /* LSNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LSNavigationController.h; path = ../ThirdParty/LSNavigationController/LSNavigationController.h; sourceTree = "<group>"; };
+		FF3C20001A2EE6D30081D3C7 /* LSNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LSNavigationController.m; path = ../ThirdParty/LSNavigationController/LSNavigationController.m; sourceTree = "<group>"; };
+		FF3C20021A2EE7480081D3C7 /* FactoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FactoryModel.h; sourceTree = "<group>"; };
+		FF3C20031A2EE7480081D3C7 /* FactoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FactoryModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,10 +272,14 @@
 		FF2A6BFD1A0F398D001607AC /* TabController_container */ = {
 			isa = PBXGroup;
 			children = (
+				FF3C1FFF1A2EE6D30081D3C7 /* LSNavigationController.h */,
+				FF3C20001A2EE6D30081D3C7 /* LSNavigationController.m */,
 				FF2A6BFE1A0F398D001607AC /* BaseViewController.h */,
 				FF2A6BFF1A0F398D001607AC /* BaseViewController.m */,
 				FF2A6C001A0F398D001607AC /* RootTabBarController.h */,
 				FF2A6C011A0F398D001607AC /* RootTabBarController.m */,
+				FF3C20021A2EE7480081D3C7 /* FactoryModel.h */,
+				FF3C20031A2EE7480081D3C7 /* FactoryModel.m */,
 			);
 			path = TabController_container;
 			sourceTree = "<group>";
@@ -277,6 +287,7 @@
 		FF2A6C041A0F39E3001607AC /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				FF3C1FFE1A2EE6D30081D3C7 /* LSNavigationController */,
 				FF2A6C8A1A0F3B9F001607AC /* ThreadSafeDict */,
 				FF2A6C7B1A0F3B8A001607AC /* SVPullToRefresh */,
 				FF2A6C491A0F3B7B001607AC /* SDWebImage */,
@@ -518,6 +529,13 @@
 			path = FirstViewController;
 			sourceTree = "<group>";
 		};
+		FF3C1FFE1A2EE6D30081D3C7 /* LSNavigationController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LSNavigationController;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -628,6 +646,7 @@
 				FF2A6C871A0F3B8A001607AC /* DataOC.mm in Sources */,
 				FF2A6C861A0F3B8A001607AC /* DataCenterDeal.mm in Sources */,
 				FF2A6C961A0F3D06001607AC /* SecondViewController.m in Sources */,
+				FF3C20041A2EE7480081D3C7 /* FactoryModel.m in Sources */,
 				FF2A6C031A0F398D001607AC /* RootTabBarController.m in Sources */,
 				FF2A6C741A0F3B7B001607AC /* UIButton+WebCache.m in Sources */,
 				FF2A6C391A0F3B59001607AC /* FBKVOController.m in Sources */,
@@ -653,6 +672,7 @@
 				FF2A6C2B1A0F3B50001607AC /* AFImageRequestOperation.m in Sources */,
 				FF2A6C6B1A0F3B7B001607AC /* MKAnnotationView+WebCache.m in Sources */,
 				FF2A6C3E1A0F3B66001607AC /* UIViewAdditions.m in Sources */,
+				FF3C20011A2EE6D30081D3C7 /* LSNavigationController.m in Sources */,
 				FF2A6C931A0F3CEB001607AC /* FirstViewController.m in Sources */,
 				FF2A6C441A0F3B6D001607AC /* SVProgressHUD.m in Sources */,
 				FF2A6C731A0F3B7B001607AC /* SDWebImagePrefetcher.m in Sources */,
@@ -843,6 +863,7 @@
 				FF2A6BF91A0F3780001607AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FF2A6BFA1A0F3780001607AC /* Build configuration list for PBXNativeTarget "YHB_PrjTests" */ = {
 			isa = XCConfigurationList;
@@ -851,6 +872,7 @@
 				FF2A6BFC1A0F3780001607AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
