@@ -212,4 +212,42 @@
     }];
     [operation start];
 }
+
++ (void)uploadArryImg:(NSArray*)aImgArry
+       parameters:(NSDictionary*)aParam
+        uploadUrl:(NSString*)aUrl
+    uploadimgName:(NSString*)aImgname
+   parameEncoding:(AFHTTPClientParameterEncoding)aEncoding
+    progressBlock:(PROGRESSBLOCK)block
+             succ:(SUCCESSBLOCK)success
+          failure:(FAILUREBLOCK)failure
+{
+    
+    AFHTTPClient *httpClient = [MyHttpClient shareHttpClient];
+    httpClient.parameterEncoding = aEncoding;
+    
+    
+    NSMutableURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:aUrl parameters:aParam constructingBodyWithBlock: ^(id <AFMultipartFormData>formData) {
+        for(int i=0; i<[aImgArry count];i++)
+        {
+            NSData *imageData = UIImageJPEGRepresentation([aImgArry objectAtIndexedSubscript:i], 1);
+            NSString *imgName = [NSString stringWithFormat:@"cardImage%d",i];
+            NSString *filename = [NSString stringWithFormat:@"%@%d",aImgname,i];
+            [formData appendPartWithFileData:imageData name:imgName fileName:filename mimeType:@"image/jpeg"];
+        }
+        
+    }];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        block(bytesWritten,totalBytesWritten,totalBytesExpectedToWrite);
+    }];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *Dict = [operation.responseString objectFromJSONString];
+        success(Dict);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSDictionary *resultDictionary = [operation.responseString objectFromJSONString];
+        failure(resultDictionary, nil);
+    }];
+    [operation start];
+}
 @end

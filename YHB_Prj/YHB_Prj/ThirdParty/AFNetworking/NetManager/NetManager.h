@@ -47,5 +47,15 @@
              succ:(SUCCESSBLOCK)success
           failure:(FAILUREBLOCK)failure;
 
+////支持一次上传多张图片
++ (void)uploadArryImg:(NSArray*)aImgArry
+           parameters:(NSDictionary*)aParam
+            uploadUrl:(NSString*)aUrl
+        uploadimgName:(NSString*)aImgname
+       parameEncoding:(AFHTTPClientParameterEncoding)aEncoding
+        progressBlock:(PROGRESSBLOCK)block
+                 succ:(SUCCESSBLOCK)success
+              failure:(FAILUREBLOCK)failure;
+
 + (void)cancelOperation:(id)aOperationKey;
 @end
