@@ -8,10 +8,29 @@
 
 #import "YHBLookSupplyViewController.h"
 #import "GoodsTableViewCell.h"
+#import "SVPullToRefresh.h"
+#import "YHBLookSupplyManage.h"
+#import "SVProgressHUD.h"
+#import "YHBSupplyModel.h"
+
+typedef enum:NSUInteger
+{
+    selectedAll=0,
+    selectedVip=1
+}selected;
+
+#define topViewHeight 40
 
 @interface YHBLookSupplyViewController ()<UITableViewDataSource, UITableViewDelegate>
 
+@property(nonatomic, strong) UIButton *selectAllBtn;
+@property(nonatomic, strong) UIButton *selectVipBtn;
+
+@property(nonatomic, assign) int nowSelected;
 @property(nonatomic, strong) UITableView *supplyTableView;
+
+@property(nonatomic, strong) NSMutableArray *tableViewArray;
+@property(nonatomic, strong) YHBLookSupplyManage *supplyManage;
 @end
 
 @implementation YHBLookSupplyViewController
@@ -19,17 +38,160 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.title = @"查看供应";
+    _nowSelected = selectedAll;
+    
+#pragma mark 建立topView
+    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 62, kMainScreenWidth, topViewHeight)];
+    [self.view addSubview:topView];
 
-    self.supplyTableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+    self.selectAllBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth/2, topViewHeight)];
+    [self.selectAllBtn setTitle:@"全部" forState:UIControlStateNormal];
+    self.selectAllBtn.titleLabel.font = kFont16;
+    [self.selectAllBtn setTitleColor:KColor forState:UIControlStateNormal];
+    [self.selectAllBtn addTarget:self action:@selector(touchTopViewBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [topView addSubview:self.selectAllBtn];
+    
+    UIView *midLineView = [[UIView alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-0.25, 10, 0.5, topViewHeight-20)];
+    midLineView.backgroundColor = [UIColor lightGrayColor];
+    [topView addSubview:midLineView];
+    
+    self.selectVipBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth/2, 0, kMainScreenWidth/2, topViewHeight)];
+    [self.selectVipBtn setTitle:@"仅看VIP" forState:UIControlStateNormal];
+    self.selectVipBtn.titleLabel.font = kFont16;
+    [self.selectVipBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.selectVipBtn addTarget:self action:@selector(touchTopViewBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [topView addSubview:self.selectVipBtn];
+    
+    UIView *underLineView = [[UIView alloc] initWithFrame:CGRectMake(0, topViewHeight-0.5, kMainScreenWidth, 0.5)];
+    underLineView.backgroundColor = [UIColor lightGrayColor];
+    [topView addSubview:underLineView];
+    
+#pragma mark 建立tableview
+    self.supplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, topViewHeight+62, kMainScreenWidth, kMainScreenHeight-topViewHeight-62-49)];
     self.supplyTableView.delegate = self;
     self.supplyTableView.dataSource = self;
     self.supplyTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.supplyTableView];
+    
+    [self addTableViewTrag];
+    [self showFlower];
+    [self getDataIsVip:NO];
 }
 
+- (void)getDataIsVip:(BOOL)aIsVip
+{
+    [self.supplyManage getSupplyArray:^(NSMutableArray *aArray){
+        [self dismissFlower];
+        self.tableViewArray = aArray;
+        [self.supplyTableView reloadData];
+    } andFail:^{
+        
+    } isVip:aIsVip];
+}
+
+- (void)touchTopViewBtn:(UIButton *)aBtn
+{
+    if (aBtn==self.selectAllBtn)
+    {
+        [self.selectAllBtn setTitleColor:KColor forState:UIControlStateNormal];
+        [self.selectVipBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        if (_nowSelected!=selectedAll)
+        {
+            [self showFlower];
+            [self getDataIsVip:NO];
+            _nowSelected=selectedAll;
+        }
+    }
+    else
+    {
+        [self.selectAllBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.selectVipBtn setTitleColor:KColor forState:UIControlStateNormal];
+        if (_nowSelected!=selectedVip)
+        {
+            [self showFlower];
+            [self getDataIsVip:YES];
+            _nowSelected=selectedVip;
+        }
+    }
+}
+
+#pragma mark 菊花
+- (void)showFlower
+{
+    [SVProgressHUD show:YES offsetY:kMainScreenHeight/2.0];
+}
+
+- (void)dismissFlower
+{
+    [SVProgressHUD dismiss];
+}
+
+#pragma mark manage
+- (YHBLookSupplyManage *)supplyManage
+{
+    if (!_supplyManage) {
+        _supplyManage = [[YHBLookSupplyManage alloc] init];
+    }
+    return _supplyManage;
+}
+
+#pragma mark 增加上拉下拉
+- (void)addTableViewTrag
+{
+    __weak YHBLookSupplyViewController *weakself = self;
+    [weakself.supplyTableView addPullToRefreshWithActionHandler:^{
+        if (_nowSelected==selectedAll)
+        {
+            [self.supplyManage getSupplyArray:^(NSMutableArray *aArray){
+                [weakself.supplyTableView.pullToRefreshView stopAnimating];
+                self.tableViewArray = aArray;
+                [self.supplyTableView reloadData];
+            } andFail:^{
+                [weakself.supplyTableView.pullToRefreshView stopAnimating];
+            } isVip:NO];
+        }
+        else
+        {
+            [self.supplyManage getSupplyArray:^(NSMutableArray *aArray){
+                [weakself.supplyTableView.pullToRefreshView stopAnimating];
+                self.tableViewArray = aArray;
+                [self.supplyTableView reloadData];
+            } andFail:^{
+                [weakself.supplyTableView.pullToRefreshView stopAnimating];
+            } isVip:YES];
+        }
+    }];
+    
+    
+    [weakself.supplyTableView addInfiniteScrollingWithActionHandler:^{
+        if(self.tableViewArray.count%20==0&&self.tableViewArray.count>0)
+        {
+            [self.supplyManage getNextSupplyArray:^(NSMutableArray *aArray) {
+                [weakself.supplyTableView.infiniteScrollingView stopAnimating];
+                NSMutableArray *insertIndexPaths = [NSMutableArray new];
+                for (unsigned long i=self.tableViewArray.count; i<self.tableViewArray.count+aArray.count; i++)
+                {
+                    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
+                    [insertIndexPaths addObject:indexpath];
+                }
+                [self.tableViewArray addObjectsFromArray:aArray];
+                [self.supplyTableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
+            } andFail:^{
+                [weakself.supplyTableView.infiniteScrollingView stopAnimating];
+            }];
+        }
+        else
+        {
+            [weakself.supplyTableView.infiniteScrollingView stopAnimating];
+        }
+    }];
+}
+
+#pragma mark tableView datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return self.tableViewArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -43,8 +205,10 @@
     if (!cell)
     {
         cell = [[GoodsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    [cell setCellWithGoodImage:@"http://file1.youboy.com/a/42/96/35/7/381037.jpg" title:@"寻迪龙里布" catName:@"化纤面料" typeName:@"寻找中" editTime:@"2014-10-22" skimCount:2000 paidPrice:50];
+    YHBSupplyModel *model = [self.tableViewArray objectAtIndex:indexPath.row];
+    [cell setCellWithGoodImage:@"http://file1.youboy.com/a/42/96/35/7/381037.jpg" title:model.title catName:model.catname typeName:model.typename editTime:model.editdate skimCount:2000 paidPrice:0];
     
     return cell;
 }
