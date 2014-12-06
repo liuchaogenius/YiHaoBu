@@ -9,6 +9,7 @@
 #import "FirstViewController.h"
 #import "YHBShopMallViewController.h"
 #import "YHBPublishSupplyViewController.h"
+#import "YHBLookSupplyViewController.h"
 @interface FirstViewController ()
 
 @end
@@ -32,6 +33,19 @@
     [supplyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [supplyBtn addTarget:self action:@selector(touchSupplyBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:supplyBtn];
+    
+    UIButton *lookSupplyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    lookSupplyBtn.frame = CGRectMake((kMainScreenWidth-100)/2.0f, 300, 100, 50);
+    [lookSupplyBtn setTitle:@"查供" forState:UIControlStateNormal];
+    [lookSupplyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [lookSupplyBtn addTarget:self action:@selector(lookSupplyBtn) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:lookSupplyBtn];
+}
+
+- (void)lookSupplyBtn
+{
+    YHBLookSupplyViewController *vc = [[YHBLookSupplyViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)touchSupplyBtn
