@@ -25,7 +25,7 @@ enum Button_Type
     Button_supply,//我的供应
     Button_lookStore//浏览商店
 };
-@interface FourthViewController ()<userCellsDelegate>
+@interface FourthViewController ()<userCellsDelegate,UserHeadDelegate>
 
 @property (strong, nonatomic) UIBarButtonItem *loginItem;
 @property (strong, nonatomic) YHBUserHeadView *userHeadView;
@@ -62,8 +62,8 @@ enum Button_Type
 #pragma mark - UI
 - (void)creatHeadView {
     _userHeadView = [[YHBUserHeadView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kHeadHeight)];
-    YHBUser *user = [YHBUser sharedYHBUser];
-    [self.userHeadView refreshViewWithIslogin:YES vcompany:user.userInfo.vcompany sell:user.userInfo.selltotal buy:user.userInfo.buytotal];
+    _userHeadView.delegate = self;
+    [self refreshUserHeadView];
     [self.scollView addSubview:self.userHeadView];
 }
 
@@ -119,71 +119,81 @@ enum Button_Type
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessItem) name:kLoginSuccessMessae object:nil];
     }else{
         //注销
-        [[YHBUser sharedYHBUser] logoutUser];
-        if (![YHBUser sharedYHBUser].isLogin) {
-            [SVProgressHUD showSuccessWithStatus:@"退出登录成功" cover:YES offsetY:0];
-            [self.loginItem setTitle:@"登陆"];
-            [self.userHeadView refreshViewWithIslogin:NO vcompany:0 sell:0 buy:0];
-        }
+        [self refreshUserHeadView];//刷新
     }
     
 }
 
 #pragma mark - delegate
+#pragma mark  点击cell
 - (void)touchCellWithTag:(NSInteger)tag
 {
-    switch (tag) {
-        case Cell_shopInfo:
-        {
-            YHBShopInfoViewController *shopInfoVC = [[YHBShopInfoViewController alloc] init];
-            shopInfoVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:shopInfoVC animated:YES];
+    if ([YHBUser sharedYHBUser].isLogin) {
+        switch (tag) {
+            case Cell_shopInfo:
+            {
+                YHBShopInfoViewController *shopInfoVC = [[YHBShopInfoViewController alloc] init];
+                shopInfoVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:shopInfoVC animated:YES];
+            }
+                break;
+            case Cell_certification:
+            {
+                
+            }
+                break;
+            case Cell_private:
+            {
+                
+            }
+                break;
+            case Cell_aboutUs:
+            {
+                YHBAboutUsViewController *aboutVC = [[YHBAboutUsViewController alloc] init];
+                aboutVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:aboutVC animated:YES];
+            }
+                break;
+            case Cell_clause:
+            {
+                
+            }
+                break;
+            case Cell_tips:
+            {
+                
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        case Cell_certification:
-        {
-            
-        }
-            break;
-        case Cell_private:
-        {
-            
-        }
-            break;
-        case Cell_aboutUs:
-        {
-            YHBAboutUsViewController *aboutVC = [[YHBAboutUsViewController alloc] init];
-            aboutVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:aboutVC animated:YES];
-        }
-            break;
-        case Cell_clause:
-        {
-            
-        }
-            break;
-        case Cell_tips:
-        {
-            
-        }
-            break;
-        default:
-            break;
+
+    }else{
+        [self touchLoginItem];
     }
 }
 
+#pragma mark 点击head中的登录按钮
+- (void)touchHeadLoginBtn
+{
+    [self touchLoginItem];
+}
 #pragma mark 登录成功返回调用方法
 - (void)loginSuccessItem
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginSuccessMessae object:nil];
     //数据刷新
+    [self refreshUserHeadView];
+}
+
+#pragma mark - 刷新headview
+- (void)refreshUserHeadView
+{
     if ([YHBUser sharedYHBUser].isLogin) {
         [self.loginItem setTitle:@"注销"];
         YHBUser *user = [YHBUser sharedYHBUser];
-        [self.userHeadView refreshViewWithIslogin:YES vcompany:user.userInfo.vcompany sell:user.userInfo.selltotal buy:user.userInfo.buytotal];
+        [self.userHeadView refreshViewWithIslogin:YES vcompany:user.userInfo.vcompany sell:user.userInfo.selltotal buy:user.userInfo.buytotal name:user.userInfo.truename avator:user.userInfo.avatar];
     }
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {

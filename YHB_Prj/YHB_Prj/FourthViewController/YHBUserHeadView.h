@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol UserHeadDelegate <NSObject>
+
+- (void)touchHeadLoginBtn;
+
+@end
+
 @interface YHBUserHeadView : UIView
 
-- (void)refreshViewWithIslogin:(BOOL)isLogin vcompany:(int)vcompany sell:(NSInteger)sell buy:(NSInteger)buy;//刷新view
+@property (weak, nonatomic) id<UserHeadDelegate> delegate;
+
+- (void)refreshViewWithIslogin:(BOOL)isLogin vcompany:(int)vcompany sell:(NSInteger)sell buy:(NSInteger)buy name:(NSString *)name avator:(NSString *)avator;//刷新view
 
 @end

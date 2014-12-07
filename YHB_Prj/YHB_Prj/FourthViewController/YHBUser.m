@@ -46,10 +46,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
     if ([[NSFileManager defaultManager] fileExistsAtPath:self.userFilePath]) {
         NSDictionary *userDic = [NSDictionary dictionaryWithContentsOfFile:self.userFilePath];
         NSString *token = userDic[@"token"];
-        NSData *infoData = userDic[@"userinfo"];
-        NSDictionary *infoDic = [NSKeyedUnarchiver unarchiveObjectWithData:infoData];
-        if (token.length && infoDic) {
-            [self loadUserInfoWithDictionary:userDic];
+        NSData *infoData = userDic[@"userInfo"];
+        YHBUserInfo *info = [NSKeyedUnarchiver unarchiveObjectWithData:infoData];
+        if (token.length && info) {
+            self.userInfo = info;
             _isLogin = YES;
             [[NetManager shareInstance] setUserid:self.userInfo.userid];
         }
@@ -82,8 +82,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
 //加载用户数据 - 通过dic
 - (void)loadUserInfoWithDictionary:(NSDictionary *)userDic
 {
-    _isLogin = YES;
-    self.token = userDic[@"token"];
+    //_isLogin = YES;
     self.userInfo = [YHBUserInfo modelObjectWithDictionary:userDic];
 }
 

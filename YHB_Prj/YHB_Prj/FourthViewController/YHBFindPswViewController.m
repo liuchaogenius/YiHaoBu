@@ -226,10 +226,13 @@ enum TextField_Type
 - (UITextField *)customedTextFieldWithFrame:(CGRect)frame andPlaceholder:(NSString *)placeholder andTag:(NSInteger)TextField_Type andReturnKeyType:(UIReturnKeyType)returnKeyType
 {
     UITextField *textField = [[UITextField alloc] initWithFrame:frame];
-    [textField setBorderStyle:UITextBorderStyleBezel];
+    [textField setBorderStyle:UITextBorderStyleRoundedRect];
     textField.layer.masksToBounds = YES;
     textField.layer.cornerRadius = 4.0f;
     textField.layer.borderColor = [kLineColor CGColor];//[RGBCOLOR(207, 207, 207) CGColor];//[KColor CGColor];
+    if (kSystemVersion < 7.0) {
+        [textField setBorderStyle:UITextBorderStyleBezel];
+    }
     textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     textField.layer.borderWidth = 0.7f;
     textField.placeholder = placeholder;

@@ -7,11 +7,18 @@
 //
 
 #import "YHBShopInfoViewController.h"
+#import "CCEditTextView.h"
 #define kImageWith 60
 #define kTitleFont 15
 #define isTest 1
 #define kCellHeight 40
-
+enum TextTag
+{
+    TextField_Name = 0,
+    TextField_Attention,
+    TextField_Address,
+    TextView_business
+};
 @interface YHBShopInfoViewController ()<UITextFieldDelegate,UITextViewDelegate>
 
 @property (strong, nonatomic) UIScrollView *scrollView;
@@ -83,7 +90,9 @@
     [cellView addSubview:titleLabel];
     titleLabel.font = [UIFont systemFontOfSize:kTitleFont];
     if (i < 3) {
-         UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(titleLabel.right+2, cellView.top, kMainScreenWidth-titleLabel.right-2, kCellHeight)];
+         UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(titleLabel.right+2, 0, kMainScreenWidth-titleLabel.right-2, kCellHeight)];
+        textField.tag = i;
+        //textField.text = [NSString stringWithFormat:@"%d",i];
         textField.font = [UIFont systemFontOfSize:kTitleFont];
         [textField setBorderStyle:UITextBorderStyleNone];
         textField.textColor = [UIColor lightGrayColor];
@@ -99,6 +108,7 @@
         textView.font = [UIFont systemFontOfSize:kTitleFont];
         textView.textColor = [UIColor lightGrayColor];
         textView.delegate = self;
+        textView.tag = i;
         //textView.backgroundColor = [UIColor blackColor];
         //textView.text = @"羊毛，羊毛，羊毛，羊毛，羊毛，羊毛，羊毛，羊毛，羊毛，羊毛，羊毛";
         [textView setTextAlignment:NSTextAlignmentLeft];
@@ -125,11 +135,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self settitleLabel:@"店铺详情"];
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - 49)];
     self.scrollView.backgroundColor = kViewBackgroundColor;
     [self.view addSubview:self.scrollView];
     
     _textFieldArray = [NSMutableArray arrayWithCapacity:3];
+    
     //ui
     [self.scrollView addSubview:self.headBackView];
     [self.scrollView addSubview:self.cellsView];
@@ -141,6 +153,38 @@
 #pragma mark - action
 - (void)touchConfirmButton
 {
+    
+}
+
+#pragma mark - delegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    switch (textField.tag) {
+        case TextField_Name:
+        {
+            UITextField *tf = self.textFieldArray[TextField_Name];
+            
+            [[CCEditTextView sharedView] showEditTextViewWithTitle:@"编辑名称" textfieldText:tf.text comfirmBlock:^(NSString *text) {
+                NSLog(@"%@",text);
+            } cancelBlock:^{
+                
+            }];
+            return NO;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    MLOG(@"%lf %lf",textField.frame.size.width, textField.height);
+    [textField resignFirstResponder];
+    return YES;
     
 }
 

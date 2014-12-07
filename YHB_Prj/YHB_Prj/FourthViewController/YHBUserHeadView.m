@@ -7,6 +7,7 @@
 //
 #define isTest 1
 #import "YHBUserHeadView.h"
+#import "UIImageView+WebCache.h"
 #define kImageWith 60
 #define kTitleFont 15
 @interface YHBUserHeadView()
@@ -43,9 +44,9 @@
         UIImageView *comTag = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"comTag"]];
         UIImageView *selTag = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selTag"]];
         UIImageView *buyTag = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buyTag"]];
-        comTag.frame = CGRectMake(_userName.left, _userImageView.bottom-45, 40, 45);
-        selTag.frame = CGRectMake(comTag.right+10, _userImageView.bottom-45, 40, 45);
-        buyTag.frame = CGRectMake(selTag.right+10, _userImageView.bottom-45, 40, 45);
+        comTag.frame = CGRectMake(_userName.left, _userImageView.bottom-45/2.0, 40/2.0, 45/2.0);
+        selTag.frame = CGRectMake(comTag.right+10, _userImageView.bottom-45/2.0, 40/2.0, 45/2.0);
+        buyTag.frame = CGRectMake(selTag.right+10, _userImageView.bottom-45/2.0, 40/2.0, 45/2.0);
         _comTag = comTag;
         _selTag = selTag;
         _buyTag = buyTag;
@@ -76,14 +77,14 @@
     self = [super initWithFrame:frame];
 
     self.backgroundColor = RGBCOLOR(58, 155, 9);
-    [self refreshViewWithIslogin:NO vcompany:0 sell:0 buy:0];
+    [self refreshViewWithIslogin:NO vcompany:0 sell:0 buy:0 name:@"" avator:nil];
     
     return self;
 }
 
 
 #pragma mark - action
-- (void)refreshViewWithIslogin:(BOOL)isLogin vcompany:(int)vcompany sell:(NSInteger)sell buy:(NSInteger)buy
+- (void)refreshViewWithIslogin:(BOOL)isLogin vcompany:(int)vcompany sell:(NSInteger)sell buy:(NSInteger)buy name:(NSString *)name avator:(NSString *)avator
 {
     if (isLogin) {
         [self addSubview:self.loginedView];
@@ -91,16 +92,22 @@
         self.comTag.hidden = vcompany ? NO : YES;
         self.selTag.hidden = sell ? NO : YES;
         self.buyTag.hidden = buy ? NO : YES;
-        
+        self.userName.text = name ? name : @"";
+        if (avator) {
+            [self.userImageView sd_setImageWithURL:[NSURL URLWithString:avator]];
+        }
     }else{
         [self addSubview:self.notLoginedView];
         [self.loginedView removeFromSuperview];
     }
 }
 
+#pragma mark 点击登录按钮
 - (void)touchLoginButton
 {
-    
+    if ([self.delegate respondsToSelector:@selector(touchHeadLoginBtn)]) {
+        [self.delegate touchHeadLoginBtn];
+    }
 }
 
 @end

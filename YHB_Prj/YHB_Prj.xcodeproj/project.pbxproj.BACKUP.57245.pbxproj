@@ -20,7 +20,7 @@
 		5BD8F96C1A1374A500B3A4F2 /* YHBUserHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD8F96B1A1374A500B3A4F2 /* YHBUserHeadView.m */; };
 		5BD8F96F1A13874D00B3A4F2 /* YHBUserCellsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD8F96E1A13874D00B3A4F2 /* YHBUserCellsView.m */; };
 		5BE051291A2C3EF100740437 /* YHBUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE051271A2C3EF100740437 /* YHBUserInfo.m */; };
-		5BE051291A2C3EF100740437 /* YHBUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE051271A2C3EF100740437 /* YHBUserInfo.m */; };
+<<<<<<< Updated upstream
 		AB59D9531A33224E002B76E1 /* GoodsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB59D9521A33224E002B76E1 /* GoodsTableViewCell.m */; };
 		AB59D9581A332F84002B76E1 /* YHBLookSupplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB59D9571A332F84002B76E1 /* YHBLookSupplyViewController.m */; };
 		AB59D95C1A333B87002B76E1 /* YHBLookSupplyManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB59D95B1A333B87002B76E1 /* YHBLookSupplyManage.m */; };
@@ -29,6 +29,9 @@
 		ABD75E571A33EB3100198FBC /* YHBSupplyDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD75E541A33EB3100198FBC /* YHBSupplyDetailModel.m */; };
 		ABD75E581A33EB3100198FBC /* YHBSupplyDetailPic.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD75E561A33EB3100198FBC /* YHBSupplyDetailPic.m */; };
 		ABD75E5B1A33EB7A00198FBC /* YHBSupplyDetailManage.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD75E5A1A33EB7A00198FBC /* YHBSupplyDetailManage.m */; };
+=======
+		AB9BA0981A2CBA79000E34FE /* YHBPhotoImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9BA0971A2CBA79000E34FE /* YHBPhotoImageView.m */; };
+>>>>>>> Stashed changes
 		ABE5BBB21A2AD452000F5505 /* YHBAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBAB1A2AD452000F5505 /* YHBAlbumViewController.m */; };
 		ABE5BBB41A2AD452000F5505 /* YHBPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBAF1A2AD452000F5505 /* YHBPhotoViewController.m */; };
 		ABE5BBB51A2AD452000F5505 /* YHBVariousImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBB11A2AD452000F5505 /* YHBVariousImageView.m */; };
@@ -131,8 +134,7 @@
 		5BD8F96E1A13874D00B3A4F2 /* YHBUserCellsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUserCellsView.m; sourceTree = "<group>"; };
 		5BE051271A2C3EF100740437 /* YHBUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUserInfo.m; sourceTree = "<group>"; };
 		5BE051281A2C3EF100740437 /* YHBUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBUserInfo.h; sourceTree = "<group>"; };
-		5BE051271A2C3EF100740437 /* YHBUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUserInfo.m; sourceTree = "<group>"; };
-		5BE051281A2C3EF100740437 /* YHBUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBUserInfo.h; sourceTree = "<group>"; };
+<<<<<<< Updated upstream
 		AB59D9511A33224E002B76E1 /* GoodsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsTableViewCell.h; sourceTree = "<group>"; };
 		AB59D9521A33224E002B76E1 /* GoodsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsTableViewCell.m; sourceTree = "<group>"; };
 		AB59D9561A332F84002B76E1 /* YHBLookSupplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBLookSupplyViewController.h; sourceTree = "<group>"; };
@@ -149,6 +151,10 @@
 		ABD75E561A33EB3100198FBC /* YHBSupplyDetailPic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBSupplyDetailPic.m; sourceTree = "<group>"; };
 		ABD75E591A33EB7A00198FBC /* YHBSupplyDetailManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBSupplyDetailManage.h; sourceTree = "<group>"; };
 		ABD75E5A1A33EB7A00198FBC /* YHBSupplyDetailManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBSupplyDetailManage.m; sourceTree = "<group>"; };
+=======
+		AB9BA0961A2CBA79000E34FE /* YHBPhotoImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPhotoImageView.h; sourceTree = "<group>"; };
+		AB9BA0971A2CBA79000E34FE /* YHBPhotoImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBPhotoImageView.m; sourceTree = "<group>"; };
+>>>>>>> Stashed changes
 		ABE5BBAA1A2AD452000F5505 /* YHBAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBAlbumViewController.h; sourceTree = "<group>"; };
 		ABE5BBAB1A2AD452000F5505 /* YHBAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBAlbumViewController.m; sourceTree = "<group>"; };
 		ABE5BBAE1A2AD452000F5505 /* YHBPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPhotoViewController.h; sourceTree = "<group>"; };
