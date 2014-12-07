@@ -14,8 +14,10 @@
 - (instancetype)initWithFrame:(CGRect)frame andPhotoArray:(NSArray *)aPhotoArray;
 - (instancetype)initEditWithFrame:(CGRect)frame andPhotoArray:(NSArray *)aPhotoArray;
 - (void)setPhotoArray:(NSArray *)aPhotoArray;
+- (void)setMyWebPhotoArray:(NSArray *)aPhotoArray;
 - (void)changeEdit;
 
+@property(nonatomic, strong) NSArray *webPhotoArray;
 @property(nonatomic, assign) BOOL isAllowEdit;
 @property(nonatomic, strong) UIView *noPhotoView;
 @property(nonatomic, strong) UIAlertView *deleteAlertView;

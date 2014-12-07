@@ -45,6 +45,7 @@
 - (void)lookSupplyBtn
 {
     YHBLookSupplyViewController *vc = [[YHBLookSupplyViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

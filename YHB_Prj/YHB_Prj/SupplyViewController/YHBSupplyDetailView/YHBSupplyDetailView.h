@@ -7,9 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YHBSupplyDetailModel.h"
 
 @interface YHBSupplyDetailView : UIView
-
+{
+    UITextView *detailTextView;
+    UILabel *timeLabel;
+    UILabel *personLabel;
+    UILabel *nameLabel;
+    UIView *bottomLineView;
+}
 - (instancetype)initWithFrame:(CGRect)frame;
-
+- (void)setDetailWithModel:(YHBSupplyDetailModel *)aModel;
 @end

@@ -9,14 +9,53 @@
 #import "YHBSupplyDetailViewController.h"
 #import "YHBSupplyDetailView.h"
 #import "YHBVariousImageView.h"
+#import "YHBSupplyDetailManage.h"
+#import "SVProgressHUD.h"
+#import "UIImage+WebP.h"
 
 @interface YHBSupplyDetailViewController ()
 {
     UIScrollView *scrollView;
+    YHBSupplyDetailView *supplyDetailView;
+    YHBVariousImageView *variousImageView;
+    BOOL isModal;
 }
+@property(nonatomic, strong) YHBSupplyDetailManage *netManage;
 @end
 
 @implementation YHBSupplyDetailViewController
+
+- (instancetype)initWithItemId:(int)aItemId
+{
+    if (self = [super init]) {
+        [self.netManage getSupllyDetailWithItemid:aItemId SuccessBlock:^(YHBSupplyDetailModel *aModel)
+         {
+             isModal=NO;
+            [supplyDetailView setDetailWithModel:aModel];
+            [variousImageView setMyWebPhotoArray:aModel.pic];
+            [self dismissFlower];
+        } andFailBlock:^{
+            [self dismissFlower];
+        }];
+    }
+    return self;
+}
+
+- (instancetype)init
+{
+    if (self = [super init]) {
+        isModal = YES;
+    }
+    return self;
+}
+
+- (YHBSupplyDetailManage *)netManage
+{
+    if (!_netManage) {
+        _netManage = [[YHBSupplyDetailManage alloc] init];
+    }
+    return _netManage;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -26,16 +65,17 @@
     scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight-50-62)];
     [self.view addSubview:scrollView];
     
-    YHBVariousImageView *variousImageView = [[YHBVariousImageView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 110) andPhotoArray:[NSArray new]];
+    variousImageView = [[YHBVariousImageView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 110) andPhotoArray:[NSArray new]];
     [scrollView addSubview:variousImageView];
     
-    YHBSupplyDetailView *supplyDetailView = [[YHBSupplyDetailView alloc] initWithFrame:CGRectMake(0, variousImageView.bottom, kMainScreenWidth, 340)];
+    supplyDetailView = [[YHBSupplyDetailView alloc] initWithFrame:CGRectMake(0, variousImageView.bottom, kMainScreenWidth, 340)];
     [scrollView addSubview:supplyDetailView];
     
     [self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(dismissSelf)];
 
     UIButton *watchStoreBtn = [[UIButton alloc] initWithFrame:CGRectMake(3, supplyDetailView.bottom+5, kMainScreenWidth-6, 35)];
     watchStoreBtn.backgroundColor = KColor;
+    [watchStoreBtn addTarget:self action:@selector(watchStoreBtn) forControlEvents:UIControlEventTouchUpInside];
     [watchStoreBtn setTitle:@"浏览商城" forState:UIControlStateNormal];
     watchStoreBtn.titleLabel.font = kFont15;
     [scrollView addSubview:watchStoreBtn];
@@ -45,13 +85,40 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, scrollView.bottom, kMainScreenWidth, 50)];
     view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:view];
+    
+    [self showFlower];
+}
+
+#pragma mark 浏览商城
+- (void)watchStoreBtn
+{
+    MLOG(@"浏览商城");
+}
+
+#pragma mark 菊花
+- (void)showFlower
+{
+    [SVProgressHUD show:YES offsetY:kMainScreenHeight/2.0];
+}
+
+- (void)dismissFlower
+{
+    [SVProgressHUD dismiss];
 }
 
 - (void)dismissSelf
 {
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    if (isModal)
+    {
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }
+    else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {

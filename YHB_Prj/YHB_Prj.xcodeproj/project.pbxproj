@@ -24,6 +24,9 @@
 		AB59D95C1A333B87002B76E1 /* YHBLookSupplyManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB59D95B1A333B87002B76E1 /* YHBLookSupplyManage.m */; };
 		AB59D9601A334295002B76E1 /* YHBSupplyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB59D95F1A334295002B76E1 /* YHBSupplyModel.m */; };
 		AB9BA0981A2CBA79000E34FE /* YHBPhotoImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9BA0971A2CBA79000E34FE /* YHBPhotoImageView.m */; };
+		ABD75E571A33EB3100198FBC /* YHBSupplyDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD75E541A33EB3100198FBC /* YHBSupplyDetailModel.m */; };
+		ABD75E581A33EB3100198FBC /* YHBSupplyDetailPic.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD75E561A33EB3100198FBC /* YHBSupplyDetailPic.m */; };
+		ABD75E5B1A33EB7A00198FBC /* YHBSupplyDetailManage.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD75E5A1A33EB7A00198FBC /* YHBSupplyDetailManage.m */; };
 		ABE5BBB21A2AD452000F5505 /* YHBAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBAB1A2AD452000F5505 /* YHBAlbumViewController.m */; };
 		ABE5BBB41A2AD452000F5505 /* YHBPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBAF1A2AD452000F5505 /* YHBPhotoViewController.m */; };
 		ABE5BBB51A2AD452000F5505 /* YHBVariousImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBB11A2AD452000F5505 /* YHBVariousImageView.m */; };
@@ -134,6 +137,12 @@
 		AB59D95F1A334295002B76E1 /* YHBSupplyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBSupplyModel.m; sourceTree = "<group>"; };
 		AB9BA0961A2CBA79000E34FE /* YHBPhotoImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPhotoImageView.h; sourceTree = "<group>"; };
 		AB9BA0971A2CBA79000E34FE /* YHBPhotoImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBPhotoImageView.m; sourceTree = "<group>"; };
+		ABD75E531A33EB3100198FBC /* YHBSupplyDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBSupplyDetailModel.h; sourceTree = "<group>"; };
+		ABD75E541A33EB3100198FBC /* YHBSupplyDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBSupplyDetailModel.m; sourceTree = "<group>"; };
+		ABD75E551A33EB3100198FBC /* YHBSupplyDetailPic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBSupplyDetailPic.h; sourceTree = "<group>"; };
+		ABD75E561A33EB3100198FBC /* YHBSupplyDetailPic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBSupplyDetailPic.m; sourceTree = "<group>"; };
+		ABD75E591A33EB7A00198FBC /* YHBSupplyDetailManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBSupplyDetailManage.h; sourceTree = "<group>"; };
+		ABD75E5A1A33EB7A00198FBC /* YHBSupplyDetailManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBSupplyDetailManage.m; sourceTree = "<group>"; };
 		ABE5BBAA1A2AD452000F5505 /* YHBAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBAlbumViewController.h; sourceTree = "<group>"; };
 		ABE5BBAB1A2AD452000F5505 /* YHBAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBAlbumViewController.m; sourceTree = "<group>"; };
 		ABE5BBAE1A2AD452000F5505 /* YHBPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPhotoViewController.h; sourceTree = "<group>"; };
@@ -341,6 +350,8 @@
 			children = (
 				AB59D95A1A333B87002B76E1 /* YHBLookSupplyManage.h */,
 				AB59D95B1A333B87002B76E1 /* YHBLookSupplyManage.m */,
+				ABD75E591A33EB7A00198FBC /* YHBSupplyDetailManage.h */,
+				ABD75E5A1A33EB7A00198FBC /* YHBSupplyDetailManage.m */,
 			);
 			path = SupplyNetManage;
 			sourceTree = "<group>";
@@ -348,6 +359,10 @@
 		AB59D95D1A334275002B76E1 /* SupplyModel */ = {
 			isa = PBXGroup;
 			children = (
+				ABD75E531A33EB3100198FBC /* YHBSupplyDetailModel.h */,
+				ABD75E541A33EB3100198FBC /* YHBSupplyDetailModel.m */,
+				ABD75E551A33EB3100198FBC /* YHBSupplyDetailPic.h */,
+				ABD75E561A33EB3100198FBC /* YHBSupplyDetailPic.m */,
 				AB59D95E1A334295002B76E1 /* YHBSupplyModel.h */,
 				AB59D95F1A334295002B76E1 /* YHBSupplyModel.m */,
 			);
@@ -884,6 +899,7 @@
 				FF2A6C761A0F3B7B001607AC /* UIImage+MultiFormat.m in Sources */,
 				AB59D9601A334295002B76E1 /* YHBSupplyModel.m in Sources */,
 				FF2A6C2E1A0F3B50001607AC /* AFPropertyListRequestOperation.m in Sources */,
+				ABD75E5B1A33EB7A00198FBC /* YHBSupplyDetailManage.m in Sources */,
 				ABE5BBB91A2AD4A7000F5505 /* YHBVariousView.m in Sources */,
 				ABE5BBB41A2AD452000F5505 /* YHBPhotoViewController.m in Sources */,
 				AB59D9581A332F84002B76E1 /* YHBLookSupplyViewController.m in Sources */,
@@ -898,9 +914,11 @@
 				FF2A6C6C1A0F3B7B001607AC /* NSData+ImageContentType.m in Sources */,
 				FF2A6C701A0F3B7B001607AC /* SDWebImageDownloader.m in Sources */,
 				FF2A6C481A0F3B72001607AC /* JSONKit.m in Sources */,
+				ABD75E581A33EB3100198FBC /* YHBSupplyDetailPic.m in Sources */,
 				5BB4A9211A172A2600DB4636 /* YHBFindPswViewController.m in Sources */,
 				FF2A6C2D1A0F3B50001607AC /* AFNetworkActivityIndicatorManager.m in Sources */,
 				FF2A6C781A0F3B7B001607AC /* UIImageView+HighlightedWebCache.m in Sources */,
+				ABD75E571A33EB3100198FBC /* YHBSupplyDetailModel.m in Sources */,
 				FF2A6C2A1A0F3B50001607AC /* AFHTTPRequestOperation.m in Sources */,
 				FF2A6C321A0F3B50001607AC /* NetManager.m in Sources */,
 				FF2A6BE01A0F3780001607AC /* main.m in Sources */,
@@ -1037,6 +1055,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Huizhen Zhu (9B9A455VM7)";
 				GCC_PREFIX_HEADER = "YHB_Prj/YHB-Prefix.pch";
 				INFOPLIST_FILE = YHB_Prj/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -1050,6 +1069,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Huizhen Zhu (9B9A455VM7)";
 				GCC_PREFIX_HEADER = "YHB_Prj/YHB-Prefix.pch";
 				INFOPLIST_FILE = YHB_Prj/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;

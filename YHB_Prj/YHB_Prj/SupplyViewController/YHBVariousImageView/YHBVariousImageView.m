@@ -9,6 +9,8 @@
 #import "YHBVariousImageView.h"
 #import "YHBAlbumViewController.h"
 #import "UIViewAdditions.h"
+#import "UIButton+WebCache.h"
+#import "YHBSupplyDetailPic.h"
 #define interval 5
 #define photoHeight 100
 #define plusTag 1000
@@ -20,6 +22,36 @@
 {
     self.myPhotoArray = [aPhotoArray mutableCopy];
     [self reloadPhotoScrollView];
+}
+
+- (void)setMyWebPhotoArray:(NSArray *)aPhotoArray
+{
+    self.webPhotoArray = aPhotoArray;
+    [self reloadWebPhotoScrollView];
+}
+
+- (void)reloadWebPhotoScrollView
+{
+    [self.photoScrollView removeSubviews];
+    int endWidth = 0;
+    if (self.webPhotoArray.count>0)
+    {
+        for (int i=0; i<self.webPhotoArray.count; i++)
+        {
+            UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake(interval+(interval+photoHeight)*i, interval, photoHeight, photoHeight)];
+            YHBSupplyDetailPic *model = [self.webPhotoArray objectAtIndex:i];
+            [photoBtn sd_setImageWithURL:[NSURL URLWithString:model.thumb] forState:UIControlStateNormal];
+            [photoBtn addTarget:self action:@selector(touchPhoto:) forControlEvents:UIControlEventTouchUpInside];
+            photoBtn.tag = 1000+i;
+            [self.photoScrollView addSubview:photoBtn];
+            endWidth = photoBtn.right+5;
+        }
+        self.photoScrollView.contentSize = CGSizeMake(endWidth, 110);
+    }
+    else
+    {
+        [self.photoScrollView addSubview:self.noPhotoView];
+    }
 }
 
 - (instancetype)initWithFrame:(CGRect)frame andPhotoArray:(NSArray *)aPhotoArray
@@ -59,6 +91,7 @@
                                 initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 110)];
         _currentPhotoCount = 0;
         self.myPhotoArray = [NSMutableArray new];
+        self.webPhotoArray = [NSMutableArray new];
         self.plusImage = [UIImage imageNamed:@"QSPlusBtn"];
         [self addSubview:self.photoScrollView];
     }

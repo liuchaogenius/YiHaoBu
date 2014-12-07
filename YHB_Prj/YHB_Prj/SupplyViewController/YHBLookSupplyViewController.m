@@ -12,6 +12,7 @@
 #import "YHBLookSupplyManage.h"
 #import "SVProgressHUD.h"
 #import "YHBSupplyModel.h"
+#import "YHBSupplyDetailViewController.h"
 
 typedef enum:NSUInteger
 {
@@ -211,6 +212,13 @@ typedef enum:NSUInteger
     [cell setCellWithGoodImage:@"http://file1.youboy.com/a/42/96/35/7/381037.jpg" title:model.title catName:model.catname typeName:model.typename editTime:model.editdate skimCount:2000 paidPrice:0];
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    YHBSupplyModel *model = [self.tableViewArray objectAtIndex:indexPath.row];
+    YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:model.itemid];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
