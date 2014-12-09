@@ -4,7 +4,7 @@
 //
 //  Created by  striveliu on 14-11-9.
 //  Copyright (c) 2014年 striveliu. All rights reserved.
-//
+//  用户管理界面
 
 #import "FourthViewController.h"
 #import "YHBUserHeadView.h"
@@ -119,6 +119,7 @@ enum Button_Type
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessItem) name:kLoginSuccessMessae object:nil];
     }else{
         //注销
+        [[YHBUser sharedYHBUser] logoutUser];
         [self refreshUserHeadView];//刷新
     }
     
@@ -193,6 +194,9 @@ enum Button_Type
         [self.loginItem setTitle:@"注销"];
         YHBUser *user = [YHBUser sharedYHBUser];
         [self.userHeadView refreshViewWithIslogin:YES vcompany:user.userInfo.vcompany sell:user.userInfo.selltotal buy:user.userInfo.buytotal name:user.userInfo.truename avator:user.userInfo.avatar];
+    }else{
+        [self.loginItem setTitle:@"登陆"];
+        [self.userHeadView refreshViewWithIslogin:NO vcompany:0 sell:0 buy:0 name:nil avator:nil];
     }
 }
 

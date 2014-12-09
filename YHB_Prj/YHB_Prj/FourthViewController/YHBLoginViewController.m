@@ -12,6 +12,7 @@
 #import "YHBUser.h"
 #import "SVProgressHUD.h"
 #define sgmButtonHeight 40
+
 enum SegmentBtn_Type
 {
     SegmentBtn_login = 100, //登陆
@@ -26,7 +27,6 @@ enum TextField_Type
     TextField_rgPassword,
     TextField_checkCode
 };
-
 
 @interface YHBLoginViewController ()<UITextFieldDelegate>
 {
@@ -109,17 +109,17 @@ enum TextField_Type
         _loginView = [[UIView alloc] initWithFrame:CGRectMake(0, sgmButtonHeight, kMainScreenWidth, kMainScreenHeight-sgmButtonHeight-64)];
         _loginView.backgroundColor = RGBCOLOR(249, 249, 249);
         
-        UIView *whiteBackView = [[UIView alloc] initWithFrame:CGRectMake(20, 20, kMainScreenWidth-40, 105)];
+        UIView *whiteBackView = [[UIView alloc] initWithFrame:CGRectMake(2, 20, kMainScreenWidth-4, 105)];
         whiteBackView.backgroundColor = [UIColor whiteColor];
         whiteBackView.layer.borderColor = [kLineColor CGColor];//[RGBCOLOR(207, 207, 207) CGColor];
         whiteBackView.layer.borderWidth = 1.0f;
         whiteBackView.layer.cornerRadius = 4.0;
         [_loginView addSubview:whiteBackView];
         
-        self.phoneNumberTextField = [self customedTextFieldWithFrame:CGRectMake(5, 10, whiteBackView.bounds.size.width-10, 35) andPlaceholder:@"用户名/邮箱/手机号" andTag:TextField_phoneNumber andReturnKeyType:(UIReturnKeyNext)];
+        self.phoneNumberTextField = [self customedTextFieldWithFrame:CGRectMake(10, 10, whiteBackView.bounds.size.width-20, 35) andPlaceholder:@"用户名/邮箱/手机号" andTag:TextField_phoneNumber andReturnKeyType:(UIReturnKeyNext)];
         [whiteBackView addSubview:self.phoneNumberTextField];
         
-        self.passwordTextField = [self customedTextFieldWithFrame:CGRectMake(5, 60, whiteBackView.bounds.size.width-10, 35) andPlaceholder:@"密码" andTag:TextField_password andReturnKeyType:UIReturnKeyGo];
+        self.passwordTextField = [self customedTextFieldWithFrame:CGRectMake(10, 60, whiteBackView.bounds.size.width-20, 35) andPlaceholder:@"密码" andTag:TextField_password andReturnKeyType:UIReturnKeyGo];
         self.passwordTextField.secureTextEntry = YES;
         [whiteBackView addSubview:self.passwordTextField];
         
@@ -151,28 +151,28 @@ enum TextField_Type
         _registerView = [[UIView alloc] initWithFrame:CGRectMake(0, sgmButtonHeight, kMainScreenWidth, kMainScreenHeight-sgmButtonHeight-64)];
         _registerView.backgroundColor = RGBCOLOR(249, 249, 249);
         
-        UIView *whiteBackView = [[UIView alloc] initWithFrame:CGRectMake(20, 20, kMainScreenWidth-40, 165)];
+        UIView *whiteBackView = [[UIView alloc] initWithFrame:CGRectMake(2, 20, kMainScreenWidth-4, 165)];
         whiteBackView.backgroundColor = [UIColor whiteColor];
         whiteBackView.layer.borderColor = [kLineColor CGColor];//[RGBCOLOR(207, 207, 207) CGColor];
         whiteBackView.layer.borderWidth = 1.0f;
         whiteBackView.layer.cornerRadius = 4.0;
         [_registerView addSubview:whiteBackView];
         
-        _rgPhoneNumberTextField = [self customedTextFieldWithFrame:CGRectMake(5, 15, whiteBackView.bounds.size.width-10, 35)  andPlaceholder:@"输入手机号" andTag:TextField_rgPhoneNumber andReturnKeyType:UIReturnKeyNext];
+        _rgPhoneNumberTextField = [self customedTextFieldWithFrame:CGRectMake(10, 15, whiteBackView.bounds.size.width-20, 35)  andPlaceholder:@"输入手机号" andTag:TextField_rgPhoneNumber andReturnKeyType:UIReturnKeyNext];
         [_rgPhoneNumberTextField setKeyboardType:UIKeyboardTypeNumberPad];
         [whiteBackView addSubview:self.rgPhoneNumberTextField];
         
-        _checkCodeTextField = [self customedTextFieldWithFrame:CGRectMake(5, 65, (whiteBackView.bounds.size.width-10)*1.8/3.0f, 35) andPlaceholder:@"输入验证码" andTag:TextField_checkCode andReturnKeyType:UIReturnKeyNext];
+        _checkCodeTextField = [self customedTextFieldWithFrame:CGRectMake(10, 65, (whiteBackView.bounds.size.width-20)*1.9/3.0f, 35) andPlaceholder:@"输入验证码" andTag:TextField_checkCode andReturnKeyType:UIReturnKeyNext];
         [whiteBackView addSubview:self.checkCodeTextField];
         
-        _rgPasswordTextField = [self customedTextFieldWithFrame:CGRectMake(5, 115, whiteBackView.bounds.size.width-10, 35) andPlaceholder:@"输入密码" andTag:TextField_checkCode andReturnKeyType:UIReturnKeyGo];
+        _rgPasswordTextField = [self customedTextFieldWithFrame:CGRectMake(10, 115, whiteBackView.bounds.size.width-20, 35) andPlaceholder:@"输入密码" andTag:TextField_checkCode andReturnKeyType:UIReturnKeyGo];
         self.rgPasswordTextField.secureTextEntry = YES;
         [whiteBackView addSubview:self.rgPasswordTextField];
         [self.view addSubview:_registerView];
         
         //验证码button
         UIButton *checkCodeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        checkCodeButton.frame = CGRectMake(whiteBackView.bounds.size.width-10-95, 65, 95, 35);
+        checkCodeButton.frame = CGRectMake(whiteBackView.bounds.size.width-10-_checkCodeTextField.width/2.0, 65, _checkCodeTextField.width/2.0, 35);
         checkCodeButton.titleLabel.font = kFont14;
         [checkCodeButton setBackgroundColor:RGBCOLOR(220, 220, 220)];
         [checkCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
@@ -294,10 +294,10 @@ enum TextField_Type
     
     if (self.rgPhoneNumberTextField.text && self.rgPhoneNumberTextField.text.length) {
         [SVProgressHUD showWithStatus:@"验证码发送中" cover:YES offsetY:kMainScreenHeight/2.0];
-        [[YHBUserManager sharedManager] getCheckCodeWithPhone:self.rgPhoneNumberTextField.text Success:^(){
+        [[YHBUserManager sharedManager] getCheckCodeWithPhone:self.rgPhoneNumberTextField.text smstpl:@"register" Success:^(){
             [SVProgressHUD dismissWithSuccess:@"验证码已发送到您的手机"];
             self.checkCodeButton.enabled = NO;
-            _secondCountDown = 90;
+            _secondCountDown = ksecond;
             if (!self.checkCodeTimer) {
                 self.checkCodeTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timeClicked) userInfo:nil repeats:YES];
             }

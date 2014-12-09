@@ -9,6 +9,7 @@
 #import "YHBShopMallViewController.h"
 #import "YHBShopMallHeadView.h"
 #import "YHBShopMallCell.h"
+#import "YHBShopInfoViewController.h"
 
 #define KimageHeight kMainScreenWidth*362/1080.0f
 
@@ -130,9 +131,18 @@
 - (void)selectCellPartWithIndexPath:(NSIndexPath *)indexPath part:(NSInteger)part
 {
     MLOG(@"section:%ld row:%ld part:%ld",(long)indexPath.section,(long)indexPath.row,(long)part);
-    UIViewController *vc = [[UIViewController alloc] init];
-    vc.view.backgroundColor = [UIColor whiteColor];
-    [self.navigationController pushViewController:vc animated:YES];
+    if (indexPath.section == 1) {
+        //店铺
+#warning 待获取选择的店铺模型
+        YHBShopInfoViewController *infoVc = [[YHBShopInfoViewController alloc] init];
+        infoVc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:infoVc animated:YES];
+    }else if (indexPath.section == 0){
+        //商品
+        UIViewController *vc = [[UIViewController alloc] init];
+        vc.view.backgroundColor = [UIColor whiteColor];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

@@ -10,7 +10,8 @@
 #import "SVProgressHUD.h"
 #import "YHBUser.h"
 #import "YHBUserManager.h"
-
+#define kWhiteleft 2
+#define kButtonleft 10
 enum TextField_Type
 {
     TextField_phoneNumber = 30,//账号文本框-登录
@@ -40,30 +41,30 @@ enum TextField_Type
 {
     if (!_findPswView) {
         
-        _findPswView = [[UIView alloc] initWithFrame:CGRectMake(10, 20, kMainScreenWidth-20, 215)];
+        _findPswView = [[UIView alloc] initWithFrame:CGRectMake(kWhiteleft, 20, kMainScreenWidth-2*kWhiteleft, 215)];
         _findPswView.backgroundColor = [UIColor whiteColor];
         _findPswView.layer.borderColor = [kLineColor CGColor];//[RGBCOLOR(207, 207, 207) CGColor];
         _findPswView.layer.borderWidth = 1.0f;
         _findPswView.layer.cornerRadius = 4.0;
         
-        _phoneNumberTextField = [self customedTextFieldWithFrame:CGRectMake(5, 15, _findPswView.bounds.size.width-10, 35)  andPlaceholder:@"输入手机号" andTag:TextField_phoneNumber andReturnKeyType:UIReturnKeyNext];
+        _phoneNumberTextField = [self customedTextFieldWithFrame:CGRectMake(kButtonleft, 15, _findPswView.bounds.size.width-2*kButtonleft, 35)  andPlaceholder:@"输入手机号" andTag:TextField_phoneNumber andReturnKeyType:UIReturnKeyNext];
         [_phoneNumberTextField setKeyboardType:UIKeyboardTypeNumberPad];
         [_findPswView addSubview:self.phoneNumberTextField];
         
-        _checkCodeTextField = [self customedTextFieldWithFrame:CGRectMake(5, 15+_phoneNumberTextField.bottom, (_findPswView.bounds.size.width-10)*1.8/3.0f, 35) andPlaceholder:@"输入验证码" andTag:TextField_checkCode andReturnKeyType:UIReturnKeyNext];
+        _checkCodeTextField = [self customedTextFieldWithFrame:CGRectMake(kButtonleft, 15+_phoneNumberTextField.bottom, (_findPswView.bounds.size.width-2*kButtonleft)*1.9/3.0f, 35) andPlaceholder:@"输入验证码" andTag:TextField_checkCode andReturnKeyType:UIReturnKeyNext];
         [_findPswView addSubview:self.checkCodeTextField];
         
-        _passwordTextFiled = [self customedTextFieldWithFrame:CGRectMake(5, 15+_checkCodeTextField.bottom, _findPswView.bounds.size.width-10, 35) andPlaceholder:@"输入新密码" andTag:TextField_newPassword andReturnKeyType:UIReturnKeyNext];
+        _passwordTextFiled = [self customedTextFieldWithFrame:CGRectMake(kButtonleft, 15+_checkCodeTextField.bottom, _findPswView.bounds.size.width-2*kButtonleft, 35) andPlaceholder:@"输入新密码" andTag:TextField_newPassword andReturnKeyType:UIReturnKeyNext];
         self.passwordTextFiled.secureTextEntry = YES;
         [_findPswView addSubview:self.passwordTextFiled];
 
-        _rePasswordTextField = [self customedTextFieldWithFrame:CGRectMake(5, 15+_passwordTextFiled.bottom, _findPswView.bounds.size.width-10, 35) andPlaceholder:@"重新输入新密码" andTag:TextField_rePassword andReturnKeyType:UIReturnKeyGo];
+        _rePasswordTextField = [self customedTextFieldWithFrame:CGRectMake(kButtonleft, 15+_passwordTextFiled.bottom, _findPswView.bounds.size.width-2*kButtonleft, 35) andPlaceholder:@"重新输入新密码" andTag:TextField_rePassword andReturnKeyType:UIReturnKeyGo];
         self.rePasswordTextField.secureTextEntry = YES;
         [_findPswView addSubview:self.rePasswordTextField];
         
         //验证码button
         UIButton *checkCodeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        checkCodeButton.frame = CGRectMake(_findPswView.bounds.size.width-10-95,_checkCodeTextField.top, 95, 35);
+        checkCodeButton.frame = CGRectMake(_findPswView.bounds.size.width-10-_checkCodeTextField.width/2.0f,_checkCodeTextField.top, _checkCodeTextField.width/2.0f, 35);
         checkCodeButton.titleLabel.font = kFont14;
         [checkCodeButton setBackgroundColor:RGBCOLOR(220, 220, 220)];
         [checkCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
@@ -108,10 +109,10 @@ enum TextField_Type
     
      if (self.phoneNumberTextField.text && self.phoneNumberTextField.text.length) {
      [SVProgressHUD showWithStatus:@"验证码发送中" cover:YES offsetY:kMainScreenHeight/2.0];
-     [[YHBUserManager sharedManager] getCheckCodeWithPhone:self.phoneNumberTextField.text Success:^(){
+     [[YHBUserManager sharedManager] getCheckCodeWithPhone:self.phoneNumberTextField.text smstpl:@"findpassword"  Success:^(){
          [SVProgressHUD dismissWithSuccess:@"验证码已发送到您的手机"];
          self.checkCodeButton.enabled = NO;
-         _secondCountDown = 90;
+         _secondCountDown = ksecond;
          if (!self.checkCodeTimer) {
              self.checkCodeTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timeClicked) userInfo:nil repeats:YES];
          }

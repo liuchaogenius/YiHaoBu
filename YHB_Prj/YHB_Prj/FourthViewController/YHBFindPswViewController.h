@@ -7,6 +7,7 @@
 //
 
 #import "BaseViewController.h"
+#define ksecond 60
 
 @interface YHBFindPswViewController : BaseViewController
 

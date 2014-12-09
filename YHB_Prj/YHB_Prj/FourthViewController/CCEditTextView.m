@@ -9,7 +9,7 @@
 #import "CCEditTextView.h"
 #define kIWidth (kMainScreenWidth-40)
 
-@interface CCEditTextView()<UITextFieldDelegate>
+@interface CCEditTextView()<UITextFieldDelegate,UITextViewDelegate>
 {
     unary_operation_comfirm _comfirmblock;
     unary_operation_cancel _cancelblock;
@@ -20,6 +20,7 @@
 @property (strong, nonatomic) UIButton *cancalButton;
 @property (strong, nonatomic) UIButton *confirmButton;
 @property (strong, nonatomic) UIView *dimView;
+@property (strong, nonatomic) UITextView *textView;
 @end
 
 @implementation CCEditTextView
@@ -62,6 +63,15 @@
         
         _textfield.layer.borderColor = [kLineColor CGColor];
         [_inputView addSubview:_textfield];
+        
+        _textView = [[UITextView alloc] initWithFrame:CGRectMake(10, _titleLabel.bottom+10, kIWidth-20, 60)];
+        _textView.backgroundColor = [UIColor whiteColor];
+        _textView.layer.cornerRadius = 4.0;
+        _textView.layer.borderWidth = 0.5;
+        _textView.delegate = self;
+        _textView.font = [UIFont systemFontOfSize:12];
+        _textView.layer.borderColor = [kLineColor CGColor];
+        [_inputView addSubview:_textView];
         
         _cancalButton = [[UIButton alloc] initWithFrame:CGRectMake(10, _textfield.bottom + 20, (kIWidth-20-10)/2.0, 30)];
         [_cancalButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -110,9 +120,13 @@
 }
 - (void)showEditTextViewWithTitle:(NSString *)title textfieldText:(NSString *)text comfirmBlock: (COMFIRMBLOCK)cBlock cancelBlock:(CANCELBLOCK)cancleBlock
 {
+    _comfirmblock = nil;
+    _cancelblock = nil;
     [[UIApplication sharedApplication].keyWindow addSubview:self.dimView];
     self.titleLabel.text = title ? :@"";
     self.textfield.text = text ? :@"";
+    self.textView.hidden = YES;
+    self.textfield.hidden = NO;
     [[UIApplication sharedApplication].keyWindow addSubview:self];
     [self.textfield becomeFirstResponder];
     
@@ -121,10 +135,27 @@
     
 }
 
+- (void)showLargeEditTextViewWithTitle:(NSString *)title textfieldText:(NSString *)text comfirmBlock: (COMFIRMBLOCK)cBlock cancelBlock:(CANCELBLOCK)cancleBlock
+{
+    _comfirmblock = nil;
+    _cancelblock = nil;
+    [[UIApplication sharedApplication].keyWindow addSubview:self.dimView];
+    self.titleLabel.text = title ? :@"";
+    self.textView.text = text ? :@"";
+    self.textView.hidden = NO;
+    self.textfield.hidden = YES;
+    [[UIApplication sharedApplication].keyWindow addSubview:self];
+    [self.textView becomeFirstResponder];
+    
+    _comfirmblock = cBlock;
+    _cancelblock = cancleBlock;
+}
+
 #pragma mark - action
 - (void)touchCancelButton
 {
     [self.textfield resignFirstResponder];
+    [self.textView resignFirstResponder];
     [self removeFromSuperview];
     [self.dimView removeFromSuperview];
     if (_cancelblock) {
@@ -135,10 +166,11 @@
 - (void)touchConfirmButton
 {
     [self.textfield resignFirstResponder];
+    [self.textView resignFirstResponder];
     [self removeFromSuperview];
     [self.dimView removeFromSuperview];
     if (_comfirmblock) {
-        NSString *text = [self.textfield.text copy];
+        NSString *text = self.textView.isHidden ? [self.textfield.text copy] : [self.textView.text copy];
         _comfirmblock(text);
     }
 }
@@ -150,5 +182,6 @@
     [self removeFromSuperview];
     return YES;
 }
+
 
 @end

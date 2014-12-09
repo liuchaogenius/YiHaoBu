@@ -26,4 +26,7 @@ typedef void (^unary_operation_cancel)();
  */
 - (void)showEditTextViewWithTitle:(NSString *)title textfieldText:(NSString *)text comfirmBlock: (COMFIRMBLOCK)cBlock cancelBlock:(CANCELBLOCK)cancleBlock;
 
+- (void)showLargeEditTextViewWithTitle:(NSString *)title textfieldText:(NSString *)text comfirmBlock: (COMFIRMBLOCK)cBlock cancelBlock:(CANCELBLOCK)cancleBlock;
+
+
 @end

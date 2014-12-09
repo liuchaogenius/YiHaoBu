@@ -7,7 +7,6 @@
 //
 
 #import "YHBUser.h"
-#import "YHBUserInfo.h"
 #import "SynthesizeSingleton.h"
 #import "NetManager.h"
 @interface YHBUser()
@@ -67,6 +66,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
 {
     self.token = token;
     _isLogin = YES;
+
+#warning 带做 userinfo方面的处理
     [self writeUserInfoToFile];
 }
 

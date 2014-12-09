@@ -23,8 +23,8 @@
 //用户修改密码网络请求
 //- (void)changePassWordWithOldPwd:(NSString *)oldpwd andNewPwd:(NSString *)newpwd andComfirmPwd:(NSString *)comfirmpwd Success:(void(^)())sBlock failure:(void(^)(NSInteger result,NSString *resultString))fBlock;
 
-//注册获取验证码
-- (void)getCheckCodeWithPhone : (NSString *)phone Success:(void(^)())sBlock failure:(void(^)(int result,NSString *errorString))fBlock;
+//注册获取验证码 smstpl:短信模板-register:注册短信；findpassword:找回密码短信
+- (void)getCheckCodeWithPhone : (NSString *)phone smstpl:(NSString *)sms Success:(void(^)())sBlock failure:(void(^)(int result,NSString *errorString))fBlock;
 
 //注册账号
 - (void)registerWithPhone:(NSString *)phone checkCode:(NSString *)checkcode passWord:(NSString *)password withSuccess:(void(^)())sBlock failure:(void(^)(int result,NSString *errorString))fBlock;

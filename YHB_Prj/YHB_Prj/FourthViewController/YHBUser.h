@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class YHBUserInfo;
+#import "YHBUserInfo.h"
 
 @interface YHBUser : NSObject
 

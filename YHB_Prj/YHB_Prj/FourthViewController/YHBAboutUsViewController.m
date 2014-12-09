@@ -52,6 +52,7 @@
 - (void)getOurInfo
 {
     NSString *url = nil;
+#warning 还无后台，待验证-cc
     kYHBRequestUrl(@"ourinfo.aspx", url);
     [NetManager requestWith:nil url:url method:@"GET" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         [self.indicatorView stopAnimating];

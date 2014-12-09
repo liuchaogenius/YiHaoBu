@@ -8,6 +8,8 @@
 
 #import "YHBShopInfoViewController.h"
 #import "CCEditTextView.h"
+#import "YHBUser.h"
+#import "UIImageView+WebCache.h"
 #define kImageWith 60
 #define kTitleFont 15
 #define isTest 1
@@ -17,7 +19,7 @@ enum TextTag
     TextField_Name = 0,
     TextField_Attention,
     TextField_Address,
-    TextView_business
+    TextView_buisness
 };
 @interface YHBShopInfoViewController ()<UITextFieldDelegate,UITextViewDelegate>
 
@@ -147,37 +149,59 @@ enum TextTag
     [self.scrollView addSubview:self.cellsView];
     [self.scrollView addSubview:self.confirmButton];
     //网络请求
-#warning 待进行网络请求
+#warning 待进行网络请求-cc
+    [self setData];
+}
+
+- (void)setData
+{
+    YHBUser *user =[YHBUser sharedYHBUser];
+    [self.userImageView sd_setImageWithURL:[NSURL URLWithString:user.userInfo.avatar]];
+    UITextField *tf;
+    tf = self.textFieldArray[TextField_Name];
+    tf.text = user.userInfo.truename;
+    
+    tf = self.textFieldArray[TextField_Attention];
+    tf.text = user.userInfo.catname;
+#warning 此处address使用哪个此段存在疑问-cc
+    tf = self.textFieldArray[TextField_Address];
+    tf.text = user.userInfo.address;
+    
+    self.mProductTextView.text = user.userInfo.business;
 }
 
 #pragma mark - action
 - (void)touchConfirmButton
 {
-    
+#warning 待上传修改的信息-cc
 }
 
 #pragma mark - delegate
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    switch (textField.tag) {
-        case TextField_Name:
-        {
-            UITextField *tf = self.textFieldArray[TextField_Name];
+    if (textField.tag < TextView_buisness) {
+        UITextField *tf = self.textFieldArray[textField.tag];
+        NSArray *array = @[@"编辑名称",@"编辑我的关注",@"编辑地址"];
+        [[CCEditTextView sharedView] showEditTextViewWithTitle:array[textField.tag] textfieldText:tf.text comfirmBlock:^(NSString *text) {
+            NSLog(@"%@",text);
+        } cancelBlock:^{
             
-            [[CCEditTextView sharedView] showEditTextViewWithTitle:@"编辑名称" textfieldText:tf.text comfirmBlock:^(NSString *text) {
-                NSLog(@"%@",text);
-            } cancelBlock:^{
-                
-            }];
-            return NO;
-        }
-            break;
-            
-        default:
-            break;
+        }];
+        return NO;
     }
-    return YES;
+    return NO;
+}
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+
+    [[CCEditTextView sharedView] showLargeEditTextViewWithTitle:@"编辑主营产品" textfieldText:[YHBUser sharedYHBUser].userInfo.business comfirmBlock:^(NSString *text) {
+        NSLog(@"%@",text);
+    } cancelBlock:^{
+        
+    }];
+    return NO;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
