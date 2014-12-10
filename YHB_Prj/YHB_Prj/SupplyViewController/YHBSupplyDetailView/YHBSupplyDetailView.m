@@ -73,7 +73,7 @@
         detailTextView.backgroundColor = [UIColor clearColor];
         detailTextView.textColor = [UIColor lightGrayColor];
         detailTextView.font = kFont13;
-//        detailTextView.text = @"化纤，棉法防打发打发";
+        detailTextView.text = @"无描述";
         [detailTextView setEditable:NO];
         [self addSubview:detailTextView];
     }

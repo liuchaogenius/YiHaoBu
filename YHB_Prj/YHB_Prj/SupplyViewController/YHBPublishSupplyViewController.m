@@ -39,7 +39,7 @@
     YHBContactView *contactView = [[YHBContactView alloc] initWithFrame:CGRectMake(0, editSupplyView.bottom+5, kMainScreenWidth, 60)];
     [scrollView addSubview:contactView];
     
-    UIButton *publishBtn = [[UIButton alloc] initWithFrame:CGRectMake(3, contactView.bottom+10, kMainScreenWidth-6, 35)];
+    UIButton *publishBtn = [[UIButton alloc] initWithFrame:CGRectMake(5, contactView.bottom+10, kMainScreenWidth-10, 35)];
     publishBtn.layer.cornerRadius = 2.5;
     publishBtn.backgroundColor = KColor;
     [publishBtn setTitle:@"发 布" forState:UIControlStateNormal];

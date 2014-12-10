@@ -45,6 +45,7 @@
 {
     if (self = [super init]) {
         isModal = YES;
+        [self dismissFlower];
     }
     return self;
 }
@@ -73,10 +74,11 @@
     
     [self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(dismissSelf)];
 
-    UIButton *watchStoreBtn = [[UIButton alloc] initWithFrame:CGRectMake(3, supplyDetailView.bottom+5, kMainScreenWidth-6, 35)];
+    UIButton *watchStoreBtn = [[UIButton alloc] initWithFrame:CGRectMake(5, supplyDetailView.bottom+5, kMainScreenWidth-10, 35)];
     watchStoreBtn.backgroundColor = KColor;
     [watchStoreBtn addTarget:self action:@selector(watchStoreBtn) forControlEvents:UIControlEventTouchUpInside];
     [watchStoreBtn setTitle:@"浏览商城" forState:UIControlStateNormal];
+    watchStoreBtn.layer.cornerRadius = 2.5;
     watchStoreBtn.titleLabel.font = kFont15;
     [scrollView addSubview:watchStoreBtn];
     
@@ -108,6 +110,7 @@
 
 - (void)dismissSelf
 {
+    [self dismissFlower];
     if (isModal)
     {
         [self dismissViewControllerAnimated:YES completion:^{
