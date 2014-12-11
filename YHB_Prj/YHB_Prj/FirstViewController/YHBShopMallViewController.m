@@ -9,7 +9,7 @@
 #import "YHBShopMallViewController.h"
 #import "YHBShopMallHeadView.h"
 #import "YHBShopMallCell.h"
-#import "YHBShopInfoViewController.h"
+#import "YHBStoreViewController.h"
 
 #define KimageHeight kMainScreenWidth*362/1080.0f
 
@@ -88,9 +88,9 @@
         cell.delegate = self;
     }
     //TODO：设备cell内容
-    cell.indexPath = indexPath;
+    cell.cellIndexPath = indexPath;
 #warning 带载入数据
-//    [cell clearCellContentParts];
+   //[cell clearCellContentParts];
     
     return cell;
 }
@@ -130,13 +130,14 @@
 #pragma mark 点击店铺/商品
 - (void)selectCellPartWithIndexPath:(NSIndexPath *)indexPath part:(NSInteger)part
 {
-    MLOG(@"section:%ld row:%ld part:%ld",(long)indexPath.section,(long)indexPath.row,(long)part);
+    //MLOG(@"section:%ld row:%ld part:%ld",(long)indexPath.section,(long)indexPath.row,(long)part);
     if (indexPath.section == 1) {
         //店铺
 #warning 待获取选择的店铺模型
-        YHBShopInfoViewController *infoVc = [[YHBShopInfoViewController alloc] init];
-        infoVc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:infoVc animated:YES];
+        YHBStoreViewController *storeVC = [[YHBStoreViewController alloc] init];
+        storeVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:storeVC animated:YES];
+        
     }else if (indexPath.section == 0){
         //商品
         UIViewController *vc = [[UIViewController alloc] init];

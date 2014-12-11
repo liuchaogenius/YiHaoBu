@@ -91,7 +91,7 @@ enum Button_Type
 - (void)touchFuncButtons:(UIButton *)sender
 {
     MLOG(@"touchFuncButtons");
-#warning 带登陆验证
+#warning 带登陆验证-cc
     switch (sender.tag) {
         case Button_purchase:{
             //跳入我的采购

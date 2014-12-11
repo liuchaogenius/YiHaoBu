@@ -125,8 +125,12 @@
 - (void)touchCellPart : (UITapGestureRecognizer *)tap
 {
     UIView *view = tap.view;
+    //MLOG(@"%d,%d",self.cellIndexPath.section,self.cellIndexPath.row);
     NSInteger tag = view.tag;
-    [self.delegate selectCellPartWithIndexPath:self.indexPath part:tag];
+    if ([self.delegate respondsToSelector:@selector(selectCellPartWithIndexPath:part:)]) {
+        [self.delegate selectCellPartWithIndexPath:self.cellIndexPath part:tag];
+    }
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

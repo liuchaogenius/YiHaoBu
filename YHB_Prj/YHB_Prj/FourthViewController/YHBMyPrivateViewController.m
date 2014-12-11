@@ -26,7 +26,7 @@ enum SgmBtn_tag
 @end
 
 @implementation YHBMyPrivateViewController
-
+#pragma mark getter and setter
 - (NSArray *)titleArray
 {
     if (!_titleArray) {

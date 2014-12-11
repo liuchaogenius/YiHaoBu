@@ -26,7 +26,7 @@
 @property (strong, nonatomic) NSMutableArray *priceLabelArray;
 @property (strong, nonatomic) NSMutableArray *dateLabelArray;
 @property (strong, nonatomic) NSMutableArray *imageViewArray;
-@property (assign, nonatomic) NSIndexPath* indexPath;// 必须设置
+@property (strong, nonatomic) NSIndexPath* cellIndexPath;// 必须设置
 @property (weak, nonatomic) id<ShopMallCellDelegate> delegate;
 
 - (void)clearCellContentParts;//重置数据，part：左中右三部分-》0,1,2
