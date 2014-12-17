@@ -15,11 +15,13 @@
 @property(nonatomic, strong) UILabel *goodCatNameLabel;
 @property(nonatomic, strong) UILabel *goodTypeNameLabel;
 @property(nonatomic, strong) UILabel *goodEditTimeLabel;
-@property(nonatomic, strong) UILabel *goodSkimCountLabel;
+@property(nonatomic, strong) UILabel *goodCatDetailLabel;
+@property(nonatomic, strong) UILabel *vipImgView;
+//@property(nonatomic, strong) UILabel *goodSkimCountLabel;
 
-@property(nonatomic, strong) UIView *goodPaidView;
-@property(nonatomic, strong) UILabel *goodPaidPriceView;
+//@property(nonatomic, strong) UIView *goodPaidView;
+//@property(nonatomic, strong) UILabel *goodPaidPriceView;
 
 
-- (void)setCellWithGoodImage:(NSString *)aImageUrl title:(NSString *)aTitle catName:(NSString *)aCatName typeName:(NSString *)aTypeName editTime:(NSString *)aEditTime skimCount:(int)aSkimCount paidPrice:(int)aPrice;
+- (void)setCellWithGoodImage:(NSString *)aImageUrl title:(NSString *)aTitle catName:(NSString *)aCatName typeName:(NSString *)aTypeName editTime:(NSString *)aEditTime skimCount:(int)aSkimCount paidPrice:(int)aPrice isVip:(BOOL)aIsVip;
 @end

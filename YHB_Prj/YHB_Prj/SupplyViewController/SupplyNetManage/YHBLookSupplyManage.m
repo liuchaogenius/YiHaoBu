@@ -33,7 +33,7 @@ int pageid;
     
     kYHBRequestUrl(@"getSellList.php", supplyUrl);
     [NetManager requestWith:dict url:supplyUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
-        MLOG(@"%@", successDict);
+//        MLOG(@"%@", successDict);
         NSDictionary *dataDict = [successDict objectForKey:@"data"];
         NSArray *rslistArray = [dataDict objectForKey:@"rslist"];
         NSMutableArray *resultArray = [NSMutableArray new];

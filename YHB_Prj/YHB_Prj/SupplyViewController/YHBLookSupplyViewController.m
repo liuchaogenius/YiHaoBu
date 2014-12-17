@@ -197,7 +197,7 @@ typedef enum:NSUInteger
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 90;
+    return 80;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -209,7 +209,7 @@ typedef enum:NSUInteger
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     YHBSupplyModel *model = [self.tableViewArray objectAtIndex:indexPath.row];
-    [cell setCellWithGoodImage:@"http://file1.youboy.com/a/42/96/35/7/381037.jpg" title:model.title catName:model.catname typeName:model.typename editTime:model.editdate skimCount:2000 paidPrice:0];
+    [cell setCellWithGoodImage:@"http://file1.youboy.com/a/42/96/35/7/381037.jpg" title:model.title catName:model.catname typeName:model.typename editTime:model.editdate skimCount:2000 paidPrice:0 isVip:model.vip];
     
     return cell;
 }

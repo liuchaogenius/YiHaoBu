@@ -19,7 +19,7 @@
     
     kYHBRequestUrl(@"getCartList.php", shopCartUrl);
     [NetManager requestWith:dict url:shopCartUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
-        MLOG(@"%@", successDict);
+//        MLOG(@"%@", successDict);
         NSDictionary *dataDict = [successDict objectForKey:@"data"];
         NSArray *rslistArray = [dataDict objectForKey:@"rslist"];
         NSMutableArray *resultArray = [NSMutableArray new];
