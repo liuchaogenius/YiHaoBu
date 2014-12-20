@@ -41,6 +41,13 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (self.navigationController.navigationBar.hidden) {
+        self.navigationController.navigationBarHidden = NO;
+    }
+}
+
 #pragma mark - tableView delegate and datasource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

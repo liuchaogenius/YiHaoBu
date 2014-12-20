@@ -164,9 +164,11 @@ enum ToolButton_tag
 {
 #warning 待刷新tableview -cc
     if(_selectSgmButton.tag != sender.tag){
-        _selectSgmButton.selected = NO;
-        _selectSgmButton = sender;
-        sender.selected = YES;
+        if (sender.tag != SgmBtn_storeInfo) {
+            _selectSgmButton.selected = NO;
+            _selectSgmButton = sender;
+            sender.selected = YES;
+        }
         switch (sender.tag) {
             case SgmBtn_productInfo:
             {

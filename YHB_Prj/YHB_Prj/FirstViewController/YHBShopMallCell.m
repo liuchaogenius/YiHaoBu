@@ -16,6 +16,8 @@
 #define kTitlefont 11
 #define kPricefont 13
 #define kDateFont 10
+#define kIconWidth 10
+#define kSeeLabelWidth 30
 
 @interface YHBShopMallCell()
 
@@ -23,12 +25,21 @@
 @property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) UILabel *priceLabel; //需自加前缀￥
 @property (strong, nonatomic) UILabel *dateLable;
+@property (strong, nonatomic) UIView *blankView;
 
 @end
 
 @implementation YHBShopMallCell
 
 #pragma mark - getter and setter
+- (NSMutableArray *)totalViewArray
+{
+    if (!_totalViewArray) {
+        _totalViewArray = [NSMutableArray arrayWithCapacity:3];
+    }
+    return _totalViewArray;
+}
+
 - (NSMutableArray *)titleLabelArray
 {
     if (!_titleLabelArray) {
@@ -61,49 +72,88 @@
     return _imageViewArray;
 }
 
+- (UIView *)blankView
+{
+    if (!_blankView) {
+        _blankView = [[UIView alloc] initWithFrame:self.frame];
+        _blankView.backgroundColor = [UIColor whiteColor];
+    }
+    return _blankView;
+}
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (void)setIsBlank:(BOOL)isBlank
+{
+    isBlank ? [self.contentView addSubview:self.blankView] : [self.blankView removeFromSuperview];
+}
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andType:(NSInteger)type
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     self.frame = CGRectMake(0, 0, kMainScreenWidth, kcellHeight);
     self.backgroundColor = [UIColor whiteColor];
     for (int i = 0; i<3; i++) {
-        [self.contentView addSubview:[self customViewWithNum:i]];
+        [self.contentView addSubview:[self customViewWithNum:i andType:type]];
     }
+    self.isBlank = NO;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     return self;
 }
 
-- (UIView *)customViewWithNum:(int)num
+- (UIView *)customViewWithNum:(int)num andType:(NSInteger)type
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(num*kCViewWidth, 0, kCViewWidth, kcellHeight)];
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(kSpaceWidth, 10, kImageWidth, kImageHeight)];
     self.imageViewArray[num] = imageView;
     [view addSubview:imageView];
-    if (isTest) imageView.backgroundColor = [UIColor blueColor];
+    if (isTest) imageView.backgroundColor = [UIColor lightGrayColor];
     
-    UILabel *titleLable = [[UILabel alloc] initWithFrame:CGRectMake(kSpaceWidth, imageView.bottom+5, kImageWidth*2/3, 18)];
+    UILabel *titleLable = [[UILabel alloc] initWithFrame:CGRectMake(kSpaceWidth, imageView.bottom+5, kImageWidth, kTitlefont*2+5)];
     titleLable.textAlignment = NSTextAlignmentLeft;
+    titleLable.textColor = [UIColor lightGrayColor];
+    titleLable.numberOfLines = 2;
     titleLable.font = [UIFont systemFontOfSize:kTitlefont];
     self.titleLabelArray[num] = titleLable;
     [view addSubview:titleLable];
-    if(isTest) titleLable.text = @"寻地龙力步";
+    if(isTest) titleLable.text = @"寻地龙力步寻地龙力步寻地龙力步寻地龙力步寻地龙力步";
     
-    UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageView.right-2*kImageWidth/3.0f,imageView.bottom + 5, 2*kImageWidth/3.0, kPricefont)];
-    priceLabel.centerY = titleLable.centerY;
-    priceLabel.textAlignment = NSTextAlignmentRight;
-    [view addSubview:priceLabel];
-    priceLabel.textColor = [UIColor redColor];
-    priceLabel.font = [UIFont systemFontOfSize:kPricefont];
-    self.priceLabelArray[num] = priceLabel;
-    if(isTest) priceLabel.text = @"￥200";
-    
-    UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageView.left, titleLable.bottom+2, kImageWidth, kDateFont)];
-    dateLabel.textColor = [UIColor lightGrayColor];
-    dateLabel.font = [UIFont systemFontOfSize:kDateFont];
-    [view addSubview:dateLabel];
-    self.dateLabelArray[num] = dateLabel;
-    if(isTest) dateLabel.text = @"2014-10-27";
+    if (type == 0) {
+        UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageView.left,titleLable.bottom + 2, kImageWidth, kPricefont)];
+        priceLabel.textAlignment = NSTextAlignmentLeft;
+        [view addSubview:priceLabel];
+        priceLabel.textColor = [UIColor redColor];
+        priceLabel.font = [UIFont systemFontOfSize:kPricefont];
+        self.priceLabelArray[num] = priceLabel;
+        if(isTest) priceLabel.text = @"￥200";
+    }else{
+        UIImageView *timeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(imageView.left, titleLable.bottom+2, kIconWidth,kIconWidth)];
+        timeIcon.image = [UIImage imageNamed:@"icon_time"];
+        [timeIcon setContentMode:UIViewContentModeScaleAspectFit];
+        [view addSubview:timeIcon];
+        
+        UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(timeIcon.right+2, titleLable.bottom+2, kImageWidth/3, kDateFont)];
+        dateLabel.centerY = timeIcon.centerY;
+        dateLabel.textAlignment = NSTextAlignmentLeft;
+        dateLabel.textColor = [UIColor lightGrayColor];
+        dateLabel.font = [UIFont systemFontOfSize:kDateFont];
+        [view addSubview:dateLabel];
+        self.dateLabelArray[num] = dateLabel;
+        if(isTest) dateLabel.text = @"10-27";
+        
+        UILabel *seeLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageView.width*2/3.0f, titleLable.bottom+2, kImageWidth/3, kDateFont)];
+        seeLabel.centerY = timeIcon.centerY;
+        seeLabel.textColor = [UIColor lightGrayColor];
+        seeLabel.font = [UIFont systemFontOfSize:kDateFont];
+        seeLabel.textAlignment = NSTextAlignmentRight;
+        [view addSubview:seeLabel];
+        //self.totalViewArray[num] = seeLabel;
+        if(isTest) seeLabel.text = @"100";
+        
+        UIImageView *seeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(imageView.right-53, titleLable.bottom+2, kIconWidth+30,kIconWidth)];
+        seeIcon.image = [UIImage imageNamed:@"icon_eye"];
+        [seeIcon setContentMode:UIViewContentModeScaleAspectFit];
+        seeIcon.centerY = timeIcon.centerY;
+        [view addSubview:seeIcon];
+    }
     
     UITapGestureRecognizer *taprz = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchCellPart:)];
     [view addGestureRecognizer:taprz];
@@ -114,13 +164,26 @@
 
 - (void)clearCellContentParts
 {
-    for (int i = 0; i < 3; i++) {
-        ((UILabel *)self.priceLabelArray[i]).text = @"";
-        ((UILabel *)self.dateLabelArray[i]).text = @"";
+    int i;
+    for (i = 0; i < self.titleLabelArray.count; i++) {
         ((UILabel *)self.titleLabelArray[i]).text = @"";
+    }
+    for (i = 0; i < self.priceLabelArray.count; i++) {
+        ((UILabel *)self.priceLabelArray[i]).text = @"";
+    }
+    for (i = 0; i < self.dateLabelArray.count; i++) {
+        ((UILabel *)self.dateLabelArray[i]).text = @"";
+    }
+    for (i = 0; i < self.totalViewArray.count; i++) {
+        ((UILabel *)self.totalViewArray[i]).text = @"";
+    }
+    for (i = 0; i < self.totalViewArray.count; i++) {
         ((UIImageView *)self.imageViewArray[i]).image = nil;
     }
+    
 }
+
+
 
 - (void)touchCellPart : (UITapGestureRecognizer *)tap
 {
