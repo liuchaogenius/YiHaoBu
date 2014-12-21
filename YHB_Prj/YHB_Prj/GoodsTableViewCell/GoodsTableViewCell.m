@@ -9,49 +9,67 @@
 #import "GoodsTableViewCell.h"
 #import "UIImageView+WebCache.h"
 
+#define cellHeight 80
 @implementation GoodsTableViewCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])
     {
-        self.goodImgView = [[UIImageView alloc] initWithFrame:CGRectMake(3, 5, 80, 80)];
-        self.layer.borderWidth=0.25;
-        self.layer.borderColor=[[UIColor lightGrayColor] CGColor];
+        self.goodImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
         
-        self.goodTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(95, 8, kMainScreenWidth-85, 15)];
-        self.goodTitleLabel.font = kFont15;
+//        UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 0.25)];
+//        topLineView.backgroundColor = [UIColor lightGrayColor];
+//        [self addSubview:topLineView];
         
-        self.goodCatNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(95, 28, kMainScreenWidth-85, 15)];
-        self.goodCatNameLabel.font = kFont12;
+        self.goodTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.goodImgView.right+10, self.goodImgView.top, kMainScreenWidth-self.goodImgView.right-10, 17)];
+        self.goodTitleLabel.font = kFont16;
         
-        self.goodTypeNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(95, 48, kMainScreenWidth-85, 15)];
+        self.vipImgView = [[UILabel alloc] initWithFrame:CGRectMake(self.goodTitleLabel.right, self.goodTitleLabel.top, 22, 17)];
+        self.vipImgView.backgroundColor = [UIColor redColor];
+        self.vipImgView.text = @"VIP";
+        self.vipImgView.textColor = [UIColor whiteColor];
+        self.vipImgView.font = kFont14;
+        self.vipImgView.hidden = YES;
+        
+        self.goodTypeNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-90, self.goodTitleLabel.bottom+10, 80, 15)];
         self.goodTypeNameLabel.textColor = [UIColor redColor];
-        self.goodTypeNameLabel.font = kFont12;
+        self.goodTypeNameLabel.textAlignment = NSTextAlignmentRight;
+        self.goodTypeNameLabel.font = kFont14;
         
-        self.goodEditTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(110, 68, 80, 15)];
+        self.goodCatNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.goodTitleLabel.left, self.goodTypeNameLabel.top, 41, 17)];
+        self.goodCatNameLabel.text = @"分类 : ";
+        self.goodCatNameLabel.font = kFont14;
+        
+        self.goodCatDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.goodCatNameLabel.right, self.goodCatNameLabel.top, self.goodTypeNameLabel.left-self.goodCatNameLabel.right, 34)];
+        self.goodCatDetailLabel.numberOfLines = 2;
+        self.goodCatDetailLabel.textColor = [UIColor lightGrayColor];
+        self.goodCatDetailLabel.font = kFont14;
+        
+        self.goodEditTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.goodTypeNameLabel.left, self.goodTypeNameLabel.bottom+5, 80, 15)];
         self.goodEditTimeLabel.font = kFont12;
+        self.goodEditTimeLabel.textAlignment = NSTextAlignmentRight;
         self.goodEditTimeLabel.textColor = [UIColor lightGrayColor];
         
-        self.goodSkimCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 68, 80, 15)];
-        self.goodSkimCountLabel.font = kFont12;
-        self.goodSkimCountLabel.textColor = [UIColor lightGrayColor];
+//        self.goodSkimCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 68, 80, 15)];
+//        self.goodSkimCountLabel.font = kFont12;
+//        self.goodSkimCountLabel.textColor = [UIColor lightGrayColor];
+//        
+//        self.goodPaidView = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-60, 10, 40, 40)];
+//        self.goodPaidView.backgroundColor = KColor;
         
-        self.goodPaidView = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-60, 10, 40, 40)];
-        self.goodPaidView.backgroundColor = KColor;
+//        UILabel *paidLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 20)];
+//        paidLabel.textAlignment = NSTextAlignmentCenter;
+//        paidLabel.font = kFont14;
+//        paidLabel.text = @"偿";
+//        paidLabel.textColor = [UIColor whiteColor];
+//        [self.goodPaidView addSubview:paidLabel];
         
-        UILabel *paidLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 20)];
-        paidLabel.textAlignment = NSTextAlignmentCenter;
-        paidLabel.font = kFont14;
-        paidLabel.text = @"偿";
-        paidLabel.textColor = [UIColor whiteColor];
-        [self.goodPaidView addSubview:paidLabel];
-        
-        self.goodPaidPriceView = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 40, 20)];
-        self.goodPaidPriceView.textAlignment = NSTextAlignmentCenter;
-        self.goodPaidPriceView.font = kFont14;
-        self.goodPaidPriceView.textColor = [UIColor whiteColor];
-        [self.goodPaidView addSubview:self.goodPaidPriceView];
+//        self.goodPaidPriceView = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 40, 20)];
+//        self.goodPaidPriceView.textAlignment = NSTextAlignmentCenter;
+//        self.goodPaidPriceView.font = kFont14;
+//        self.goodPaidPriceView.textColor = [UIColor whiteColor];
+//        [self.goodPaidView addSubview:self.goodPaidPriceView];
         
         
         [self addSubview:self.goodImgView];
@@ -59,15 +77,25 @@
         [self addSubview:self.goodCatNameLabel];
         [self addSubview:self.goodTypeNameLabel];
         [self addSubview:self.goodEditTimeLabel];
-        [self addSubview:self.goodSkimCountLabel];
-        [self addSubview:self.goodPaidView];
+        [self addSubview:self.goodCatDetailLabel];
+        [self addSubview:self.vipImgView];
+//        [self addSubview:self.goodSkimCountLabel];
+//        [self addSubview:self.goodPaidView];
+        
+        UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, cellHeight-0.3, kMainScreenWidth, 0.3)];
+        bottomLineView.backgroundColor = [UIColor lightGrayColor];
+        [self addSubview:bottomLineView];
     }
     return self;
 }
 
-- (void)setCellWithGoodImage:(NSString *)aImageUrl title:(NSString *)aTitle catName:(NSString *)aCatName typeName:(NSString *)aTypeName editTime:(NSString *)aEditTime skimCount:(int)aSkimCount paidPrice:(int)aPrice
+- (void)setCellWithGoodImage:(NSString *)aImageUrl title:(NSString *)aTitle catName:(NSString *)aCatName typeName:(NSString *)aTypeName editTime:(NSString *)aEditTime skimCount:(int)aSkimCount paidPrice:(int)aPrice isVip:(BOOL)aIsVip
 {
-    self.goodPaidView.hidden = YES;
+//    self.goodPaidView.hidden = YES;
+    self.goodCatDetailLabel.numberOfLines=1;
+    CGRect temFrame = self.goodCatDetailLabel.frame;
+    temFrame.size.height = 17;
+    self.goodCatDetailLabel.frame = temFrame;
     if (aImageUrl)
     {
         [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aImageUrl]];
@@ -76,6 +104,13 @@
     if (aTitle)
     {
         self.goodTitleLabel.text = aTitle;
+        CGSize strSize = [aTitle sizeWithFont:kFont16];
+        CGRect temFrame = self.goodTitleLabel.frame;
+        temFrame.size.width = strSize.width;
+        self.goodTitleLabel.frame = temFrame;
+        CGRect vipFrame = self.vipImgView.frame;
+        vipFrame.origin.x = self.goodTitleLabel.right+3;
+        self.vipImgView.frame = vipFrame;
     }
     else
     {
@@ -84,11 +119,18 @@
     
     if (aCatName)
     {
-        self.goodCatNameLabel.text = [NSString stringWithFormat:@"面料分类 : %@", aCatName];
+        self.goodCatDetailLabel.text = aCatName;
+        CGSize strSize = [aTypeName sizeWithFont:kFont14];
+        if (strSize.width>self.goodTypeNameLabel.left-self.goodCatNameLabel.right) {
+            self.goodCatDetailLabel.numberOfLines = 2;
+            CGRect temFrame = self.goodCatDetailLabel.frame;
+            temFrame.size.height = 34;
+            self.goodCatDetailLabel.frame = temFrame;
+        }
     }
     else
     {
-        self.goodCatNameLabel.text = @"面料分类 : ";
+        self.goodCatNameLabel.text = @"";
     }
     
     if (aTypeName)
@@ -109,24 +151,33 @@
         self.goodEditTimeLabel.text = @"";
     }
     
-    if (aSkimCount)
+    if (aIsVip==1)
     {
-        self.goodSkimCountLabel.text = [NSString stringWithFormat:@"浏览 : %d", aSkimCount];
+        self.vipImgView.hidden=NO;
     }
     else
     {
-        self.goodSkimCountLabel.text = @"浏览 : 0";
+        self.vipImgView.hidden=YES;
     }
     
-    if (aPrice && aPrice>0)
-    {
-        self.goodPaidView.hidden = 0;
-        self.goodPaidPriceView.text = [NSString stringWithFormat:@"￥%d", aPrice];
-    }
-    else
-    {
-        self.goodPaidView.hidden = YES;
-    }
+//    if (aSkimCount)
+//    {
+//        self.goodSkimCountLabel.text = [NSString stringWithFormat:@"浏览 : %d", aSkimCount];
+//    }
+//    else
+//    {
+//        self.goodSkimCountLabel.text = @"浏览 : 0";
+//    }
+    
+//    if (aPrice && aPrice>0)
+//    {
+//        self.goodPaidView.hidden = 0;
+//        self.goodPaidPriceView.text = [NSString stringWithFormat:@"￥%d", aPrice];
+//    }
+//    else
+//    {
+//        self.goodPaidView.hidden = YES;
+//    }
 }
 
 
