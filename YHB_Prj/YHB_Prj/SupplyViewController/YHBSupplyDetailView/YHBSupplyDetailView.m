@@ -7,58 +7,89 @@
 //
 
 #import "YHBSupplyDetailView.h"
-#define interval 7
+#define interval 10
 @implementation YHBSupplyDetailView
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor whiteColor];
+        isLiked=NO;
         UIView *topLineView = [[UIView alloc]
                                initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 0.5)];
-        topLineView.backgroundColor = [UIColor blackColor];
+        topLineView.backgroundColor = [UIColor lightGrayColor];
         [self addSubview:topLineView];
         
-        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-100, topLineView.bottom+interval, 200, 15)];
-        nameLabel.font = kFont14;
+        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, topLineView.bottom+interval, kMainScreenWidth-80, 18)];
+        nameLabel.font = kFont15;
         nameLabel.text = @"商品名";
         nameLabel.backgroundColor = [UIColor clearColor];
-        nameLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:nameLabel];
         
-        timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, nameLabel.bottom+interval, 130, 15)];
+//        CGSize size = [@"已收藏" sizeWithFont:kFont12];
+        
+        vipImgView = [[UIImageView alloc] initWithFrame:CGRectMake(nameLabel.right, nameLabel.top+3, 16, 12)];
+        vipImgView.image = [UIImage imageNamed:@"vipImgDetail"];
+        [self addSubview:vipImgView];
+        vipImgView.hidden = YES;
+        
+        timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.left, nameLabel.bottom+interval, 130, 15)];
         timeLabel.font = kFont12;
         timeLabel.textColor = [UIColor lightGrayColor];
         timeLabel.backgroundColor = [UIColor clearColor];
         timeLabel.text = @"发布时间 : ";//@"发布时间 : 2014-10-24";
         [self addSubview:timeLabel];
         
-        personLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-90, timeLabel.top, 90, 15)];
-        personLabel.font = kFont12;
-        personLabel.textColor = [UIColor lightGrayColor];
-        personLabel.backgroundColor = [UIColor clearColor];
-        personLabel.text = @"浏览量 : ";//@"浏览量 : 123";
-        [self addSubview:personLabel];
+//        personLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-90, timeLabel.top, 90, 15)];
+//        personLabel.font = kFont12;
+//        personLabel.textColor = [UIColor lightGrayColor];
+//        personLabel.backgroundColor = [UIColor clearColor];
+//        personLabel.text = @"浏览量 : ";//@"浏览量 : 123";
+//        [self addSubview:personLabel];
         
         bottomLineView = [[UIView alloc]
-                            initWithFrame:CGRectMake(0, personLabel.bottom+interval, kMainScreenWidth, 0.5)];
+                            initWithFrame:CGRectMake(0, timeLabel.bottom+interval, kMainScreenWidth, 0.5)];
         bottomLineView.backgroundColor = [UIColor lightGrayColor];
         [self addSubview:bottomLineView];
         
-        NSArray *itemArray = @[@"价       格 : ",@"状       态 : ",@"风       格 : ",@"成       分 : ",@"用       途 : ",@"工       艺 : ", @"面料详情 : "];
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(kMainScreenWidth-60, 10, 0.5, bottomLineView.top-20)];
+        lineView.backgroundColor = [UIColor lightGrayColor];
+        [self addSubview:lineView];
+        
+        likeBtn = [[UIButton alloc] initWithFrame:CGRectMake(lineView.right+12, lineView.top+3, 36, 40)];
+        likeBtn.userInteractionEnabled=NO;
+        [likeBtn addTarget:self action:@selector(touchLikeBtn) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:likeBtn];
+
+        starView = [[UIImageView alloc] initWithFrame:CGRectMake((likeBtn.right-likeBtn.left-21)/2.0, 0, 21, 20)];
+        starView.image = [UIImage imageNamed:@"starUnLike"];
+        [likeBtn addSubview:starView];
+        
+        likelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, starView.bottom+2.5, 36, 15)];
+        likelabel.textColor = KColor;
+        likelabel.textAlignment = NSTextAlignmentCenter;
+        likelabel.font = kFont12;
+        likelabel.text=@"收藏";
+        [likeBtn addSubview:likelabel];
+        
+        NSArray *itemArray = @[@"价格 : ",@"状态 : ",@"分类 : ",@"面料详情 : "];
         CGFloat endY = 0.0;
-        for (int i=0; i<7; i++)
+        for (int i=0; i<4; i++)
         {
-            UILabel *itemLabel = [[UILabel alloc] initWithFrame:CGRectMake(3, bottomLineView.bottom+interval+(20+interval*2)*i, 80, 20)];
+            float itemWidth = 43;
+            if (i==3) {
+                itemWidth=75;
+            }
+            UILabel *itemLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, bottomLineView.bottom+interval+(18+interval*2)*i, itemWidth, 18)];
             itemLabel.text = [itemArray objectAtIndex:i];
             if (i==1)
             {
                 itemLabel.textColor = [UIColor redColor];
             }
-            itemLabel.font = kFont16;
+            itemLabel.font = kFont15;
             itemLabel.backgroundColor = [UIColor clearColor];
             [self addSubview:itemLabel];
-            if (i!=6)
+            if (i!=3)
             {
                 UIView *lineView = [[UIView alloc]
                                     initWithFrame:CGRectMake(0, itemLabel.bottom+interval-0.5, kMainScreenWidth, 0.5)];
@@ -69,37 +100,82 @@
         }
         
         detailTextView = [[UITextView alloc]
-                                initWithFrame:CGRectMake(0, endY+interval, kMainScreenWidth, 50)];
+                                initWithFrame:CGRectMake(5, endY, kMainScreenWidth-2*5, 60)];
         detailTextView.backgroundColor = [UIColor clearColor];
         detailTextView.textColor = [UIColor lightGrayColor];
-        detailTextView.font = kFont13;
+        detailTextView.font = kFont15;
         detailTextView.text = @"无描述";
         [detailTextView setEditable:NO];
         [self addSubview:detailTextView];
+//        contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(interval, endY+interval, kMainScreenWidth-20, 18)];
+//        contentLabel.textColor = [UIColor lightGrayColor];
+//        contentLabel.text = @"无描述";
+//        contentLabel.font = kFont15;
+//        [self addSubview:contentLabel];
     }
     return self;
 }
 
+- (AttentionManage *)manage
+{
+    if (!_manage) {
+        _manage = [[AttentionManage alloc] init];
+    }
+    return _manage;
+}
+
+- (void)touchLikeBtn
+{
+    if (isLiked)
+    {
+        starView.image = [UIImage imageNamed:@"starUnLike"];
+        likelabel.text=@"收藏";
+    }
+    else
+    {
+        starView.image = [UIImage imageNamed:@"starLike"];
+        likelabel.text=@"已收藏";
+    }
+    [self.manage changeLikeStatusAction:@"sell" itemid:myModel.itemid SuccBlock:^{
+        
+    } andFailBlock:^{
+        
+    }];
+    isLiked = !isLiked;
+}
+
 - (void)setDetailWithModel:(YHBSupplyDetailModel *)aModel
 {
-    NSArray *array = [aModel.catname componentsSeparatedByString:@","];
-    NSArray *valueArray = @[aModel.price,aModel.typename,array[0],array[1],array[2],@"提花"];
-    for (int i=0; i<6; i++)
+//    NSArray *array = [aModel.catname componentsSeparatedByString:@","];
+    likeBtn.userInteractionEnabled = YES;
+    NSArray *valueArray = @[aModel.price,aModel.typename,aModel.catname];
+    for (int i=0; i<3; i++)
     {
-        UILabel *valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(83, bottomLineView.bottom+interval+(20+interval*2)*i, 80, 20)];
+        UILabel *valueLabel = [[UILabel alloc]
+                               initWithFrame:CGRectMake(55, bottomLineView.bottom+interval+(18+interval*2)*i, kMainScreenWidth-80, 18)];
+        valueLabel.font = kFont15;
         if (i<2)
         {
-            valueLabel.font = kFont16;
             valueLabel.textColor = [UIColor redColor];
         }
         else
         {
-            valueLabel.font = kFont14;
             valueLabel.textColor = [UIColor lightGrayColor];
         }
         if (i==0)
         {
-            valueLabel.text = [NSString stringWithFormat:@"%@ %@", [valueArray objectAtIndex:i], aModel.unit];
+            NSString *str = [valueArray objectAtIndex:i];
+            float price = [str floatValue];
+            valueLabel.text = [NSString stringWithFormat:@"￥%.2f", price];
+            CGSize size = [valueLabel.text sizeWithFont:kFont15];
+            CGRect temFrame = valueLabel.frame;
+            temFrame.size.width = size.width;
+            valueLabel.frame = temFrame;
+            UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(valueLabel.right+15, valueLabel.top, 40, 18)];
+            unitLabel.textColor = [UIColor lightGrayColor];
+            unitLabel.font = kFont15;
+            unitLabel.text = aModel.unit;
+            [self addSubview:unitLabel];
         }
         else
         {
@@ -108,9 +184,19 @@
         [self addSubview:valueLabel];
     }
     detailTextView.text = aModel.content;
+//    contentLabel.text = aModel.content;
     timeLabel.text = [NSString stringWithFormat:@"发布时间 : %@", aModel.editdate];
-    personLabel.text = [NSString stringWithFormat:@"浏览量 : %d", aModel.hits];
+//    personLabel.text = [NSString stringWithFormat:@"浏览量 : %d", aModel.hits];
     nameLabel.text = aModel.title;
+    if (aModel.vip==1)
+    {
+        CGSize nameSize = [nameLabel.text sizeWithFont:kFont15];
+        CGRect temFrame = nameLabel.frame;
+        temFrame.size.width = nameSize.width;
+        nameLabel.frame = temFrame;
+        vipImgView.left = nameLabel.right+5;
+        vipImgView.hidden = NO;
+    }
 }
 
 @end

@@ -25,14 +25,11 @@
         self.goodTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.goodImgView.right+10, self.goodImgView.top, kMainScreenWidth-self.goodImgView.right-10, 17)];
         self.goodTitleLabel.font = kFont16;
         
-        self.vipImgView = [[UILabel alloc] initWithFrame:CGRectMake(self.goodTitleLabel.right, self.goodTitleLabel.top, 22, 17)];
-        self.vipImgView.backgroundColor = [UIColor redColor];
-        self.vipImgView.text = @"VIP";
-        self.vipImgView.textColor = [UIColor whiteColor];
-        self.vipImgView.font = kFont14;
+        self.vipImgView = [[UIImageView alloc] initWithFrame:CGRectMake(self.goodTitleLabel.right, self.goodTitleLabel.top, 24, 17)];
+        self.vipImgView.image = [UIImage imageNamed:@"vipImg"];
         self.vipImgView.hidden = YES;
         
-        self.goodTypeNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-90, self.goodTitleLabel.bottom+10, 80, 15)];
+        self.goodTypeNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-90, self.goodTitleLabel.bottom+10, 80, 17)];
         self.goodTypeNameLabel.textColor = [UIColor redColor];
         self.goodTypeNameLabel.textAlignment = NSTextAlignmentRight;
         self.goodTypeNameLabel.font = kFont14;
@@ -89,13 +86,14 @@
     return self;
 }
 
+-(void)setCellWithGoodImage:(NSString *)aImageUrl title:(NSString *)aTitle catName:(NSString *)aCatName typeName:(NSString *)aTypeName editTime:(NSString *)aEditTime isVip:(BOOL)aIsVip
+{
+    [self setCellWithGoodImage:aImageUrl title:aTitle catName:aCatName typeName:aTypeName editTime:aEditTime skimCount:0 paidPrice:0 isVip:aIsVip];
+}
+
 - (void)setCellWithGoodImage:(NSString *)aImageUrl title:(NSString *)aTitle catName:(NSString *)aCatName typeName:(NSString *)aTypeName editTime:(NSString *)aEditTime skimCount:(int)aSkimCount paidPrice:(int)aPrice isVip:(BOOL)aIsVip
 {
 //    self.goodPaidView.hidden = YES;
-    self.goodCatDetailLabel.numberOfLines=1;
-    CGRect temFrame = self.goodCatDetailLabel.frame;
-    temFrame.size.height = 17;
-    self.goodCatDetailLabel.frame = temFrame;
     if (aImageUrl)
     {
         [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aImageUrl]];
@@ -106,6 +104,10 @@
         self.goodTitleLabel.text = aTitle;
         CGSize strSize = [aTitle sizeWithFont:kFont16];
         CGRect temFrame = self.goodTitleLabel.frame;
+        if (strSize.width+temFrame.origin.x>kMainScreenWidth-50)
+        {
+            strSize.width = kMainScreenWidth-50-temFrame.origin.x;
+        }
         temFrame.size.width = strSize.width;
         self.goodTitleLabel.frame = temFrame;
         CGRect vipFrame = self.vipImgView.frame;
@@ -117,10 +119,40 @@
         self.goodTitleLabel.text = @"未命名";
     }
     
+    
+    if (aTypeName)
+    {
+        self.goodTypeNameLabel.text = [NSString stringWithFormat:@"状态 : %@", aTypeName];
+    }
+    else
+    {
+        self.goodTypeNameLabel.text = @"";
+    }
+    
+    CGRect typeNameFrame = CGRectMake(kMainScreenWidth-90, self.goodTitleLabel.bottom+10, 80, 15);
+    self.goodTypeNameLabel.frame = typeNameFrame;
+    
+    CGRect catNameFrame = CGRectMake(self.goodCatNameLabel.right, self.goodCatNameLabel.top, self.goodTypeNameLabel.left-self.goodCatNameLabel.right, 17);
+    self.goodCatDetailLabel.frame = catNameFrame;
+    
+    CGSize typeSize = [self.goodTypeNameLabel.text sizeWithFont:kFont14];
+    if (typeSize.width>80)
+    {
+        CGRect temTypeFrame = self.goodTypeNameLabel.frame;
+        temTypeFrame.size.width = typeSize.width;
+        temTypeFrame.origin.x = kMainScreenWidth-10-typeSize.width;
+        self.goodTypeNameLabel.frame = temTypeFrame;
+        
+        CGRect temCatFrame = self.goodCatDetailLabel.frame;
+        temCatFrame.size.width -= typeSize.width-80;
+        self.goodCatDetailLabel.frame = temCatFrame;
+    }
+    
+    self.goodCatDetailLabel.numberOfLines=1;
     if (aCatName)
     {
         self.goodCatDetailLabel.text = aCatName;
-        CGSize strSize = [aTypeName sizeWithFont:kFont14];
+        CGSize strSize = [aCatName sizeWithFont:kFont14];
         if (strSize.width>self.goodTypeNameLabel.left-self.goodCatNameLabel.right) {
             self.goodCatDetailLabel.numberOfLines = 2;
             CGRect temFrame = self.goodCatDetailLabel.frame;
@@ -131,15 +163,6 @@
     else
     {
         self.goodCatNameLabel.text = @"";
-    }
-    
-    if (aTypeName)
-    {
-        self.goodTypeNameLabel.text = [NSString stringWithFormat:@"状态 : %@", aTypeName];
-    }
-    else
-    {
-        self.goodTypeNameLabel.text = @"状态 : %@";
     }
     
     if (aEditTime)

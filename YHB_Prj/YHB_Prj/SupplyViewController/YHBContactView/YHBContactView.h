@@ -8,7 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YHBContactView : UIView
+@interface YHBContactView : UIView<UIAlertViewDelegate>
+{
+    UILabel *phoneLabel;
+    UILabel *storeLabel;
+    UIView *firstView;
+    UIButton *secondView;
+    UIButton *thirdView;
+    UIButton *fourthView;
+    NSString *phoneNumber;
+    int itemId;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame;
+- (void)setPhoneNumber:(NSString *)aNumber storeName:(NSString *)aName itemId:(int)aItemId isVip:(int)aisVip;
 @end

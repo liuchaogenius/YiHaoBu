@@ -46,10 +46,13 @@
 		AB59D95C1A333B87002B76E1 /* YHBLookSupplyManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB59D95B1A333B87002B76E1 /* YHBLookSupplyManage.m */; };
 		AB59D9601A334295002B76E1 /* YHBSupplyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB59D95F1A334295002B76E1 /* YHBSupplyModel.m */; };
 		AB9BA0981A2CBA79000E34FE /* YHBPhotoImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9BA0971A2CBA79000E34FE /* YHBPhotoImageView.m */; };
+		AB9FD9941A465BD0003EBE40 /* AttentionManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9FD9931A465BD0003EBE40 /* AttentionManage.m */; };
 		ABBE32E21A3C7E94005EA9EE /* ChangeCountView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBE32E11A3C7E94005EA9EE /* ChangeCountView.m */; };
 		ABD75E571A33EB3100198FBC /* YHBSupplyDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD75E541A33EB3100198FBC /* YHBSupplyDetailModel.m */; };
 		ABD75E581A33EB3100198FBC /* YHBSupplyDetailPic.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD75E561A33EB3100198FBC /* YHBSupplyDetailPic.m */; };
 		ABD75E5B1A33EB7A00198FBC /* YHBSupplyDetailManage.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD75E5A1A33EB7A00198FBC /* YHBSupplyDetailManage.m */; };
+		ABE1B33C1A429B3900F63AFA /* TitleTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE1B33B1A429B3900F63AFA /* TitleTagViewController.m */; };
+		ABE1B33F1A42A2D200F63AFA /* TitleTagManage.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE1B33E1A42A2D200F63AFA /* TitleTagManage.m */; };
 		ABE5BBB21A2AD452000F5505 /* YHBAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBAB1A2AD452000F5505 /* YHBAlbumViewController.m */; };
 		ABE5BBB41A2AD452000F5505 /* YHBPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBAF1A2AD452000F5505 /* YHBPhotoViewController.m */; };
 		ABE5BBB51A2AD452000F5505 /* YHBVariousImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE5BBB11A2AD452000F5505 /* YHBVariousImageView.m */; };
@@ -202,6 +205,8 @@
 		AB59D95F1A334295002B76E1 /* YHBSupplyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBSupplyModel.m; sourceTree = "<group>"; };
 		AB9BA0961A2CBA79000E34FE /* YHBPhotoImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPhotoImageView.h; sourceTree = "<group>"; };
 		AB9BA0971A2CBA79000E34FE /* YHBPhotoImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBPhotoImageView.m; sourceTree = "<group>"; };
+		AB9FD9921A465BD0003EBE40 /* AttentionManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttentionManage.h; sourceTree = "<group>"; };
+		AB9FD9931A465BD0003EBE40 /* AttentionManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttentionManage.m; sourceTree = "<group>"; };
 		ABBE32E01A3C7E94005EA9EE /* ChangeCountView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeCountView.h; sourceTree = "<group>"; };
 		ABBE32E11A3C7E94005EA9EE /* ChangeCountView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeCountView.m; sourceTree = "<group>"; };
 		ABD75E531A33EB3100198FBC /* YHBSupplyDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBSupplyDetailModel.h; sourceTree = "<group>"; };
@@ -210,6 +215,10 @@
 		ABD75E561A33EB3100198FBC /* YHBSupplyDetailPic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBSupplyDetailPic.m; sourceTree = "<group>"; };
 		ABD75E591A33EB7A00198FBC /* YHBSupplyDetailManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBSupplyDetailManage.h; sourceTree = "<group>"; };
 		ABD75E5A1A33EB7A00198FBC /* YHBSupplyDetailManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBSupplyDetailManage.m; sourceTree = "<group>"; };
+		ABE1B33A1A429B3900F63AFA /* TitleTagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleTagViewController.h; sourceTree = "<group>"; };
+		ABE1B33B1A429B3900F63AFA /* TitleTagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleTagViewController.m; sourceTree = "<group>"; };
+		ABE1B33D1A42A2D200F63AFA /* TitleTagManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleTagManage.h; sourceTree = "<group>"; };
+		ABE1B33E1A42A2D200F63AFA /* TitleTagManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleTagManage.m; sourceTree = "<group>"; };
 		ABE5BBAA1A2AD452000F5505 /* YHBAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBAlbumViewController.h; sourceTree = "<group>"; };
 		ABE5BBAB1A2AD452000F5505 /* YHBAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBAlbumViewController.m; sourceTree = "<group>"; };
 		ABE5BBAE1A2AD452000F5505 /* YHBPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPhotoViewController.h; sourceTree = "<group>"; };
@@ -518,9 +527,21 @@
 			path = SupplyModel;
 			sourceTree = "<group>";
 		};
+		ABE1B3391A429B2500F63AFA /* YHBTitleTag */ = {
+			isa = PBXGroup;
+			children = (
+				ABE1B33A1A429B3900F63AFA /* TitleTagViewController.h */,
+				ABE1B33B1A429B3900F63AFA /* TitleTagViewController.m */,
+				ABE1B33D1A42A2D200F63AFA /* TitleTagManage.h */,
+				ABE1B33E1A42A2D200F63AFA /* TitleTagManage.m */,
+			);
+			path = YHBTitleTag;
+			sourceTree = "<group>";
+		};
 		ABE5BBA81A2AD3C2000F5505 /* SupplyViewController */ = {
 			isa = PBXGroup;
 			children = (
+				ABE1B3391A429B2500F63AFA /* YHBTitleTag */,
 				AB59D95D1A334275002B76E1 /* SupplyModel */,
 				AB59D9591A333B51002B76E1 /* SupplyNetManage */,
 				ABE5BBCB1A2AF017000F5505 /* YHBSupplyDetailView */,
@@ -587,6 +608,8 @@
 			children = (
 				ABE5BBCC1A2AF036000F5505 /* YHBSupplyDetailView.h */,
 				ABE5BBCD1A2AF036000F5505 /* YHBSupplyDetailView.m */,
+				AB9FD9921A465BD0003EBE40 /* AttentionManage.h */,
+				AB9FD9931A465BD0003EBE40 /* AttentionManage.m */,
 			);
 			path = YHBSupplyDetailView;
 			sourceTree = "<group>";
@@ -1078,6 +1101,7 @@
 				FF2A6CA51A0F40B0001607AC /* ThreadSafeMutableDictionary.m in Sources */,
 				FF2A6C0C1A0F3A01001607AC /* UIImage+ImageEffects.m in Sources */,
 				5B2653401A1B214500D0C418 /* YHBShopMallViewController.m in Sources */,
+				AB9FD9941A465BD0003EBE40 /* AttentionManage.m in Sources */,
 				FF2A6C791A0F3B7B001607AC /* UIImageView+WebCache.m in Sources */,
 				AB28610F1A38311600EB654C /* YHBShopCartManage.m in Sources */,
 				FF2A6C021A0F398D001607AC /* BaseViewController.m in Sources */,
@@ -1086,6 +1110,7 @@
 				FF2A6C6C1A0F3B7B001607AC /* NSData+ImageContentType.m in Sources */,
 				FF2A6C701A0F3B7B001607AC /* SDWebImageDownloader.m in Sources */,
 				FF2A6C481A0F3B72001607AC /* JSONKit.m in Sources */,
+				ABE1B33F1A42A2D200F63AFA /* TitleTagManage.m in Sources */,
 				ABD75E581A33EB3100198FBC /* YHBSupplyDetailPic.m in Sources */,
 				5BB4A9211A172A2600DB4636 /* YHBFindPswViewController.m in Sources */,
 				5BBCB6CA1A36E51500E50BF5 /* YHBMyPrivateViewController.m in Sources */,
@@ -1116,11 +1141,8 @@
 				5BD8F96C1A1374A500B3A4F2 /* YHBUserHeadView.m in Sources */,
 				AB28610A1A38309000EB654C /* YHBShopCartCartlist.m in Sources */,
 				FF2A6C441A0F3B6D001607AC /* SVProgressHUD.m in Sources */,
-<<<<<<< HEAD
 				5B23F44C1A45399900F39D8E /* YHBFunctionCell.m in Sources */,
-=======
 				AB37699F1A3BEE8B00D8B507 /* TableSectionHeaderView.m in Sources */,
->>>>>>> 973cad89ee18e71e9f10348f1d7943d247a9f4dc
 				FF2A6C731A0F3B7B001607AC /* SDWebImagePrefetcher.m in Sources */,
 				FF2A6C291A0F3B50001607AC /* AFHTTPClient.m in Sources */,
 				FF2A6C711A0F3B7B001607AC /* SDWebImageDownloaderOperation.m in Sources */,
@@ -1133,7 +1155,11 @@
 				FF2A6C991A0F3D1C001607AC /* ThirdViewController.m in Sources */,
 				FF2A6C771A0F3B7B001607AC /* UIImage+WebP.m in Sources */,
 				FF2A6C9F1A0F3D41001607AC /* FifthViewController.m in Sources */,
+<<<<<<< Updated upstream
 				5B0A34BB1A458E180071A357 /* YHBHotTagsCell.m in Sources */,
+=======
+>>>>>>> Stashed changes
+				ABE1B33C1A429B3900F63AFA /* TitleTagViewController.m in Sources */,
 				FF2A6C081A0F39EC001607AC /* ViewInteraction.m in Sources */,
 				FF2A6C6D1A0F3B7B001607AC /* SDImageCache.m in Sources */,
 				5BE051291A2C3EF100740437 /* YHBUserInfo.m in Sources */,

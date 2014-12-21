@@ -36,6 +36,11 @@ typedef enum:NSUInteger
 
 @implementation YHBLookSupplyViewController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden = NO;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];

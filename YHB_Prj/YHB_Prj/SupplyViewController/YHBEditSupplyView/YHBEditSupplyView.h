@@ -9,10 +9,24 @@
 #import <UIKit/UIKit.h>
 #import "YHBVariousView.h"
 
+@class YHBEditSupplyView;
+@protocol YHBEditSupplyViewDelegate <NSObject>
+
+- (void)touchDayLabel;
+
+@end
+
 @interface YHBEditSupplyView : UIScrollView<UITextFieldDelegate, UITextViewDelegate>
 {
-    UITextField *titleTextField;
+//    UITextField *titleTextField;
+    UILabel *titleLabel;
     UITextField *priceTextField;
+    UILabel *dayLabel;
+    UILabel *catNameLabel;
+    UITextView *contentTextView;
+    UITapGestureRecognizer *tapTitleGesture;
+    UITapGestureRecognizer *tapDayGesture;
+    
     YHBVariousView *typeVariousView;
     CGRect oldFrame;
     UIScrollView *contentScrollView;
@@ -22,6 +36,7 @@
 @property(nonatomic, copy) NSString *price;
 @property(nonatomic ,copy) NSString *content;
 @property(nonatomic ,copy) NSString *typeIdentifier;
+@property (nonatomic, assign) int typeid;
 
 - (instancetype)initWithFrame:(CGRect)frame;
 @end

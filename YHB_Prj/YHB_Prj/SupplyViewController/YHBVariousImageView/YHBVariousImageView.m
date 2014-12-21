@@ -11,7 +11,7 @@
 #import "UIViewAdditions.h"
 #import "UIButton+WebCache.h"
 #import "YHBSupplyDetailPic.h"
-#define interval 5
+#define interval 10
 #define photoHeight 100
 #define plusTag 1000
 #define kMainScreenHeight [UIScreen mainScreen].bounds.size.height
