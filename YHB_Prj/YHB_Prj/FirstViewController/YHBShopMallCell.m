@@ -7,7 +7,9 @@
 //
 
 #import "YHBShopMallCell.h"
+#import "UIImageView+WebCache.h"
 #define isTest 1
+
 #define kSpaceWidth 5
 #define kCViewWidth kMainScreenWidth/3.0
 #define kImageWidth (kCViewWidth-2*kSpaceWidth)
@@ -25,7 +27,8 @@
 @property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) UILabel *priceLabel; //需自加前缀￥
 @property (strong, nonatomic) UILabel *dateLable;
-@property (strong, nonatomic) UIView *blankView;
+@property (strong, nonatomic) UIView *midBlankView;
+@property (strong, nonatomic) UIView *rightBlankView;
 
 @end
 
@@ -72,19 +75,24 @@
     return _imageViewArray;
 }
 
-- (UIView *)blankView
+- (UIView *)midBlankView
 {
-    if (!_blankView) {
-        _blankView = [[UIView alloc] initWithFrame:self.frame];
-        _blankView.backgroundColor = [UIColor whiteColor];
+    if (!_midBlankView) {
+        _midBlankView = [[UIView alloc] initWithFrame:CGRectMake(1*kCViewWidth, 0, kCViewWidth, kcellHeight)];
+        _midBlankView.backgroundColor = [UIColor whiteColor];
     }
-    return _blankView;
+    return _midBlankView;
 }
 
-- (void)setIsBlank:(BOOL)isBlank
+- (UIView *)rightBlankView
 {
-    isBlank ? [self.contentView addSubview:self.blankView] : [self.blankView removeFromSuperview];
+    if (!_rightBlankView) {
+        _rightBlankView = [[UIView alloc] initWithFrame:CGRectMake(2*kCViewWidth, 0, kCViewWidth, kcellHeight)];
+        _rightBlankView.backgroundColor = [UIColor whiteColor];
+    }
+    return _rightBlankView;
 }
+
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andType:(NSInteger)type
 {
@@ -94,9 +102,70 @@
     for (int i = 0; i<3; i++) {
         [self.contentView addSubview:[self customViewWithNum:i andType:type]];
     }
-    self.isBlank = NO;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     return self;
+}
+
+- (void)setBlankWithPart:(int)part
+{
+    part == right_part ? [self addSubview:self.rightBlankView] : [self addSubview:self.midBlankView];
+}
+
+- (void)clearCellContentParts
+{
+    int i;
+    for (i = 0; i < self.titleLabelArray.count; i++) {
+        ((UILabel *)self.titleLabelArray[i]).text = @"";
+    }
+    for (i = 0; i < self.priceLabelArray.count; i++) {
+        ((UILabel *)self.priceLabelArray[i]).text = @"";
+    }
+    for (i = 0; i < self.dateLabelArray.count; i++) {
+        ((UILabel *)self.dateLabelArray[i]).text = @"";
+    }
+    for (i = 0; i < self.totalViewArray.count; i++) {
+        ((UILabel *)self.totalViewArray[i]).text = @"";
+    }
+    for (i = 0; i < self.totalViewArray.count; i++) {
+        ((UIImageView *)self.imageViewArray[i]).image = nil;
+    }
+    if(_midBlankView && [_midBlankView superview]) [_midBlankView removeFromSuperview];
+    if(_rightBlankView && [_rightBlankView superview]) [_rightBlankView removeFromSuperview];
+}
+
+#pragma mark - refreshUI
+- (void)setImage:(NSString *)imgurl title:(NSString *)title price:(NSString *)price part:(int)part
+{
+    UILabel *titleLabel = self.titleLabelArray[part];
+    titleLabel.text = title;
+    UILabel *priceLabel = self.priceLabelArray[part];
+    priceLabel.text = price.length ? [NSString stringWithFormat:@"￥%@",price] : @"";
+    UIImageView *imageView = self.imageViewArray[part];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:title] placeholderImage:nil];
+}
+
+- (void)setImage:(NSString *)imgurl title:(NSString *)title time:(NSString *)time hits:(int)hits part:(int)part
+{
+    UILabel *titleLabel = self.titleLabelArray[part];
+    titleLabel.text = title;
+    UIImageView *imageView = self.imageViewArray[part];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:title] placeholderImage:nil];
+    UILabel *datelabel = self.dateLabelArray[part];
+    datelabel.text = time;
+    UILabel *hitsLabel = self.totalViewArray[part];
+    hitsLabel.text = [NSString stringWithFormat:@"%d",hits];
+}
+
+#pragma mark - touch action
+- (void)touchCellPart : (UITapGestureRecognizer *)tap
+{
+    UIView *view = tap.view;
+    //MLOG(@"%d,%d",self.cellIndexPath.section,self.cellIndexPath.row);
+    NSInteger tag = view.tag;
+    if ([self.delegate respondsToSelector:@selector(selectCellPartWithIndexPath:part:)]) {
+        [self.delegate selectCellPartWithIndexPath:self.cellIndexPath part:tag];
+    }
+    
 }
 
 - (UIView *)customViewWithNum:(int)num andType:(NSInteger)type
@@ -146,6 +215,7 @@
         seeLabel.textAlignment = NSTextAlignmentRight;
         [view addSubview:seeLabel];
         //self.totalViewArray[num] = seeLabel;
+        self.totalViewArray[num] = seeLabel;
         if(isTest) seeLabel.text = @"100";
         
         UIImageView *seeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(imageView.right-53, titleLable.bottom+2, kIconWidth+30,kIconWidth)];
@@ -160,40 +230,6 @@
     
     view.tag = num;
     return view;
-}
-
-- (void)clearCellContentParts
-{
-    int i;
-    for (i = 0; i < self.titleLabelArray.count; i++) {
-        ((UILabel *)self.titleLabelArray[i]).text = @"";
-    }
-    for (i = 0; i < self.priceLabelArray.count; i++) {
-        ((UILabel *)self.priceLabelArray[i]).text = @"";
-    }
-    for (i = 0; i < self.dateLabelArray.count; i++) {
-        ((UILabel *)self.dateLabelArray[i]).text = @"";
-    }
-    for (i = 0; i < self.totalViewArray.count; i++) {
-        ((UILabel *)self.totalViewArray[i]).text = @"";
-    }
-    for (i = 0; i < self.totalViewArray.count; i++) {
-        ((UIImageView *)self.imageViewArray[i]).image = nil;
-    }
-    
-}
-
-
-
-- (void)touchCellPart : (UITapGestureRecognizer *)tap
-{
-    UIView *view = tap.view;
-    //MLOG(@"%d,%d",self.cellIndexPath.section,self.cellIndexPath.row);
-    NSInteger tag = view.tag;
-    if ([self.delegate respondsToSelector:@selector(selectCellPartWithIndexPath:part:)]) {
-        [self.delegate selectCellPartWithIndexPath:self.cellIndexPath part:tag];
-    }
-    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

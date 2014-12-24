@@ -9,6 +9,7 @@
 #import "YHBShopIndexManager.h"
 #import "NetManager.h"
 #import "YHBFirstPageIndex.h"
+#import "YHBCompanyIndex.h"
 
 @implementation YHBShopIndexManager
 
@@ -32,26 +33,25 @@
     }];
 }
 
-/*
-- (void)getShopIndexWithSuccess:(void(^)(YHBShopIndex *shopModel))sBlock failure:(void(^)())fBlock
+- (void)getCompanyIndexWithSuccess:(void(^)(YHBCompanyIndex *model))sBlock failure:(void(^)(int result,NSString *errorString))fBlock
 {
     NSString *url = nil;
-    kYHBRequestUrl(@"getShopIndex.php", url);
+    kYHBRequestUrl(@"getCompanyIndex.php", url);
     [NetManager requestWith:nil url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         // NSDictionary *data = successDict[@"data"];
         NSInteger result = [successDict[@"result"] integerValue];
         if (result == 1) {
             NSDictionary *dataDic = successDict[@"data"];
-            NSDictionary *dic = dataDic[@"shoplist"];
-            YHBShopIndex *indexModel = [YHBShopIndex modelObjectWithDictionary:dataDic];
+            //NSDictionary *dic = dataDic[@"shoplist"];
+            YHBCompanyIndex *indexModel = [YHBCompanyIndex modelObjectWithDictionary:dataDic];
             sBlock(indexModel);
         }else{
-            fBlock();
+            fBlock((int)result,@"获取信息失败，请稍后再试");
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock();
+        fBlock(-20,@"您的网路有些问题，请稍后再试");
     }];
+}
 
-}*/
 
 @end

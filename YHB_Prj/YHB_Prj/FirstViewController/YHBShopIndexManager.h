@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 @class YHBFirstPageIndex;
+@class YHBCompanyIndex;
 @interface YHBShopIndexManager : NSObject
 
-//- (void)getShopIndexWithSuccess:(void(^)(YHBShopIndex *shopModel))sBlock failure:(void(^)())fBlock;
 //获取首页数据
 - (void)getFirstPageIndexWithSuccess:(void(^)(YHBFirstPageIndex *model))sBlock failure:(void(^)(int result,NSString *errorString))fBlock;
+//获取商城首页信息
+- (void)getCompanyIndexWithSuccess:(void(^)(YHBCompanyIndex *model))sBlock failure:(void(^)(int result,NSString *errorString))fBlock;
 
 @end

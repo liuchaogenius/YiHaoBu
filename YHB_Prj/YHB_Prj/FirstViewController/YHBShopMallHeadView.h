@@ -12,4 +12,9 @@
 
 @property (strong, nonatomic) NSString *title;
 
+@property (strong, nonatomic) UIImageView *imageView;
+@property (strong, nonatomic) NSString *rightTitle;
+
+
+
 @end

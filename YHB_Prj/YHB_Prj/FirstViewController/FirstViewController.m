@@ -99,7 +99,7 @@
     // Do any additional setup after loading the view.
     
     //UI
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, kMainScreenWidth, kMainScreenHeight-49-20) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, kMainScreenWidth, kMainScreenHeight-49-20) style:UITableViewStyleGrouped];
     self.tableView.backgroundColor = kViewBackgroundColor;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -107,14 +107,15 @@
     
     self.bannerView = [[YHBBannerVeiw alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kBannerHeight)];
     self.bannerView.headScrollView.delegate = self;
-    self.tableView.tableHeaderView = self.bannerView;    
+    self.tableView.tableHeaderView = self.bannerView;
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self setExtraCellLineHidden:self.tableView]; //隐藏多需的cell线
     
     //网络请求
     __weak FirstViewController *weakself = self;
     [self.shopIndexManager getFirstPageIndexWithSuccess:^(YHBFirstPageIndex *model) {
         weakself.pageIndexMdoel = model;
-        MLOG(@"%@",model);
+        //MLOG(@"%@",model);
         [weakself refreshAddView];
         [weakself.tableView reloadData];
     } failure:^(int result, NSString *errorString) {
@@ -157,24 +158,24 @@
 {
     if (section > 1 && section < 5) {
         return self.headersArray[section-2];
-    }
-    return nil;
+    }else
+        return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return kFooterHeigt;
+    return 10;
 }
-
+/*
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kFooterHeigt)];
-    footer.backgroundColor = RGBCOLOR(238, 238, 238);
+    footer.backgroundColor = kViewBackgroundColor;//RGBCOLOR(238, 238, 238);
     footer.layer.borderColor = [kLineColor CGColor];
     footer.layer.borderWidth = 0.5f;
     return footer;
 }
-
+*/
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (indexPath.section) {
@@ -209,7 +210,7 @@
             return self.funcBlockCell;
         }
             break;
-        case 2:
+        case 2: //热门标签
         {
             static NSString *tagCellIdentifier = @"tagCell";
             YHBHotTagsCell *cell = [tableView dequeueReusableCellWithIdentifier:tagCellIdentifier];
@@ -230,7 +231,7 @@
             
         }
             break;
-        case 3:
+        case 3: //产品推荐
         {
             static NSString *productCell = @"product";
             YHBShopMallCell *cell = [tableView dequeueReusableCellWithIdentifier:productCell];
@@ -238,16 +239,36 @@
                 cell = [[YHBShopMallCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:productCell andType:0];
                 cell.delegate = self;
             }
+            [cell clearCellContentParts];
+            cell.cellIndexPath = indexPath;
+            YHBMalllist *list;
+            for (int i=0; i < 3; i ++) {
+                //设置cell左中右三部分ui内容
+                if (indexPath.row*3+i < self.pageIndexMdoel.malllist.count) {
+                    list = self.pageIndexMdoel.malllist[indexPath.row*3+i];
+                    [cell setImage:list.thumb title:list.title price:list.price part:i];
+                }else [cell setImage:nil title:@"" price:nil part:i];
+            }
             return cell;
         }
             break;
-        case 4:
+        case 4: //商机推荐
         {
             static NSString *businessCell = @"business";
             YHBShopMallCell *cell = [tableView dequeueReusableCellWithIdentifier:businessCell];
             if (!cell) {
                 cell = [[YHBShopMallCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:businessCell andType:1];
                 cell.delegate = self;
+            }
+            cell.cellIndexPath = indexPath;
+            [cell clearCellContentParts];
+            for (int i=0; i < 3; i ++) {
+                YHBSelllist *list;
+                //设置cell左中右三部分ui内容
+                if (indexPath.row*3+i < self.pageIndexMdoel.selllist.count) {
+                    list = self.pageIndexMdoel.selllist[indexPath.row*3+i];
+                    [cell setImage:list.thumb title:list.title time:list.edittime hits:list.hits part:i];
+                }else [cell setBlankWithPart:i];
             }
             return cell;
         }
@@ -374,7 +395,6 @@
 }
 
 
-#pragma mark - Delegate
 #pragma mark 点击head的Banner 广告
 - (void)touchBannerWithNum:(NSInteger)num;
 {
