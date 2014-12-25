@@ -45,7 +45,7 @@
     selectedDict = [NSMutableDictionary new];
     selectedHeaderViewArray = [NSMutableArray new];
     isAllSelected = NO;
-    self.title = @"购物车";
+    [self settitleLabel:@"购物车"];
     self.netManage = [[YHBShopCartManage alloc] init];
     self.tableViewArray = [NSMutableArray new];
     price = 0;

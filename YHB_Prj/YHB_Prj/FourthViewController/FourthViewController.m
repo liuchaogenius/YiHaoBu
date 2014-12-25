@@ -39,7 +39,7 @@ enum Button_Type
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTitle:@"我的"];
+    [self settitleLabel:@"我的"];
     
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight-64)];
     scrollView.backgroundColor = RGBCOLOR(240, 240, 242);
