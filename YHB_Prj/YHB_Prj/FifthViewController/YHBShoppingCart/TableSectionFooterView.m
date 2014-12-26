@@ -43,7 +43,7 @@
     {
         YHBShopCartCartlist *model = [array objectAtIndex:i];
         itemCount += [model.number intValue];
-        price += [model.number intValue]*[model.price intValue];
+        price += [model.number floatValue]*[model.price floatValue];
     }
     itemCountLabel.text = [NSString stringWithFormat:@"共%d件商品", itemCount];
     priceLabel.text = [NSString stringWithFormat:@"合计￥%.2f", price];

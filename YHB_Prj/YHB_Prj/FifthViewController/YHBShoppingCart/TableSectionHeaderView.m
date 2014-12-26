@@ -23,13 +23,14 @@
         bottomView.backgroundColor = [UIColor whiteColor];
         [self addSubview:bottomView];
         
-        self.chooseBtn = [[UIButton alloc] initWithFrame:CGRectMake(5, 10, 20, 20)];
+        self.chooseBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 10-2.5, 25, 25)];
         [self.chooseBtn addTarget:self action:@selector(chooseBtn:) forControlEvents:UIControlEventTouchUpInside];
-        self.chooseBtn.layer.borderColor = [[UIColor blackColor] CGColor];
-        self.chooseBtn.layer.borderWidth = 0.5;
+//        self.chooseBtn.layer.borderColor = [[UIColor blackColor] CGColor];
+//        self.chooseBtn.layer.borderWidth = 0.5;
+        [self.chooseBtn setImage:[UIImage imageNamed:@"shopNotChooseImg"] forState:UIControlStateNormal];
         [bottomView addSubview:self.chooseBtn];
         
-        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.chooseBtn.right+10, self.chooseBtn.top, kMainScreenWidth-50, 20)];
+        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.chooseBtn.right+10, self.chooseBtn.top, kMainScreenWidth-50, self.chooseBtn.bottom-self.chooseBtn.top)];
         nameLabel.font = kFont15;
         [bottomView addSubview:nameLabel];
     }
@@ -45,11 +46,11 @@
 {
     if (_isSelected==NO)
     {
-        self.chooseBtn.backgroundColor = [UIColor redColor];
+        [self.chooseBtn setImage:[UIImage imageNamed:@"shopChooseImg"] forState:UIControlStateNormal];
     }
     else
     {
-        self.chooseBtn.backgroundColor = [UIColor whiteColor];
+        [self.chooseBtn setImage:[UIImage imageNamed:@"shopNotChooseImg"] forState:UIControlStateNormal];
     }
     [self.headerViewDelegate selectHeadViewWithView:self Index:self.index];
     _isSelected = !_isSelected;
@@ -57,13 +58,13 @@
 
 - (void)chooseBtnNo
 {
-    self.chooseBtn.backgroundColor = [UIColor whiteColor];
+    [self.chooseBtn setImage:[UIImage imageNamed:@"shopNotChooseImg"] forState:UIControlStateNormal];
     _isSelected = NO;
 }
 
 - (void)chooseBtnYes
 {
-    self.chooseBtn.backgroundColor = [UIColor redColor];
+    [self.chooseBtn setImage:[UIImage imageNamed:@"shopChooseImg"] forState:UIControlStateNormal];
     _isSelected = YES;
 }
 

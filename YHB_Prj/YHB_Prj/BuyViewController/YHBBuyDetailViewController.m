@@ -1,38 +1,40 @@
 //
-//  YHBSupplyDetailViewController.m
+//  YHBBuyDetailViewController.m
 //  YHB_Prj
 //
-//  Created by Johnny's on 14/11/30.
+//  Created by Johnny's on 14/12/21.
 //  Copyright (c) 2014年 striveliu. All rights reserved.
 //
 
-#import "YHBSupplyDetailViewController.h"
-#import "YHBSupplyDetailView.h"
-#import "YHBVariousImageView.h"
-#import "YHBSupplyDetailManage.h"
+#import "YHBBuyDetailViewController.h"
+#import "YHBBuyDetailManage.h"
 #import "SVProgressHUD.h"
 #import "YHBContactView.h"
+#import "YHBBuyDetailView.h"
+#import "YHBVariousImageView.h"
+#import "YHBContactView.h"
+#import "PushPriceViewController.h"
 
 #define kContactViewHeight 60
-@interface YHBSupplyDetailViewController ()
+@interface YHBBuyDetailViewController ()
 {
     UIScrollView *scrollView;
-    YHBSupplyDetailView *supplyDetailView;
+    YHBBuyDetailView *buyDetailView;
     YHBVariousImageView *variousImageView;
-    YHBContactView *contactView;
     BOOL isModal;
     int itemId;
+    YHBBuyDetailData *myModel;
     BOOL isMine;
+    YHBContactView *contactView;
 }
-@property(nonatomic, strong) YHBSupplyDetailManage *netManage;
+@property(nonatomic, strong) YHBBuyDetailManage *manage;
 @end
 
-@implementation YHBSupplyDetailViewController
+@implementation YHBBuyDetailViewController
 
-- (instancetype)initWithItemId:(int)aItemId andIsMine:(BOOL)aIsMine;
+- (instancetype)initWithItemId:(int)aItemId andIsMine:(BOOL)aIsMine
 {
     if (self = [super init]) {
-        isModal=NO;
         itemId = aItemId;
         isMine = aIsMine;
     }
@@ -48,18 +50,10 @@
     return self;
 }
 
-- (YHBSupplyDetailManage *)netManage
-{
-    if (!_netManage) {
-        _netManage = [[YHBSupplyDetailManage alloc] init];
-    }
-    return _netManage;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = RGBCOLOR(241, 241, 241);
-    self.title = @"供应详情";
+    self.title = @"求购详情";
     
     scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight-kContactViewHeight-62)];
     [self.view addSubview:scrollView];
@@ -67,39 +61,47 @@
     variousImageView = [[YHBVariousImageView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 120) andPhotoArray:[NSArray new]];
     [scrollView addSubview:variousImageView];
     
-    supplyDetailView = [[YHBSupplyDetailView alloc] initWithFrame:CGRectMake(0, variousImageView.bottom, kMainScreenWidth, 270)];
-    [scrollView addSubview:supplyDetailView];
+    buyDetailView = [[YHBBuyDetailView alloc] initWithFrame:CGRectMake(0, variousImageView.bottom, kMainScreenWidth, 235)];
+    [scrollView addSubview:buyDetailView];
     
     [self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(dismissSelf)];
-
+    
     if (!isMine)
     {
-        UIButton *watchStoreBtn = [[UIButton alloc] initWithFrame:CGRectMake(5, supplyDetailView.bottom+20, kMainScreenWidth-10, 35)];
+        UIButton *pushPriceBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, buyDetailView.bottom+20, kMainScreenWidth/2-20, 40)];
+        pushPriceBtn.backgroundColor = KColor;
+        [pushPriceBtn addTarget:self action:@selector(pushPriceBtn) forControlEvents:UIControlEventTouchUpInside];
+        [pushPriceBtn setTitle:@"我要报价" forState:UIControlStateNormal];
+        [pushPriceBtn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
+        pushPriceBtn.layer.cornerRadius = 2.5;
+        [scrollView addSubview:pushPriceBtn];
+        
+        UIButton *watchStoreBtn = [[UIButton alloc] initWithFrame:CGRectMake(pushPriceBtn.right+20, pushPriceBtn.top, kMainScreenWidth/2-20, 40)];
         watchStoreBtn.backgroundColor = KColor;
         [watchStoreBtn addTarget:self action:@selector(watchStoreBtn) forControlEvents:UIControlEventTouchUpInside];
-        [watchStoreBtn setTitle:@"浏览商城" forState:UIControlStateNormal];
+        [watchStoreBtn setTitle:@"浏览店铺" forState:UIControlStateNormal];
         watchStoreBtn.layer.cornerRadius = 2.5;
         [watchStoreBtn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
         [scrollView addSubview:watchStoreBtn];
         
-        scrollView.contentSize = CGSizeMake(kMainScreenWidth, watchStoreBtn.bottom+20);
+        scrollView.contentSize = CGSizeMake(kMainScreenWidth, pushPriceBtn.bottom+20);
         
         contactView = [[YHBContactView alloc] initWithFrame:CGRectMake(0, scrollView.bottom, kMainScreenWidth, kContactViewHeight)];
         contactView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:contactView];
     }
-    
-    
+   
     [self showFlower];
     
     if (isModal==NO)
     {
-        [self.netManage getSupllyDetailWithItemid:itemId SuccessBlock:^(YHBSupplyDetailModel *aModel)
+        self.manage = [[YHBBuyDetailManage alloc] init];
+        [self.manage getBuyDetailWithItemid:itemId SuccessBlock:^(YHBBuyDetailData *aModel)
          {
-             [supplyDetailView setDetailWithModel:aModel];
+             myModel = aModel;
+             [buyDetailView setDetailWithModel:aModel];
              [variousImageView setMyWebPhotoArray:aModel.pic];
-             if (!isMine)
-             {
+             if (!isMine) {
                  [contactView setPhoneNumber:aModel.mobile storeName:aModel.truename itemId:itemId isVip:aModel.vip];
              }
              [self dismissFlower];
@@ -110,9 +112,15 @@
 }
 
 #pragma mark 浏览商城
+- (void)pushPriceBtn
+{
+    PushPriceViewController *vc = [[PushPriceViewController alloc] initWithItemId:myModel.itemid];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 - (void)watchStoreBtn
 {
-    MLOG(@"浏览商城");
+    MLOG(@"浏览店铺");
 }
 
 #pragma mark 菊花

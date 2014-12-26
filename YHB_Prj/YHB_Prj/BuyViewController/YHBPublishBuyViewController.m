@@ -6,14 +6,14 @@
 //  Copyright (c) 2014年 striveliu. All rights reserved.
 //
 
-#import "YHBPublishSupplyViewController.h"
+#import "YHBPublishBuyViewController.h"
 #import "YHBVariousImageView.h"
 #import "YHBSupplyDetailViewController.h"
 #import "TitleTagViewController.h"
 #import "SVProgressHUD.h"
 
 #define kButtonTag_Yes 100
-@interface YHBPublishSupplyViewController ()<UITextFieldDelegate, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface YHBPublishBuyViewController()<UITextFieldDelegate, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 {
     UIScrollView *scrollView;
     UITextField *nameTextField;
@@ -38,7 +38,7 @@
 @property(nonatomic, strong) UIView *toolView;
 @end
 
-@implementation YHBPublishSupplyViewController
+@implementation YHBPublishBuyViewController
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -49,7 +49,7 @@
     [super viewDidLoad];
     [self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(dismissSelf)];
     
-    self.title = @"发布供应";
+    self.title = @"发布采购";
     self.view.backgroundColor = RGBCOLOR(241, 241, 241);
     
     scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
@@ -61,7 +61,7 @@
 #pragma mark 中间View
     float labelHeight = 20;//label高度
     float interval = 20;//label之间间隔
-    float editViewHeight = 310;//中间view高度
+    float editViewHeight = 270;//中间view高度
     typeId=0;
     
     UIView *editSupplyView = [[UIView alloc] initWithFrame:CGRectMake(0, variousImageView.bottom, kMainScreenWidth, editViewHeight)];
@@ -76,7 +76,7 @@
     bottomLineView.backgroundColor = [UIColor lightGrayColor];
     [editSupplyView addSubview:bottomLineView];
     
-    NSArray *strArray = @[@"名       称 |",@"价       格 |",@"到期时间 |",@"分       类 |",@"供货状态 |",@"详细描述 |"];
+    NSArray *strArray = @[@"名       称 |",@"分       类 |",@"数       量 |",@"求购周期 |",@"面料详情 |"];
     for (int i=0; i<strArray.count; i++)
     {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, interval+(labelHeight+interval)*i, 70, labelHeight)];
@@ -101,14 +101,14 @@
     
     tapTitleGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchTitle)];
     [titleLabel addGestureRecognizer:tapTitleGesture];
-    
-    priceTextField = [[UITextField alloc] initWithFrame:CGRectMake(85, interval*2+labelHeight-5, 80, labelHeight+10)];
+
+    priceTextField = [[UITextField alloc] initWithFrame:CGRectMake(85, interval*3+labelHeight*2-5, 80, labelHeight+10)];
     priceTextField.font = [UIFont systemFontOfSize:15];
     priceTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     priceTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     priceTextField.returnKeyType = UIReturnKeyDone;
-    priceTextField.delegate = self;
     priceTextField.textColor = [UIColor lightGrayColor];
+    priceTextField.delegate = self;
     priceTextField.textAlignment = NSTextAlignmentCenter;
     priceTextField.layer.borderWidth = 0.5;
     [editSupplyView addSubview:priceTextField];
@@ -118,8 +118,8 @@
     priceLabelNote.textColor = [UIColor lightGrayColor];
     priceLabelNote.text = @"元/米";
     [editSupplyView addSubview:priceLabelNote];
-    
-    dayView = [[UIView alloc] initWithFrame:CGRectMake(85, (interval+labelHeight)*2+interval-5, 80, labelHeight+10)];
+
+    dayView = [[UIView alloc] initWithFrame:CGRectMake(85, (interval+labelHeight)*3+interval-5, 80, labelHeight+10)];
     dayView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     dayView.layer.borderWidth = 0.5;
     dayView.userInteractionEnabled = YES;
@@ -138,14 +138,14 @@
     
     tapDayGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchDay)];
     [dayView addGestureRecognizer:tapDayGesture];
-    
+
     UILabel *dayLabelNote = [[UILabel alloc] initWithFrame:CGRectMake(dayView.right+3, dayView.top, 120, labelHeight+10)];
     dayLabelNote.font = [UIFont systemFontOfSize:15];
     dayLabelNote.textColor = [UIColor lightGrayColor];
-    dayLabelNote.text = @"天";
+    dayLabelNote.text = @"天,默认最多30天";
     [editSupplyView addSubview:dayLabelNote];
-    
-    catNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, (interval+labelHeight)*3+interval-5, 177, labelHeight+10)];
+
+    catNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, (interval+labelHeight)*1+interval-5, 177, labelHeight+10)];
     catNameLabel.layer.borderWidth = 0.5;
     catNameLabel.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     [editSupplyView addSubview:catNameLabel];
@@ -153,27 +153,8 @@
     UIImageView *plusImgView = [[UIImageView alloc] initWithFrame:CGRectMake(catNameLabel.right, catNameLabel.top, 23, 30)];
     plusImgView.image = [UIImage imageNamed:@"plusImg"];
     [editSupplyView addSubview:plusImgView];
-    
-    NSArray *array = @[@"现货",@"期货",@"促销"];
-    for (int i=0; i<3; i++)
-    {
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(85+(labelHeight+10+40)*i, (interval+labelHeight)*4+interval-5, labelHeight+6, labelHeight+6)];
-        [btn setImage:[UIImage imageNamed:@"btnNotChoose"] forState:UIControlStateNormal];
-        btn.tag=10+i;
-        [btn addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
-        [editSupplyView addSubview:btn];
-        if (i==0) {
-            [btn setImage:[UIImage imageNamed:@"btnChoose"] forState:UIControlStateNormal];
-        }
-        
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(btn.right+5, btn.top, 30, labelHeight+10)];
-        label.text = [array objectAtIndex:i];
-        label.font = kFont15;
-        label.textColor = [UIColor lightGrayColor];
-        [editSupplyView addSubview:label];
-    }
-    
-    contentTextView = [[UITextView alloc] initWithFrame:CGRectMake(85, interval+(interval+labelHeight)*5, 200, 70)];
+
+    contentTextView = [[UITextView alloc] initWithFrame:CGRectMake(85, interval+(interval+labelHeight)*4, 200, 70)];
     contentTextView.layer.borderWidth = 0.5;
     contentTextView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     contentTextView.font = [UIFont systemFontOfSize:15];
@@ -206,9 +187,9 @@
     phoneTextField = [[UITextField alloc] initWithFrame:CGRectMake(contentTextView.left, phoneLabel.top-5, 200, labelHeight+10)];
     phoneTextField.font = kFont15;
     phoneTextField.delegate = self;
+    phoneTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     phoneTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     phoneTextField.layer.borderWidth = 0.5;
-    phoneTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     phoneTextField.returnKeyType = UIReturnKeyDone;
     phoneTextField.text = @"13000000000";
     
@@ -277,7 +258,7 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return 7;
+    return 30;
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
@@ -468,21 +449,20 @@
 {
     //获取键盘高度
     NSValue *keyboardRectAsObject=[[paramNotification userInfo]objectForKey:UIKeyboardFrameEndUserInfoKey];
-
+    
     CGRect keyboardRect;
     [keyboardRectAsObject getValue:&keyboardRect];
-
+    
     if (![priceTextField isFirstResponder])
     {
         float offY = 0;
-        MLOG(@"%f", kMainScreenHeight);
         if (kMainScreenHeight>500)
         {
-            offY=270;
+            offY=230;
         }
         else
         {
-            offY=330;
+            offY=300;
         }
         [UIView animateWithDuration:0.2 animations:^{
             scrollView.contentOffset = CGPointMake(0, offY);
@@ -491,7 +471,7 @@
         temFrame.size.height = self.view.frame.size.height - keyboardRect.size.height;
         scrollView.frame = temFrame;
     }
-
+    
 }
 
 - (void)handleKeyboardDidHidden
@@ -514,13 +494,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

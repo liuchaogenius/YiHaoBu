@@ -13,28 +13,36 @@
 #import "SVProgressHUD.h"
 #import "YHBSupplyModel.h"
 #import "YHBSupplyDetailViewController.h"
-
-typedef enum:NSUInteger
-{
-    selectedAll=0,
-    selectedVip=1
-}selected;
+#import "YHBLookBuyManage.h"
+#import "YHBBuyDetailViewController.h"
 
 #define topViewHeight 40
 
 @interface YHBLookSupplyViewController ()<UITableViewDataSource, UITableViewDelegate>
-
+{
+    BOOL isVip;
+    BOOL isSupply;
+}
 @property(nonatomic, strong) UIButton *selectAllBtn;
 @property(nonatomic, strong) UIButton *selectVipBtn;
 
-@property(nonatomic, assign) int nowSelected;
 @property(nonatomic, strong) UITableView *supplyTableView;
 
 @property(nonatomic, strong) NSMutableArray *tableViewArray;
+
 @property(nonatomic, strong) YHBLookSupplyManage *supplyManage;
+@property(nonatomic, strong) YHBLookBuyManage *buyManage;
 @end
 
 @implementation YHBLookSupplyViewController
+
+- (instancetype)initWithIsSupply:(BOOL)aIsSupply
+{
+    if (self = [super init]) {
+        isSupply = aIsSupply;
+    }
+    return self;
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -44,8 +52,15 @@ typedef enum:NSUInteger
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"查看供应";
-    _nowSelected = selectedAll;
+    isVip = NO;
+    
+    if (isSupply) {
+        self.title = @"查看供应";
+    }
+    else
+    {
+        self.title = @"查看求购";
+    }
     
 #pragma mark 建立topView
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 62, kMainScreenWidth, topViewHeight)];
@@ -82,44 +97,48 @@ typedef enum:NSUInteger
     
     [self addTableViewTrag];
     [self showFlower];
-    [self getDataIsVip:NO];
+    [self getDataIsVip:isVip];
 }
 
 - (void)getDataIsVip:(BOOL)aIsVip
 {
-    [self.supplyManage getSupplyArray:^(NSMutableArray *aArray){
-        [self dismissFlower];
-        self.tableViewArray = aArray;
-        [self.supplyTableView reloadData];
-    } andFail:^{
-        
-    } isVip:aIsVip];
+    if (isSupply) {
+        [self.supplyManage getSupplyArray:^(NSMutableArray *aArray){
+            [self dismissFlower];
+            self.tableViewArray = aArray;
+            [self.supplyTableView reloadData];
+        } andFail:^{
+            
+        } isVip:aIsVip];
+    }
+    else
+    {
+        [self.buyManage getBuyArray:^(NSMutableArray *aArray) {
+            [self dismissFlower];
+            self.tableViewArray = aArray;
+            [self.supplyTableView reloadData];
+        } andFail:^{
+            
+        } isVip:isVip];
+    }
+    
 }
 
 - (void)touchTopViewBtn:(UIButton *)aBtn
 {
-    if (aBtn==self.selectAllBtn)
+    if (isVip)
     {
         [self.selectAllBtn setTitleColor:KColor forState:UIControlStateNormal];
         [self.selectVipBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        if (_nowSelected!=selectedAll)
-        {
-            [self showFlower];
-            [self getDataIsVip:NO];
-            _nowSelected=selectedAll;
-        }
     }
     else
     {
         [self.selectAllBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self.selectVipBtn setTitleColor:KColor forState:UIControlStateNormal];
-        if (_nowSelected!=selectedVip)
-        {
-            [self showFlower];
-            [self getDataIsVip:YES];
-            _nowSelected=selectedVip;
-        }
     }
+    isVip = !isVip;
+    [self showFlower];
+    [self getDataIsVip:isVip];
 }
 
 #pragma mark 菊花
@@ -142,50 +161,76 @@ typedef enum:NSUInteger
     return _supplyManage;
 }
 
+-(YHBLookBuyManage *)buyManage
+{
+    if (!_buyManage) {
+        _buyManage = [[YHBLookBuyManage alloc] init];
+    }
+    return _buyManage;
+}
+
 #pragma mark 增加上拉下拉
 - (void)addTableViewTrag
 {
     __weak YHBLookSupplyViewController *weakself = self;
     [weakself.supplyTableView addPullToRefreshWithActionHandler:^{
-        if (_nowSelected==selectedAll)
-        {
+        if (isSupply) {
             [self.supplyManage getSupplyArray:^(NSMutableArray *aArray){
                 [weakself.supplyTableView.pullToRefreshView stopAnimating];
                 self.tableViewArray = aArray;
                 [self.supplyTableView reloadData];
             } andFail:^{
                 [weakself.supplyTableView.pullToRefreshView stopAnimating];
-            } isVip:NO];
+            } isVip:isVip];
         }
         else
         {
-            [self.supplyManage getSupplyArray:^(NSMutableArray *aArray){
+            [self.buyManage getBuyArray:^(NSMutableArray *aArray) {
                 [weakself.supplyTableView.pullToRefreshView stopAnimating];
                 self.tableViewArray = aArray;
                 [self.supplyTableView reloadData];
             } andFail:^{
                 [weakself.supplyTableView.pullToRefreshView stopAnimating];
-            } isVip:YES];
+            } isVip:isVip];
         }
+        
     }];
     
     
     [weakself.supplyTableView addInfiniteScrollingWithActionHandler:^{
         if(self.tableViewArray.count%20==0&&self.tableViewArray.count>0)
         {
-            [self.supplyManage getNextSupplyArray:^(NSMutableArray *aArray) {
-                [weakself.supplyTableView.infiniteScrollingView stopAnimating];
-                NSMutableArray *insertIndexPaths = [NSMutableArray new];
-                for (unsigned long i=self.tableViewArray.count; i<self.tableViewArray.count+aArray.count; i++)
-                {
-                    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
-                    [insertIndexPaths addObject:indexpath];
-                }
-                [self.tableViewArray addObjectsFromArray:aArray];
-                [self.supplyTableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
-            } andFail:^{
-                [weakself.supplyTableView.infiniteScrollingView stopAnimating];
-            }];
+            if (isSupply) {
+                [self.supplyManage getNextSupplyArray:^(NSMutableArray *aArray) {
+                    [weakself.supplyTableView.infiniteScrollingView stopAnimating];
+                    NSMutableArray *insertIndexPaths = [NSMutableArray new];
+                    for (unsigned long i=self.tableViewArray.count; i<self.tableViewArray.count+aArray.count; i++)
+                    {
+                        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
+                        [insertIndexPaths addObject:indexpath];
+                    }
+                    [self.tableViewArray addObjectsFromArray:aArray];
+                    [self.supplyTableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
+                } andFail:^{
+                    [weakself.supplyTableView.infiniteScrollingView stopAnimating];
+                }];
+            }
+            else
+            {
+                [self.buyManage getNextBuyArray:^(NSMutableArray *aArray) {
+                    [weakself.supplyTableView.infiniteScrollingView stopAnimating];
+                    NSMutableArray *insertIndexPaths = [NSMutableArray new];
+                    for (unsigned long i=self.tableViewArray.count; i<self.tableViewArray.count+aArray.count; i++)
+                    {
+                        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
+                        [insertIndexPaths addObject:indexpath];
+                    }
+                    [self.tableViewArray addObjectsFromArray:aArray];
+                    [self.supplyTableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
+                } andFail:^{
+                    [weakself.supplyTableView.infiniteScrollingView stopAnimating];
+                }];
+            }
         }
         else
         {
@@ -222,8 +267,15 @@ typedef enum:NSUInteger
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     YHBSupplyModel *model = [self.tableViewArray objectAtIndex:indexPath.row];
-    YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:model.itemid];
-    [self.navigationController pushViewController:vc animated:YES];
+    if (isSupply) {
+        YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:model.itemid andIsMine:NO];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else
+    {
+        YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:model.itemid andIsMine:NO];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

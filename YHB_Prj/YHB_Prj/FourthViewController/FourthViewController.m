@@ -14,6 +14,7 @@
 #import "YHBUser.h"
 #import "YHBUserInfo.h"
 #import "SVProgressHUD.h"
+#import "YHBMySupplyViewController.h"
 #define kHeadHeight 110
 #define kBtnsViewHeight 65
 #define kBtnImageWidth 25
@@ -95,10 +96,16 @@ enum Button_Type
     switch (sender.tag) {
         case Button_purchase:{
             //跳入我的采购
+            YHBMySupplyViewController *vc = [[YHBMySupplyViewController alloc] initWithIsSupply:NO];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case Button_supply:{
             //跳入我的供应
+            YHBMySupplyViewController *vc = [[YHBMySupplyViewController alloc] initWithIsSupply:YES];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case Button_lookStore:{

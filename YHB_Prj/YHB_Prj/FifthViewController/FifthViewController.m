@@ -30,7 +30,7 @@
     UIButton *editBtn;
     UIButton *accontBtn;
     UILabel *yunlabel;
-    UIButton *moveToFavoriteBtn;
+//    UIButton *moveToFavoriteBtn;
 }
 @property(nonatomic, strong) YHBShopCartManage *netManage;
 @property(nonatomic, strong) NSMutableArray *tableViewArray;
@@ -72,10 +72,11 @@
     [self.bottomView addSubview:toplineView];
     
     chooseBtn = [[UIButton alloc]
-                           initWithFrame:CGRectMake(5, (bottomHeight-20)/2, 20, 20)];
+                           initWithFrame:CGRectMake(10, (bottomHeight-25)/2, 25, 25)];
     [chooseBtn addTarget:self action:@selector(allSelected) forControlEvents:UIControlEventTouchUpInside];
-    chooseBtn.layer.borderColor = [[UIColor blackColor] CGColor];
-    chooseBtn.layer.borderWidth = 0.5;
+//    chooseBtn.layer.borderColor = [[UIColor blackColor] CGColor];
+//    chooseBtn.layer.borderWidth = 0.5;
+    [chooseBtn setImage:[UIImage imageNamed:@"shopNotChooseImg"] forState:UIControlStateNormal];
     [self.bottomView addSubview:chooseBtn];
     
     UILabel *allLabel = [[UILabel alloc] initWithFrame:CGRectMake(chooseBtn.right+5, chooseBtn.top, 40, 20)];
@@ -103,13 +104,13 @@
     yunlabel.textAlignment = NSTextAlignmentRight;
     [self.bottomView addSubview:yunlabel];
     
-    moveToFavoriteBtn = [[UIButton alloc] initWithFrame:CGRectMake(accontBtn.left-160, accontBtn.top, 140, 30)];
-    [moveToFavoriteBtn setTitle:@"移动至收藏夹" forState:UIControlStateNormal];
-    moveToFavoriteBtn.backgroundColor = KColor;
-    moveToFavoriteBtn.titleLabel.font = kFont15;
-    [moveToFavoriteBtn addTarget:self action:@selector(moveToFavorite) forControlEvents:UIControlEventTouchUpInside];
-    moveToFavoriteBtn.hidden = YES;
-    [self.bottomView addSubview:moveToFavoriteBtn];
+//    moveToFavoriteBtn = [[UIButton alloc] initWithFrame:CGRectMake(accontBtn.left-160, accontBtn.top, 140, 30)];
+//    [moveToFavoriteBtn setTitle:@"移动至收藏夹" forState:UIControlStateNormal];
+//    moveToFavoriteBtn.backgroundColor = KColor;
+//    moveToFavoriteBtn.titleLabel.font = kFont15;
+//    [moveToFavoriteBtn addTarget:self action:@selector(moveToFavorite) forControlEvents:UIControlEventTouchUpInside];
+//    moveToFavoriteBtn.hidden = YES;
+//    [self.bottomView addSubview:moveToFavoriteBtn];
     
     [self.view addSubview:self.bottomView];
 //以上是bottomView
@@ -138,7 +139,7 @@
         [accontBtn setTitle:@"结算" forState:UIControlStateNormal];
         priceLabel.hidden = NO;
         yunlabel.hidden = NO;
-        moveToFavoriteBtn.hidden = YES;
+//        moveToFavoriteBtn.hidden = YES;
     }
     else
     {
@@ -146,7 +147,7 @@
         [accontBtn setTitle:@"删除" forState:UIControlStateNormal];
         priceLabel.hidden = YES;
         yunlabel.hidden = YES;
-        moveToFavoriteBtn.hidden = NO;
+//        moveToFavoriteBtn.hidden = NO;
 
     }
     isEdit = !isEdit;
@@ -161,14 +162,14 @@
         price=0;
         if (isAllSelected)
         {
-            chooseBtn.backgroundColor = [UIColor whiteColor];
+            [chooseBtn setImage:[UIImage imageNamed:@"shopNotChooseImg"] forState:UIControlStateNormal];
             [selectedDict removeAllObjects];
             [selectedHeaderViewArray removeAllObjects];
             price=0;
         }
         else
         {
-            chooseBtn.backgroundColor = [UIColor redColor];
+            [chooseBtn setImage:[UIImage imageNamed:@"shopChooseImg"] forState:UIControlStateNormal];
             selectedHeaderViewArray = [NSMutableArray new];
             for (int i=0; i<self.tableViewArray.count; i++) {
                 [selectedHeaderViewArray addObject:[NSString stringWithFormat:@"%d", i]];
@@ -191,13 +192,13 @@
 
 - (void)allSelectedNo
 {
-    chooseBtn.backgroundColor = [UIColor whiteColor];
+    [chooseBtn setImage:[UIImage imageNamed:@"shopNotChooseImg"] forState:UIControlStateNormal];
     isAllSelected=NO;
 }
 
 - (void)allSelectedYes
 {
-    chooseBtn.backgroundColor = [UIColor redColor];
+    [chooseBtn setImage:[UIImage imageNamed:@"shopChooseImg"] forState:UIControlStateNormal];
     isAllSelected = YES;
 }
 
@@ -292,7 +293,8 @@
 {
     YHBShopCartRslist *model = [self.tableViewArray objectAtIndex:indexPath.section];
     YHBShopCartCartlist *cartModel = [model.cartlist objectAtIndex:indexPath.row];
-    YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:cartModel.itemid];
+    YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:cartModel.itemid andIsMine:NO];
+    vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

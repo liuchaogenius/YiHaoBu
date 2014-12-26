@@ -9,6 +9,7 @@
 #import "FirstViewController.h"
 #import "YHBShopMallViewController.h"
 #import "YHBPublishSupplyViewController.h"
+#import "YHBPublishBuyViewController.h"
 #import "YHBLookSupplyViewController.h"
 #import "YHBFirstPageIndex.h"
 #import "YHBMalllist.h"
@@ -322,7 +323,7 @@
         case button_sell:
         {
             //查看供应
-            YHBLookSupplyViewController *vc = [[YHBLookSupplyViewController alloc] init];
+            YHBLookSupplyViewController *vc = [[YHBLookSupplyViewController alloc] initWithIsSupply:YES];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }
@@ -330,6 +331,9 @@
         case button_buy:
         {
             //查看采购
+            YHBLookSupplyViewController *vc = [[YHBLookSupplyViewController alloc] initWithIsSupply:NO];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         default:
@@ -360,8 +364,10 @@
         case button_findWeave:
         {
             //找步
-            
-
+            YHBPublishBuyViewController *supplyVC = [[YHBPublishBuyViewController alloc] init];
+            [self presentViewController:[[UINavigationController alloc] initWithRootViewController:supplyVC] animated:YES completion:^{
+                
+            }];
         }
             break;
         default:

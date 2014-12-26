@@ -1155,11 +1155,8 @@
 				FF2A6C991A0F3D1C001607AC /* ThirdViewController.m in Sources */,
 				FF2A6C771A0F3B7B001607AC /* UIImage+WebP.m in Sources */,
 				FF2A6C9F1A0F3D41001607AC /* FifthViewController.m in Sources */,
-<<<<<<< Updated upstream
 				5B0A34BB1A458E180071A357 /* YHBHotTagsCell.m in Sources */,
-=======
 				ABE1B33C1A429B3900F63AFA /* TitleTagViewController.m in Sources */,
->>>>>>> Stashed changes
 				FF2A6C081A0F39EC001607AC /* ViewInteraction.m in Sources */,
 				FF2A6C6D1A0F3B7B001607AC /* SDImageCache.m in Sources */,
 				5BE051291A2C3EF100740437 /* YHBUserInfo.m in Sources */,

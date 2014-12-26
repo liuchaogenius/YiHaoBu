@@ -17,10 +17,11 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])
     {
         CGFloat line = kMainScreenWidth-75;
-        self.chooseBtn = [[UIButton alloc] initWithFrame:CGRectMake(5, (cellHeight-20)/2, 20, 20)];
+        self.chooseBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, (cellHeight-25)/2, 25, 25)];
         [self.chooseBtn addTarget:self action:@selector(chooseBtn:) forControlEvents:UIControlEventTouchUpInside];
-        self.chooseBtn.layer.borderColor = [[UIColor blackColor] CGColor];
-        self.chooseBtn.layer.borderWidth = 0.5;
+//        self.chooseBtn.layer.borderColor = [[UIColor blackColor] CGColor];
+//        self.chooseBtn.layer.borderWidth = 0.5;
+        [self.chooseBtn setImage:[UIImage imageNamed:@"shopNotChooseImg"] forState:UIControlStateNormal];
         [self addSubview:self.chooseBtn];
         
         shopImgView = [[UIImageView alloc] initWithFrame:CGRectMake(self.chooseBtn.right+10, 10, 60, 60)];
@@ -55,6 +56,10 @@
         
         changeView = [[ChangeCountView alloc] initWithFrame:CGRectMake(line, catLabel.top, 65, 20)];
         [self addSubview:changeView];
+        
+        UIView *bottomline = [[UIView alloc] initWithFrame:CGRectMake(0, cellHeight-0.3, kMainScreenWidth, 0.3)];
+        bottomline.backgroundColor = [UIColor lightGrayColor];
+        [self addSubview:bottomline];
     }
     return self;
 }
@@ -77,11 +82,11 @@
 {
     if (_isSelected==NO)
     {
-        self.chooseBtn.backgroundColor = [UIColor redColor];
+        [self.chooseBtn setImage:[UIImage imageNamed:@"shopChooseImg"] forState:UIControlStateNormal];
     }
     else
     {
-        self.chooseBtn.backgroundColor = [UIColor whiteColor];
+        [self.chooseBtn setImage:[UIImage imageNamed:@"shopNotChooseImg"] forState:UIControlStateNormal];
     }
     [self.delegate touchCell:self WithSection:_section row:_row];
     _isSelected = !_isSelected;
@@ -89,13 +94,13 @@
 
 - (void)selectedBtnNo
 {
-    self.chooseBtn.backgroundColor = [UIColor whiteColor];
+    [self.chooseBtn setImage:[UIImage imageNamed:@"shopNotChooseImg"] forState:UIControlStateNormal];
     _isSelected=NO;
 }
 
 - (void)selectedBtnYes
 {
-    self.chooseBtn.backgroundColor = [UIColor redColor];
+    [self.chooseBtn setImage:[UIImage imageNamed:@"shopChooseImg"] forState:UIControlStateNormal];
     _isSelected=YES;
 }
 
@@ -103,10 +108,17 @@
 {
     [shopImgView sd_setImageWithURL:[NSURL URLWithString:aModel.thumb]];
     countLabel.text = [NSString stringWithFormat:@"×%@", aModel.number];
-    [changeView setCountLabel:[aModel.number intValue]];
+    [changeView setCountLabel:[aModel.number floatValue]];
     titleLabel.text = aModel.title;
     priceLabel.text = [NSString stringWithFormat:@"￥%@",aModel.price];
-    catLabel.text = [NSString stringWithFormat:@"类别 : %@", aModel.catname];
+    if (aModel.catname)
+    {
+        catLabel.text = [NSString stringWithFormat:@"类别 : %@", aModel.catname];
+    }
+    else
+    {
+        catLabel.text = @"";
+    }
 }
 
 - (void)awakeFromNib {
