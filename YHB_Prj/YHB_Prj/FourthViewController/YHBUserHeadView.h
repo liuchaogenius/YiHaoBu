@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#define kHeadHeight 135
 
 @protocol UserHeadDelegate <NSObject>
 
 - (void)touchHeadLoginBtn;
+- (void)touchPrivateBtn;
 
 @end
 
@@ -18,6 +20,10 @@
 
 @property (weak, nonatomic) id<UserHeadDelegate> delegate;
 
-- (void)refreshViewWithIslogin:(BOOL)isLogin vcompany:(int)vcompany sell:(NSInteger)sell buy:(NSInteger)buy name:(NSString *)name avator:(NSString *)avator;//刷新view
+//显示的是自己时，刷新方法
+- (void)refreshSelfHeadWithIsLogin:(BOOL)isLogin name:(NSString *)name avator:(NSString *)avator thumb:(NSString *)thumb group:(NSInteger)group company:(NSString *)company;
+
+//显示他人时，刷新方法
+- (void)refreshViewWithIslogin:(BOOL)isLogin group:(NSInteger)group name:(NSString *)name avator:(NSString *)avator thumb:(NSString *)thumb company:(NSString *)company friend:(NSInteger)firend;
 
 @end

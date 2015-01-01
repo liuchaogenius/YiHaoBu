@@ -10,28 +10,34 @@
 #import "YHBUserHeadView.h"
 #import "YHBShopMallCell.h"
 #import "YHBShopInfoViewController.h"
+#import "YHBUserInfo.h"
+#import "YHBUserManager.h"
+#import "YHBInfoListManager.h"
+#import "SVProgressHUD.h"
+#import "YHBPage.h"
+#import "YHBRslist.h"
+#import "SVPullToRefresh.h"
 
-#define kSgmBtnHeight 35
+#define kSgmBtnHeight 50
 #define kSelectTagBase 100
-#define kToolBtnTagBase 200
-#define kHeadHeight 110
-#define kToolBarHeight 64
-#define kToolItemImageWidth 25
-#define kToolTitleFont 16
+#define kNumberFont 14
+#define kButtonFont 15
+#define kPageSize 20 //分页-每页的数量
+
+enum SgmLabel_tag
+{
+    SgmLabel_number = 200,
+    SgmLabel_title
+};
+
 enum SgmBtn_tag
 {
     SgmBtn_productInfo = kSelectTagBase, //产品信息
-    SgmBtn_cellInfo,//供应信息
-    SgmBtn_storeInfo//店铺信息
-};
-enum ToolButton_tag
-{
-    ToolBtn_phone = kToolBtnTagBase,//电话
-    ToolBtn_message,//短信
-    ToolBtn_online//在线交流
+    SgmBtn_sellInfo,//供应信息
+    SgmBtn_templetInfo//样板信息
 };
 
-@interface YHBStoreViewController ()<UserHeadDelegate,UITableViewDataSource,UITableViewDelegate,ShopMallCellDelegate>
+@interface YHBStoreViewController ()<UserHeadDelegate,UITableViewDataSource,UITableViewDelegate,ShopMallCellDelegate,UIScrollViewDelegate>
 {
     UIButton *_selectSgmButton;
 }
@@ -39,72 +45,133 @@ enum ToolButton_tag
 @property (strong, nonatomic) UIScrollView *sgmBtmScrollView;
 @property (assign, nonatomic) NSInteger sgmCount;
 @property (strong, nonatomic) NSArray *titleArray;
-@property (strong, nonatomic) UIView *toolBarView;
-@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) UITableView *sellTableView;//供应信息tableview
+@property (strong, nonatomic) UITableView *productTableView;//产品信息tableview
+@property (strong, nonatomic) UITableView *templetTableView;//样板信息tableview
+@property (assign, nonatomic) NSString* shopID;
+@property (strong, nonatomic) UIScrollView *backScrollView;
+@property (strong, nonatomic) YHBUserInfo *shopInfo;
+@property (strong, nonatomic) YHBInfoListManager *listManger;
+@property (strong, nonatomic) YHBUserManager *infoManger;
+@property (strong, nonatomic) NSMutableDictionary  *rslistDic;
+@property (strong, nonatomic) NSMutableDictionary *pageDic;
 
 @end
 
 @implementation YHBStoreViewController
 #pragma mark - getter and setter
-
-- (UIView *)toolBarView
+- (NSMutableDictionary *)rslistDic
 {
-    if (!_toolBarView) {
-        _toolBarView = [[UIView alloc] initWithFrame:CGRectMake(0, kMainScreenHeight-kToolBarHeight-64, kMainScreenWidth, kToolBarHeight)];
-        _toolBarView.backgroundColor = [UIColor whiteColor];
-        UIView *orangeLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 4)];
-        orangeLine.backgroundColor = KColor;
-        [_toolBarView addSubview:orangeLine];
-        NSArray *titleArray = @[@"电话",@"短信",@"在线沟通"];
-        CGFloat btnWidth = kMainScreenWidth/titleArray.count;
-        for (int i = 0; i < titleArray.count; i++) {
-            UIButton *btn = [self customToolButtonWithFrame:CGRectMake(i*btnWidth, orangeLine.bottom+8, btnWidth, _toolBarView.height-orangeLine.height) Image:[UIImage imageNamed:[NSString stringWithFormat:@"Comuticate_%d",i]] Title:titleArray[i]];
-            btn.tag = i + kToolBtnTagBase;
-            [btn addTarget:self action:@selector(touchToolBtn:) forControlEvents:UIControlEventTouchUpInside];
-            //btn.backgroundColor = [UIColor greenColor];
-            [_toolBarView addSubview:btn];
-        }
+    if (!_rslistDic) {
+        _rslistDic = [NSMutableDictionary dictionaryWithCapacity:3];
     }
-    return _toolBarView;
+    return _rslistDic;
 }
 
-- (NSArray *)titleArray
+- (NSMutableDictionary *)pageDic
 {
-    if (!_titleArray) {
-        _titleArray = @[@"产品信息",@"供应信息",@"店铺信息"];
+    if (!_pageDic) {
+        _pageDic = [NSMutableDictionary dictionaryWithCapacity:3];
     }
-    return _titleArray;
+    return _pageDic;
 }
+
+- (UITableView *)sellTableView
+{
+    if (!_sellTableView) {
+        _sellTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, _backScrollView.height) style:UITableViewStylePlain];
+        _sellTableView.tag = SgmBtn_sellInfo;
+        _sellTableView.delegate = self;
+        _sellTableView.dataSource = self;
+        _sellTableView.backgroundColor = kViewBackgroundColor;
+        _sellTableView.rowHeight = kcellHeight;
+    }
+    return _sellTableView;
+}
+
+- (UITableView *)productTableView
+{
+    if (!_productTableView) {
+        _productTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, _backScrollView.height) style:UITableViewStylePlain];
+        _productTableView.tag = SgmBtn_productInfo;
+        _productTableView.delegate = self;
+        _productTableView.dataSource = self;
+        _productTableView.backgroundColor = kViewBackgroundColor;
+        _productTableView.rowHeight = kcellHeight;
+    }
+    return _productTableView;
+}
+
+- (UITableView *)templetTableView
+{
+    if (!_templetTableView) {
+        _templetTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, _backScrollView.height) style:UITableViewStylePlain];
+        _templetTableView.tag = SgmBtn_templetInfo;
+        _templetTableView.delegate = self;
+        _templetTableView.dataSource = self;
+        _templetTableView.backgroundColor = kViewBackgroundColor;
+        _templetTableView.rowHeight = kcellHeight;
+    }
+    return _templetTableView;
+}
+
+- (UIScrollView *)backScrollView
+{
+    if (!_backScrollView) {
+        _backScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, kHeadHeight+kSgmBtnHeight, kMainScreenWidth, kMainScreenHeight-44-kHeadHeight-kSgmBtnHeight)];
+        _backScrollView.backgroundColor = kViewBackgroundColor;
+        [_backScrollView setBounces:NO];
+        [_backScrollView setPagingEnabled:YES];
+        [_backScrollView setContentSize:CGSizeMake(kMainScreenWidth, _backScrollView.height)];
+        _backScrollView.showsHorizontalScrollIndicator = NO;
+        _backScrollView.showsVerticalScrollIndicator = NO;
+        _backScrollView.delegate = self;
+    }
+    return _backScrollView;
+}
+
+- (YHBUserManager *)infoManger
+{
+    if (!_infoManger) {
+        _infoManger = [[YHBUserManager alloc] init];
+    }
+    return _infoManger;
+}
+
+- (YHBInfoListManager *)listManger
+{
+    if (!_listManger) {
+        _listManger = [[YHBInfoListManager alloc] init];
+    }
+    return _listManger;
+}
+
 
 - (UIScrollView *)sgmBtmScrollView
 {
     if (!_sgmBtmScrollView) {
         _sgmBtmScrollView = [[UIScrollView alloc] init];
-        self.sgmCount = self.titleArray.count;
         _sgmBtmScrollView.layer.borderColor = [RGBCOLOR(207, 207, 207) CGColor];
         _sgmBtmScrollView.layer.borderWidth = 0.7f;
         _sgmBtmScrollView.layer.masksToBounds = YES;
         _sgmBtmScrollView.showsHorizontalScrollIndicator = NO;
         [_sgmBtmScrollView setFrame:CGRectMake(0, kHeadHeight, kMainScreenWidth, kSgmBtnHeight)];
         _sgmBtmScrollView.backgroundColor = [UIColor whiteColor];
+        //_sgmBtmScrollView.delegate = self;
         //通过分栏数量调整content宽度
-        CGFloat contentWidth = (self.sgmCount > 5 ? self.sgmCount*kMainScreenWidth/5.0f : kMainScreenWidth);
-        [_sgmBtmScrollView setContentSize:CGSizeMake(contentWidth, kSgmBtnHeight)];
         
-        //添加sgmButton
-        CGFloat buttonWidth = (self.sgmCount>=5 ? kMainScreenWidth/5.0f : kMainScreenWidth/(float)self.sgmCount);
-        for (int i = 0; i < self.sgmCount; i++) {
-            UIButton *sgmButton = [self customButtonWithFrame:CGRectMake(i*buttonWidth, 0, buttonWidth, kSgmBtnHeight) andTitle:self.titleArray[i]];
-            sgmButton.tag = i + kSelectTagBase;//用tag%kSelectTagBase 来记录选中的分类
-            if (i == 0) {
-                sgmButton.selected = YES; //默认选择第一个
-                _selectSgmButton = sgmButton;
-            }
-            [_sgmBtmScrollView addSubview:sgmButton];
-        }
-        
+        [self refreshSgmBtmScrollView];
     }
     return _sgmBtmScrollView;
+}
+
+- (instancetype)initWithShopID:(NSString *)shopID
+{
+    self = [super init];
+    if (self) {
+        self.shopID = shopID;
+    }
+    return self;
 }
 
 - (void)viewDidLoad {
@@ -114,14 +181,45 @@ enum ToolButton_tag
     //UI
     self.view.backgroundColor = kViewBackgroundColor;
     [self creatHeadView];
+    [self.shopHeadView refreshSelfHeadWithIsLogin:YES name:@"姓名" avator:nil thumb:nil group:0 company:@"公司名"];
+    
+    _titleArray = nil;
     [self.view addSubview:self.sgmBtmScrollView];
-    [self.view addSubview:self.toolBarView];
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.sgmBtmScrollView.bottom, kMainScreenWidth, self.toolBarView.top-self.sgmBtmScrollView.bottom) style:UITableViewStylePlain];
-    self.tableView.backgroundColor = kViewBackgroundColor;
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-    self.tableView.rowHeight = kcellHeight;
-    [self.view addSubview:self.tableView];
+    [self.view addSubview:self.backScrollView];
+    
+    //网络请求
+    __weak YHBStoreViewController *weakself = self;
+    [self.infoManger getUserInfoWithToken:Nil orUserId:self.shopID ? :@"" Success:^(NSDictionary *dataDic){
+        weakself.shopInfo = [YHBUserInfo modelObjectWithDictionary:dataDic];
+        if (weakself.shopInfo.groupid > 5) {
+            //刷新页面
+            weakself.titleArray = weakself.shopInfo.groupid == 7 ? @[@"产品信息",@"供应信息",@"样板信息"] : @[@"供应信息"];
+            [weakself refreshUI];
+            if (weakself.shopInfo.groupid == 6) {
+                weakself.sellTableView.left = 0;
+                [weakself.backScrollView addSubview:weakself.sellTableView];
+                [weakself.backScrollView setContentSize:CGSizeMake(kMainScreenWidth, _backScrollView.height)];
+                [weakself getDataWithPageID:1 andInfoListTypr:SgmBtn_sellInfo];
+            }else if (weakself.shopInfo.groupid == 7){
+                [weakself.backScrollView setContentSize:CGSizeMake(kMainScreenWidth*3, _backScrollView.height)];
+                weakself.productTableView.left = 0;
+                [weakself.backScrollView addSubview:weakself.productTableView];
+                [weakself getDataWithPageID:1 andInfoListTypr:SgmBtn_productInfo];
+                
+                weakself.sellTableView.left = kMainScreenWidth;
+                [weakself.backScrollView addSubview:weakself.sellTableView];
+                [weakself getDataWithPageID:1 andInfoListTypr:SgmBtn_sellInfo];
+                
+                weakself.templetTableView.left = 2*kMainScreenWidth;
+                [weakself.backScrollView addSubview:weakself.templetTableView];
+                [weakself getDataWithPageID:1 andInfoListTypr:SgmBtn_templetInfo];
+
+            }
+        }
+    } failure:^{
+        [SVProgressHUD showErrorWithStatus:@"获取信息失败,请稍后再试！" cover:YES offsetY:0];
+    }];
+    
 }
 
 #pragma mark - UI
@@ -134,29 +232,136 @@ enum ToolButton_tag
     [self.view addSubview:self.shopHeadView];
 }
 
+- (void)refreshUI
+{
+    [self.shopHeadView refreshViewWithIslogin:YES group:self.shopInfo.groupid name:self.shopInfo.truename avator:self.shopInfo.avatar thumb:self.shopInfo.thumb company:self.shopInfo.company friend:self.shopInfo.friend];
+    [self refreshSgmBtmScrollView];
+}
+
+- (void)refreshSgmBtmScrollView
+{
+    if (_sgmBtmScrollView) {
+        self.sgmCount = self.titleArray.count;
+        [_sgmBtmScrollView removeSubviews];
+        CGFloat contentWidth = (self.sgmCount > 5 ? self.sgmCount*kMainScreenWidth/5.0f : kMainScreenWidth);
+        [_sgmBtmScrollView setContentSize:CGSizeMake(contentWidth, kSgmBtnHeight)];
+        
+        //添加sgmButton
+        CGFloat buttonWidth = (self.sgmCount>=5 ? kMainScreenWidth/5.0f : kMainScreenWidth/(float)self.sgmCount);
+        for (int i = 0; i < self.sgmCount; i++) {
+            UIButton *sgmButton = [self customButtonWithFrame:CGRectMake(i*buttonWidth, 0, buttonWidth, kSgmBtnHeight) andTitle:self.titleArray[i] andNumber:@""];
+            sgmButton.tag = i + kSelectTagBase;//用tag%kSelectTagBase 来记录选中的分类
+            if (i == 0) {
+                sgmButton.selected = YES; //默认选择第一个
+                [self setSelectOfButton:sgmButton andisSelect:YES];
+                _selectSgmButton = sgmButton;
+            }
+            [_sgmBtmScrollView addSubview:sgmButton];
+        }
+    }
+}
+#pragma - 获取产品、供应、样本信息列表,并刷新tableview
+- (void)getDataWithPageID:(NSInteger)pageID andInfoListTypr:(NSInteger)type
+{
+    switch (type) {
+        case SgmBtn_productInfo: //产品信息
+        {
+            [self.listManger getProductListWithUserID:[self.shopID integerValue] typeID:0 pageID:0 pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
+                MLOG(@"%@",modelArray);
+                [self.rslistDic setObject:modelArray forKey:[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
+                [self.pageDic setObject:page forKey:[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
+                [self.productTableView reloadData];
+            } failure:^{
+                [SVProgressHUD showErrorWithStatus:@"获取信息失败，请检查网络或稍后再试！" cover:YES offsetY:0];
+            }];
+        }
+            break;
+        case SgmBtn_sellInfo://供应信息
+        {
+            [self.listManger getSellListWithUserID:[self.shopID integerValue] pageID:pageID pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
+                [self.rslistDic setObject:modelArray forKey:[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
+                [self.pageDic setObject:page forKey:[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
+                [self.sellTableView reloadData];
+            } failure:^{
+                [SVProgressHUD showErrorWithStatus:@"获取信息失败，请检查网络或稍后再试！" cover:YES offsetY:0];
+            }];
+        }
+            break;
+        case SgmBtn_templetInfo://样板信息
+        {
+            [self.listManger getProductListWithUserID:[self.shopID integerValue] typeID:1 pageID:pageID pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
+                [self.rslistDic setObject:modelArray forKey:[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
+                [self.pageDic setObject:page forKey:[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
+                [self.templetTableView reloadData];
+            } failure:^{
+                [SVProgressHUD showErrorWithStatus:@"获取信息失败，请检查网络或稍后再试！" cover:YES offsetY:0];
+            }];
+        }
+            break;
+        default:
+            break;
+    }
+}
+
 #pragma mark - tableView DataSource and Delegaet
 #warning table待获取后台数据
 #pragma mark 数据行数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    NSInteger type = tableView.tag;
+    NSMutableArray *array = self.rslistDic[[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
+    MLOG(@"%@",array);
+    return array ? (array.count/3 + (array.count%3 ?1 : 0)) : 0;
 }
 
 #pragma mark 每行显示内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"Cell";
-    YHBShopMallCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell) {
-        cell = [[YHBShopMallCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        cell.delegate = self;
+    NSMutableArray *array = self.rslistDic[[NSString stringWithFormat:@"%ld",tableView.tag-kSelectTagBase]];
+    NSInteger count = array.count;
+    switch (tableView.tag) {
+        case SgmBtn_productInfo:
+        case SgmBtn_templetInfo:{
+            static NSString *cellIdentifier1 = @"Cell1";
+            YHBShopMallCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier1];
+            if (!cell) {
+                cell = [[YHBShopMallCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier1 andType:0];
+                cell.delegate = self;
+            }
+            for (int i=0; i < 3; i++ ) {
+                if(indexPath.row * 3 + i > count){//空白部分
+                    [cell setBlankWithPart:i];
+                }else{
+                    YHBRslist *list = array[indexPath.row *3 + i];
+                    [cell setImage:list.thumb title:list.title price:list.price part:i];
+                }
+            }
+            cell.cellIndexPath = indexPath;
+            return cell;
+        }
+            break;
+        case SgmBtn_sellInfo:{
+            static NSString * cellIdentifier2 = @"Cell2";
+            YHBShopMallCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier2];
+            if (!cell) {
+                cell = [[YHBShopMallCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier2 andType:1];
+                cell.delegate = self;
+            }
+            for (int i=0; i < 3; i++ ) {
+                if(indexPath.row * 3 + i > count){//空白部分
+                    [cell setBlankWithPart:i];
+                }else{
+                    YHBRslist *list = array[indexPath.row *3 + i];
+                    [cell setImage:list.thumb title:list.title time:list.editdate hits:list.hits part:i];
+                }
+            }
+            cell.cellIndexPath = indexPath;
+            return cell;
+        }
+        default:
+            return nil;
+            break;
     }
-    //TODO：设备cell内容
-    cell.cellIndexPath = indexPath;
-    //[cell clearCellContentParts];
-#warning 待载入数据 -cc
-    
-    return cell;
 }
 
 #pragma mark - action
@@ -164,28 +369,34 @@ enum ToolButton_tag
 {
 #warning 待刷新tableview -cc
     if(_selectSgmButton.tag != sender.tag){
-        if (sender.tag != SgmBtn_storeInfo) {
-            _selectSgmButton.selected = NO;
-            _selectSgmButton = sender;
-            sender.selected = YES;
-        }
+        _selectSgmButton.selected = NO;
+        [self setSelectOfButton:_selectSgmButton andisSelect:NO];
+        
+        _selectSgmButton = sender;
+        [self setSelectOfButton:sender andisSelect:YES];
+        sender.selected = YES;
+
         switch (sender.tag) {
             case SgmBtn_productInfo:
             {
                 //产品信息
+                [self.backScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
             }
                 break;
-            case SgmBtn_cellInfo:
+            case SgmBtn_sellInfo:
             {
                 //供应信息
+                [self.backScrollView setContentOffset:CGPointMake(kMainScreenWidth, 0) animated:YES];
             }
                 break;
-            case SgmBtn_storeInfo:
+            case SgmBtn_templetInfo:
             {
-                //店铺信息
+                //样板信息
+                /*
                 YHBShopInfoViewController *infoVC = [[YHBShopInfoViewController alloc] init];
                 infoVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:infoVC animated:YES];
+                [self.navigationController pushViewController:infoVC animated:YES];*/
+                [self.backScrollView setContentOffset:CGPointMake(kMainScreenWidth*2, 0) animated:YES];
             }
                 break;
             default:
@@ -194,30 +405,7 @@ enum ToolButton_tag
     }
 }
 
-- (void)touchToolBtn:(UIButton *)sender
-{
-#warning 待验证用户登录状态,以及后续逻辑处理 -cc
-    MLOG(@"touched");
-    switch (sender.tag) {
-        case ToolBtn_phone:
-        {
-            //电话
-        }
-            break;
-        case ToolBtn_message:
-        {
-            //短信
-        }
-            break;
-        case ToolBtn_online:
-        {
-            //在线沟通
-        }
-            break;
-        default:
-            break;
-    }
-}
+
 
 #pragma mark - delegate
 
@@ -226,15 +414,50 @@ enum ToolButton_tag
     MLOG(@"touch Cell");
 }
 
+- (void)touchPrivateBtn
+{
+    
+}
+
+#pragma mark scrollView delegat
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if (scrollView == self.backScrollView && self.shopInfo.groupid == 7) {
+        NSInteger tag = scrollView.contentOffset.x / kMainScreenWidth + kSelectTagBase;
+        UIButton *button = (UIButton *)[self.sgmBtmScrollView viewWithTag:tag];
+        //MLOG(@"%@",button.currentTitle);
+        [self touchSgmButton:button];
+    }
+   
+}
 
 #pragma mark - customButtom构造
-- (UIButton *)customButtonWithFrame:(CGRect)frame andTitle:(NSString *)title
+- (UIButton *)customButtonWithFrame:(CGRect)frame andTitle:(NSString *)title andNumber:(NSString *)number
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setFrame:frame];
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [button setTitleColor:KColor forState:UIControlStateSelected];
-    [button setTitle:title forState:UIControlStateNormal];
+    
+    UILabel *numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, button.width, kNumberFont)];
+    numberLabel.backgroundColor  = [UIColor clearColor];
+    numberLabel.textAlignment = NSTextAlignmentCenter;
+    numberLabel.textColor = [UIColor blackColor];
+    numberLabel.tag = SgmLabel_number;
+    [numberLabel setFont:[UIFont systemFontOfSize:kNumberFont]];
+    numberLabel.text = @"0";
+    [button addSubview:numberLabel];
+    
+    UILabel *titleLabel =[[UILabel alloc] initWithFrame:CGRectMake(0, button.height/2.0+5, button.width, kButtonFont)];
+    titleLabel.backgroundColor  = [UIColor clearColor];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.tag = SgmLabel_title;
+    [titleLabel setFont:[UIFont systemFontOfSize:kButtonFont]];
+    titleLabel.text = title;
+    [button addSubview:titleLabel];
+    
+    //[button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    //[button setTitleColor:KColor forState:UIControlStateSelected];
+    //[button setTitle:title forState:UIControlStateNormal];
     [button setBackgroundColor:[UIColor clearColor]];
     button.titleLabel.font = kFont16;
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(button.width+0.2, 0, 0.6f, button.height)];
@@ -247,33 +470,20 @@ enum ToolButton_tag
     return button;
 }
 
-- (UIButton *)customToolButtonWithFrame:(CGRect)frame Image:(UIImage *)image Title:(NSString *)title
+- (void)setSelectOfButton:(UIButton *)button andisSelect : (BOOL)isSelect
 {
-    UIButton *button = [[UIButton alloc] initWithFrame:frame];
-    [button setBackgroundColor:[UIColor whiteColor]];
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((button.width-kToolItemImageWidth)/2.0f, 0, kToolItemImageWidth, kToolItemImageWidth)];
-    [imageView setContentMode:UIViewContentModeScaleAspectFit];
-    imageView.image = image;
-    [button addSubview:imageView];
-    UILabel *titlelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, imageView.bottom+5, button.width, kToolTitleFont)];
-    titlelabel.backgroundColor = [UIColor clearColor];
-    titlelabel.textColor = [UIColor blackColor];
-    titlelabel.font = [UIFont systemFontOfSize:kToolTitleFont];
-    [titlelabel setTextAlignment:NSTextAlignmentCenter];
-    titlelabel.text = title;
-    [button addSubview:titlelabel];
-    
-    return button;
+    UILabel *numLabel = (UILabel *)[button viewWithTag:SgmLabel_number];
+    UILabel *titleLabel = (UILabel *)[button viewWithTag:SgmLabel_title];
+    numLabel.textColor = isSelect ? KColor : [UIColor blackColor];
+    titleLabel.textColor = isSelect ? KColor : [UIColor blackColor];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -281,6 +491,5 @@ enum ToolButton_tag
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-*/
 
 @end

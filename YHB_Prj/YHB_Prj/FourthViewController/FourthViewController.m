@@ -17,6 +17,7 @@
 #import "YHBMySupplyViewController.h"
 #define kHeadHeight 110
 #define kBtnsViewHeight 65
+#define kBtnsViewHeight 60
 #define kBtnImageWidth 25
 #define kBtnLabelFont 12
 #define kBtnsTagStart 40
@@ -33,16 +34,43 @@ enum Button_Type
 @property (strong, nonatomic) UIView *buttonsView;
 @property (strong, nonatomic) UIScrollView *scollView;
 @property (strong, nonatomic) YHBUserCellsView *userCellsView;
+@property (strong, nonatomic) NSArray *dataArray;
+@property (assign, nonatomic) CGFloat cellViewHeight;
 
 @end
 
 @implementation FourthViewController
 
+#pragma mark - getter and setter
+- (CGFloat)cellViewHeight
+{
+    if (_cellViewHeight < 0) {
+        _cellViewHeight = 0.0;
+        int i;
+        for (i = 0; i < self.dataArray.count; i++) {
+            NSArray *array = self.dataArray[i];
+            _cellViewHeight += array.count * (KcellHeight+1.5);
+            _cellViewHeight += kBlankHeight;
+        }
+    }
+    return _cellViewHeight;
+}
+
+- (NSArray *)dataArray
+{
+    if(!_dataArray){
+        _dataArray = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"UserVCData" ofType:@"plist"]];
+    }
+    return _dataArray;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self settitleLabel:@"我的"];
     
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight-64)];
+    _cellViewHeight = -1;
+    
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight-64-49)];
     scrollView.backgroundColor = RGBCOLOR(240, 240, 242);
     scrollView.contentSize = CGSizeMake(kMainScreenWidth, kMainScreenHeight);
     _scollView = scrollView;
@@ -58,6 +86,9 @@ enum Button_Type
     [self creatHeadView];
     [self creatButtonsView];
     [self creatCellsView];
+    
+    //通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshUserHeadView) name:kUserInfoGetMessage object:nil];
 }
 
 #pragma mark - UI
@@ -71,8 +102,8 @@ enum Button_Type
 - (void)creatButtonsView {
     UIView *buttonsView = [[UIView alloc] initWithFrame:CGRectMake(0, self.userHeadView.bottom, kMainScreenWidth, kBtnsViewHeight)];
     //buttonsView.backgroundColor = [UIColor blackColor];
-    NSArray *titleArray = @[@"我的采购",@"我的供应",@"浏览商城"];
-    for (int i = 0; i < 3; i++) {
+    NSArray *titleArray = @[@"我的采购",@"我的供应",@"我的产品",@"浏览商城"];
+    for (int i = 0; i < titleArray.count; i++) {
         UIButton *button  = [self customButtonViewWithNum:i title:titleArray[i]];
         //button.backgroundColor = [UIColor blueColor];
         [buttonsView addSubview:button];
@@ -82,7 +113,8 @@ enum Button_Type
 }
 
 - (void)creatCellsView {
-    self.userCellsView = [[YHBUserCellsView alloc] initWithFrame:CGRectMake(0, self.buttonsView.bottom+10, kMainScreenWidth, KcellHeight * 6)];
+    _scollView.contentSize = CGSizeMake(kMainScreenWidth, self.buttonsView.bottom + 10 + self.cellViewHeight+20);
+    self.userCellsView = [[YHBUserCellsView alloc] initWithFrame:CGRectMake(0, self.buttonsView.bottom+10, kMainScreenWidth, self.cellViewHeight) withData:self.dataArray];
     self.userCellsView.delegate = self;
     [self.scollView addSubview:self.userCellsView];
 }
@@ -150,6 +182,16 @@ enum Button_Type
                 
             }
                 break;
+            case Cell_myOrder:
+            {
+                
+            }
+                break;
+            case Cell_address:
+            {
+                
+            }
+                break;
             case Cell_private:
             {
                 
@@ -168,6 +210,11 @@ enum Button_Type
             }
                 break;
             case Cell_tips:
+            {
+                
+            }
+                break;
+            case Cell_share:
             {
                 
             }
@@ -197,13 +244,13 @@ enum Button_Type
 #pragma mark - 刷新headview
 - (void)refreshUserHeadView
 {
-    if ([YHBUser sharedYHBUser].isLogin) {
+    if ([YHBUser sharedYHBUser].isLogin ) {
         [self.loginItem setTitle:@"注销"];
         YHBUser *user = [YHBUser sharedYHBUser];
-        [self.userHeadView refreshViewWithIslogin:YES vcompany:user.userInfo.vcompany sell:user.userInfo.selltotal buy:user.userInfo.buytotal name:user.userInfo.truename avator:user.userInfo.avatar];
+        [self.userHeadView refreshSelfHeadWithIsLogin:YES name:user.userInfo.truename avator:user.userInfo.avatar thumb:user.userInfo.thumb group:user.userInfo.groupid company:user.userInfo.company];
     }else{
         [self.loginItem setTitle:@"登陆"];
-        [self.userHeadView refreshViewWithIslogin:NO vcompany:0 sell:0 buy:0 name:nil avator:nil];
+        [self.userHeadView refreshSelfHeadWithIsLogin:NO name:nil avator:nil thumb:nil group:0 company:nil];
     }
 }
 
@@ -214,21 +261,21 @@ enum Button_Type
 
 - (UIButton *)customButtonViewWithNum:(int)number  title:(NSString *)title
 {
-    CGFloat width = kMainScreenWidth/3.0f;
+    CGFloat width = kMainScreenWidth/4.0f;
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake((number)*width, 0, width, kBtnsViewHeight);
     button.tag = number + kBtnsTagStart;
     [button addTarget:self action:@selector(touchFuncButtons:) forControlEvents:UIControlEventTouchUpInside];
     button.backgroundColor = [UIColor whiteColor];
-    button.layer.borderColor = [kLineColor CGColor];
-    button.layer.borderWidth = 0.5f;
+    //button.layer.borderColor = [kLineColor CGColor];
+    //button.layer.borderWidth = 0.5f;
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((button.width-kBtnImageWidth)/2.0f, 10, kBtnImageWidth, kBtnImageWidth)];
     //设置图片
     imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"MiButtons_%d",number]];
     [button addSubview:imageView];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, kBtnsViewHeight-kBtnLabelFont-5, width,kBtnLabelFont)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, kBtnsViewHeight-kBtnLabelFont-10, width,kBtnLabelFont)];
     label.font = [UIFont systemFontOfSize:kBtnLabelFont];
     label.textAlignment = NSTextAlignmentCenter;
     label.text = title;

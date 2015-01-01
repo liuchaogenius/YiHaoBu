@@ -9,14 +9,24 @@
 #import "YHBUser.h"
 #import "SynthesizeSingleton.h"
 #import "NetManager.h"
+#import "YHBUserManager.h"
 @interface YHBUser()
 @property (strong, nonatomic) NSString *userFilePath; //用户文件路径
 //@property (strong, nonatomic) NSMutableDictionary *userInfoDic;//用户信息字典
+@property (strong, nonatomic) YHBUserManager *userManger;
 @end
 
 @implementation YHBUser
 SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
 #pragma mark - getter and setter
+- (YHBUserManager *)userManger
+{
+    if (!_userManger) {
+        _userManger = [[YHBUserManager alloc] init];
+    }
+    return _userManger;
+}
+
 - (NSString *)userFilePath
 {
     if (!_userFilePath) {
@@ -51,24 +61,41 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
             self.userInfo = info;
             _isLogin = YES;
             [[NetManager shareInstance] setUserid:self.userInfo.userid];
+            //刷新用户数据
+            [self refreshUserInfoWithSuccess:nil failure:nil];
         }
     }
 }
-//登陆用户
-- (void)loginUserWithUserDictionnary:(NSDictionary *)userDic
+
+//刷新数据
+- (void)refreshUserInfoWithSuccess:(void(^)())sBlock failure:(void(^)())fBlock
 {
-    [self loadUserInfoWithDictionary:userDic];
+    __weak YHBUser *weakSelf = self;
+    [self.userManger getUserInfoWithToken:self.token orUserId:nil Success:^(NSDictionary *dataDic) {
+        [weakSelf loadUserInfoAndSaveWithUserDictionnary:dataDic];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUserInfoGetMessage object:nil];
+        if (sBlock) sBlock();
+    } failure:^{
+        if(fBlock) fBlock();
+    }];
+}
+
+//获取用户信息并存入文件
+- (void)loadUserInfoAndSaveWithUserDictionnary:(NSDictionary *)userDic
+{
+    MLOG(@"%@",userDic);
+    self.userInfo = [YHBUserInfo modelObjectWithDictionary:userDic];
     [self writeUserInfoToFile];
 }
 
-//登陆用户-传token
+//登陆用户-传token 并自动获取用户信息
 - (void)loginUserWithUserToken:(NSString *)token
 {
     self.token = token;
     _isLogin = YES;
 
-#warning 带做 userinfo方面的处理
-    [self writeUserInfoToFile];
+    [self refreshUserInfoWithSuccess:nil failure:nil];
+    //[self writeUserInfoToFile];
 }
 
 //退出登录
@@ -80,12 +107,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
     
 }
 
-//加载用户数据 - 通过dic
-- (void)loadUserInfoWithDictionary:(NSDictionary *)userDic
-{
-    //_isLogin = YES;
-    self.userInfo = [YHBUserInfo modelObjectWithDictionary:userDic];
-}
+////加载用户数据 - 通过dic
+//- (void)loadUserInfoWithDictionary:(NSDictionary *)userDic
+//{
+//    //_isLogin = YES;
+//    self.userInfo = [YHBUserInfo modelObjectWithDictionary:userDic];
+//}
 
 //保存用户信息文件至沙箱
 - (void)writeUserInfoToFile

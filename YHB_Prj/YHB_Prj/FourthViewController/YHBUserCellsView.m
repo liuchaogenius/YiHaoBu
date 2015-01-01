@@ -11,25 +11,32 @@
 
 @interface YHBUserCellsView ()
 @property (strong, nonatomic) UIButton *button;
+@property (strong, nonatomic) NSArray *dataArray;
 @end
 
 @implementation YHBUserCellsView
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame withData:(NSArray *)data
 {
     self = [super initWithFrame:frame];
-    self.backgroundColor = [UIColor whiteColor];
-    NSArray *titleArray = @[@"店铺信息",@"我的认证",@"我的收藏",@"关于我们",@"服务条款",@"使用帮助"];
-    self.layer.borderWidth = 0.5f;
-    self.layer.borderColor = [kLineColor CGColor];
-    
-    for (int i = 0; i < titleArray.count; i++) {
-        UIView *cellView = [self customCellWithNum:i title:titleArray[i] frame:CGRectMake(0, 0, kMainScreenWidth, KcellHeight)];
-        [cellView setFrame:CGRectMake(0, i * KcellHeight, kMainScreenWidth, KcellHeight)];
-        [self addSubview:cellView];
-        [self addSubview:[self myLineWithY:i * KcellHeight]];
+    self.dataArray = data;
+    self.backgroundColor = [UIColor clearColor];
+    //self.layer.borderWidth = 0.5f;
+    //self.layer.borderColor = [kLineColor CGColor];
+    int i,j;
+    CGFloat currentY = 0;
+    for (i = 0; i < self.dataArray.count; i++) {
+        NSArray *array = self.dataArray[i];
+        for (j = 0; j < array.count; j++) {
+            NSDictionary *dic = array[j];
+            UIView *cellView = [self customCellWithNum:[dic[@"tag"] intValue] title:dic[@"title"] frame:CGRectMake(0, 0, kMainScreenWidth, KcellHeight)];
+            [cellView setFrame:CGRectMake(0, currentY, kMainScreenWidth, KcellHeight)];
+            currentY += (KcellHeight + 1.5);
+            [self addSubview:cellView];
+            //[cellView addSubview:[self myLineWithY:KcellHeight-0.3]];
+        }
+        currentY += kBlankHeight;
     }
-    
     return self;
 }
 
@@ -65,6 +72,16 @@
     //MLOG(@"%@",title);
     
     [cellView addSubview:titleLabel];
+    //8-13
+    UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kMainScreenWidth-25, KcellHeight/2.0 - 9.5, 12, 19)];
+    arrowImageView.image = [UIImage imageNamed:@"Arrow_right"];
+    [arrowImageView setContentMode:UIViewContentModeScaleAspectFit];
+    [cellView addSubview:arrowImageView];
+    /*
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, cellView.height-0.5, kMainScreenWidth, 0.5)];
+    line.backgroundColor = kLineColor;
+    [cellView addSubview:line];
+     */
     return cellView;
 }
 

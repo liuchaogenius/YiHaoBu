@@ -37,6 +37,7 @@
     NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:phone ? phone:@"",@"mobile",password ? :@"",@"password", nil];
 #warning result = -3 后台提示手机号码错误？|| 登陆token问题？
     [NetManager requestWith:postDic url:loginUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
+        MLOG(@"%@",successDict);
         int result = [successDict[@"result"] intValue];
         if (result == 1) {
             NSDictionary *data = successDict[@"data"];
@@ -63,11 +64,12 @@
     kYHBRequestUrl(@"getUser.php", url);
     NSMutableDictionary *postDic = [NSMutableDictionary dictionaryWithCapacity:2];
     if(token) [postDic setObject:token forKey:@"token"];
-    if(userId) [postDic setObject:userId forKey:@"userid"];
+    else if(userId) [postDic setObject:userId forKey:@"userid"];
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
         if (result) {
             NSDictionary *dataDic = successDict[@"data"];
+         
             //[[YHBUser sharedYHBUser] loginUserWithUserDictionnary:dataDic];
             if (sBlock) {
                 sBlock(dataDic);

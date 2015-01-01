@@ -20,7 +20,10 @@
 + (YHBUser *)sharedYHBUser;
 //通过token登陆
 - (void)loginUserWithUserToken:(NSString *)token;
-- (void)loginUserWithUserDictionnary:(NSDictionary *)userDic;
+//- (void)loginUserWithUserDictionnary:(NSDictionary *)userDic;
+
+//刷新用户信息-userInfo
+- (void)refreshUserInfoWithSuccess:(void(^)())sBlock failure:(void(^)())fBlock;
 
 //退出登陆
 - (void)logoutUser;
