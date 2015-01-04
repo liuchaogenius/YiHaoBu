@@ -11,6 +11,7 @@
 #import "YHBSupplyDetailViewController.h"
 #import "TitleTagViewController.h"
 #import "SVProgressHUD.h"
+#import "YHBPublishBuyManage.h"
 
 #define kButtonTag_Yes 100
 @interface YHBPublishBuyViewController()<UITextFieldDelegate, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
@@ -36,6 +37,7 @@
 
 @property(nonatomic, strong) UIPickerView *dayPickerView;
 @property(nonatomic, strong) UIView *toolView;
+@property(nonatomic, strong) YHBPublishBuyManage *netManage;
 @end
 
 @implementation YHBPublishBuyViewController
@@ -212,6 +214,14 @@
 }
 
 #pragma mark getter
+- (YHBPublishBuyManage *)netManage
+{
+    if (!_netManage) {
+        _netManage = [[YHBPublishBuyManage alloc] init];
+    }
+    return _netManage;
+}
+
 - (UIPickerView *)dayPickerView
 {
     if (!_dayPickerView)
@@ -342,8 +352,26 @@
 #pragma mark 发布
 - (void)TouchPublish
 {
-    YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    [self showFlower];
+    [self.netManage publishBuyWithItemid:0 title:@"1" catid:@"1" today:@"1" content:@"1" truename:@"1" mobile:@"1" andSuccBlock:^(int aItemId) {
+        [self dismissFlower];
+        YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:aItemId andIsMine:NO];
+        [self.navigationController pushViewController:vc animated:YES];
+    } failBlock:^{
+        [self dismissFlower];
+        [SVProgressHUD showErrorWithStatus:@"发布失败" cover:YES offsetY:kMainScreenHeight/2.0];
+    }];
+}
+
+#pragma mark 菊花
+- (void)showFlower
+{
+    [SVProgressHUD show:YES offsetY:kMainScreenHeight/2.0];
+}
+
+- (void)dismissFlower
+{
+    [SVProgressHUD dismiss];
 }
 
 #pragma mark 键盘
@@ -458,7 +486,7 @@
         float offY = 0;
         if (kMainScreenHeight>500)
         {
-            offY=230;
+            offY=kMainScreenHeight;
         }
         else
         {

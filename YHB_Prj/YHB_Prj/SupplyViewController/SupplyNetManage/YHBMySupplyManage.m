@@ -26,16 +26,16 @@ int buyTotalPage;
     isSupply = aBool;
     NSString *supplyUrl = nil;
     NSDictionary *dict;
-//    if (isVip)
-//    {
-//        dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", pageid],@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",@"1",@"vip",nil];
-//    }
-//    else
-//    {
-//        dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", pageid],@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",nil];
-//    }
-    
-    kYHBRequestUrl(@"getBuyList.php", supplyUrl);
+#warning userid czx
+    dict = [NSDictionary dictionaryWithObjectsAndKeys:@"1",@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",@"1",@"userid",nil];
+    if (isSupply)
+    {
+        kYHBRequestUrl(@"getSellList.php", supplyUrl);
+    }
+    else
+    {
+        kYHBRequestUrl(@"getBuyList.php", supplyUrl);
+    }
     [NetManager requestWith:dict url:supplyUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         //        MLOG(@"%@", successDict);
         NSDictionary *dataDict = [successDict objectForKey:@"data"];

@@ -11,6 +11,8 @@
 #import "YHBSupplyDetailViewController.h"
 #import "TitleTagViewController.h"
 #import "SVProgressHUD.h"
+#import "YHBPublishSupplyManage.h"
+
 
 #define kButtonTag_Yes 100
 @interface YHBPublishSupplyViewController ()<UITextFieldDelegate, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
@@ -32,13 +34,23 @@
     UITextView *contentTextView;
     UITapGestureRecognizer *tapTitleGesture;
     UITapGestureRecognizer *tapDayGesture;
+    YHBSupplyDetailModel *myModel;
 }
 
 @property(nonatomic, strong) UIPickerView *dayPickerView;
 @property(nonatomic, strong) UIView *toolView;
+@property(nonatomic, strong) YHBPublishSupplyManage *netManage;
 @end
 
 @implementation YHBPublishSupplyViewController
+
+- (instancetype)initWithModel:(YHBSupplyDetailModel *)aModel
+{
+    if (self = [super init]) {
+        myModel = aModel;
+    }
+    return self;
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -147,6 +159,7 @@
     
     catNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, (interval+labelHeight)*3+interval-5, 177, labelHeight+10)];
     catNameLabel.layer.borderWidth = 0.5;
+    catNameLabel.font = kFont15;
     catNameLabel.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     [editSupplyView addSubview:catNameLabel];
     
@@ -181,6 +194,14 @@
     contentTextView.delegate = self;
     contentTextView.backgroundColor = [UIColor clearColor];
     [editSupplyView addSubview:contentTextView];
+    
+    if (myModel)
+    {
+        titleLabel.text = myModel.title;
+        priceTextField.text = myModel.price;
+        catNameLabel.text = myModel.catname;
+        contentTextView.text = myModel.content;
+    }
     
 #pragma mark 下面View
     UIView *contactView = [[UIView alloc] initWithFrame:CGRectMake(0, editSupplyView.bottom+10, kMainScreenWidth, 90)];
@@ -231,6 +252,14 @@
 }
 
 #pragma mark getter
+- (YHBPublishSupplyManage *)netManage
+{
+    if (!_netManage) {
+        _netManage = [[YHBPublishSupplyManage alloc] init];
+    }
+    return _netManage;
+}
+
 - (UIPickerView *)dayPickerView
 {
     if (!_dayPickerView)
@@ -338,6 +367,17 @@
     }
 }
 
+#pragma mark 菊花
+- (void)showFlower
+{
+    [SVProgressHUD show:YES offsetY:kMainScreenHeight/2.0];
+}
+
+- (void)dismissFlower
+{
+    [SVProgressHUD dismiss];
+}
+
 #pragma mark 选择类型
 - (void)touchBtn:(UIButton *)aBtn
 {
@@ -353,6 +393,7 @@
 #pragma mark 返回
 - (void)dismissSelf
 {
+    [self dismissFlower];
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
@@ -361,8 +402,15 @@
 #pragma mark 发布
 - (void)TouchPublish
 {
-    YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    [self showFlower];
+    [self.netManage publishSupplyWithItemid:0 title:@"1" price:@"1" catid:@"1" typeid:@"1" today:@"1" content:@"1" truename:@"1" mobile:@"1" andSuccBlock:^(int aItemId) {
+        [self dismissFlower];
+        YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:aItemId andIsMine:NO];
+        [self.navigationController pushViewController:vc animated:YES];
+    } failBlock:^{
+        [self dismissFlower];
+        [SVProgressHUD showErrorWithStatus:@"发布失败" cover:YES offsetY:kMainScreenHeight/2.0];
+    }];
 }
 
 #pragma mark 键盘
@@ -478,7 +526,7 @@
         MLOG(@"%f", kMainScreenHeight);
         if (kMainScreenHeight>500)
         {
-            offY=270;
+            offY=kMainScreenHeight;
         }
         else
         {

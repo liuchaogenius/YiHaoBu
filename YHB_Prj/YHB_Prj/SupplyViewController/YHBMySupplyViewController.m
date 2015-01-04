@@ -15,6 +15,7 @@
 #import "YHBBuyDetailViewController.h"
 #import "YHBPublishSupplyViewController.h"
 #import "YHBPublishBuyViewController.h"
+#import "YHBMySupplyManage.h"
 
 @interface YHBMySupplyViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -55,6 +56,15 @@
     
 //    [self addTableViewTrag];
     [self showFlower];
+    
+    YHBMySupplyManage *manage = [[YHBMySupplyManage alloc] init];
+    [manage getSupplyArray:^(NSMutableArray *aArray) {
+        [self dismissFlower];
+        self.tableViewArray = aArray;
+        [self.supplyTableView reloadData];
+    } andFail:^{
+        [self dismissFlower];
+    } isSupply:isSupply];
 }
 
 - (void)addSupply
@@ -115,16 +125,15 @@
 {
     YHBSupplyModel *model = [self.tableViewArray objectAtIndex:indexPath.row];
     if (isSupply) {
-        YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:model.itemid andIsMine:NO];
+        YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:model.itemid andIsMine:YES];
         [self.navigationController pushViewController:vc animated:YES];
     }
     else
     {
-        YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:model.itemid andIsMine:NO];
+        YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:model.itemid andIsMine:YES];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

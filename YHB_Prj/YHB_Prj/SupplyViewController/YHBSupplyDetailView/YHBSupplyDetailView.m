@@ -10,7 +10,7 @@
 #define interval 10
 @implementation YHBSupplyDetailView
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame andIsMine:(BOOL)aBool
 {
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor whiteColor];
@@ -52,25 +52,28 @@
         bottomLineView.backgroundColor = [UIColor lightGrayColor];
         [self addSubview:bottomLineView];
         
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(kMainScreenWidth-60, 10, 0.5, bottomLineView.top-20)];
-        lineView.backgroundColor = [UIColor lightGrayColor];
-        [self addSubview:lineView];
-        
-        likeBtn = [[UIButton alloc] initWithFrame:CGRectMake(lineView.right+12, lineView.top+3, 36, 40)];
-        likeBtn.userInteractionEnabled=NO;
-        [likeBtn addTarget:self action:@selector(touchLikeBtn) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:likeBtn];
-
-        starView = [[UIImageView alloc] initWithFrame:CGRectMake((likeBtn.right-likeBtn.left-21)/2.0, 0, 21, 20)];
-        starView.image = [UIImage imageNamed:@"starUnLike"];
-        [likeBtn addSubview:starView];
-        
-        likelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, starView.bottom+2.5, 36, 15)];
-        likelabel.textColor = KColor;
-        likelabel.textAlignment = NSTextAlignmentCenter;
-        likelabel.font = kFont12;
-        likelabel.text=@"收藏";
-        [likeBtn addSubview:likelabel];
+        if (!aBool)
+        {
+            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(kMainScreenWidth-60, 10, 0.5, bottomLineView.top-20)];
+            lineView.backgroundColor = [UIColor lightGrayColor];
+            [self addSubview:lineView];
+            
+            likeBtn = [[UIButton alloc] initWithFrame:CGRectMake(lineView.right+12, lineView.top+3, 36, 40)];
+            likeBtn.userInteractionEnabled=NO;
+            [likeBtn addTarget:self action:@selector(touchLikeBtn) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:likeBtn];
+            
+            starView = [[UIImageView alloc] initWithFrame:CGRectMake((likeBtn.right-likeBtn.left-21)/2.0, 0, 21, 20)];
+            starView.image = [UIImage imageNamed:@"starUnLike"];
+            [likeBtn addSubview:starView];
+            
+            likelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, starView.bottom+2.5, 36, 15)];
+            likelabel.textColor = KColor;
+            likelabel.textAlignment = NSTextAlignmentCenter;
+            likelabel.font = kFont12;
+            likelabel.text=@"收藏";
+            [likeBtn addSubview:likelabel];
+        }
         
         NSArray *itemArray = @[@"价格 : ",@"状态 : ",@"分类 : ",@"面料详情 : "];
         CGFloat endY = 0.0;

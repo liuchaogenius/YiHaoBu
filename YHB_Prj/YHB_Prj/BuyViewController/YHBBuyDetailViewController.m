@@ -90,6 +90,23 @@
         contactView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:contactView];
     }
+    
+    UIView *navRightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 22)];
+    UIButton *shareBtn = [[UIButton alloc] initWithFrame:CGRectMake(navRightView.right-25, 0, 25, 21)];
+    [shareBtn setImage:[UIImage imageNamed:@"detailShareImg"] forState:UIControlStateNormal];
+    [shareBtn addTarget:self  action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
+    [navRightView addSubview:shareBtn];
+    
+    if (isMine)
+    {
+        UIButton *editBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
+        [editBtn setImage:[UIImage imageNamed:@"editImg"] forState:UIControlStateNormal];
+        [editBtn addTarget:self action:@selector(edit) forControlEvents:UIControlEventTouchUpInside];
+        [navRightView addSubview:editBtn];
+    }
+    
+    UIBarButtonItem *navRightBarItem = [[UIBarButtonItem alloc] initWithCustomView:navRightView];
+    self.navigationItem.rightBarButtonItem = navRightBarItem;
    
     [self showFlower];
     
@@ -109,6 +126,18 @@
              [self dismissFlower];
          }];
     }
+}
+
+#pragma mark 分享
+- (void)share
+{
+    MLOG(@"分享");
+}
+
+#pragma mark 编辑
+- (void)edit
+{
+    MLOG(@"编辑");
 }
 
 #pragma mark 浏览商城

@@ -26,6 +26,6 @@
     YHBSupplyDetailModel *myModel;
 }
 @property(nonatomic, strong) AttentionManage *manage;
-- (instancetype)initWithFrame:(CGRect)frame;
+- (instancetype)initWithFrame:(CGRect)frame andIsMine:(BOOL)aBool;
 - (void)setDetailWithModel:(YHBSupplyDetailModel *)aModel;
 @end

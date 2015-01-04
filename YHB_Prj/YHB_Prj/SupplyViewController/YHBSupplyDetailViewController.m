@@ -12,6 +12,7 @@
 #import "YHBSupplyDetailManage.h"
 #import "SVProgressHUD.h"
 #import "YHBContactView.h"
+#import "YHBPublishSupplyViewController.h"
 
 #define kContactViewHeight 60
 @interface YHBSupplyDetailViewController ()
@@ -23,6 +24,7 @@
     BOOL isModal;
     int itemId;
     BOOL isMine;
+    YHBSupplyDetailModel *myModel;
 }
 @property(nonatomic, strong) YHBSupplyDetailManage *netManage;
 @end
@@ -67,7 +69,7 @@
     variousImageView = [[YHBVariousImageView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 120) andPhotoArray:[NSArray new]];
     [scrollView addSubview:variousImageView];
     
-    supplyDetailView = [[YHBSupplyDetailView alloc] initWithFrame:CGRectMake(0, variousImageView.bottom, kMainScreenWidth, 270)];
+    supplyDetailView = [[YHBSupplyDetailView alloc] initWithFrame:CGRectMake(0, variousImageView.bottom, kMainScreenWidth, 270) andIsMine:isMine];
     [scrollView addSubview:supplyDetailView];
     
     [self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(dismissSelf)];
@@ -89,6 +91,22 @@
         [self.view addSubview:contactView];
     }
     
+    UIView *navRightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 22)];
+    UIButton *shareBtn = [[UIButton alloc] initWithFrame:CGRectMake(navRightView.right-25, 0, 25, 21)];
+    [shareBtn setImage:[UIImage imageNamed:@"detailShareImg"] forState:UIControlStateNormal];
+    [shareBtn addTarget:self  action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
+    [navRightView addSubview:shareBtn];
+    
+    if (isMine)
+    {
+        UIButton *editBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
+        [editBtn setImage:[UIImage imageNamed:@"editImg"] forState:UIControlStateNormal];
+        [editBtn addTarget:self action:@selector(edit) forControlEvents:UIControlEventTouchUpInside];
+        [navRightView addSubview:editBtn];
+    }
+    
+    UIBarButtonItem *navRightBarItem = [[UIBarButtonItem alloc] initWithCustomView:navRightView];
+    self.navigationItem.rightBarButtonItem = navRightBarItem;
     
     [self showFlower];
     
@@ -96,6 +114,7 @@
     {
         [self.netManage getSupllyDetailWithItemid:itemId SuccessBlock:^(YHBSupplyDetailModel *aModel)
          {
+             myModel = aModel;
              [supplyDetailView setDetailWithModel:aModel];
              [variousImageView setMyWebPhotoArray:aModel.pic];
              if (!isMine)
@@ -107,6 +126,21 @@
              [self dismissFlower];
          }];
     }
+}
+
+#pragma mark 分享
+- (void)share
+{
+    MLOG(@"分享");
+}
+
+#pragma mark 编辑
+- (void)edit
+{
+    YHBPublishSupplyViewController *vc = [[YHBPublishSupplyViewController alloc] initWithModel:myModel];
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:vc] animated:YES completion:^{
+        
+    }];
 }
 
 #pragma mark 浏览商城

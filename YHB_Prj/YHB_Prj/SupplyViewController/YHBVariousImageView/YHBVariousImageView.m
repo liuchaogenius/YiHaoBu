@@ -32,13 +32,14 @@
 
 - (void)reloadWebPhotoScrollView
 {
+    float width = (320-photoHeight*3)/4.0;
     [self.photoScrollView removeSubviews];
     int endWidth = 0;
     if (self.webPhotoArray.count>0)
     {
         for (int i=0; i<self.webPhotoArray.count; i++)
         {
-            UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake(interval+(interval+photoHeight)*i, interval, photoHeight, photoHeight)];
+            UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake(width+(width+photoHeight)*i, interval, photoHeight, photoHeight)];
             YHBSupplyDetailPic *model = [self.webPhotoArray objectAtIndex:i];
             [photoBtn sd_setImageWithURL:[NSURL URLWithString:model.thumb] forState:UIControlStateNormal];
             [photoBtn addTarget:self action:@selector(touchPhoto:) forControlEvents:UIControlEventTouchUpInside];
@@ -172,13 +173,14 @@
 
 - (void)reloadPhotoScrollView
 {
+    float width = (320-photoHeight*3)/4.0;
     [self.photoScrollView removeSubviews];
     int endWidth = 0;
     if (self.myPhotoArray.count>0)
     {
         for (int i=0; i<self.myPhotoArray.count; i++)
         {
-            UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake(interval+(interval+photoHeight)*i, interval, photoHeight, photoHeight)];
+            UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake(width+(width+photoHeight)*i, interval, photoHeight, photoHeight)];
             [photoBtn setBackgroundImage:[self.myPhotoArray objectAtIndex:i] forState:UIControlStateNormal];
             [photoBtn addTarget:self action:@selector(touchPhoto:) forControlEvents:UIControlEventTouchUpInside];
             photoBtn.tag = 1000+i;

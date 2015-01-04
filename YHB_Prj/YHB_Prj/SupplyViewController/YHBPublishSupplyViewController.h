@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YHBSupplyDetailModel.h"
 
 @interface YHBPublishSupplyViewController : BaseViewController
 
+- (instancetype)initWithModel:(YHBSupplyDetailModel *)aModel;
 @end
