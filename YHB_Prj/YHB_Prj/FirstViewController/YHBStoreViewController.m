@@ -48,7 +48,7 @@ enum SgmBtn_tag
 @property (strong, nonatomic) UITableView *sellTableView;//供应信息tableview
 @property (strong, nonatomic) UITableView *productTableView;//产品信息tableview
 @property (strong, nonatomic) UITableView *templetTableView;//样板信息tableview
-@property (assign, nonatomic) NSString* shopID;
+@property (assign, nonatomic) int shopID;
 @property (strong, nonatomic) UIScrollView *backScrollView;
 @property (strong, nonatomic) YHBUserInfo *shopInfo;
 @property (strong, nonatomic) YHBInfoListManager *listManger;
@@ -165,7 +165,7 @@ enum SgmBtn_tag
     return _sgmBtmScrollView;
 }
 
-- (instancetype)initWithShopID:(NSString *)shopID
+- (instancetype)initWithShopID:(int)shopID
 {
     self = [super init];
     if (self) {
@@ -189,7 +189,7 @@ enum SgmBtn_tag
     
     //网络请求
     __weak YHBStoreViewController *weakself = self;
-    [self.infoManger getUserInfoWithToken:Nil orUserId:self.shopID ? :@"" Success:^(NSDictionary *dataDic){
+    [self.infoManger getUserInfoWithToken:Nil orUserId:[NSString stringWithFormat:@"%d",self.shopID] Success:^(NSDictionary *dataDic){
         weakself.shopInfo = [YHBUserInfo modelObjectWithDictionary:dataDic];
         if (weakself.shopInfo.groupid > 5) {
             //刷新页面
@@ -200,6 +200,7 @@ enum SgmBtn_tag
                 [weakself.backScrollView addSubview:weakself.sellTableView];
                 [weakself.backScrollView setContentSize:CGSizeMake(kMainScreenWidth, _backScrollView.height)];
                 [weakself getDataWithPageID:1 andInfoListTypr:SgmBtn_sellInfo];
+                [weakself addTableViewTragWithTableView:weakself.sellTableView];
             }else if (weakself.shopInfo.groupid == 7){
                 [weakself.backScrollView setContentSize:CGSizeMake(kMainScreenWidth*3, _backScrollView.height)];
                 weakself.productTableView.left = 0;
@@ -214,6 +215,9 @@ enum SgmBtn_tag
                 [weakself.backScrollView addSubview:weakself.templetTableView];
                 [weakself getDataWithPageID:1 andInfoListTypr:SgmBtn_templetInfo];
 
+                [weakself addTableViewTragWithTableView:weakself.productTableView];
+                [weakself addTableViewTragWithTableView:weakself.sellTableView];
+                [weakself addTableViewTragWithTableView:weakself.templetTableView];
             }
         }
     } failure:^{
@@ -265,12 +269,19 @@ enum SgmBtn_tag
 {
     switch (type) {
         case SgmBtn_productInfo: //产品信息
+        case SgmBtn_templetInfo://样板信息
         {
-            [self.listManger getProductListWithUserID:[self.shopID integerValue] typeID:0 pageID:0 pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
-                MLOG(@"%@",modelArray);
-                [self.rslistDic setObject:modelArray forKey:[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
+            [self.listManger getProductListWithUserID:self.shopID typeID:0 pageID:(type==SgmBtn_productInfo?0:1) pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
+                if (pageID == 1) {
+                    [self.rslistDic setObject:modelArray forKey:[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
+                }else{
+                    NSMutableArray *array = self.rslistDic[[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
+                    if (array) {
+                        [array addObjectsFromArray:modelArray];
+                    }
+                }
                 [self.pageDic setObject:page forKey:[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
-                [self.productTableView reloadData];
+                type == SgmBtn_productInfo ? [self.productTableView reloadData] : [self.templetTableView reloadData];
             } failure:^{
                 [SVProgressHUD showErrorWithStatus:@"获取信息失败，请检查网络或稍后再试！" cover:YES offsetY:0];
             }];
@@ -278,8 +289,15 @@ enum SgmBtn_tag
             break;
         case SgmBtn_sellInfo://供应信息
         {
-            [self.listManger getSellListWithUserID:[self.shopID integerValue] pageID:pageID pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
-                [self.rslistDic setObject:modelArray forKey:[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
+            [self.listManger getSellListWithUserID:self.shopID pageID:pageID pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
+                if (pageID == 1) {
+                    [self.rslistDic setObject:modelArray forKey:[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
+                }else{
+                    NSMutableArray *array = self.rslistDic[[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
+                    if (array) {
+                        [array addObjectsFromArray:modelArray];
+                    }
+                }
                 [self.pageDic setObject:page forKey:[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
                 [self.sellTableView reloadData];
             } failure:^{
@@ -287,24 +305,42 @@ enum SgmBtn_tag
             }];
         }
             break;
-        case SgmBtn_templetInfo://样板信息
-        {
-            [self.listManger getProductListWithUserID:[self.shopID integerValue] typeID:1 pageID:pageID pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
-                [self.rslistDic setObject:modelArray forKey:[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
-                [self.pageDic setObject:page forKey:[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
-                [self.templetTableView reloadData];
-            } failure:^{
-                [SVProgressHUD showErrorWithStatus:@"获取信息失败，请检查网络或稍后再试！" cover:YES offsetY:0];
-            }];
-        }
-            break;
+        
         default:
             break;
     }
 }
 
+#pragma mark 上拉下拉
+- (void)addTableViewTragWithTableView:(UITableView *)tableView
+{
+    __weak YHBStoreViewController *weakself = self;
+    __weak UITableView *weakTableView = tableView;
+    NSInteger type = tableView.tag;
+    [tableView addPullToRefreshWithActionHandler:^{
+        int16_t delayInSeconds = 2.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^{
+            [weakTableView.pullToRefreshView stopAnimating];
+            [weakself getDataWithPageID:1 andInfoListTypr:type];
+        });
+    }];
+    
+    [tableView addInfiniteScrollingWithActionHandler:^{
+        YHBPage *page = weakself.pageDic[[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
+        NSMutableArray *array = weakself.rslistDic[[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
+        if (page && (int)page.pageid * kPageSize <= (int)page.pagetotal && array.count >= kPageSize) {
+            int16_t delayInSeconds = 2.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^{
+                [weakTableView.infiniteScrollingView stopAnimating];
+                [weakself getDataWithPageID:(int)page.pageid+1 andInfoListTypr:type];
+            });
+        }else [weakTableView.infiniteScrollingView stopAnimating];
+    }];
+}
+
 #pragma mark - tableView DataSource and Delegaet
-#warning table待获取后台数据
 #pragma mark 数据行数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

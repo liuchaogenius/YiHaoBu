@@ -24,15 +24,15 @@
 #import "YHBFuncBlockCell.h"
 #import "YHBHotTagsCell.h"
 #import "YHBShopMallCell.h"
+#import "YHBProductDetailVC.h"
 
-#define kBannerHeight (kMainScreenWidth * 397/1075.0f)
+#define kBannerHeight (kMainScreenWidth * 397/1080.0f)
 #define kFuncCellHeight 60
 #define kFooterHeigt 14
 #define kFuncBlockCellHeight (439*kMainScreenWidth/2.0/540.0f)
 @interface FirstViewController ()<YHBBannerDelegate,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,YHBFunctionCellDelegate,YHBFuncBlockCellDelegate,YHBHotTagsDelegate,ShopMallCellDelegate>
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) YHBBannerVeiw *bannerView;//顶部广告
-@property (strong, nonatomic) UIScrollView *headScrollView;
 @property (strong, nonatomic) YHBFirstPageIndex *pageIndexMdoel;
 @property (strong, nonatomic) YHBShopIndexManager *shopIndexManager;
 @property (strong, nonatomic) YHBFunctionCell *functionCell;
@@ -67,7 +67,6 @@
     if (!_funcBlockCell) {
         _funcBlockCell = [[YHBFuncBlockCell alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kFuncBlockCellHeight)];
         _funcBlockCell.delegate = self;
-        
     }
     return _funcBlockCell;
 }
@@ -136,9 +135,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section > 1) {
+    if (section > 2) {
         return 25;
-    }else return 0;
+    }else return 0.5;
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -159,8 +159,9 @@
 {
     if (section > 1 && section < 5) {
         return self.headersArray[section-2];
-    }else
+    }else{
         return nil;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -171,7 +172,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kFooterHeigt)];
-    footer.backgroundColor = kViewBackgroundColor;//RGBCOLOR(238, 238, 238);
+    footer.backgroundColor = [UIColor blueColor];//kViewBackgroundColor;//RGBCOLOR(238, 238, 238);
     footer.layer.borderColor = [kLineColor CGColor];
     footer.layer.borderWidth = 0.5f;
     return footer;
@@ -268,7 +269,7 @@
                 //设置cell左中右三部分ui内容
                 if (indexPath.row*3+i < self.pageIndexMdoel.selllist.count) {
                     list = self.pageIndexMdoel.selllist[indexPath.row*3+i];
-                    [cell setImage:list.thumb title:list.title time:list.edittime hits:list.hits part:i];
+                    [cell setImage:list.thumb title:list.title time:list.editdate hits:list.hits part:i];
                 }else [cell setBlankWithPart:i];
             }
             return cell;
@@ -291,13 +292,13 @@
     
     for (NSInteger i = 0; i < imageNum; i++) {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i * kMainScreenWidth, 0, kMainScreenWidth, self.bannerView.headScrollView.height)];
-        imageView.backgroundColor = [UIColor whiteColor];
+        imageView.backgroundColor = [UIColor lightTextColor];
         
         YHBSelllist *slide = self.pageIndexMdoel.slidelist[i];
         //设置image
     
-        [imageView sd_setImageWithURL:[NSURL URLWithString:slide.thumb]];
-        [self.headScrollView addSubview:imageView];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:slide.thumb] placeholderImage:[UIImage imageNamed:@"bannerDefault"]];
+        [self.bannerView.headScrollView addSubview:imageView];
         imageView.tag = i;
     }
     [self.bannerView.pageControl setNumberOfPages:imageNum];
@@ -377,7 +378,12 @@
 #pragma mark 点击产品推荐、商机推荐部分
 - (void)selectCellPartWithIndexPath : (NSIndexPath*)indexPath part:(NSInteger)part
 {
-    
+    if (indexPath.section == 3) {
+        YHBMalllist *list = self.pageIndexMdoel.malllist[indexPath.row*3+part];
+        YHBProductDetailVC *vc = [[YHBProductDetailVC alloc] initWithProductID:(NSInteger)list.itemid];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 #pragma mark 点击hot tag
 - (void)touchHotTagsWithTag:(NSInteger)tag

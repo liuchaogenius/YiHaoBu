@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol YHBBannerDelegate <NSObject>
+@protocol YHBBannerDelegate <NSObject,UIScrollViewDelegate>
 
 - (void)touchBannerWithNum:(NSInteger)num;
 

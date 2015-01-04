@@ -199,7 +199,7 @@
         [timeIcon setContentMode:UIViewContentModeScaleAspectFit];
         [view addSubview:timeIcon];
         
-        UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(timeIcon.right+2, titleLable.bottom+2, kImageWidth/3, kDateFont)];
+        UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(timeIcon.right+2, titleLable.bottom+2, kImageWidth*1.5/3, kDateFont)];
         dateLabel.centerY = timeIcon.centerY;
         dateLabel.textAlignment = NSTextAlignmentLeft;
         dateLabel.textColor = [UIColor lightGrayColor];

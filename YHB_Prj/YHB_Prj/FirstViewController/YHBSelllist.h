@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *thumb;
 @property (nonatomic, assign) double hits;
+@property (nonatomic, strong) NSString *editdate;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;

@@ -37,12 +37,11 @@
     
     UIPageControl *pageControl = [[UIPageControl alloc] init];
     [pageControl setBounds:CGRectMake(0, 0, 150.0, 50.0)];
-    [pageControl setBounds:CGRectMake(0, 0, 150.0, 50.0)];
     [pageControl setCenter:CGPointMake(kMainScreenWidth/2, self.height - 10)];
     [pageControl setNumberOfPages:1];
     [pageControl setCurrentPage:0];
     [pageControl setCurrentPageIndicatorTintColor:[UIColor whiteColor]];
-    [pageControl setPageIndicatorTintColor:[UIColor colorWithRed:0.6 green:0.6 blue:0.7 alpha:0.8]];
+    [pageControl setPageIndicatorTintColor:[UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1.0]];
     [self addSubview:pageControl];
     self.pageControl = pageControl;
 

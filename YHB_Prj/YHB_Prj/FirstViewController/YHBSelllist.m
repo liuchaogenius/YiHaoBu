@@ -13,6 +13,7 @@ NSString *const kYHBSelllistItemid = @"itemid";
 NSString *const kYHBSelllistTitle = @"title";
 NSString *const kYHBSelllistThumb = @"thumb";
 NSString *const kYHBSelllistHits = @"hits";
+NSString *const kYHBSelllistEditdate = @"editdate";
 
 
 @interface YHBSelllist ()
@@ -28,6 +29,7 @@ NSString *const kYHBSelllistHits = @"hits";
 @synthesize title = _title;
 @synthesize thumb = _thumb;
 @synthesize hits = _hits;
+@synthesize editdate = _editdate;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
@@ -47,7 +49,7 @@ NSString *const kYHBSelllistHits = @"hits";
             self.title = [self objectOrNilForKey:kYHBSelllistTitle fromDictionary:dict];
             self.thumb = [self objectOrNilForKey:kYHBSelllistThumb fromDictionary:dict];
             self.hits = [[self objectOrNilForKey:kYHBSelllistHits fromDictionary:dict] doubleValue];
-
+            self.editdate = [self objectOrNilForKey:kYHBSelllistEditdate fromDictionary:dict];
     }
     
     return self;
@@ -62,6 +64,7 @@ NSString *const kYHBSelllistHits = @"hits";
     [mutableDict setValue:self.title forKey:kYHBSelllistTitle];
     [mutableDict setValue:self.thumb forKey:kYHBSelllistThumb];
     [mutableDict setValue:[NSNumber numberWithDouble:self.hits] forKey:kYHBSelllistHits];
+    [mutableDict setValue:self.editdate forKey:kYHBSelllistEditdate];
 
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
@@ -90,6 +93,7 @@ NSString *const kYHBSelllistHits = @"hits";
     self.title = [aDecoder decodeObjectForKey:kYHBSelllistTitle];
     self.thumb = [aDecoder decodeObjectForKey:kYHBSelllistThumb];
     self.hits = [aDecoder decodeDoubleForKey:kYHBSelllistHits];
+    self.editdate = [aDecoder decodeObjectForKey:kYHBSelllistEditdate];
     return self;
 }
 
@@ -101,6 +105,7 @@ NSString *const kYHBSelllistHits = @"hits";
     [aCoder encodeObject:_title forKey:kYHBSelllistTitle];
     [aCoder encodeObject:_thumb forKey:kYHBSelllistThumb];
     [aCoder encodeDouble:_hits forKey:kYHBSelllistHits];
+    [aCoder encodeObject:_editdate forKey:kYHBSelllistEditdate];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -114,6 +119,7 @@ NSString *const kYHBSelllistHits = @"hits";
         copy.title = [self.title copyWithZone:zone];
         copy.thumb = [self.thumb copyWithZone:zone];
         copy.hits = self.hits;
+        copy.editdate = [self.editdate copyWithZone:zone];
     }
     
     return copy;

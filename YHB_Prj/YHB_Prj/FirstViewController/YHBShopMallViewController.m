@@ -23,6 +23,7 @@
 #import "YHBSerchCell.h"
 #import "YHBShopMallCell.h"
 #import "YHBShopListsCell.h"
+#import "YHBProductDetailVC.h"
 
 #define kSearchTag 200
 #define kBannerHeight (kMainScreenWidth * 397/1075.0f)
@@ -30,7 +31,6 @@
 @interface YHBShopMallViewController ()<YHBBannerDelegate,UITableViewDelegate,UITableViewDataSource,ShopMallCellDelegate,YHBShopListCellDelegate,UITextFieldDelegate>
 
 @property (strong, nonatomic) YHBBannerVeiw *bannerView;//顶部广告
-@property (strong, nonatomic) UIScrollView *headScrollView;
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) YHBCompanyIndex *indexModel;
 @property (strong, nonatomic) YHBShopIndexManager *indexManager;
@@ -252,8 +252,8 @@
         YHBSlidelist *slide = self.indexModel.slidelist[i];
         //设置image
         
-        [imageView sd_setImageWithURL:[NSURL URLWithString:slide.thumb]];
-        [self.headScrollView addSubview:imageView];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:slide.thumb] placeholderImage:[UIImage imageNamed:@"bannerDefault"]];
+        [self.bannerView.headScrollView addSubview:imageView];
         imageView.tag = i;
     }
     [self.bannerView.pageControl setNumberOfPages:imageNum];
@@ -267,16 +267,15 @@
 {
     //MLOG(@"section:%ld row:%ld part:%ld",(long)indexPath.section,(long)indexPath.row,(long)part);
     if (indexPath.section == 1) {
-        //店铺
-#warning 待获取选择的店铺模型
-        YHBStoreViewController *storeVC = [[YHBStoreViewController alloc] init];
-        storeVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:storeVC animated:YES];
+        //促销产品
+        YHBHotlist *hot = self.indexModel.hotlist[indexPath.row * 3 + part];
+        YHBProductDetailVC *vc = [[YHBProductDetailVC alloc] initWithProductID:(NSInteger)hot.itemid];
+        [self.navigationController pushViewController:vc animated:YES];
         
-    }else if (indexPath.section == 0){
-        //商品
-        UIViewController *vc = [[UIViewController alloc] init];
-        vc.view.backgroundColor = [UIColor whiteColor];
+    }else if (indexPath.section == 3){
+        //产品推荐
+        YHBMalllist *mall  = self.indexModel.malllist[indexPath.row * 3 + part];
+        YHBProductDetailVC *vc = [[YHBProductDetailVC alloc] initWithProductID:(NSInteger)mall.itemid];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
@@ -286,6 +285,9 @@
 {
     if (self.indexModel.shoplist.count > tag) {
         YHBShoplist *shop = self.indexModel.shoplist[tag];
+        YHBStoreViewController *storeVC = [[YHBStoreViewController alloc] initWithShopID:(int)shop.itemid];
+        storeVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:storeVC animated:YES];
     }
 }
 

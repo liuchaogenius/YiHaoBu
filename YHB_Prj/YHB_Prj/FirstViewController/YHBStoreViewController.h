@@ -10,6 +10,6 @@
 
 @interface YHBStoreViewController : BaseViewController
 
-- (instancetype)initWithShopID:(NSString *)shopID;
+- (instancetype)initWithShopID:(int)shopID;
 
 @end
