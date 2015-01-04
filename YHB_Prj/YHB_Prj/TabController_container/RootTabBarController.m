@@ -39,14 +39,6 @@
     isGoBack = NO;
     [self initTabViewController];
     [self initTabBarItem];
-    [self initNotifyRegister];
-}
-
-- (void)initNotifyRegister
-{
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushLeftView) name:kLeftViewPushMessage object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popLeftView) name:kLeftViewPopMessage object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLoginViewController:) name:kLoginForUserMessage object:nil];
 }
 
 - (void)initTabViewController
@@ -97,13 +89,7 @@
     }
     
     MLOG(@"tabbarHeight=%f",self.tabBar.frame.size.height);
-
 }
-
-//- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
-//{
-//    tabBar.selectedItem.title = @" ";
-//}
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
@@ -118,55 +104,6 @@
     newSelectIndex = tabBarController.selectedIndex;
 }
 
-
-#pragma mark show login
-- (void)showLoginViewController:(NSNotification *)aNotification
-{
-    
-//    if(aNotification.object)
-//    {
-//        isGoBack = [[aNotification object] boolValue]; ///yes为goback  其他的不处理
-//    }
-//    __weak RootTabBarController *weakself = self;
-//    if (![HbhUser sharedHbhUser].isLogin)
-//    {
-//        if(!self.loginVC)
-//        {
-//            self.loginVC = [[HbhLoginViewController alloc] init];
-//        }
-//        if(!self.loginNav)
-//        {
-//            self.loginNav = [[UINavigationController alloc] initWithRootViewController:self.loginVC];
-//            
-//        }
-//
-//        [self presentViewController:self.loginNav animated:YES completion:^{
-//            
-//        }];
-//        if(!loginObserver)
-//        {
-//            loginObserver = [[FBKVOController alloc] initWithObserver:self];
-//        }
-//        [loginObserver observe:self.loginVC keyPath:@"type" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change) {
-//            int type = [[change objectForKey:@"new"] intValue];
-//            if(type == eLoginSucc)
-//            {
-//
-//            }
-//            else if(type == eLoginBack)
-//            {
-//                if(isGoBack)
-//                {
-//                    weakself.selectedIndex = oldSelectIndex;
-//                    isGoBack = NO;
-//                }
-//            }
-//            [weakself.loginNav dismissViewControllerAnimated:YES completion:^{
-//                
-//            }];
-//        }];
-//    }
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
