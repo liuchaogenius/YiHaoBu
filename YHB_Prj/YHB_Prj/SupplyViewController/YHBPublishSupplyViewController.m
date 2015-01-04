@@ -405,7 +405,7 @@
     [self showFlower];
     [self.netManage publishSupplyWithItemid:0 title:@"1" price:@"1" catid:@"1" typeid:@"1" today:@"1" content:@"1" truename:@"1" mobile:@"1" andSuccBlock:^(int aItemId) {
         [self dismissFlower];
-        YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:aItemId andIsMine:NO];
+        YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:aItemId andIsMine:YES isModal:YES];
         [self.navigationController pushViewController:vc animated:YES];
     } failBlock:^{
         [self dismissFlower];

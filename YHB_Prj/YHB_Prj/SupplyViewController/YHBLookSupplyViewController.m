@@ -268,12 +268,12 @@
 {
     YHBSupplyModel *model = [self.tableViewArray objectAtIndex:indexPath.row];
     if (isSupply) {
-        YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:model.itemid andIsMine:NO];
+        YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:model.itemid andIsMine:NO isModal:NO];
         [self.navigationController pushViewController:vc animated:YES];
     }
     else
     {
-        YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:model.itemid andIsMine:NO];
+        YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:model.itemid andIsMine:NO isModal:NO];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

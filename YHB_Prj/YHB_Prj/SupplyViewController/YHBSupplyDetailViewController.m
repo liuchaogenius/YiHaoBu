@@ -31,10 +31,20 @@
 
 @implementation YHBSupplyDetailViewController
 
-- (instancetype)initWithItemId:(int)aItemId andIsMine:(BOOL)aIsMine;
+//- (instancetype)initWithItemId:(int)aItemId andIsMine:(BOOL)aIsMine;
+//{
+//    if (self = [super init]) {
+//        isModal=NO;
+//        itemId = aItemId;
+//        isMine = aIsMine;
+//    }
+//    return self;
+//}
+
+- (instancetype)initWithItemId:(int)aItemId andIsMine:(BOOL)aIsMine isModal:(BOOL)aIsModal
 {
     if (self = [super init]) {
-        isModal=NO;
+        isModal=aIsModal;
         itemId = aItemId;
         isMine = aIsMine;
     }
@@ -110,8 +120,8 @@
     
     [self showFlower];
     
-    if (isModal==NO)
-    {
+//    if (isModal==NO)
+//    {
         [self.netManage getSupllyDetailWithItemid:itemId SuccessBlock:^(YHBSupplyDetailModel *aModel)
          {
              myModel = aModel;
@@ -125,7 +135,7 @@
          } andFailBlock:^{
              [self dismissFlower];
          }];
-    }
+//    }
 }
 
 #pragma mark 分享

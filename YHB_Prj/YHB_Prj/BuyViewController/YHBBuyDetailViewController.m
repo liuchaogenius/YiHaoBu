@@ -32,9 +32,10 @@
 
 @implementation YHBBuyDetailViewController
 
-- (instancetype)initWithItemId:(int)aItemId andIsMine:(BOOL)aIsMine
+- (instancetype)initWithItemId:(int)aItemId andIsMine:(BOOL)aIsMine isModal:(BOOL)aIsModal
 {
     if (self = [super init]) {
+        isModal = aIsModal;
         itemId = aItemId;
         isMine = aIsMine;
     }
@@ -110,8 +111,8 @@
    
     [self showFlower];
     
-    if (isModal==NO)
-    {
+//    if (isModal==NO)
+//    {
         self.manage = [[YHBBuyDetailManage alloc] init];
         [self.manage getBuyDetailWithItemid:itemId SuccessBlock:^(YHBBuyDetailData *aModel)
          {
@@ -125,7 +126,7 @@
          } andFailBlock:^{
              [self dismissFlower];
          }];
-    }
+//    }
 }
 
 #pragma mark 分享

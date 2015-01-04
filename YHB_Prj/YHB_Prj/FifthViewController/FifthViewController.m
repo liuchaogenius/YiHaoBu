@@ -293,7 +293,7 @@
 {
     YHBShopCartRslist *model = [self.tableViewArray objectAtIndex:indexPath.section];
     YHBShopCartCartlist *cartModel = [model.cartlist objectAtIndex:indexPath.row];
-    YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:cartModel.itemid andIsMine:NO];
+    YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:cartModel.itemid andIsMine:NO isModal:NO];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }

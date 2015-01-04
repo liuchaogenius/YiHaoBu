@@ -10,6 +10,7 @@
 
 @interface YHBSupplyDetailViewController : BaseViewController
 
-- (instancetype)initWithItemId:(int)aItemId andIsMine:(BOOL)aIsMine;
+//- (instancetype)initWithItemId:(int)aItemId andIsMine:(BOOL)aIsMine;
+- (instancetype)initWithItemId:(int)aItemId andIsMine:(BOOL)aIsMine isModal:(BOOL)aIsModal;
 - (instancetype)init;
 @end

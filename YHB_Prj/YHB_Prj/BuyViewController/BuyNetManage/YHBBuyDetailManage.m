@@ -17,7 +17,7 @@
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", aItemId], @"itemid",nil];
     kYHBRequestUrl(@"getBuyDetail.php", supplyDetailUrl);
     [NetManager requestWith:dict url:supplyDetailUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
-//        MLOG(@"%@", successDict);
+        MLOG(@"%@", successDict);
         NSDictionary *dataDict = [successDict objectForKey:@"data"];
         YHBBuyDetailData *model = [YHBBuyDetailData modelObjectWithDictionary:dataDict];
         aSuccBlock(model);

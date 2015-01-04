@@ -8,7 +8,7 @@
 
 #import "YHBPublishBuyViewController.h"
 #import "YHBVariousImageView.h"
-#import "YHBSupplyDetailViewController.h"
+#import "YHBBuyDetailViewController.h"
 #import "TitleTagViewController.h"
 #import "SVProgressHUD.h"
 #import "YHBPublishBuyManage.h"
@@ -355,7 +355,7 @@
     [self showFlower];
     [self.netManage publishBuyWithItemid:0 title:@"1" catid:@"1" today:@"1" content:@"1" truename:@"1" mobile:@"1" andSuccBlock:^(int aItemId) {
         [self dismissFlower];
-        YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:aItemId andIsMine:NO];
+        YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:aItemId andIsMine:YES isModal:YES];
         [self.navigationController pushViewController:vc animated:YES];
     } failBlock:^{
         [self dismissFlower];
