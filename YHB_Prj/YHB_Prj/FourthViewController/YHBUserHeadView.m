@@ -36,7 +36,7 @@
     if (!_privateButton) {
         _privateButton = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth-65, 50, 55, 20)];
         [_privateButton setBackgroundImage:[UIImage imageNamed:@"privateBtn"] forState:UIControlStateNormal];
-        [_privateButton setBackgroundImage:[UIImage imageNamed:@"hadPrivateBtn"] forState:UIControlStateSelected];
+        [_privateButton setBackgroundImage:[UIImage imageNamed:@"privateHighBtn"] forState:UIControlStateSelected];
         [_privateButton addTarget:self action:@selector(touchPrivateButton:) forControlEvents:UIControlEventTouchUpInside];
         _privateButton.selected = NO;
     }
@@ -52,6 +52,15 @@
         _userImageView.backgroundColor = [UIColor whiteColor];
         _userImageView.layer.cornerRadius = 2.0;
         [_loginedView addSubview:_userImageView];
+        
+        UIButton *imageButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        imageButton.frame = _userImageView.frame;
+        [imageButton setBackgroundColor:[UIColor clearColor]];
+        [imageButton addTarget:self action:@selector(touchHeadImageView) forControlEvents:UIControlEventTouchUpInside];
+        [_loginedView addSubview:imageButton];
+//        UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchHeadImageView)];
+//        [_userImageView addGestureRecognizer:gr];
+        
         
         _companylabel = [[UILabel alloc] initWithFrame:CGRectMake(self.userImageView.right+15, self.userImageView.top+5, 200, kTitleFont)];
         _companylabel.backgroundColor = [UIColor clearColor];
@@ -80,6 +89,8 @@
         [_loginedView addSubview:comTag];
         [_loginedView addSubview:selTag];
         [_loginedView addSubview:buyTag];
+        
+        
     }
     return _loginedView;
 }
@@ -166,6 +177,14 @@
 {
     if ([self.delegate respondsToSelector:@selector(touchPrivateBtn)]) {
         [self.delegate touchPrivateBtn];
+    }
+}
+
+#pragma mark touch 头像
+- (void)touchHeadImageView
+{
+    if ([self.delegate respondsToSelector:@selector(touchHeadImagBtn)]) {
+        [self.delegate touchHeadImagBtn];
     }
 }
 

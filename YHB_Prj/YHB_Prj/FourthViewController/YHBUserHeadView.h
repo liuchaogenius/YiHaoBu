@@ -13,6 +13,7 @@
 
 - (void)touchHeadLoginBtn;
 - (void)touchPrivateBtn;
+- (void)touchHeadImagBtn;
 
 @end
 

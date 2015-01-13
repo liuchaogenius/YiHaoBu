@@ -21,6 +21,8 @@
 #import "YHBBuytoolBarView.h"
 #import "YHBCommentCellView.h"
 #import "YHBConnectStoreVeiw.h"
+#import "YHBMoreCommentsVC.h"
+#import "YHBStoreDetailViewController.h"
 
 #define kBlankHeight 15
 #define kCCellHeight 35
@@ -284,12 +286,14 @@
 #pragma mark 点击更多评论
 - (void)touchMoreComment
 {
-    
+    YHBMoreCommentsVC *moreVC = [[YHBMoreCommentsVC alloc] initWithItemID:self.productID];
+    [self.navigationController pushViewController:moreVC animated:YES];
 }
 #pragma mark 点击查询店铺详情
 - (void)touchShopDetailCell
 {
-    
+    YHBStoreDetailViewController *vc = [[YHBStoreDetailViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark 点击联系卖家
 - (void)touchConnectStoreBtn

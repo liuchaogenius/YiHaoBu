@@ -17,6 +17,7 @@
 #import "YHBPage.h"
 #import "YHBRslist.h"
 #import "SVPullToRefresh.h"
+#import "YHBStoreDetailViewController.h"
 
 #define kSgmBtnHeight 50
 #define kSelectTagBase 100
@@ -453,6 +454,15 @@ enum SgmBtn_tag
 - (void)touchPrivateBtn
 {
     
+}
+
+#pragma mark 点击头像
+- (void)touchHeadImagBtn
+{
+    if (self.shopInfo){
+        YHBStoreDetailViewController *vc = [[YHBStoreDetailViewController alloc] initWithStoreInfo:self.shopInfo];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 #pragma mark scrollView delegat

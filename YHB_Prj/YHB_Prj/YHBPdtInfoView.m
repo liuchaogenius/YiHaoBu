@@ -10,7 +10,7 @@
 
 #define kPrice 16
 #define ktext 12
-#define kBtnWidth 23
+#define kBtnWidth 28
 @interface YHBPdtInfoView()
 
 @property (strong, nonatomic) UILabel *titleLabel;
@@ -44,10 +44,9 @@
     //self.titleLabel.text = @"xxxxsdfsdfsgdfgdfgdsdfasdfasdfasdfgdxxx电视机";
     
     self.privateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.privateButton.frame = CGRectMake(self.titleLabel.right+10, 10, kBtnWidth,33);
+    self.privateButton.frame = CGRectMake(self.titleLabel.right+5, 10, kBtnWidth,31);
     [self.privateButton setBackgroundImage:[UIImage imageNamed:@"privateImg"] forState:UIControlStateNormal];
-#warning 待替换已关注的图标-cc
-    [self.privateButton setBackgroundImage:[UIImage imageNamed:@"privateImg"] forState:UIControlStateSelected];
+    [self.privateButton setBackgroundImage:[UIImage imageNamed:@"privateHighImg"] forState:UIControlStateSelected];
     self.privateButton.selected = NO;
     //[self.privateButton addTarget:self action:@selector(touchPrivateButton) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.privateButton];

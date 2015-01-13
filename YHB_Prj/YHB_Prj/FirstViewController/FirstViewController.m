@@ -135,7 +135,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section > 2) {
+    if (section > 1) {
         return 25;
     }else return 0.5;
     
@@ -313,7 +313,7 @@
         case button_message:
         {
             //我的消息
-            self.tabBarController.selectedIndex = 3;
+            self.tabBarController.selectedIndex = 2;
         }
             break;
         case button_orders:

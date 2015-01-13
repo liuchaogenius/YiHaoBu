@@ -40,6 +40,7 @@
     [pageControl setCenter:CGPointMake(kMainScreenWidth/2, self.height - 10)];
     [pageControl setNumberOfPages:1];
     [pageControl setCurrentPage:0];
+    pageControl.hidesForSinglePage = YES;
     [pageControl setCurrentPageIndicatorTintColor:[UIColor whiteColor]];
     [pageControl setPageIndicatorTintColor:[UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1.0]];
     [self addSubview:pageControl];

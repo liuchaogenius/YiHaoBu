@@ -44,6 +44,8 @@
     if (self) {
         self.frame = CGRectMake(0, 0, kMainScreenWidth, ktoolHeight);
         self.backgroundColor = [UIColor whiteColor];
+        self.layer.borderWidth = 0.5;
+        self.layer.borderColor = [kLineColor CGColor];
         [self addSubview:self.cartButton];
         [self addSubview:self.buyButton];
     }
