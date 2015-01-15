@@ -12,7 +12,8 @@
 {
     UILabel *countLabel;
 }
-@property (nonatomic, assign) int count;
-- (instancetype)initWithFrame:(CGRect)frame;
-- (void)setCountLabel:(int)aCount;
+@property (nonatomic, assign) float count;
+@property(nonatomic, strong) void(^ myBlock)(float aCount);
+- (instancetype)initWithFrame:(CGRect)frame andChangeBlock:(void(^)(float aCount))aChangeBlock;
+- (void)setCountLabel:(float)aCount;
 @end

@@ -1268,8 +1268,11 @@
 		FF2A6C8B1A0F3C58001607AC /* UIParty */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< Updated upstream
 				5BC0D6DF1A650DBB00F0EE35 /* SelectNumColorViewController */,
+=======
 				AB65A4EB1A6774BC009475DC /* CategoryViewController */,
+>>>>>>> Stashed changes
 				5BD6329E1A5FA32800095DFD /* StoreDetailViewController */,
 				5BD632961A5F939400095DFD /* MoreCommentVC */,
 				5B6774FA1A559A0D00457012 /* ProductDetailViewController */,

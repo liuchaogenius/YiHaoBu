@@ -37,11 +37,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"Photos";
+    self.title = @"相册";
     self.albumArray = [NSMutableArray new];
     self.photoArray = [NSMutableArray new];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
     
     self.showAlbumTableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.showAlbumTableView.delegate = self;
@@ -124,7 +124,7 @@
     {
         countLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)array.count];
         
-        ALAsset *asset = [array objectAtIndex:0];
+        ALAsset *asset = [array lastObject];
         CGImageRef cgImage = [asset thumbnail];
         UIImage *image = [UIImage imageWithCGImage:cgImage];
         

@@ -14,7 +14,7 @@
 @property (nonatomic, assign) int userid;
 @property (nonatomic, strong) NSString *company;
 @property (nonatomic, strong) NSString *truename;
-@property (nonatomic, strong) NSArray *cartlist;
+@property (nonatomic, strong) NSMutableArray *cartlist;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;

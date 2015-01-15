@@ -41,7 +41,8 @@
     if (!_maskingView)
     {
         _maskingView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-        _maskingView.backgroundColor = [UIColor whiteColor];
+        _maskingView.backgroundColor = [UIColor grayColor];
+        _maskingView.alpha=0.7;
         _maskingView.tag = 1000;
     }
     return _maskingView;

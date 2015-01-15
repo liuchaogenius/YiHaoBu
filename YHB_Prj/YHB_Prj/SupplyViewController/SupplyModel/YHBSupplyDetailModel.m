@@ -28,7 +28,7 @@ NSString *const kYHBSupplyDetailModelVip = @"vip";
 NSString *const kYHBSupplyDetailModelPrice = @"price";
 NSString *const kYHBSupplyDetailModelEdittime = @"edittime";
 NSString *const kYHBSupplyDetailModelTypeid = @"typeid";
-NSString *const kYHBSupplyDetailModelContent = @"content";
+NSString *const kYHBSupplyDetailModelContent = @"introduce";
 
 
 @interface YHBSupplyDetailModel ()

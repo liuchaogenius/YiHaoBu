@@ -51,7 +51,7 @@
     _photoDictionary = [NSMutableDictionary new];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(done)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(done)];
     
     self.showPhotoTableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.showPhotoTableView.delegate = self;
@@ -74,6 +74,13 @@
     self.photoArray = temPhotoArray;
     [self.showPhotoTableView reloadData];
     [activityView stopAnimating];
+    CGFloat height = (self.photoArray.count%4==0?self.photoArray.count/4:self.photoArray.count/4+1)*(_photoHeight+_interval);
+    CGFloat offY = 0;
+    if (height>kMainScreenHeight)
+    {
+        offY = height-kMainScreenHeight;
+        self.showPhotoTableView.contentOffset = CGPointMake(0, offY);
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -142,9 +149,48 @@
             _currentSelectCount++;
             int index = aRow*4+aIndex;
             ALAsset *asset = [self.photoArray objectAtIndex:index];
-            CGImageRef cgImage = [asset thumbnail];
+            CGImageRef cgImage = [[asset defaultRepresentation] fullScreenImage];
             UIImage *image = [UIImage imageWithCGImage:cgImage];
-            [_photoDictionary setObject:image forKey:[NSString stringWithFormat:@"%d", index]];
+            CGFloat imageHeight = image.size.height;
+            CGFloat imageWidth = image.size.width;
+//            CGRect rect = CGRectMake((imageWidth-kMainScreenWidth)/2.0,(imageHeight-kMainScreenWidth*imageHeight/imageWidth)/2.0,kMainScreenWidth,kMainScreenWidth*imageHeight/imageWidth);
+//            CGImageRef imageRefRect = CGImageCreateWithImageInRect(cgImage, rect);
+//            UIImage *imageRect = [[UIImage alloc] initWithCGImage:imageRefRect];
+//            UIImageView *imgView = [[UIImageView alloc] initWithImage:imageRect];
+            
+            UIImage *newimage = nil;
+            if (imageWidth>kMainScreenWidth)
+            {
+                CGSize asize = CGSizeMake(kMainScreenWidth,kMainScreenWidth*imageHeight/imageWidth);
+                CGRect rect;
+                CGSize oldsize = CGSizeMake(imageWidth, imageHeight);
+                if (asize.width/asize.height > oldsize.width/oldsize.height) {
+                    rect.size.width = asize.height*oldsize.width/oldsize.height;
+                    rect.size.height = asize.height;
+                    rect.origin.x = (asize.width - rect.size.width)/2;
+                    rect.origin.y = 0;
+                }
+                else{
+                    rect.size.width = asize.width;
+                    rect.size.height = asize.width*oldsize.height/oldsize.width;
+                    rect.origin.x = 0;
+                    rect.origin.y = (asize.height - rect.size.height)/2;
+                }
+                UIGraphicsBeginImageContext(asize);
+                CGContextRef context = UIGraphicsGetCurrentContext();
+                CGContextSetFillColorWithColor(context, [[UIColor clearColor] CGColor]);
+                UIRectFill(CGRectMake(0, 0, asize.width, asize.height));//clear background
+                [image drawInRect:rect];
+                newimage = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+            }
+            else
+            {
+                newimage = image;
+            }
+            UIImageView *imgView = [[UIImageView alloc] initWithImage:newimage];
+//            MLOG(@"%@", imgView);
+            [_photoDictionary setObject:newimage forKey:[NSString stringWithFormat:@"%d", index]];
         }
         else if(temImgView.isSelected==YES)
         {

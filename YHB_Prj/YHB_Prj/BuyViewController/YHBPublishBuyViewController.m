@@ -33,6 +33,8 @@
     UITextView *contentTextView;
     UITapGestureRecognizer *tapTitleGesture;
     UITapGestureRecognizer *tapDayGesture;
+    
+    YHBBuyDetailData *myModel;
 }
 
 @property(nonatomic, strong) UIPickerView *dayPickerView;
@@ -41,6 +43,14 @@
 @end
 
 @implementation YHBPublishBuyViewController
+
+- (instancetype)initWithModel:(YHBBuyDetailData *)aModel
+{
+    if (self = [super init]) {
+        myModel = aModel;
+    }
+    return self;
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -164,6 +174,13 @@
     contentTextView.delegate = self;
     contentTextView.backgroundColor = [UIColor clearColor];
     [editSupplyView addSubview:contentTextView];
+    
+    if (myModel)
+    {
+        titleLabel.text = myModel.title;
+        catNameLabel.text = myModel.catname;
+        contentTextView.text = myModel.content;
+    }
     
 #pragma mark 下面View
     UIView *contactView = [[UIView alloc] initWithFrame:CGRectMake(0, editSupplyView.bottom+10, kMainScreenWidth, 90)];

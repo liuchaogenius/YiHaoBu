@@ -56,7 +56,7 @@ NSString *const kYHBShopCartRslistCartlist = @"cartlist";
        [parsedYHBShopCartCartlist addObject:[YHBShopCartCartlist modelObjectWithDictionary:(NSDictionary *)receivedYHBShopCartCartlist]];
     }
 
-    self.cartlist = [NSArray arrayWithArray:parsedYHBShopCartCartlist];
+    self.cartlist = [NSMutableArray arrayWithArray:parsedYHBShopCartCartlist];
 
     }
     

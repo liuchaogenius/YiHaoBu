@@ -12,6 +12,8 @@
 #import "TitleTagViewController.h"
 #import "SVProgressHUD.h"
 #import "YHBPublishSupplyManage.h"
+#import "CategoryViewController.h"
+#import "YHBCatSubcate.h"
 
 
 #define kButtonTag_Yes 100
@@ -165,7 +167,11 @@
     
     UIImageView *plusImgView = [[UIImageView alloc] initWithFrame:CGRectMake(catNameLabel.right, catNameLabel.top, 23, 30)];
     plusImgView.image = [UIImage imageNamed:@"plusImg"];
+    plusImgView.userInteractionEnabled = YES;
     [editSupplyView addSubview:plusImgView];
+    
+    UITapGestureRecognizer *tapGestureReco = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchCat)];
+    [plusImgView addGestureRecognizer:tapGestureReco];
     
     NSArray *array = @[@"现货",@"期货",@"促销"];
     for (int i=0; i<3; i++)
@@ -329,6 +335,20 @@
     self.toolView.top = self.dayPickerView.top-30;
     [self.dayPickerView removeFromSuperview];
     [aBtn.superview removeFromSuperview];
+}
+
+#pragma mark 点击cat
+- (void)touchCat
+{
+    CategoryViewController *vc = [CategoryViewController sharedInstancetype];
+    [vc setBlock:^(NSArray *aArray) {
+        NSString *str = @"";
+        for (YHBCatSubcate *subModel in aArray) {
+            str = [str stringByAppendingString:[NSString stringWithFormat:@" %@", subModel.catname]];
+        }
+        catNameLabel.text = str;
+    }];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark 点击标题

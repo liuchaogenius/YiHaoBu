@@ -10,7 +10,7 @@
 
 @implementation ChangeCountView
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame andChangeBlock:(void (^)(float aCount))aChangeBlock
 {
     if (self = [super initWithFrame:frame]) {
         UIButton *jianBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
@@ -22,13 +22,6 @@
         [jianBtn addTarget:self action:@selector(jianjiaBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:jianBtn];
         
-        countLabel = [[UILabel alloc] initWithFrame:CGRectMake(jianBtn.right, 0, 25, 20)];
-        countLabel.font = kFont15;
-        countLabel.textAlignment = NSTextAlignmentCenter;
-        countLabel.layer.borderWidth = 0.5;
-        countLabel.layer.borderColor = [[UIColor blackColor] CGColor];
-        [self addSubview:countLabel];
-        
         UIButton *jiaBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.frame.size.width-20, 0, 20, 20)];
         [jiaBtn setTitle:@"+" forState:UIControlStateNormal];
         jiaBtn.tag = 101;
@@ -37,14 +30,23 @@
         [jiaBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [jiaBtn addTarget:self action:@selector(jianjiaBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:jiaBtn];
+        
+        countLabel = [[UILabel alloc] initWithFrame:CGRectMake(jianBtn.right, 0, jiaBtn.left-jianBtn.right, 20)];
+        countLabel.font = kFont12;
+        countLabel.textAlignment = NSTextAlignmentCenter;
+        countLabel.layer.borderWidth = 0.5;
+        countLabel.layer.borderColor = [[UIColor blackColor] CGColor];
+        [self addSubview:countLabel];
+        
+        self.myBlock = aChangeBlock;
     }
     return self;
 }
 
-- (void)setCountLabel:(int)aCount
+- (void)setCountLabel:(float)aCount
 {
     self.count = aCount;
-    countLabel.text = [NSString stringWithFormat:@"%d", self.count];
+    countLabel.text = [NSString stringWithFormat:@"%.1f", self.count];
 }
 
 - (void)jianjiaBtn:(UIButton *)aBtn
@@ -60,7 +62,8 @@
     {
         self.count++;
     }
-    countLabel.text = [NSString stringWithFormat:@"%d", self.count];
+    countLabel.text = [NSString stringWithFormat:@"%.1f", self.count];
+    self.myBlock(self.count);
 }
 /*
 // Only override drawRect: if you perform custom drawing.

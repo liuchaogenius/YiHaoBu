@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YHBBuyDetailData.h"
 
 @interface YHBPublishBuyViewController : BaseViewController
-
+- (instancetype)initWithModel:(YHBBuyDetailData *)aModel;
 @end

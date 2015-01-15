@@ -15,6 +15,7 @@
 #import "SVProgressHUD.h"
 #import "YHBSupplyDetailViewController.h"
 #import "TableSectionHeaderView.h"
+#import "SVPullToRefresh.h"
 
 #define bottomHeight 60
 @interface FifthViewController ()<UITableViewDataSource, UITableViewDelegate, ShoppingCartCellDelegate, TableViewHeaderViewDelegate>
@@ -31,6 +32,8 @@
     UIButton *accontBtn;
     UILabel *yunlabel;
 //    UIButton *moveToFavoriteBtn;
+    NSMutableArray *changeItemArray;
+    NSMutableArray *changeModelArray;
 }
 @property(nonatomic, strong) YHBShopCartManage *netManage;
 @property(nonatomic, strong) NSMutableArray *tableViewArray;
@@ -48,6 +51,8 @@
     [self settitleLabel:@"购物车"];
     self.netManage = [[YHBShopCartManage alloc] init];
     self.tableViewArray = [NSMutableArray new];
+    changeItemArray = [NSMutableArray new];
+    changeModelArray = [NSMutableArray new];
     price = 0;
     isEdit = NO;
     
@@ -88,6 +93,7 @@
     accontBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth-90, (bottomHeight-30)/2, 80, 30)];
     accontBtn.backgroundColor = KColor;
     [accontBtn setTitle:@"结算" forState:UIControlStateNormal];
+    [accontBtn addTarget:self action:@selector(touchAccontBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomView addSubview:accontBtn];
     
     priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(accontBtn.left-150, accontBtn.top+3, 110, 15)];
@@ -116,6 +122,7 @@
 //以上是bottomView
     
     [self showFlower];
+    [self addTableViewTrag];
     [self.netManage getShopCartArray:^(NSMutableArray *aArray) {
         self.tableViewArray = aArray;
         [self.tableView reloadData];
@@ -133,12 +140,37 @@
 #pragma mark 编辑
 - (void)edit
 {
+    [chooseBtn setImage:[UIImage imageNamed:@"shopNotChooseImg"] forState:UIControlStateNormal];
+    [selectedDict removeAllObjects];
+    [selectedHeaderViewArray removeAllObjects];
+    price=0;
+    isAllSelected = NO;
+    [self changePrice:price];
     if (isEdit)
     {
         [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
         [accontBtn setTitle:@"结算" forState:UIControlStateNormal];
         priceLabel.hidden = NO;
         yunlabel.hidden = NO;
+        self.tableView.allowsSelection = YES;
+        if (changeModelArray.count>0)
+        {
+            for(NSDictionary *paramDict in changeModelArray)
+            {
+                int section = [[paramDict objectForKey:@"section"] intValue];
+                NSString *number = [paramDict objectForKey:@"number"];
+                int row = [[paramDict objectForKey:@"row"] intValue];
+                YHBShopCartRslist *model = [self.tableViewArray objectAtIndex:section];
+                YHBShopCartCartlist *cartModel = [model.cartlist objectAtIndex:row];
+                cartModel.number = number;
+            }
+            [self.netManage changeShopCartWithArray:changeItemArray andSuccBlock:^{
+                changeItemArray = [NSMutableArray new];
+                changeModelArray = [NSMutableArray new];
+            } failBlock:^{
+                
+            }];
+        }
 //        moveToFavoriteBtn.hidden = YES;
     }
     else
@@ -147,12 +179,47 @@
         [accontBtn setTitle:@"删除" forState:UIControlStateNormal];
         priceLabel.hidden = YES;
         yunlabel.hidden = YES;
+        self.tableView.allowsSelection = NO;
 //        moveToFavoriteBtn.hidden = NO;
 
     }
     isEdit = !isEdit;
     [self.tableView reloadData];
 }
+
+#pragma mark 增加上拉下拉
+- (void)addTableViewTrag
+{
+    __weak FifthViewController *weakself = self;
+    [weakself.tableView addPullToRefreshWithActionHandler:^{
+        [self.netManage getShopCartArray:^(NSMutableArray *aArray) {
+            [weakself.tableView.pullToRefreshView stopAnimating];
+            self.tableViewArray = aArray;
+            [self.tableView reloadData];
+        } andFail:^{
+            [weakself.tableView.pullToRefreshView stopAnimating];
+        }];
+    }];
+    
+    
+    [weakself.tableView addInfiniteScrollingWithActionHandler:^{
+        if(self.tableViewArray.count%10==0&&self.tableViewArray.count>0)
+        {
+            [self.netManage getNextShopCartArray:^(NSMutableArray *aArray) {
+                [weakself.tableView.infiniteScrollingView stopAnimating];
+                [self.tableViewArray addObjectsFromArray:aArray];
+                [self.tableView reloadData];
+            } andFail:^{
+                [weakself.tableView.infiniteScrollingView stopAnimating];
+            }];
+        }
+        else
+        {
+            [weakself.tableView.infiniteScrollingView stopAnimating];
+        }
+    }];
+}
+
 
 #pragma mark AllSelected
 - (void)allSelected
@@ -231,18 +298,18 @@
     return view;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 30;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    TableSectionFooterView *view = [[TableSectionFooterView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 30)];
-    YHBShopCartRslist *model = [self.tableViewArray objectAtIndex:section];
-    [view setViewWith:model];
-    return view;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+//{
+//    return 30;
+//}
+//
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+//{
+//    TableSectionFooterView *view = [[TableSectionFooterView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 30)];
+//    YHBShopCartRslist *model = [self.tableViewArray objectAtIndex:section];
+//    [view setViewWith:model];
+//    return view;
+//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -263,8 +330,8 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.delegate = self;
     }
-    cell.section = indexPath.section;
-    cell.row = indexPath.row;
+    cell.section = (int)indexPath.section;
+    cell.row = (int)indexPath.row;
     [cell selectedBtnNo];
     if (isAllSelected)
     {
@@ -296,6 +363,44 @@
     YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:cartModel.itemid andIsMine:NO isModal:NO];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark 自己的delegate
+- (void)changeCountWithItemId:(NSString *)aItemid andCount:(float)aCount WithSection:(int)aSection row:(int)aRow isStay:(BOOL)aBool
+{
+    int j=0;
+    for(int i=0; i<changeItemArray.count; i++)
+    {
+        NSDictionary *paramDict = [changeItemArray objectAtIndex:i];
+        NSString *paramItemid = [paramDict objectForKey:@"itemid"];
+        j++;
+        if ([paramItemid isEqualToString:aItemid])
+        {
+            if (aBool)
+            {
+                [changeItemArray removeObjectAtIndex:i];
+                [changeModelArray removeObjectAtIndex:i];
+                break;
+            }
+            else
+            {
+                [changeItemArray removeObjectAtIndex:i];
+                [changeModelArray removeObjectAtIndex:i];
+                NSDictionary *itemDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%.1f", aCount],@"number",aItemid,@"itemid", nil];
+                NSDictionary *modelDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%.1f", aCount],@"number",[NSString stringWithFormat:@"%d", aSection],@"section",[NSString stringWithFormat:@"%d", aRow],@"row",nil];
+                [changeItemArray addObject:itemDict];
+                [changeModelArray addObject:modelDict];
+                break;
+            }
+        }
+    }
+    if (j==changeItemArray.count)
+    {
+        NSDictionary *itemDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%.1f", aCount],@"number",aItemid,@"itemid", nil];
+        NSDictionary *modelDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%.1f", aCount],@"number",[NSString stringWithFormat:@"%d", aSection],@"section",[NSString stringWithFormat:@"%d", aRow],@"row",nil];
+        [changeItemArray addObject:itemDict];
+        [changeModelArray addObject:modelDict];
+    }
 }
 
 - (void)touchCell:(YHBShoppingCartTableViewCell *)aCell WithSection:(int)aSection row:(int)aRow
@@ -411,6 +516,47 @@
     [SVProgressHUD dismiss];
 }
 
+#pragma mark 完成
+- (void)touchAccontBtn
+{
+    if (isEdit)
+    {
+        NSMutableArray *itemidArray = [NSMutableArray new];
+        NSArray *keyArray = [selectedDict allKeys];
+        for (int i=0; i<keyArray.count; i++)
+        {
+            NSString *section = [keyArray objectAtIndex:i];
+            NSArray *temarray = [selectedDict objectForKey:section];
+            NSArray *array = [temarray sortedArrayUsingSelector:@selector(compare:)];
+            for (int j=(int)array.count-1; j>=0; j--)
+            {
+                NSString *row = [array objectAtIndex:j];
+                YHBShopCartRslist *model = [self.tableViewArray objectAtIndex:[section intValue]];
+                YHBShopCartCartlist *cartModel = [model.cartlist objectAtIndex:[row intValue]];
+                NSString *itemid = [NSString stringWithFormat:@"%d", (int)cartModel.itemid];
+                [itemidArray addObject:itemid];
+                [model.cartlist removeObject:cartModel];
+                if (model.cartlist.count==0)
+                {
+                    [self.tableViewArray removeObject:model];
+                }
+            }
+        }
+        [selectedDict removeAllObjects];
+        [selectedHeaderViewArray removeAllObjects];
+        isAllSelected = NO;
+        [self.tableView reloadData];
+        [self.netManage deleteShopCartWithArray:itemidArray andSuccBlock:^{
+            
+        } failBlock:^{
+            
+        }];
+    }
+    else
+    {
+        
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

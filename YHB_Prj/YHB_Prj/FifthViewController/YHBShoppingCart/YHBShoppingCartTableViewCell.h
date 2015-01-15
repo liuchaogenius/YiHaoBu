@@ -13,6 +13,7 @@
 @protocol ShoppingCartCellDelegate <NSObject>
 
 - (void)touchCell:(YHBShoppingCartTableViewCell *)aCell WithSection:(int)aSection row:(int)aRow;
+- (void)changeCountWithItemId:(NSString *)aItemid andCount:(float)aCount WithSection:(int)aSection row:(int)aRow isStay:(BOOL)aBool;
 
 @end
 
@@ -25,10 +26,11 @@
     UILabel *titleLabel;
     UILabel *catLabel;
     ChangeCountView *changeView;
+    YHBShopCartCartlist *myModel;
 }
 
-@property (nonatomic, assign) long section;
-@property (nonatomic, assign) long row;
+@property (nonatomic, assign) int section;
+@property (nonatomic, assign) int row;
 
 @property(nonatomic, strong) UIButton *chooseBtn;
 @property (nonatomic, assign) BOOL isSelected;

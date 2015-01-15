@@ -20,6 +20,7 @@
 @interface YHBMySupplyViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
     BOOL isSupply;
+    YHBMySupplyManage *manage;
 }
 
 @property(nonatomic, strong) UITableView *supplyTableView;
@@ -54,10 +55,10 @@
     self.supplyTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.supplyTableView];
     
-//    [self addTableViewTrag];
+    [self addTableViewTrag];
     [self showFlower];
     
-    YHBMySupplyManage *manage = [[YHBMySupplyManage alloc] init];
+    manage = [[YHBMySupplyManage alloc] init];
     [manage getSupplyArray:^(NSMutableArray *aArray) {
         [self dismissFlower];
         self.tableViewArray = aArray;
@@ -66,6 +67,46 @@
         [self dismissFlower];
     } isSupply:isSupply];
 }
+
+#pragma mark 增加上拉下拉
+- (void)addTableViewTrag
+{
+    __weak YHBMySupplyViewController *weakself = self;
+    [weakself.supplyTableView addPullToRefreshWithActionHandler:^{
+        [manage getSupplyArray:^(NSMutableArray *aArray) {
+            [weakself.supplyTableView.infiniteScrollingView stopAnimating];
+            self.tableViewArray = aArray;
+            [self.supplyTableView reloadData];
+        } andFail:^{
+            [weakself.supplyTableView.infiniteScrollingView stopAnimating];
+        } isSupply:isSupply];
+    }];
+    
+    
+    [weakself.supplyTableView addInfiniteScrollingWithActionHandler:^{
+        if(self.tableViewArray.count%20==0&&self.tableViewArray.count>0)
+        {
+            [manage getNextSupplyArray:^(NSMutableArray *aArray) {
+                [weakself.supplyTableView.infiniteScrollingView stopAnimating];
+                NSMutableArray *insertIndexPaths = [NSMutableArray new];
+                for (unsigned long i=self.tableViewArray.count; i<self.tableViewArray.count+aArray.count; i++)
+                {
+                    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
+                    [insertIndexPaths addObject:indexpath];
+                }
+                [self.tableViewArray addObjectsFromArray:aArray];
+                [self.supplyTableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
+            } andFail:^{
+                [weakself.supplyTableView.infiniteScrollingView stopAnimating];
+            }];
+        }
+        else
+        {
+            [weakself.supplyTableView.infiniteScrollingView stopAnimating];
+        }
+    }];
+}
+
 
 - (void)addSupply
 {

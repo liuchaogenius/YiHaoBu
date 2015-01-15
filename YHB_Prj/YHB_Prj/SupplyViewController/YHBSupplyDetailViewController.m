@@ -149,7 +149,7 @@
 {
     YHBPublishSupplyViewController *vc = [[YHBPublishSupplyViewController alloc] initWithModel:myModel];
     [self presentViewController:[[UINavigationController alloc] initWithRootViewController:vc] animated:YES completion:^{
-        
+        [self.navigationController popViewControllerAnimated:YES];
     }];
 }
 

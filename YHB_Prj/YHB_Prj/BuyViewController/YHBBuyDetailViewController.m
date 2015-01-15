@@ -14,6 +14,7 @@
 #import "YHBVariousImageView.h"
 #import "YHBContactView.h"
 #import "PushPriceViewController.h"
+#import "YHBPublishBuyViewController.h"
 
 #define kContactViewHeight 60
 @interface YHBBuyDetailViewController ()
@@ -138,7 +139,10 @@
 #pragma mark 编辑
 - (void)edit
 {
-    MLOG(@"编辑");
+    YHBPublishBuyViewController *vc = [[YHBPublishBuyViewController alloc] initWithModel:myModel];
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:vc] animated:YES completion:^{
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
 }
 
 #pragma mark 浏览商城

@@ -54,7 +54,12 @@
         //        countLabel.text = @"×1";
         [self addSubview:countLabel];
         
-        changeView = [[ChangeCountView alloc] initWithFrame:CGRectMake(line, catLabel.top, 65, 20)];
+        changeView = [[ChangeCountView alloc] initWithFrame:CGRectMake(line, catLabel.top, 65, 20) andChangeBlock:^(float aCount) {
+//            countLabel.text = [NSString stringWithFormat:@"×%.1f", aCount];
+            BOOL isStay = (aCount==[myModel.number floatValue]);
+            [self.delegate changeCountWithItemId:[NSString stringWithFormat:@"%d", (int)myModel.itemid]
+                                        andCount:aCount WithSection:self.section row:self.row isStay:isStay];
+        }];
         [self addSubview:changeView];
         
         UIView *bottomline = [[UIView alloc] initWithFrame:CGRectMake(0, cellHeight-0.3, kMainScreenWidth, 0.3)];
@@ -106,9 +111,11 @@
 
 - (void)setCellWithModel:(YHBShopCartCartlist *)aModel
 {
+    myModel = aModel;
     [shopImgView sd_setImageWithURL:[NSURL URLWithString:aModel.thumb]];
     countLabel.text = [NSString stringWithFormat:@"×%@", aModel.number];
-    [changeView setCountLabel:[aModel.number floatValue]];
+    NSString * newString = [countLabel.text substringWithRange:NSMakeRange(1, [countLabel.text length] - 1)];
+    [changeView setCountLabel:[newString floatValue]];
     titleLabel.text = aModel.title;
     priceLabel.text = [NSString stringWithFormat:@"￥%@",aModel.price];
     if (aModel.catname)

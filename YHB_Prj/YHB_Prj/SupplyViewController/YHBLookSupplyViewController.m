@@ -89,7 +89,7 @@
     [topView addSubview:underLineView];
     
 #pragma mark 建立tableview
-    self.supplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, topViewHeight+62, kMainScreenWidth, kMainScreenHeight-topViewHeight-62-49)];
+    self.supplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, topViewHeight+62, kMainScreenWidth, kMainScreenHeight-topViewHeight-62)];
     self.supplyTableView.delegate = self;
     self.supplyTableView.dataSource = self;
     self.supplyTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -126,6 +126,9 @@
 
 - (void)touchTopViewBtn:(UIButton *)aBtn
 {
+    [UIView animateWithDuration:0.2 animations:^{
+        self.supplyTableView.contentOffset = CGPointMake(0, 0);
+    }];
     if (isVip)
     {
         [self.selectAllBtn setTitleColor:KColor forState:UIControlStateNormal];
