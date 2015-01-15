@@ -14,7 +14,7 @@
 #import "YHBProductDetail.h"
 #import "YHBSku.h"
 #import "YHBExpress.h"
-#import "YHBPic.h"
+#import "YHBAlbum.h"
 #import "YHBComment.h"
 #import "UIImageView+WebCache.h"
 #import "YHBPdtInfoView.h"
@@ -23,12 +23,14 @@
 #import "YHBConnectStoreVeiw.h"
 #import "YHBMoreCommentsVC.h"
 #import "YHBStoreDetailViewController.h"
+#import "YHBSelNumColorView.h"
+#import "YHBPrivateManager.h"
 
 #define kBlankHeight 15
 #define kCCellHeight 35
 #define kBannerHeight (kMainScreenWidth * 625/1080.0f)
 
-@interface YHBProductDetailVC()<YHBBannerDelegate,YHBConStoreDelegate>
+@interface YHBProductDetailVC()<YHBBannerDelegate,YHBConStoreDelegate,YHBSelViewDelegate>
 {
     CGFloat _currentY;
 }
@@ -44,12 +46,23 @@
 @property (weak, nonatomic) UIView *selectCell;
 @property (weak, nonatomic) UIView *commentHead;
 @property (strong, nonatomic) YHBConnectStoreVeiw *conStoreView;
+@property (strong, nonatomic) YHBSelNumColorView *selView;
+@property (strong, nonatomic) UIVisualEffectView *visualEffectView;
+@property (strong, nonatomic) YHBPrivateManager *privateManager;
 
 @end
 
 @implementation YHBProductDetailVC
 
 #pragma mark - getter and setter
+- (YHBPrivateManager *)privateManager
+{
+    if (!_privateManager) {
+        _privateManager = [[YHBPrivateManager alloc] init];
+    }
+    return _privateManager;
+}
+
 - (YHBUser *)user
 {
     if (!_user) {
@@ -234,17 +247,17 @@
 - (void)refreshAddView
 {
     
-    NSInteger imageNum = self.productModel.pic.count;
+    NSInteger imageNum = self.productModel.album.count;
     [self.bannerView.headScrollView setContentSize:CGSizeMake(imageNum * kMainScreenWidth, self.bannerView.headScrollView.height)];
     
     for (NSInteger i = 0; i < imageNum; i++) {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i * kMainScreenWidth, 0, kMainScreenWidth, self.bannerView.headScrollView.height)];
         imageView.backgroundColor = [UIColor whiteColor];
         
-        YHBPic *pic = self.productModel.pic[i];
+        YHBAlbum *album = self.productModel.album[i];
         //设置image
 #warning 以后带去掉placehold-cc
-        [imageView sd_setImageWithURL:[NSURL URLWithString:pic.middle] placeholderImage:[UIImage imageNamed:@"productDefault"]];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:album.middle] placeholderImage:[UIImage imageNamed:@"productDefault"]];
         [self.bannerView.headScrollView addSubview:imageView];
         imageView.tag = i;
     }
@@ -254,9 +267,15 @@
 }
 #pragma mark - Action
 #pragma mark 收藏
-- (void)touchPrivateBtn : (UIButton *)senger
+- (void)touchPrivateBtn : (UIButton *)sender
 {
-    
+#warning 此处是否一定是产品,以及用户登录验证，带解决-cc
+    sender.selected = !sender.selected;
+    [self.privateManager privateOrDisPrivateWithItemID:[NSString stringWithFormat:@"%ld",(long)self.productID] privateType:private_mall token:[YHBUser sharedYHBUser].token ? :@"" Success:^{
+        
+    } failure:^{
+        sender.selected = !sender.selected;
+    }];
 }
 
 #pragma mark 点击购物车
@@ -274,7 +293,59 @@
 #pragma mark 点击选择色块
 - (void)touchSelectColorCell
 {
+    if (self.productModel) {
+        if (!_selView) {
+            _selView = [[YHBSelNumColorView alloc] initWithProductModel:self.productModel];
+            _selView.delegate = self;
+        }
+        _selView.top = kMainScreenHeight;
+        /*
+        UIView *dimView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight)];
+        dimView.backgroundColor = [UIColor clearColor];
+        dimView.alpha = 0.6;
+        //[[UIApplication sharedApplication].keyWindow addSubview:dimView];
+        */
+        if (!_visualEffectView) {
+            UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+            
+            _visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+            
+            _visualEffectView.frame = CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight);
+        }
+        self.visualEffectView.alpha = 1.0f;
+        
+        [[UIApplication sharedApplication].keyWindow addSubview:_visualEffectView];
+        
+        [[UIApplication sharedApplication].keyWindow addSubview:_selView];
+        
+        [UIView animateWithDuration:0.6f animations:^{
+            _selView.bottom -= _selView.height;
+        } completion:^(BOOL finished) {
+            
+        }];
+        
+        
+        /*
+        vc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        [self presentViewController:vc animated:YES completion:^{
+        }];*/
+    }
     
+}
+
+#pragma mark selView dismiss
+- (void)selViewShouldDismiss
+{
+    [UIView animateWithDuration:0.2f animations:^{
+        self.selView.top = kMainScreenHeight;
+    } completion:^(BOOL finished) {
+        [self.selView removeFromSuperview];
+        [UIView animateWithDuration:0.2f animations:^{
+        self.visualEffectView.alpha = 0.1;
+        } completion:^(BOOL finished) {
+            [self.visualEffectView removeFromSuperview];
+        }];
+    }];
 }
 
 #pragma mark 点击查看产品详情

@@ -175,8 +175,8 @@
 #pragma mark touch private 收藏
 - (void)touchPrivateButton : (UIButton *)sender
 {
-    if ([self.delegate respondsToSelector:@selector(touchPrivateBtn)]) {
-        [self.delegate touchPrivateBtn];
+    if ([self.delegate respondsToSelector:@selector(touchPrivateBtn:)]) {
+        [self.delegate touchPrivateBtn:sender];
     }
 }
 

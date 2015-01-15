@@ -12,7 +12,7 @@
 @protocol UserHeadDelegate <NSObject>
 
 - (void)touchHeadLoginBtn;
-- (void)touchPrivateBtn;
+- (void)touchPrivateBtn:(UIButton *)sender;
 - (void)touchHeadImagBtn;
 
 @end

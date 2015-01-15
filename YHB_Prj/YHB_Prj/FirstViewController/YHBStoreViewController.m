@@ -18,6 +18,8 @@
 #import "YHBRslist.h"
 #import "SVPullToRefresh.h"
 #import "YHBStoreDetailViewController.h"
+#import "YHBPrivateManager.h"
+#import "YHBUser.h"
 
 #define kSgmBtnHeight 50
 #define kSelectTagBase 100
@@ -56,11 +58,21 @@ enum SgmBtn_tag
 @property (strong, nonatomic) YHBUserManager *infoManger;
 @property (strong, nonatomic) NSMutableDictionary  *rslistDic;
 @property (strong, nonatomic) NSMutableDictionary *pageDic;
+@property (strong, nonatomic) YHBPrivateManager *privateManager;
+
 
 @end
 
 @implementation YHBStoreViewController
 #pragma mark - getter and setter
+- (YHBPrivateManager *)privateManager
+{
+    if (!_privateManager) {
+        _privateManager = [[YHBPrivateManager alloc] init];
+    }
+    return _privateManager;
+}
+
 - (NSMutableDictionary *)rslistDic
 {
     if (!_rslistDic) {
@@ -451,9 +463,15 @@ enum SgmBtn_tag
     MLOG(@"touch Cell");
 }
 
-- (void)touchPrivateBtn
+- (void)touchPrivateBtn:(UIButton *)sender
 {
-    
+#warning 待验证用户登录情况
+    sender.selected = !sender.selected;
+    [self.privateManager privateOrDisPrivateWithItemID:[NSString stringWithFormat:@"%d",self.shopID] privateType:private_company token:[YHBUser sharedYHBUser].token Success:^{
+        
+    } failure:^{
+        sender.selected = !sender.selected;
+    }];
 }
 
 #pragma mark 点击头像

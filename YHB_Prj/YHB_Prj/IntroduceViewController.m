@@ -20,6 +20,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _webView = [[IntroduceWebView alloc] initWithFrame:self.view.bounds];
+    
     [self.view addSubview:_webView];
     self.view.backgroundColor = kViewBackgroundColor;
     if(self.isSysPush == NO)

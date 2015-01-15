@@ -1,7 +1,7 @@
 //
-//  YHBPic.h
+//  YHBAlbum.h
 //
-//  Created by   on 15/1/2
+//  Created by   on 15/1/15
 //  Copyright (c) 2015 __MyCompanyName__. All rights reserved.
 //
 
@@ -9,7 +9,7 @@
 
 
 
-@interface YHBPic : NSObject <NSCoding, NSCopying>
+@interface YHBAlbum : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, strong) NSString *thumb;
 @property (nonatomic, strong) NSString *large;
