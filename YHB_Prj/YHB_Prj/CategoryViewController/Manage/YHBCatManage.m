@@ -18,7 +18,7 @@
     NSDictionary *dict = [NSDictionary new];
     kYHBRequestUrl(@"getCategory.php", supplyDetailUrl);
     [NetManager requestWith:dict url:supplyDetailUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
-        MLOG(@"%@", successDict);
+//        MLOG(@"%@", successDict);
         NSMutableArray *reslutArray = [NSMutableArray new];
         NSArray *dataArray = [successDict objectForKey:@"data"];
         for (NSDictionary *dict in dataArray)

@@ -12,5 +12,7 @@
 
 + (CategoryViewController *)sharedInstancetype;
 - (void)setBlock:(void(^)(NSArray *aArray))aBlock;
+- (void)cleanAll;
+- (void)deleteItemWithItemID:(int)aCatid;
 
 @end

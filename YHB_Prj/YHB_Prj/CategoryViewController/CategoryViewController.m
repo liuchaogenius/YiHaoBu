@@ -165,11 +165,14 @@
             [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
             btn.titleLabel.font = kFont15;
             [btn addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
-//            if (i==0)
-//            {
-//                [btn setTitleColor:KColor forState:UIControlStateNormal];
-//                btn.layer.borderColor = [KColor CGColor];
-//            }
+            
+            for (YHBCatSubcate *temModel in chooseArray)
+            {
+                if (model.catid == temModel.catid) {
+                    [btn setTitleColor:KColor forState:UIControlStateNormal];
+                    btn.layer.borderColor = [KColor CGColor];
+                }
+            }
             [cell addSubview:btn];
         }
     }
@@ -202,22 +205,48 @@
     }
     [aBtn setTitleColor:KColor forState:UIControlStateNormal];
     aBtn.layer.borderColor = [KColor CGColor];
-//    [chooseArray removeObjectAtIndex:section-1];
+    
     int index = (int)aBtn.tag%100;
     YHBCatSubcate *subModel = (YHBCatSubcate *)[temArray objectAtIndex:index];
+    
+    BOOL isHave = NO;
+    YHBCatSubcate *temDeleteModel;
     for (YHBCatSubcate *temModel in chooseArray)
     {
-        for (YHBCatSubcate *anTemModel in temArray)
+        if ((int)temModel.catid==(int)subModel.catid)
         {
-            if (temModel.catid == anTemModel.catid)
-            {
-                [chooseArray removeObject:temModel];
-                break;
-            }
+            temDeleteModel=subModel;
+            isHave = YES;
+            [aBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            aBtn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+            break;
         }
     }
-    [chooseArray addObject:subModel];
-//    [chooseArray insertObject:subModel atIndex:section-1];
+    if (temDeleteModel)
+    {
+        [chooseArray removeObject:temDeleteModel];
+    }
+    
+    if (isHave==NO)
+    {
+        YHBCatSubcate *deleteModel;
+        for (YHBCatSubcate *temModel in chooseArray)
+        {
+            for (YHBCatSubcate *anTemModel in temArray)
+            {
+                if ((int)temModel.catid == (int)anTemModel.catid)
+                {
+                    deleteModel = temModel;
+                    break;
+                }
+            }
+        }
+        if (deleteModel)
+        {
+            [chooseArray removeObject:deleteModel];
+        }
+        [chooseArray addObject:subModel];
+    }
 }
 
 - (void)touchYesBtn
@@ -229,23 +258,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self dismissFlower];
-    for (int section=0; section<self.tableViewArray.count; section++)
-    {
-        YHBCatData *dataModel = [self.tableViewArray objectAtIndex:section];
-        NSArray *temArray = dataModel.subcate;
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:section];
-        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-//        UIButton *aBtn = (UIButton *)[cell viewWithTag:(section+1)*100];
-        for (int i=0; i<temArray.count; i++)
-        {
-            UIButton *btn = (UIButton *)[cell viewWithTag:(section+1)*100+i];
-            btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-            [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        }
-//        [aBtn setTitleColor:KColor forState:UIControlStateNormal];
-//        aBtn.layer.borderColor = [KColor CGColor];
-    }
-    chooseArray = [NSMutableArray new];
+
 //    for (int i=0; i<self.tableViewArray.count; i++)
 //    {
 //        YHBCatData *dataModel = [self.tableViewArray objectAtIndex:i];
@@ -253,6 +266,42 @@
 //        YHBCatSubcate *subModel = [array objectAtIndex:0];
 //        [chooseArray addObject:subModel];;
 //    }
+}
+
+- (void)cleanAll
+{
+    for (int section=0; section<self.tableViewArray.count; section++)
+    {
+        YHBCatData *dataModel = [self.tableViewArray objectAtIndex:section];
+        NSArray *temArray = dataModel.subcate;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:section];
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        for (int i=0; i<temArray.count; i++)
+        {
+            UIButton *btn = (UIButton *)[cell viewWithTag:(section+1)*100+i];
+            btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+            [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        }
+    }
+    chooseArray = [NSMutableArray new];
+}
+
+- (void)deleteItemWithItemID:(int)aCatid
+{
+    YHBCatSubcate *deleteModel;
+    for (YHBCatSubcate *model in chooseArray)
+    {
+        if ((int)model.catid==aCatid)
+        {
+            deleteModel = model;
+            break;
+        }
+    }
+    if (deleteModel)
+    {
+        [chooseArray removeObject:deleteModel];
+    }
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
