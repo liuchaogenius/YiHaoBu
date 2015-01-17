@@ -281,6 +281,11 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self dismissFlower];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

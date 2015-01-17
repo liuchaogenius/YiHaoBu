@@ -12,6 +12,8 @@
 #import "TitleTagViewController.h"
 #import "SVProgressHUD.h"
 #import "YHBPublishBuyManage.h"
+#import "CategoryViewController.h"
+#import "YHBCatSubcate.h"
 
 #define kButtonTag_Yes 100
 @interface YHBPublishBuyViewController()<UITextFieldDelegate, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
@@ -164,7 +166,11 @@
     
     UIImageView *plusImgView = [[UIImageView alloc] initWithFrame:CGRectMake(catNameLabel.right, catNameLabel.top, 23, 30)];
     plusImgView.image = [UIImage imageNamed:@"plusImg"];
+    plusImgView.userInteractionEnabled = YES;
     [editSupplyView addSubview:plusImgView];
+    
+    UITapGestureRecognizer *tapGestureReco = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchCat)];
+    [plusImgView addGestureRecognizer:tapGestureReco];
 
     contentTextView = [[UITextView alloc] initWithFrame:CGRectMake(85, interval+(interval+labelHeight)*4, 200, 70)];
     contentTextView.layer.borderWidth = 0.5;
@@ -308,6 +314,20 @@
     self.toolView.top = self.dayPickerView.top-30;
     [self.dayPickerView removeFromSuperview];
     [aBtn.superview removeFromSuperview];
+}
+
+#pragma mark 点击cat
+- (void)touchCat
+{
+    CategoryViewController *vc = [CategoryViewController sharedInstancetype];
+    [vc setBlock:^(NSArray *aArray) {
+        NSString *str = @"";
+        for (YHBCatSubcate *subModel in aArray) {
+            str = [str stringByAppendingString:[NSString stringWithFormat:@" %@", subModel.catname]];
+        }
+        catNameLabel.text = str;
+    }];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark 点击标题

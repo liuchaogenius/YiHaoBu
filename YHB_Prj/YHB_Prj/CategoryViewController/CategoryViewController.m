@@ -207,10 +207,13 @@
     YHBCatSubcate *subModel = (YHBCatSubcate *)[temArray objectAtIndex:index];
     for (YHBCatSubcate *temModel in chooseArray)
     {
-        if (temModel.catid == subModel.catid)
+        for (YHBCatSubcate *anTemModel in temArray)
         {
-            [chooseArray removeObject:temModel];
-            break;
+            if (temModel.catid == anTemModel.catid)
+            {
+                [chooseArray removeObject:temModel];
+                break;
+            }
         }
     }
     [chooseArray addObject:subModel];

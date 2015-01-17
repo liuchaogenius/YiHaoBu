@@ -13,7 +13,7 @@
 #import "YHBShopCartRslist.h"
 #import "YHBShopCartCartlist.h"
 #import "SVProgressHUD.h"
-#import "YHBSupplyDetailViewController.h"
+#import "YHBProductDetailVC.h"
 #import "TableSectionHeaderView.h"
 #import "SVPullToRefresh.h"
 
@@ -42,6 +42,21 @@
 @end
 
 @implementation FifthViewController
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (self.tableViewArray.count==0)
+    {
+        [self showFlower];
+        [self.netManage getShopCartArray:^(NSMutableArray *aArray) {
+            self.tableViewArray = aArray;
+            [self.tableView reloadData];
+            [self dismissFlower];
+        } andFail:^{
+            [self dismissFlower];
+        }];
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -360,7 +375,7 @@
 {
     YHBShopCartRslist *model = [self.tableViewArray objectAtIndex:indexPath.section];
     YHBShopCartCartlist *cartModel = [model.cartlist objectAtIndex:indexPath.row];
-    YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:cartModel.itemid andIsMine:NO isModal:NO];
+    YHBProductDetailVC *vc = [[YHBProductDetailVC alloc] initWithProductID:(int)cartModel.itemid];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -556,6 +571,11 @@
     {
         
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self dismissFlower];
 }
 
 - (void)didReceiveMemoryWarning {
