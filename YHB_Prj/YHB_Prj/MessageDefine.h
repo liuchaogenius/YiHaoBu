@@ -15,4 +15,5 @@
 #define kLoginSuccessMessae @"loginsuccess" //登陆成功发送消息
 #define kLoginFailMessage @"loginFail"
 #define kUserInfoGetMessage @"useiInfoGet"//成功加载用户信息
+#define kSearchMessage @"search"//搜索通知
 #endif

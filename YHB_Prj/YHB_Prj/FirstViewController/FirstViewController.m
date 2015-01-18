@@ -391,6 +391,11 @@
     if (self.pageIndexMdoel.taglist.count > tag) {
         NSString *hotTag = self.pageIndexMdoel.taglist[tag];
 #warning 待传hottag进入搜索页
+        self.tabBarController.selectedIndex = 1;
+        NSDictionary * dic = [NSDictionary dictionaryWithObject:(hotTag?:@"") forKey:kSearchMessage];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSearchMessage object:nil userInfo:dic];
+        
+        
     }
 }
 

@@ -14,5 +14,5 @@
 - (void)setBlock:(void(^)(NSArray *aArray))aBlock;
 - (void)cleanAll;
 - (void)deleteItemWithItemID:(int)aCatid;
-
+- (NSMutableArray *)getChooseArray;
 @end

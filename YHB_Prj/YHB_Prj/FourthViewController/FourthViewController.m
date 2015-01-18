@@ -15,9 +15,7 @@
 #import "YHBUserInfo.h"
 #import "SVProgressHUD.h"
 #import "YHBMySupplyViewController.h"
-#define kHeadHeight 110
 #define kBtnsViewHeight 65
-#define kBtnsViewHeight 60
 #define kBtnImageWidth 25
 #define kBtnLabelFont 12
 #define kBtnsTagStart 40

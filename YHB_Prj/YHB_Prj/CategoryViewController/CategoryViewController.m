@@ -37,6 +37,11 @@
     return sharedAccountManagerInstance;
 }
 
+- (NSMutableArray *)getChooseArray
+{
+    return chooseArray;
+}
+
 - (void)setBlock:(void(^)(NSArray *aArray))aBlock
 {
     self.myBlock = aBlock;
@@ -54,6 +59,9 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    if (self.navigationController.navigationBar.hidden) {
+        self.navigationController.navigationBar.hidden = NO;
+    }
     if (self.tableViewArray.count==0)
     {
         [self showFlower];
