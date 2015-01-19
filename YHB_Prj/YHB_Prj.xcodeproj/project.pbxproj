@@ -42,10 +42,18 @@
 		5B5A6DAD1A66B8990043B246 /* YHBSelColorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A6DAC1A66B8990043B246 /* YHBSelColorCell.m */; };
 		5B6774FD1A559A6500457012 /* YHBProductDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6774FC1A559A6500457012 /* YHBProductDetailVC.m */; };
 		5B67750C1A56E8B900457012 /* YHBProductDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6775051A56E8B900457012 /* YHBProductDetail.m */; };
+		5B7C409D1A6CEE5600FB2DF5 /* YHBOrderDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7C409C1A6CEE5600FB2DF5 /* YHBOrderDetail.m */; };
+		5B7C40A11A6CEF1400FB2DF5 /* YHBOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7C40A01A6CEF1400FB2DF5 /* YHBOrderDetailViewController.m */; };
+		5B7C40A61A6D324E00FB2DF5 /* YHBOrderFirstSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7C40A51A6D324E00FB2DF5 /* YHBOrderFirstSectionView.m */; };
 		5B85F3CB1A6767AA00B91DA4 /* YHBAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B85F3C31A6767AA00B91DA4 /* YHBAlbum.m */; };
 		5B85F3CC1A6767AA00B91DA4 /* YHBSku.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B85F3C41A6767AA00B91DA4 /* YHBSku.m */; };
 		5B85F3CD1A6767AA00B91DA4 /* YHBExpress.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B85F3C71A6767AA00B91DA4 /* YHBExpress.m */; };
 		5B85F3CE1A6767AA00B91DA4 /* YHBComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B85F3CA1A6767AA00B91DA4 /* YHBComment.m */; };
+		5B8D07721A6BDEC300AF6341 /* YHBOrderList.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8D076E1A6BDEC300AF6341 /* YHBOrderList.m */; };
+		5B8D07731A6BDEC300AF6341 /* YHBORslist.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8D07701A6BDEC300AF6341 /* YHBORslist.m */; };
+		5B8D07771A6BDF8200AF6341 /* YHBOrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8D07761A6BDF8200AF6341 /* YHBOrderListViewController.m */; };
+		5B8D077B1A6BE73D00AF6341 /* YHBOrderInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8D077A1A6BE73D00AF6341 /* YHBOrderInfoView.m */; };
+		5B8D077E1A6BF5B100AF6341 /* YHBOrderListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8D077D1A6BF5B100AF6341 /* YHBOrderListCell.m */; };
 		5B908E781A4C3B6F00EF395E /* UserVCData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B908E771A4C3B6F00EF395E /* UserVCData.plist */; };
 		5B986A431A19C69D00FFA9D8 /* YHBShopInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B986A421A19C69D00FFA9D8 /* YHBShopInfoViewController.m */; };
 		5BB4A9181A1721F300DB4636 /* YHBUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB4A9171A1721F300DB4636 /* YHBUserManager.m */; };
@@ -66,6 +74,8 @@
 		5BE051291A2C3EF100740437 /* YHBUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE051271A2C3EF100740437 /* YHBUserInfo.m */; };
 		5BE46AE31A529C50008EF2D3 /* YHBPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE46ADF1A529C50008EF2D3 /* YHBPage.m */; };
 		5BE46AE71A52A00C008EF2D3 /* YHBRslist.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE46AE51A52A00C008EF2D3 /* YHBRslist.m */; };
+		5BE76FF51A6C9D3000E3F62A /* YHBOrderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE76FF41A6C9D3000E3F62A /* YHBOrderManager.m */; };
+		5BE76FF81A6CA04100E3F62A /* YHBOrderShopInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE76FF71A6CA04100E3F62A /* YHBOrderShopInfoView.m */; };
 		AB0ED65E1A591C52006EF96F /* YHBPublishSupplyManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0ED65D1A591C52006EF96F /* YHBPublishSupplyManage.m */; };
 		AB0ED6611A592530006EF96F /* YHBPublishBuyManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0ED6601A592530006EF96F /* YHBPublishBuyManage.m */; };
 		AB2860FE1A38216800EB654C /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB2860FB1A38216800EB654C /* View.xib */; };
@@ -249,6 +259,12 @@
 		5B6774FC1A559A6500457012 /* YHBProductDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBProductDetailVC.m; sourceTree = "<group>"; };
 		5B6775051A56E8B900457012 /* YHBProductDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBProductDetail.m; sourceTree = "<group>"; };
 		5B6775081A56E8B900457012 /* YHBProductDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBProductDetail.h; sourceTree = "<group>"; };
+		5B7C409A1A6CEE4D00FB2DF5 /* YHBOrderDetail.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YHBOrderDetail.h; sourceTree = "<group>"; };
+		5B7C409C1A6CEE5600FB2DF5 /* YHBOrderDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderDetail.m; sourceTree = "<group>"; };
+		5B7C409F1A6CEF1400FB2DF5 /* YHBOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderDetailViewController.h; sourceTree = "<group>"; };
+		5B7C40A01A6CEF1400FB2DF5 /* YHBOrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderDetailViewController.m; sourceTree = "<group>"; };
+		5B7C40A41A6D324E00FB2DF5 /* YHBOrderFirstSectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderFirstSectionView.h; sourceTree = "<group>"; };
+		5B7C40A51A6D324E00FB2DF5 /* YHBOrderFirstSectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderFirstSectionView.m; sourceTree = "<group>"; };
 		5B85F3C31A6767AA00B91DA4 /* YHBAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBAlbum.m; sourceTree = "<group>"; };
 		5B85F3C41A6767AA00B91DA4 /* YHBSku.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBSku.m; sourceTree = "<group>"; };
 		5B85F3C51A6767AA00B91DA4 /* YHBSku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBSku.h; sourceTree = "<group>"; };
@@ -257,6 +273,16 @@
 		5B85F3C81A6767AA00B91DA4 /* YHBComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBComment.h; sourceTree = "<group>"; };
 		5B85F3C91A6767AA00B91DA4 /* YHBExpress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBExpress.h; sourceTree = "<group>"; };
 		5B85F3CA1A6767AA00B91DA4 /* YHBComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBComment.m; sourceTree = "<group>"; };
+		5B8D076E1A6BDEC300AF6341 /* YHBOrderList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderList.m; sourceTree = "<group>"; };
+		5B8D076F1A6BDEC300AF6341 /* YHBOrderList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderList.h; sourceTree = "<group>"; };
+		5B8D07701A6BDEC300AF6341 /* YHBORslist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBORslist.m; sourceTree = "<group>"; };
+		5B8D07711A6BDEC300AF6341 /* YHBORslist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBORslist.h; sourceTree = "<group>"; };
+		5B8D07751A6BDF8200AF6341 /* YHBOrderListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderListViewController.h; sourceTree = "<group>"; };
+		5B8D07761A6BDF8200AF6341 /* YHBOrderListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderListViewController.m; sourceTree = "<group>"; };
+		5B8D07791A6BE73D00AF6341 /* YHBOrderInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderInfoView.h; sourceTree = "<group>"; };
+		5B8D077A1A6BE73D00AF6341 /* YHBOrderInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderInfoView.m; sourceTree = "<group>"; };
+		5B8D077C1A6BF5B100AF6341 /* YHBOrderListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderListCell.h; sourceTree = "<group>"; };
+		5B8D077D1A6BF5B100AF6341 /* YHBOrderListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderListCell.m; sourceTree = "<group>"; };
 		5B908E771A4C3B6F00EF395E /* UserVCData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserVCData.plist; sourceTree = "<group>"; };
 		5B986A411A19C69D00FFA9D8 /* YHBShopInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBShopInfoViewController.h; sourceTree = "<group>"; };
 		5B986A421A19C69D00FFA9D8 /* YHBShopInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBShopInfoViewController.m; sourceTree = "<group>"; };
@@ -297,6 +323,10 @@
 		5BE46AE21A529C50008EF2D3 /* YHBPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPage.h; sourceTree = "<group>"; };
 		5BE46AE51A52A00C008EF2D3 /* YHBRslist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBRslist.m; sourceTree = "<group>"; };
 		5BE46AE61A52A00C008EF2D3 /* YHBRslist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBRslist.h; sourceTree = "<group>"; };
+		5BE76FF31A6C9D3000E3F62A /* YHBOrderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderManager.h; sourceTree = "<group>"; };
+		5BE76FF41A6C9D3000E3F62A /* YHBOrderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderManager.m; sourceTree = "<group>"; };
+		5BE76FF61A6CA04100E3F62A /* YHBOrderShopInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderShopInfoView.h; sourceTree = "<group>"; };
+		5BE76FF71A6CA04100E3F62A /* YHBOrderShopInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderShopInfoView.m; sourceTree = "<group>"; };
 		AB0ED65C1A591C52006EF96F /* YHBPublishSupplyManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPublishSupplyManage.h; sourceTree = "<group>"; };
 		AB0ED65D1A591C52006EF96F /* YHBPublishSupplyManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBPublishSupplyManage.m; sourceTree = "<group>"; };
 		AB0ED65F1A592530006EF96F /* YHBPublishBuyManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPublishBuyManage.h; sourceTree = "<group>"; };
@@ -599,6 +629,8 @@
 		5B46484F1A49507A00566BC5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5B7C40991A6CEE3600FB2DF5 /* OrderDetailModel */,
+				5B8D076D1A6BDE7600AF6341 /* OrderListModel */,
 				5B6774FE1A56E82F00457012 /* ProductDetailModel */,
 				5B6774F91A55996800457012 /* UserModel */,
 				5BE46ADE1A529C1C008EF2D3 /* MallListModel */,
@@ -681,6 +713,69 @@
 				5B85F3CA1A6767AA00B91DA4 /* YHBComment.m */,
 			);
 			name = ProductDetailModel;
+			sourceTree = "<group>";
+		};
+		5B7C40991A6CEE3600FB2DF5 /* OrderDetailModel */ = {
+			isa = PBXGroup;
+			children = (
+				5B7C409A1A6CEE4D00FB2DF5 /* YHBOrderDetail.h */,
+				5B7C409C1A6CEE5600FB2DF5 /* YHBOrderDetail.m */,
+			);
+			name = OrderDetailModel;
+			sourceTree = "<group>";
+		};
+		5B7C409E1A6CEE6F00FB2DF5 /* OrderDetailViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5B7C40A31A6D31BA00FB2DF5 /* View */,
+				5B7C409F1A6CEF1400FB2DF5 /* YHBOrderDetailViewController.h */,
+				5B7C40A01A6CEF1400FB2DF5 /* YHBOrderDetailViewController.m */,
+			);
+			name = OrderDetailViewController;
+			sourceTree = "<group>";
+		};
+		5B7C40A31A6D31BA00FB2DF5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5B7C40A41A6D324E00FB2DF5 /* YHBOrderFirstSectionView.h */,
+				5B7C40A51A6D324E00FB2DF5 /* YHBOrderFirstSectionView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		5B8D076D1A6BDE7600AF6341 /* OrderListModel */ = {
+			isa = PBXGroup;
+			children = (
+				5B8D076F1A6BDEC300AF6341 /* YHBOrderList.h */,
+				5B8D076E1A6BDEC300AF6341 /* YHBOrderList.m */,
+				5B8D07711A6BDEC300AF6341 /* YHBORslist.h */,
+				5B8D07701A6BDEC300AF6341 /* YHBORslist.m */,
+			);
+			name = OrderListModel;
+			sourceTree = "<group>";
+		};
+		5B8D07741A6BDF5B00AF6341 /* OrderListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5BE76FF21A6C9CED00E3F62A /* Manager */,
+				5B8D07781A6BE4F600AF6341 /* View */,
+				5B8D07751A6BDF8200AF6341 /* YHBOrderListViewController.h */,
+				5B8D07761A6BDF8200AF6341 /* YHBOrderListViewController.m */,
+			);
+			name = OrderListViewController;
+			sourceTree = "<group>";
+		};
+		5B8D07781A6BE4F600AF6341 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5B8D07791A6BE73D00AF6341 /* YHBOrderInfoView.h */,
+				5B8D077A1A6BE73D00AF6341 /* YHBOrderInfoView.m */,
+				5B8D077C1A6BF5B100AF6341 /* YHBOrderListCell.h */,
+				5B8D077D1A6BF5B100AF6341 /* YHBOrderListCell.m */,
+				5BE76FF61A6CA04100E3F62A /* YHBOrderShopInfoView.h */,
+				5BE76FF71A6CA04100E3F62A /* YHBOrderShopInfoView.m */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		5B908E731A4C3B3A00EF395E /* Data */ = {
@@ -796,6 +891,15 @@
 				5BE46ADF1A529C50008EF2D3 /* YHBPage.m */,
 			);
 			name = MallListModel;
+			sourceTree = "<group>";
+		};
+		5BE76FF21A6C9CED00E3F62A /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				5BE76FF31A6C9D3000E3F62A /* YHBOrderManager.h */,
+				5BE76FF41A6C9D3000E3F62A /* YHBOrderManager.m */,
+			);
+			name = Manager;
 			sourceTree = "<group>";
 		};
 		AB2860FA1A38216800EB654C /* YHBShoppingCart */ = {
@@ -1300,6 +1404,8 @@
 		FF2A6C8B1A0F3C58001607AC /* UIParty */ = {
 			isa = PBXGroup;
 			children = (
+				5B7C409E1A6CEE6F00FB2DF5 /* OrderDetailViewController */,
+				5B8D07741A6BDF5B00AF6341 /* OrderListViewController */,
 				5BC0D6DF1A650DBB00F0EE35 /* SelectNumColorViewController */,
 				AB65A4EB1A6774BC009475DC /* CategoryViewController */,
 				5BD6329E1A5FA32800095DFD /* StoreDetailViewController */,
@@ -1496,9 +1602,11 @@
 				ABE5BBB21A2AD452000F5505 /* YHBAlbumViewController.m in Sources */,
 				5B2FB0811A39A1FA000177D9 /* YHBStoreViewController.m in Sources */,
 				5B3D069B1A4AD88900AC6BEC /* YHBShopListsCell.m in Sources */,
+				5B7C40A61A6D324E00FB2DF5 /* YHBOrderFirstSectionView.m in Sources */,
 				AB9BA0981A2CBA79000E34FE /* YHBPhotoImageView.m in Sources */,
 				5B4BABB61A6A34BB00FEBC65 /* YHBCRslist.m in Sources */,
 				FF2A6C881A0F3B8A001607AC /* UIScrollView+SVInfiniteScrolling.m in Sources */,
+				5B7C40A11A6CEF1400FB2DF5 /* YHBOrderDetailViewController.m in Sources */,
 				AB2861041A382BEF00EB654C /* TableSectionFooterView.m in Sources */,
 				AB59D95C1A333B87002B76E1 /* YHBLookSupplyManage.m in Sources */,
 				AB34037B1A67B80000A38FF6 /* YHBCatSubcate.m in Sources */,
@@ -1532,6 +1640,7 @@
 				AB9FD9A71A4697CB003EBE40 /* YHBBuyDetailPic.m in Sources */,
 				5B13A4DC1A58128900713C5E /* YHBBuytoolBarView.m in Sources */,
 				5BCE1F5F1A1496980004BE32 /* YHBUser.m in Sources */,
+				5B8D07771A6BDF8200AF6341 /* YHBOrderListViewController.m in Sources */,
 				5B41E8C71A2DE8B6005DD38B /* CCEditTextView.m in Sources */,
 				ABB796681A46F766009E27F8 /* YHBPublishBuyViewController.m in Sources */,
 				FF2A6C761A0F3B7B001607AC /* UIImage+MultiFormat.m in Sources */,
@@ -1550,6 +1659,7 @@
 				FF2A6C6F1A0F3B7B001607AC /* SDWebImageDecoder.m in Sources */,
 				5BE46AE71A52A00C008EF2D3 /* YHBRslist.m in Sources */,
 				5B13A4E21A5951A800713C5E /* YHBConnectStoreVeiw.m in Sources */,
+				5B8D077E1A6BF5B100AF6341 /* YHBOrderListCell.m in Sources */,
 				FF2A6CA51A0F40B0001607AC /* ThreadSafeMutableDictionary.m in Sources */,
 				5B85F3CC1A6767AA00B91DA4 /* YHBSku.m in Sources */,
 				FF2A6C0C1A0F3A01001607AC /* UIImage+ImageEffects.m in Sources */,
@@ -1561,10 +1671,13 @@
 				5B4BABC01A6A89FE00FEBC65 /* YHBSortTagsCell.m in Sources */,
 				FF2A6C021A0F398D001607AC /* BaseViewController.m in Sources */,
 				AB9FD9B01A46AA5B003EBE40 /* PushPriceManage.m in Sources */,
+				5B8D07721A6BDEC300AF6341 /* YHBOrderList.m in Sources */,
 				5B986A431A19C69D00FFA9D8 /* YHBShopInfoViewController.m in Sources */,
 				FF2A6C301A0F3B50001607AC /* AFXMLRequestOperation.m in Sources */,
 				5BD6329D1A5F941500095DFD /* YHBCommentManager.m in Sources */,
 				FF2A6C6C1A0F3B7B001607AC /* NSData+ImageContentType.m in Sources */,
+				5BE76FF81A6CA04100E3F62A /* YHBOrderShopInfoView.m in Sources */,
+				5B7C409D1A6CEE5600FB2DF5 /* YHBOrderDetail.m in Sources */,
 				FF2A6C701A0F3B7B001607AC /* SDWebImageDownloader.m in Sources */,
 				FF2A6C481A0F3B72001607AC /* JSONKit.m in Sources */,
 				AB9FD9AD1A46A105003EBE40 /* PushPriceViewController.m in Sources */,
@@ -1585,6 +1698,7 @@
 				FF2A6C321A0F3B50001607AC /* NetManager.m in Sources */,
 				FF2A6BE01A0F3780001607AC /* main.m in Sources */,
 				FF2A6C311A0F3B50001607AC /* MyHttpClient.m in Sources */,
+				5BE76FF51A6C9D3000E3F62A /* YHBOrderManager.m in Sources */,
 				AB9C29861A4CFF380084C912 /* YHBMySupplyManage.m in Sources */,
 				FF2A6C7A1A0F3B7B001607AC /* UIView+WebCacheOperation.m in Sources */,
 				5B13A4DF1A58200F00713C5E /* YHBCommentCellView.m in Sources */,
@@ -1608,6 +1722,7 @@
 				ABE5BBD11A2B4291000F5505 /* YHBPhotoTableViewCell.m in Sources */,
 				AB9FD99B1A4694F8003EBE40 /* YHBBuyDetailViewController.m in Sources */,
 				FF2A6C931A0F3CEB001607AC /* FirstViewController.m in Sources */,
+				5B8D07731A6BDEC300AF6341 /* YHBORslist.m in Sources */,
 				5B85F3CD1A6767AA00B91DA4 /* YHBExpress.m in Sources */,
 				5BD8F96C1A1374A500B3A4F2 /* YHBUserHeadView.m in Sources */,
 				FF2A6C441A0F3B6D001607AC /* SVProgressHUD.m in Sources */,
@@ -1628,6 +1743,7 @@
 				5B3B6BDE1A4146E800903880 /* YHBShopIndexManager.m in Sources */,
 				FF2A6C891A0F3B8A001607AC /* UIScrollView+SVPullToRefresh.m in Sources */,
 				AB9FD9A61A4697CB003EBE40 /* YHBBuyDetailData.m in Sources */,
+				5B8D077B1A6BE73D00AF6341 /* YHBOrderInfoView.m in Sources */,
 				AB9FD9971A4690D8003EBE40 /* YHBLookBuyManage.m in Sources */,
 				ABE5BBB51A2AD452000F5505 /* YHBVariousImageView.m in Sources */,
 				FF2A6C991A0F3D1C001607AC /* ThirdViewController.m in Sources */,

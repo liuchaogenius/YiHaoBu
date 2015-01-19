@@ -91,9 +91,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    if (self.navigationController.navigationBar.hidden) {
-        self.navigationController.navigationBarHidden = NO;
-    }
+    self.navigationController.navigationBarHidden = NO;
+    [super viewWillAppear:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -105,7 +104,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.navigationController.navigationBarHidden = NO;
     //UI
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight-44-ktoolHeight-20)];
     self.scrollView.delegate = self;

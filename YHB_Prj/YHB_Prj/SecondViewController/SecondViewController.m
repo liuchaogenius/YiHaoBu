@@ -19,6 +19,8 @@
 #import "YHBShopslistCell.h"
 #import "CategoryViewController.h"
 #import "YHBSortTagsCell.h"
+#import "YHBStoreViewController.h"
+#import "YHBProductDetailVC.h"
 
 #define ksegBtnWidth (kMainScreenWidth/4.0)
 #define kFilBtnWidth (kMainScreenWidth/3.0)
@@ -197,8 +199,8 @@ typedef enum : NSUInteger {
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    self.navigationController.navigationBar.hidden = YES;
     self.tabBarController.tabBarController.tabBar.hidden = NO;
+    self.navigationController.navigationBarHidden = YES;
     [super viewWillAppear:YES];
 }
 
@@ -237,7 +239,14 @@ typedef enum : NSUInteger {
         case Search_buy:
         {
             [self.listManager searchBuyListWithUserID:kAll KeyWord:self.searchTextField.text cateID:[self getCateID] pageID:pageid Vip:(_selectFilType == Filter_all ? kAll:1) pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
-                [self.modelsDic setObject:modelArray forKey:[NSString stringWithFormat:@"%lu",(unsigned long)Search_buy * _selectFilType]];
+                [self.pageDic setObject:page forKey:[NSString stringWithFormat:@"%lu",(unsigned long)Search_buy * _selectFilType]];
+                if (pageid == 1) {
+                    [self.modelsDic setObject:modelArray forKey:[NSString stringWithFormat:@"%lu",(unsigned long)Search_buy * _selectFilType]];
+                }else{
+                    NSMutableArray *array = self.modelsDic[[NSString stringWithFormat:@"%lu",(unsigned long)Search_buy * _selectFilType]];
+                    [array addObjectsFromArray:modelArray];
+                }
+                
                 [self.tableView reloadData];
             } failure:^{
                 [SVProgressHUD showErrorWithStatus:@"搜索失败，请稍后再试！" cover:NO offsetY:0];
@@ -247,7 +256,13 @@ typedef enum : NSUInteger {
         case Search_sell:
         {
             [self.listManager searchSellListWithUserID:kAll KeyWord:self.searchTextField.text cateID:[self getCateID] Vip:(_selectFilType == Filter_all ? kAll:1) pageID:pageid pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
-                [self.modelsDic setObject:modelArray forKey:[NSString stringWithFormat:@"%lu",(unsigned long)Search_sell* _selectFilType]];
+                self.pageDic[[NSString stringWithFormat:@"%lu",(unsigned long)Search_sell * _selectFilType]] = page;
+                if (pageid == 1) {
+                    [self.modelsDic setObject:modelArray forKey:[NSString stringWithFormat:@"%lu",(unsigned long)Search_sell * _selectFilType]];
+                }else{
+                    NSMutableArray *array = self.modelsDic[[NSString stringWithFormat:@"%lu",(unsigned long)Search_sell * _selectFilType]];
+                    [array addObjectsFromArray:modelArray];
+                }
                 [self.tableView reloadData];
             } failure:^{
                 [SVProgressHUD showErrorWithStatus:@"搜索失败，请稍后再试！" cover:NO offsetY:0];
@@ -257,7 +272,14 @@ typedef enum : NSUInteger {
         case Search_product:
         {
             [self.listManager searchProductListWithUserID:kAll typeID:(_selectFilType == Filter_all ? kAll:1) KeyWord:self.searchTextField.text cateID:[self getCateID] PageID:pageid pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
-                [self.modelsDic setObject:modelArray forKey:[NSString stringWithFormat:@"%lu",(unsigned long)Search_product * _selectFilType]];
+                self.pageDic[[NSString stringWithFormat:@"%lu",(unsigned long)Search_product * _selectFilType]] = page;
+                if (pageid == 1) {
+                    [self.modelsDic setObject:modelArray forKey:[NSString stringWithFormat:@"%lu",(unsigned long)Search_product * _selectFilType]];
+                }else{
+                    NSMutableArray *array = self.modelsDic[[NSString stringWithFormat:@"%lu",(unsigned long)Search_product * _selectFilType]];
+                    [array addObjectsFromArray:modelArray];
+                }
+
                 [self.tableView reloadData];
             } failure:^{
                 [SVProgressHUD showErrorWithStatus:@"搜索失败，请稍后再试！" cover:NO offsetY:0];
@@ -267,7 +289,13 @@ typedef enum : NSUInteger {
         case Search_mall:
         {
             [self.listManager searchCompanyListWithKeyWord:self.searchTextField.text cateID:[self getCateID] Vip:(_selectFilType == Filter_all ? kAll:1) pageID:pageid pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
-                [self.modelsDic setObject:modelArray forKey:[NSString stringWithFormat:@"%lu",(unsigned long)Search_mall * _selectFilType]];
+                self.pageDic[[NSString stringWithFormat:@"%lu",(unsigned long)Search_mall * _selectFilType]] = page;
+                if (pageid == 1) {
+                    [self.modelsDic setObject:modelArray forKey:[NSString stringWithFormat:@"%lu",(unsigned long)Search_mall * _selectFilType]];
+                }else{
+                    NSMutableArray *array = self.modelsDic[[NSString stringWithFormat:@"%lu",(unsigned long)Search_mall * _selectFilType]];
+                    [array addObjectsFromArray:modelArray];
+                }
                 [self.tableView reloadData];
 
             } failure:^{
@@ -423,9 +451,48 @@ typedef enum : NSUInteger {
     return nil;
 }
 
+#pragma mark 点击cell
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 1) {
+        NSMutableArray *modelArray = self.modelsDic[[NSString stringWithFormat:@"%lu",_selectFilType * _selectSearchType]];
+        if (modelArray.count > indexPath.row) {
+            YHBRslist *model = modelArray[indexPath.row];
+            switch (_selectSearchType) {
+                case Search_buy:
+                {
+                    //求购
+                }
+                    break;
+                case Search_sell:
+                {
+                    //供应
+                }
+                    break;
+                case Search_mall:
+                {
+                    //店铺
+                    YHBStoreViewController *vc = [[YHBStoreViewController alloc] initWithShopID:(int)((YHBCRslist *)model).userid];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                    break;
+                case Search_product:
+                {
+                    //产品
+                    YHBProductDetailVC *vc = [[YHBProductDetailVC alloc] initWithProductID:(NSInteger)model.itemid];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                    
+                }
+                default:
+                    break;
+            }
+        }
+    }
+    
+    
 }
 
 #pragma mark - Action

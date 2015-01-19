@@ -20,6 +20,7 @@
 #import "YHBStoreDetailViewController.h"
 #import "YHBPrivateManager.h"
 #import "YHBUser.h"
+#import "YHBProductDetailVC.h"
 
 #define kSgmBtnHeight 50
 #define kSelectTagBase 100
@@ -457,10 +458,37 @@ enum SgmBtn_tag
 
 
 #pragma mark - delegate
-
+#pragma mark - 点击进入产品、供应详情
 - (void)selectCellPartWithIndexPath : (NSIndexPath*)indexPath part:(NSInteger)part
 {
-    MLOG(@"touch Cell");
+    NSMutableArray *array = self.rslistDic[[NSString stringWithFormat:@"%ld",_selectSgmButton.tag-kSelectTagBase]];
+    
+    YHBRslist *model = array[indexPath.row * 3 + part];
+    
+    switch (_selectSgmButton.tag) {
+        case SgmBtn_productInfo:
+        {
+            //产品
+            YHBProductDetailVC *vc = [[YHBProductDetailVC alloc] initWithProductID:(int)model.itemid];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+        case SgmBtn_sellInfo:
+        {
+            //供应
+#warning 此处带跳转供应详情-cc
+        }
+            break;
+        case SgmBtn_templetInfo:
+        {
+            //样板
+            YHBProductDetailVC *vc = [[YHBProductDetailVC alloc] initWithProductID:(int)model.itemid];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)touchPrivateBtn:(UIButton *)sender

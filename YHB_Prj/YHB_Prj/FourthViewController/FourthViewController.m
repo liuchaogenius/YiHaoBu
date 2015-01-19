@@ -15,6 +15,7 @@
 #import "YHBUserInfo.h"
 #import "SVProgressHUD.h"
 #import "YHBMySupplyViewController.h"
+#import "YHBOrderListViewController.h"
 #define kBtnsViewHeight 65
 #define kBtnImageWidth 25
 #define kBtnLabelFont 12
@@ -182,7 +183,9 @@ enum Button_Type
                 break;
             case Cell_myOrder:
             {
-                
+                YHBOrderListViewController *vc = [[YHBOrderListViewController alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
             }
                 break;
             case Cell_address:
