@@ -31,6 +31,7 @@
 #define kFilTagBase 100
 #define kGoodsCellHeight 80
 #define kPageSize 30
+
 typedef enum : NSUInteger {
     Search_buy = 0, //采购
     Search_sell,//供应
@@ -538,9 +539,7 @@ typedef enum : NSUInteger {
 {
     if (sender != _selectFilBtn) {
         if (sender.tag == Filter_filt) {
-#warning 弹出筛选页面
             UINavigationController *navVc = [[UINavigationController alloc] initWithRootViewController:[CategoryViewController sharedInstancetype]];
-            navVc.navigationBar.tintColor = KColor;
             __weak SecondViewController *weakself = self;
             [CategoryViewController sharedInstancetype].hidesBottomBarWhenPushed = YES;
             //navVc.hidesBottomBarWhenPushed = YES;
@@ -549,7 +548,9 @@ typedef enum : NSUInteger {
                 [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
                 MLOG(@"%@",weakself.tagsArray);
             }];
-            [self.navigationController pushViewController:[CategoryViewController sharedInstancetype] animated:YES];
+            //self.navigationController.navigationBar.hidden = NO;
+            [self presentViewController:navVc animated:YES completion:nil];
+            //[self.navigationController pushViewController:navVc animated:YES];
         }else{
             _selectFilBtn.selected = NO;
             _selectFilBtn = sender;

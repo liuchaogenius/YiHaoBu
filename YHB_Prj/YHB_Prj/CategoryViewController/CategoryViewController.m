@@ -95,6 +95,7 @@
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
     [self.view addSubview:self.tableView];
+    [self setLeftButton:[UIImage imageNamed:@"back"] title:@"" target:self action:@selector(back)];
 }
 
 #pragma mark 菊花
@@ -260,7 +261,21 @@
 - (void)touchYesBtn
 {
     self.myBlock(chooseArray);
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.isPushed) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    
+}
+
+- (void)back
+{
+    if (self.isPushed) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated

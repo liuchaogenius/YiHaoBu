@@ -17,15 +17,19 @@ enum SgmBtn_tag
     SgmBtn_Shops
 };
 
+
 @interface YHBMyPrivateViewController ()
+
 @property (strong, nonatomic) UIScrollView *sgmBtmScrollView;
 @property (strong, nonatomic) UIButton *selectSgmButton;
 @property (assign, nonatomic) NSInteger sgmCount;
 @property (strong, nonatomic) NSArray *titleArray;
 
+
 @end
 
 @implementation YHBMyPrivateViewController
+
 #pragma mark getter and setter
 - (NSArray *)titleArray
 {
@@ -35,6 +39,19 @@ enum SgmBtn_tag
     return _titleArray;
 }
 
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self.view addSubview:self.sgmBtmScrollView];
+
+}
+
+#pragma mark - action
+- (void)touchSgmButton:(UIButton *)sender
+{
+    
+}
 
 - (UIScrollView *)sgmBtmScrollView
 {
@@ -67,20 +84,6 @@ enum SgmBtn_tag
     return _sgmBtmScrollView;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    [self.view addSubview:self.sgmBtmScrollView];
-}
-
-
-#pragma mark - action
-- (void)touchSgmButton:(UIButton *)sender
-{
-    
-}
-
-#pragma mark - customButtom构造
 - (UIButton *)customButtonWithFrame:(CGRect)frame andTitle:(NSString *)title
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];

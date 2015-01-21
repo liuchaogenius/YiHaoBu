@@ -42,7 +42,6 @@
 		5B5A6DAD1A66B8990043B246 /* YHBSelColorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A6DAC1A66B8990043B246 /* YHBSelColorCell.m */; };
 		5B6774FD1A559A6500457012 /* YHBProductDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6774FC1A559A6500457012 /* YHBProductDetailVC.m */; };
 		5B67750C1A56E8B900457012 /* YHBProductDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6775051A56E8B900457012 /* YHBProductDetail.m */; };
-		5B7C409D1A6CEE5600FB2DF5 /* YHBOrderDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7C409C1A6CEE5600FB2DF5 /* YHBOrderDetail.m */; };
 		5B7C40A11A6CEF1400FB2DF5 /* YHBOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7C40A01A6CEF1400FB2DF5 /* YHBOrderDetailViewController.m */; };
 		5B7C40A61A6D324E00FB2DF5 /* YHBOrderFirstSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7C40A51A6D324E00FB2DF5 /* YHBOrderFirstSectionView.m */; };
 		5B85F3CB1A6767AA00B91DA4 /* YHBAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B85F3C31A6767AA00B91DA4 /* YHBAlbum.m */; };
@@ -64,6 +63,9 @@
 		5BC0D6E21A650E1700F0EE35 /* YHBSelectNumColorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC0D6E11A650E1700F0EE35 /* YHBSelectNumColorVC.m */; };
 		5BC0D6E51A656D9200F0EE35 /* YHBSelNumColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC0D6E41A656D9200F0EE35 /* YHBSelNumColorView.m */; };
 		5BC5211C1A4C000F00B78E52 /* YHBInfoListManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC5211B1A4C000F00B78E52 /* YHBInfoListManager.m */; };
+		5BCBB0721A6E372200BF5E5C /* YHBOrderSecondView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBB0711A6E372200BF5E5C /* YHBOrderSecondView.m */; };
+		5BCBB0751A6E399400BF5E5C /* YHBOrderDetailInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBB0741A6E399400BF5E5C /* YHBOrderDetailInfoView.m */; };
+		5BCBB0781A6EAB1400BF5E5C /* YHBOrderDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBB0761A6EAB1400BF5E5C /* YHBOrderDetail.m */; };
 		5BCE1F5F1A1496980004BE32 /* YHBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE1F5E1A1496980004BE32 /* YHBUser.m */; };
 		5BCE1F621A1497F00004BE32 /* YHBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE1F611A1497F00004BE32 /* YHBLoginViewController.m */; };
 		5BD632991A5F93EF00095DFD /* YHBMoreCommentsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD632981A5F93EF00095DFD /* YHBMoreCommentsVC.m */; };
@@ -259,8 +261,6 @@
 		5B6774FC1A559A6500457012 /* YHBProductDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBProductDetailVC.m; sourceTree = "<group>"; };
 		5B6775051A56E8B900457012 /* YHBProductDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBProductDetail.m; sourceTree = "<group>"; };
 		5B6775081A56E8B900457012 /* YHBProductDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBProductDetail.h; sourceTree = "<group>"; };
-		5B7C409A1A6CEE4D00FB2DF5 /* YHBOrderDetail.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YHBOrderDetail.h; sourceTree = "<group>"; };
-		5B7C409C1A6CEE5600FB2DF5 /* YHBOrderDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderDetail.m; sourceTree = "<group>"; };
 		5B7C409F1A6CEF1400FB2DF5 /* YHBOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderDetailViewController.h; sourceTree = "<group>"; };
 		5B7C40A01A6CEF1400FB2DF5 /* YHBOrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderDetailViewController.m; sourceTree = "<group>"; };
 		5B7C40A41A6D324E00FB2DF5 /* YHBOrderFirstSectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderFirstSectionView.h; sourceTree = "<group>"; };
@@ -302,6 +302,12 @@
 		5BC0D6E41A656D9200F0EE35 /* YHBSelNumColorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBSelNumColorView.m; sourceTree = "<group>"; };
 		5BC5211A1A4C000F00B78E52 /* YHBInfoListManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBInfoListManager.h; sourceTree = "<group>"; };
 		5BC5211B1A4C000F00B78E52 /* YHBInfoListManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBInfoListManager.m; sourceTree = "<group>"; };
+		5BCBB0701A6E372200BF5E5C /* YHBOrderSecondView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderSecondView.h; sourceTree = "<group>"; };
+		5BCBB0711A6E372200BF5E5C /* YHBOrderSecondView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderSecondView.m; sourceTree = "<group>"; };
+		5BCBB0731A6E399400BF5E5C /* YHBOrderDetailInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderDetailInfoView.h; sourceTree = "<group>"; };
+		5BCBB0741A6E399400BF5E5C /* YHBOrderDetailInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderDetailInfoView.m; sourceTree = "<group>"; };
+		5BCBB0761A6EAB1400BF5E5C /* YHBOrderDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderDetail.m; sourceTree = "<group>"; };
+		5BCBB0771A6EAB1400BF5E5C /* YHBOrderDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderDetail.h; sourceTree = "<group>"; };
 		5BCE1F5C1A1496550004BE32 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SynthesizeSingleton.h; path = ../FourthViewController/SynthesizeSingleton.h; sourceTree = "<group>"; };
 		5BCE1F5D1A1496980004BE32 /* YHBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YHBUser.h; path = ../FourthViewController/YHBUser.h; sourceTree = "<group>"; };
 		5BCE1F5E1A1496980004BE32 /* YHBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YHBUser.m; path = ../FourthViewController/YHBUser.m; sourceTree = "<group>"; };
@@ -718,8 +724,8 @@
 		5B7C40991A6CEE3600FB2DF5 /* OrderDetailModel */ = {
 			isa = PBXGroup;
 			children = (
-				5B7C409A1A6CEE4D00FB2DF5 /* YHBOrderDetail.h */,
-				5B7C409C1A6CEE5600FB2DF5 /* YHBOrderDetail.m */,
+				5BCBB0771A6EAB1400BF5E5C /* YHBOrderDetail.h */,
+				5BCBB0761A6EAB1400BF5E5C /* YHBOrderDetail.m */,
 			);
 			name = OrderDetailModel;
 			sourceTree = "<group>";
@@ -739,6 +745,10 @@
 			children = (
 				5B7C40A41A6D324E00FB2DF5 /* YHBOrderFirstSectionView.h */,
 				5B7C40A51A6D324E00FB2DF5 /* YHBOrderFirstSectionView.m */,
+				5BCBB0701A6E372200BF5E5C /* YHBOrderSecondView.h */,
+				5BCBB0711A6E372200BF5E5C /* YHBOrderSecondView.m */,
+				5BCBB0731A6E399400BF5E5C /* YHBOrderDetailInfoView.h */,
+				5BCBB0741A6E399400BF5E5C /* YHBOrderDetailInfoView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1597,11 +1607,14 @@
 				AB9FD9A01A4696F3003EBE40 /* YHBBuyDetailManage.m in Sources */,
 				5B0A34B81A45862A0071A357 /* YHBFuncBlockCell.m in Sources */,
 				FF2A6C751A0F3B7B001607AC /* UIImage+GIF.m in Sources */,
+				5BCBB0781A6EAB1400BF5E5C /* YHBOrderDetail.m in Sources */,
 				AB59D9531A33224E002B76E1 /* GoodsTableViewCell.m in Sources */,
 				FF2A6CA41A0F40B0001607AC /* ThreadSafeMutableArry.m in Sources */,
+				5BCBB0751A6E399400BF5E5C /* YHBOrderDetailInfoView.m in Sources */,
 				ABE5BBB21A2AD452000F5505 /* YHBAlbumViewController.m in Sources */,
 				5B2FB0811A39A1FA000177D9 /* YHBStoreViewController.m in Sources */,
 				5B3D069B1A4AD88900AC6BEC /* YHBShopListsCell.m in Sources */,
+				5BCBB0721A6E372200BF5E5C /* YHBOrderSecondView.m in Sources */,
 				5B7C40A61A6D324E00FB2DF5 /* YHBOrderFirstSectionView.m in Sources */,
 				AB9BA0981A2CBA79000E34FE /* YHBPhotoImageView.m in Sources */,
 				5B4BABB61A6A34BB00FEBC65 /* YHBCRslist.m in Sources */,
@@ -1677,7 +1690,6 @@
 				5BD6329D1A5F941500095DFD /* YHBCommentManager.m in Sources */,
 				FF2A6C6C1A0F3B7B001607AC /* NSData+ImageContentType.m in Sources */,
 				5BE76FF81A6CA04100E3F62A /* YHBOrderShopInfoView.m in Sources */,
-				5B7C409D1A6CEE5600FB2DF5 /* YHBOrderDetail.m in Sources */,
 				FF2A6C701A0F3B7B001607AC /* SDWebImageDownloader.m in Sources */,
 				FF2A6C481A0F3B72001607AC /* JSONKit.m in Sources */,
 				AB9FD9AD1A46A105003EBE40 /* PushPriceViewController.m in Sources */,

@@ -1,43 +1,51 @@
 //
 //  YHBOrderDetail.m
 //
-//  Created by   on 15/1/19
+//  Created by   on 15/1/20
 //  Copyright (c) 2015 __MyCompanyName__. All rights reserved.
 //
 
 #import "YHBOrderDetail.h"
 
 
-NSString *const kYHBOrderDetailNaction = @"naction";
-NSString *const kYHBOrderDetailSeller = @"seller";
-NSString *const kYHBOrderDetailMoney = @"money";
-NSString *const kYHBOrderDetailAmount = @"amount";
-NSString *const kYHBOrderDetailTitle = @"title";
-NSString *const kYHBOrderDetailSendDays = @"send_days";
-NSString *const kYHBOrderDetailItemid = @"itemid";
-NSString *const kYHBOrderDetailUpdatetime = @"updatetime";
-NSString *const kYHBOrderDetailBuyerReason = @"buyer_reason";
-NSString *const kYHBOrderDetailStatus = @"status";
-NSString *const kYHBOrderDetailBuyerName = @"buyer_name";
 NSString *const kYHBOrderDetailSendNo = @"send_no";
-NSString *const kYHBOrderDetailSendUrl = @"send_url";
-NSString *const kYHBOrderDetailSendType = @"send_type";
-NSString *const kYHBOrderDetailBuyerAddress = @"buyer_address";
-NSString *const kYHBOrderDetailOrderid = @"orderid";
-NSString *const kYHBOrderDetailNumber = @"number";
+NSString *const kYHBOrderDetailNaction = @"naction";
 NSString *const kYHBOrderDetailSellcom = @"sellcom";
-NSString *const kYHBOrderDetailSellid = @"sellid";
-NSString *const kYHBOrderDetailThumb = @"thumb";
-NSString *const kYHBOrderDetailFeeName = @"fee_name";
-NSString *const kYHBOrderDetailBuyerMobile = @"buyer_mobile";
+NSString *const kYHBOrderDetailReceivedate = @"receivedate";
 NSString *const kYHBOrderDetailAddtime = @"addtime";
-NSString *const kYHBOrderDetailNote = @"note";
-NSString *const kYHBOrderDetailFee = @"fee";
-NSString *const kYHBOrderDetailTradeNo = @"trade_no";
-NSString *const kYHBOrderDetailPrice = @"price";
-NSString *const kYHBOrderDetailSendTime = @"send_time";
+NSString *const kYHBOrderDetailReceivetime = @"receivetime";
+NSString *const kYHBOrderDetailSendDays = @"send_days";
+NSString *const kYHBOrderDetailSendtime = @"sendtime";
+NSString *const kYHBOrderDetailItemid = @"itemid";
+NSString *const kYHBOrderDetailOrderid = @"orderid";
+NSString *const kYHBOrderDetailFeeName = @"fee_name";
+NSString *const kYHBOrderDetailThumb = @"thumb";
 NSString *const kYHBOrderDetailRefundReason = @"refund_reason";
+NSString *const kYHBOrderDetailSendUrl = @"send_url";
+NSString *const kYHBOrderDetailNumber = @"number";
+NSString *const kYHBOrderDetailPaydate = @"paydate";
+NSString *const kYHBOrderDetailSenddate = @"senddate";
+NSString *const kYHBOrderDetailSeller = @"seller";
+NSString *const kYHBOrderDetailSendTime = @"send_time";
+NSString *const kYHBOrderDetailBuyerName = @"buyer_name";
+NSString *const kYHBOrderDetailTradeNo = @"trade_no";
+NSString *const kYHBOrderDetailStatus = @"status";
+NSString *const kYHBOrderDetailAdddate = @"adddate";
+NSString *const kYHBOrderDetailPrice = @"price";
+NSString *const kYHBOrderDetailBuyerReason = @"buyer_reason";
+NSString *const kYHBOrderDetailFee = @"fee";
+NSString *const kYHBOrderDetailSendType = @"send_type";
+NSString *const kYHBOrderDetailUpdatedate = @"updatedate";
+NSString *const kYHBOrderDetailSellid = @"sellid";
 NSString *const kYHBOrderDetailDstatus = @"dstatus";
+NSString *const kYHBOrderDetailPaytime = @"paytime";
+NSString *const kYHBOrderDetailBuyerAddress = @"buyer_address";
+NSString *const kYHBOrderDetailTitle = @"title";
+NSString *const kYHBOrderDetailMoney = @"money";
+NSString *const kYHBOrderDetailUpdatetime = @"updatetime";
+NSString *const kYHBOrderDetailBuyerMobile = @"buyer_mobile";
+NSString *const kYHBOrderDetailNote = @"note";
+NSString *const kYHBOrderDetailAmount = @"amount";
 
 
 @interface YHBOrderDetail ()
@@ -48,41 +56,79 @@ NSString *const kYHBOrderDetailDstatus = @"dstatus";
 
 @implementation YHBOrderDetail
 
-@synthesize naction = _naction;
-@synthesize seller = _seller;
-@synthesize money = _money;
-@synthesize amount = _amount;
-@synthesize title = _title;
-@synthesize sendDays = _sendDays;
-@synthesize itemid = _itemid;
-@synthesize updatetime = _updatetime;
-@synthesize buyerReason = _buyerReason;
-@synthesize status = _status;
-@synthesize buyerName = _buyerName;
 @synthesize sendNo = _sendNo;
-@synthesize sendUrl = _sendUrl;
-@synthesize sendType = _sendType;
-@synthesize buyerAddress = _buyerAddress;
-@synthesize orderid = _orderid;
-@synthesize number = _number;
+@synthesize naction = _naction;
 @synthesize sellcom = _sellcom;
-@synthesize sellid = _sellid;
-@synthesize thumb = _thumb;
-@synthesize feeName = _feeName;
-@synthesize buyerMobile = _buyerMobile;
+@synthesize receivedate = _receivedate;
 @synthesize addtime = _addtime;
-@synthesize note = _note;
-@synthesize fee = _fee;
-@synthesize tradeNo = _tradeNo;
-@synthesize price = _price;
-@synthesize sendTime = _sendTime;
+@synthesize receivetime = _receivetime;
+@synthesize sendDays = _sendDays;
+@synthesize sendtime = _sendtime;
+@synthesize itemid = _itemid;
+@synthesize orderid = _orderid;
+@synthesize feeName = _feeName;
+@synthesize thumb = _thumb;
 @synthesize refundReason = _refundReason;
+@synthesize sendUrl = _sendUrl;
+@synthesize number = _number;
+@synthesize paydate = _paydate;
+@synthesize senddate = _senddate;
+@synthesize seller = _seller;
+@synthesize sendTime = _sendTime;
+@synthesize buyerName = _buyerName;
+@synthesize tradeNo = _tradeNo;
+@synthesize status = _status;
+@synthesize adddate = _adddate;
+@synthesize price = _price;
+@synthesize buyerReason = _buyerReason;
+@synthesize fee = _fee;
+@synthesize sendType = _sendType;
+@synthesize updatedate = _updatedate;
+@synthesize sellid = _sellid;
 @synthesize dstatus = _dstatus;
+@synthesize paytime = _paytime;
+@synthesize buyerAddress = _buyerAddress;
+@synthesize title = _title;
+@synthesize money = _money;
+@synthesize updatetime = _updatetime;
+@synthesize buyerMobile = _buyerMobile;
+@synthesize note = _note;
+@synthesize amount = _amount;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
 {
     return [[self alloc] initWithDictionary:dict];
+}
+
+- (NSMutableArray *)getDetailTextArray
+{
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:8];
+    if (self.orderid.length) {
+        [array addObject:[@"订单编号：" stringByAppendingString:self.orderid]];
+    }
+    if (self.tradeNo.length) {
+        [array addObject:[@"支付宝订单号：" stringByAppendingString:self.tradeNo]];
+    }
+    if (self.adddate.length) {
+        [array addObject:[@"下单时间：" stringByAppendingString:self.adddate]];
+    }
+    if (self.updatedate.length) {
+        [array addObject:[@"更新时间：" stringByAppendingString:self.updatedate]];
+    }
+    if (self.paydate.length) {
+        [array addObject:[@"支付时间：" stringByAppendingString:self.paydate]];
+    }
+    if (self.senddate.length) {
+        [array addObject:[@"发货时间：" stringByAppendingString:self.senddate]];
+    }
+    if (self.receivedate.length) {
+        [array addObject:[@"收货时间：" stringByAppendingString:self.orderid]];
+    }
+    if (self.sendNo.length) {
+        [array addObject:[@"物流编号：" stringByAppendingString:self.orderid]];
+    }
+    return array;
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict
@@ -92,37 +138,45 @@ NSString *const kYHBOrderDetailDstatus = @"dstatus";
     // This check serves to make sure that a non-NSDictionary object
     // passed into the model class doesn't break the parsing.
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
-        self.naction = [self objectOrNilForKey:kYHBOrderDetailNaction fromDictionary:dict];
-        self.seller = [self objectOrNilForKey:kYHBOrderDetailSeller fromDictionary:dict];
-        self.money = [self objectOrNilForKey:kYHBOrderDetailMoney fromDictionary:dict];
-        self.amount = [self objectOrNilForKey:kYHBOrderDetailAmount fromDictionary:dict];
-        self.title = [self objectOrNilForKey:kYHBOrderDetailTitle fromDictionary:dict];
-        self.sendDays = [self objectOrNilForKey:kYHBOrderDetailSendDays fromDictionary:dict];
-        self.itemid = [[self objectOrNilForKey:kYHBOrderDetailItemid fromDictionary:dict] doubleValue];
-        self.updatetime = [self objectOrNilForKey:kYHBOrderDetailUpdatetime fromDictionary:dict];
-        self.buyerReason = [self objectOrNilForKey:kYHBOrderDetailBuyerReason fromDictionary:dict];
-        self.status = [[self objectOrNilForKey:kYHBOrderDetailStatus fromDictionary:dict] doubleValue];
-        self.buyerName = [self objectOrNilForKey:kYHBOrderDetailBuyerName fromDictionary:dict];
-        self.sendNo = [self objectOrNilForKey:kYHBOrderDetailSendNo fromDictionary:dict];
-        self.sendUrl = [self objectOrNilForKey:kYHBOrderDetailSendUrl fromDictionary:dict];
-        self.sendType = [self objectOrNilForKey:kYHBOrderDetailSendType fromDictionary:dict];
-        self.buyerAddress = [self objectOrNilForKey:kYHBOrderDetailBuyerAddress fromDictionary:dict];
-        self.orderid = [self objectOrNilForKey:kYHBOrderDetailOrderid fromDictionary:dict];
-        self.number = [self objectOrNilForKey:kYHBOrderDetailNumber fromDictionary:dict];
-        self.sellcom = [self objectOrNilForKey:kYHBOrderDetailSellcom fromDictionary:dict];
-        self.sellid = [[self objectOrNilForKey:kYHBOrderDetailSellid fromDictionary:dict] doubleValue];
-        self.thumb = [self objectOrNilForKey:kYHBOrderDetailThumb fromDictionary:dict];
-        self.feeName = [self objectOrNilForKey:kYHBOrderDetailFeeName fromDictionary:dict];
-        self.buyerMobile = [self objectOrNilForKey:kYHBOrderDetailBuyerMobile fromDictionary:dict];
-        self.addtime = [self objectOrNilForKey:kYHBOrderDetailAddtime fromDictionary:dict];
-        self.note = [self objectOrNilForKey:kYHBOrderDetailNote fromDictionary:dict];
-        self.fee = [self objectOrNilForKey:kYHBOrderDetailFee fromDictionary:dict];
-        self.tradeNo = [self objectOrNilForKey:kYHBOrderDetailTradeNo fromDictionary:dict];
-        self.price = [self objectOrNilForKey:kYHBOrderDetailPrice fromDictionary:dict];
-        self.sendTime = [self objectOrNilForKey:kYHBOrderDetailSendTime fromDictionary:dict];
-        self.refundReason = [self objectOrNilForKey:kYHBOrderDetailRefundReason fromDictionary:dict];
-        self.dstatus = [self objectOrNilForKey:kYHBOrderDetailDstatus fromDictionary:dict];
-        
+            self.sendNo = [self objectOrNilForKey:kYHBOrderDetailSendNo fromDictionary:dict];
+            self.naction = [self objectOrNilForKey:kYHBOrderDetailNaction fromDictionary:dict];
+            self.sellcom = [self objectOrNilForKey:kYHBOrderDetailSellcom fromDictionary:dict];
+            self.receivedate = [self objectOrNilForKey:kYHBOrderDetailReceivedate fromDictionary:dict];
+            self.addtime = [self objectOrNilForKey:kYHBOrderDetailAddtime fromDictionary:dict];
+            self.receivetime = [self objectOrNilForKey:kYHBOrderDetailReceivetime fromDictionary:dict];
+            self.sendDays = [self objectOrNilForKey:kYHBOrderDetailSendDays fromDictionary:dict];
+            self.sendtime = [self objectOrNilForKey:kYHBOrderDetailSendtime fromDictionary:dict];
+            self.itemid = [[self objectOrNilForKey:kYHBOrderDetailItemid fromDictionary:dict] doubleValue];
+            self.orderid = [self objectOrNilForKey:kYHBOrderDetailOrderid fromDictionary:dict];
+            self.feeName = [self objectOrNilForKey:kYHBOrderDetailFeeName fromDictionary:dict];
+            self.thumb = [self objectOrNilForKey:kYHBOrderDetailThumb fromDictionary:dict];
+            self.refundReason = [self objectOrNilForKey:kYHBOrderDetailRefundReason fromDictionary:dict];
+            self.sendUrl = [self objectOrNilForKey:kYHBOrderDetailSendUrl fromDictionary:dict];
+            self.number = [self objectOrNilForKey:kYHBOrderDetailNumber fromDictionary:dict];
+            self.paydate = [self objectOrNilForKey:kYHBOrderDetailPaydate fromDictionary:dict];
+            self.senddate = [self objectOrNilForKey:kYHBOrderDetailSenddate fromDictionary:dict];
+            self.seller = [self objectOrNilForKey:kYHBOrderDetailSeller fromDictionary:dict];
+            self.sendTime = [self objectOrNilForKey:kYHBOrderDetailSendTime fromDictionary:dict];
+            self.buyerName = [self objectOrNilForKey:kYHBOrderDetailBuyerName fromDictionary:dict];
+            self.tradeNo = [self objectOrNilForKey:kYHBOrderDetailTradeNo fromDictionary:dict];
+            self.status = [[self objectOrNilForKey:kYHBOrderDetailStatus fromDictionary:dict] doubleValue];
+            self.adddate = [self objectOrNilForKey:kYHBOrderDetailAdddate fromDictionary:dict];
+            self.price = [self objectOrNilForKey:kYHBOrderDetailPrice fromDictionary:dict];
+            self.buyerReason = [self objectOrNilForKey:kYHBOrderDetailBuyerReason fromDictionary:dict];
+            self.fee = [self objectOrNilForKey:kYHBOrderDetailFee fromDictionary:dict];
+            self.sendType = [self objectOrNilForKey:kYHBOrderDetailSendType fromDictionary:dict];
+            self.updatedate = [self objectOrNilForKey:kYHBOrderDetailUpdatedate fromDictionary:dict];
+            self.sellid = [[self objectOrNilForKey:kYHBOrderDetailSellid fromDictionary:dict] doubleValue];
+            self.dstatus = [self objectOrNilForKey:kYHBOrderDetailDstatus fromDictionary:dict];
+            self.paytime = [self objectOrNilForKey:kYHBOrderDetailPaytime fromDictionary:dict];
+            self.buyerAddress = [self objectOrNilForKey:kYHBOrderDetailBuyerAddress fromDictionary:dict];
+            self.title = [self objectOrNilForKey:kYHBOrderDetailTitle fromDictionary:dict];
+            self.money = [self objectOrNilForKey:kYHBOrderDetailMoney fromDictionary:dict];
+            self.updatetime = [self objectOrNilForKey:kYHBOrderDetailUpdatetime fromDictionary:dict];
+            self.buyerMobile = [self objectOrNilForKey:kYHBOrderDetailBuyerMobile fromDictionary:dict];
+            self.note = [self objectOrNilForKey:kYHBOrderDetailNote fromDictionary:dict];
+            self.amount = [self objectOrNilForKey:kYHBOrderDetailAmount fromDictionary:dict];
+
     }
     
     return self;
@@ -132,6 +186,7 @@ NSString *const kYHBOrderDetailDstatus = @"dstatus";
 - (NSDictionary *)dictionaryRepresentation
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];
+    [mutableDict setValue:self.sendNo forKey:kYHBOrderDetailSendNo];
     NSMutableArray *tempArrayForNaction = [NSMutableArray array];
     for (NSObject *subArrayObject in self.naction) {
         if([subArrayObject respondsToSelector:@selector(dictionaryRepresentation)]) {
@@ -143,40 +198,47 @@ NSString *const kYHBOrderDetailDstatus = @"dstatus";
         }
     }
     [mutableDict setValue:[NSArray arrayWithArray:tempArrayForNaction] forKey:kYHBOrderDetailNaction];
-    [mutableDict setValue:self.seller forKey:kYHBOrderDetailSeller];
-    [mutableDict setValue:self.money forKey:kYHBOrderDetailMoney];
-    [mutableDict setValue:self.amount forKey:kYHBOrderDetailAmount];
-    [mutableDict setValue:self.title forKey:kYHBOrderDetailTitle];
-    [mutableDict setValue:self.sendDays forKey:kYHBOrderDetailSendDays];
-    [mutableDict setValue:[NSNumber numberWithDouble:self.itemid] forKey:kYHBOrderDetailItemid];
-    [mutableDict setValue:self.updatetime forKey:kYHBOrderDetailUpdatetime];
-    [mutableDict setValue:self.buyerReason forKey:kYHBOrderDetailBuyerReason];
-    [mutableDict setValue:[NSNumber numberWithDouble:self.status] forKey:kYHBOrderDetailStatus];
-    [mutableDict setValue:self.buyerName forKey:kYHBOrderDetailBuyerName];
-    [mutableDict setValue:self.sendNo forKey:kYHBOrderDetailSendNo];
-    [mutableDict setValue:self.sendUrl forKey:kYHBOrderDetailSendUrl];
-    [mutableDict setValue:self.sendType forKey:kYHBOrderDetailSendType];
-    [mutableDict setValue:self.buyerAddress forKey:kYHBOrderDetailBuyerAddress];
-    [mutableDict setValue:self.orderid forKey:kYHBOrderDetailOrderid];
-    [mutableDict setValue:self.number forKey:kYHBOrderDetailNumber];
     [mutableDict setValue:self.sellcom forKey:kYHBOrderDetailSellcom];
-    [mutableDict setValue:[NSNumber numberWithDouble:self.sellid] forKey:kYHBOrderDetailSellid];
-    [mutableDict setValue:self.thumb forKey:kYHBOrderDetailThumb];
-    [mutableDict setValue:self.feeName forKey:kYHBOrderDetailFeeName];
-    [mutableDict setValue:self.buyerMobile forKey:kYHBOrderDetailBuyerMobile];
+    [mutableDict setValue:self.receivedate forKey:kYHBOrderDetailReceivedate];
     [mutableDict setValue:self.addtime forKey:kYHBOrderDetailAddtime];
-    [mutableDict setValue:self.note forKey:kYHBOrderDetailNote];
-    [mutableDict setValue:self.fee forKey:kYHBOrderDetailFee];
-    [mutableDict setValue:self.tradeNo forKey:kYHBOrderDetailTradeNo];
-    [mutableDict setValue:self.price forKey:kYHBOrderDetailPrice];
-    [mutableDict setValue:self.sendTime forKey:kYHBOrderDetailSendTime];
+    [mutableDict setValue:self.receivetime forKey:kYHBOrderDetailReceivetime];
+    [mutableDict setValue:self.sendDays forKey:kYHBOrderDetailSendDays];
+    [mutableDict setValue:self.sendtime forKey:kYHBOrderDetailSendtime];
+    [mutableDict setValue:[NSNumber numberWithDouble:self.itemid] forKey:kYHBOrderDetailItemid];
+    [mutableDict setValue:self.orderid forKey:kYHBOrderDetailOrderid];
+    [mutableDict setValue:self.feeName forKey:kYHBOrderDetailFeeName];
+    [mutableDict setValue:self.thumb forKey:kYHBOrderDetailThumb];
     [mutableDict setValue:self.refundReason forKey:kYHBOrderDetailRefundReason];
+    [mutableDict setValue:self.sendUrl forKey:kYHBOrderDetailSendUrl];
+    [mutableDict setValue:self.number forKey:kYHBOrderDetailNumber];
+    [mutableDict setValue:self.paydate forKey:kYHBOrderDetailPaydate];
+    [mutableDict setValue:self.senddate forKey:kYHBOrderDetailSenddate];
+    [mutableDict setValue:self.seller forKey:kYHBOrderDetailSeller];
+    [mutableDict setValue:self.sendTime forKey:kYHBOrderDetailSendTime];
+    [mutableDict setValue:self.buyerName forKey:kYHBOrderDetailBuyerName];
+    [mutableDict setValue:self.tradeNo forKey:kYHBOrderDetailTradeNo];
+    [mutableDict setValue:[NSNumber numberWithDouble:self.status] forKey:kYHBOrderDetailStatus];
+    [mutableDict setValue:self.adddate forKey:kYHBOrderDetailAdddate];
+    [mutableDict setValue:self.price forKey:kYHBOrderDetailPrice];
+    [mutableDict setValue:self.buyerReason forKey:kYHBOrderDetailBuyerReason];
+    [mutableDict setValue:self.fee forKey:kYHBOrderDetailFee];
+    [mutableDict setValue:self.sendType forKey:kYHBOrderDetailSendType];
+    [mutableDict setValue:self.updatedate forKey:kYHBOrderDetailUpdatedate];
+    [mutableDict setValue:[NSNumber numberWithDouble:self.sellid] forKey:kYHBOrderDetailSellid];
     [mutableDict setValue:self.dstatus forKey:kYHBOrderDetailDstatus];
-    
+    [mutableDict setValue:self.paytime forKey:kYHBOrderDetailPaytime];
+    [mutableDict setValue:self.buyerAddress forKey:kYHBOrderDetailBuyerAddress];
+    [mutableDict setValue:self.title forKey:kYHBOrderDetailTitle];
+    [mutableDict setValue:self.money forKey:kYHBOrderDetailMoney];
+    [mutableDict setValue:self.updatetime forKey:kYHBOrderDetailUpdatetime];
+    [mutableDict setValue:self.buyerMobile forKey:kYHBOrderDetailBuyerMobile];
+    [mutableDict setValue:self.note forKey:kYHBOrderDetailNote];
+    [mutableDict setValue:self.amount forKey:kYHBOrderDetailAmount];
+
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
 
-- (NSString *)description
+- (NSString *)description 
 {
     return [NSString stringWithFormat:@"%@", [self dictionaryRepresentation]];
 }
@@ -194,73 +256,89 @@ NSString *const kYHBOrderDetailDstatus = @"dstatus";
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super init];
-    
-    self.naction = [aDecoder decodeObjectForKey:kYHBOrderDetailNaction];
-    self.seller = [aDecoder decodeObjectForKey:kYHBOrderDetailSeller];
-    self.money = [aDecoder decodeObjectForKey:kYHBOrderDetailMoney];
-    self.amount = [aDecoder decodeObjectForKey:kYHBOrderDetailAmount];
-    self.title = [aDecoder decodeObjectForKey:kYHBOrderDetailTitle];
-    self.sendDays = [aDecoder decodeObjectForKey:kYHBOrderDetailSendDays];
-    self.itemid = [aDecoder decodeDoubleForKey:kYHBOrderDetailItemid];
-    self.updatetime = [aDecoder decodeObjectForKey:kYHBOrderDetailUpdatetime];
-    self.buyerReason = [aDecoder decodeObjectForKey:kYHBOrderDetailBuyerReason];
-    self.status = [aDecoder decodeDoubleForKey:kYHBOrderDetailStatus];
-    self.buyerName = [aDecoder decodeObjectForKey:kYHBOrderDetailBuyerName];
+
     self.sendNo = [aDecoder decodeObjectForKey:kYHBOrderDetailSendNo];
-    self.sendUrl = [aDecoder decodeObjectForKey:kYHBOrderDetailSendUrl];
-    self.sendType = [aDecoder decodeObjectForKey:kYHBOrderDetailSendType];
-    self.buyerAddress = [aDecoder decodeObjectForKey:kYHBOrderDetailBuyerAddress];
-    self.orderid = [aDecoder decodeObjectForKey:kYHBOrderDetailOrderid];
-    self.number = [aDecoder decodeObjectForKey:kYHBOrderDetailNumber];
+    self.naction = [aDecoder decodeObjectForKey:kYHBOrderDetailNaction];
     self.sellcom = [aDecoder decodeObjectForKey:kYHBOrderDetailSellcom];
-    self.sellid = [aDecoder decodeDoubleForKey:kYHBOrderDetailSellid];
-    self.thumb = [aDecoder decodeObjectForKey:kYHBOrderDetailThumb];
-    self.feeName = [aDecoder decodeObjectForKey:kYHBOrderDetailFeeName];
-    self.buyerMobile = [aDecoder decodeObjectForKey:kYHBOrderDetailBuyerMobile];
+    self.receivedate = [aDecoder decodeObjectForKey:kYHBOrderDetailReceivedate];
     self.addtime = [aDecoder decodeObjectForKey:kYHBOrderDetailAddtime];
-    self.note = [aDecoder decodeObjectForKey:kYHBOrderDetailNote];
-    self.fee = [aDecoder decodeObjectForKey:kYHBOrderDetailFee];
-    self.tradeNo = [aDecoder decodeObjectForKey:kYHBOrderDetailTradeNo];
-    self.price = [aDecoder decodeObjectForKey:kYHBOrderDetailPrice];
-    self.sendTime = [aDecoder decodeObjectForKey:kYHBOrderDetailSendTime];
+    self.receivetime = [aDecoder decodeObjectForKey:kYHBOrderDetailReceivetime];
+    self.sendDays = [aDecoder decodeObjectForKey:kYHBOrderDetailSendDays];
+    self.sendtime = [aDecoder decodeObjectForKey:kYHBOrderDetailSendtime];
+    self.itemid = [aDecoder decodeDoubleForKey:kYHBOrderDetailItemid];
+    self.orderid = [aDecoder decodeObjectForKey:kYHBOrderDetailOrderid];
+    self.feeName = [aDecoder decodeObjectForKey:kYHBOrderDetailFeeName];
+    self.thumb = [aDecoder decodeObjectForKey:kYHBOrderDetailThumb];
     self.refundReason = [aDecoder decodeObjectForKey:kYHBOrderDetailRefundReason];
+    self.sendUrl = [aDecoder decodeObjectForKey:kYHBOrderDetailSendUrl];
+    self.number = [aDecoder decodeObjectForKey:kYHBOrderDetailNumber];
+    self.paydate = [aDecoder decodeObjectForKey:kYHBOrderDetailPaydate];
+    self.senddate = [aDecoder decodeObjectForKey:kYHBOrderDetailSenddate];
+    self.seller = [aDecoder decodeObjectForKey:kYHBOrderDetailSeller];
+    self.sendTime = [aDecoder decodeObjectForKey:kYHBOrderDetailSendTime];
+    self.buyerName = [aDecoder decodeObjectForKey:kYHBOrderDetailBuyerName];
+    self.tradeNo = [aDecoder decodeObjectForKey:kYHBOrderDetailTradeNo];
+    self.status = [aDecoder decodeDoubleForKey:kYHBOrderDetailStatus];
+    self.adddate = [aDecoder decodeObjectForKey:kYHBOrderDetailAdddate];
+    self.price = [aDecoder decodeObjectForKey:kYHBOrderDetailPrice];
+    self.buyerReason = [aDecoder decodeObjectForKey:kYHBOrderDetailBuyerReason];
+    self.fee = [aDecoder decodeObjectForKey:kYHBOrderDetailFee];
+    self.sendType = [aDecoder decodeObjectForKey:kYHBOrderDetailSendType];
+    self.updatedate = [aDecoder decodeObjectForKey:kYHBOrderDetailUpdatedate];
+    self.sellid = [aDecoder decodeDoubleForKey:kYHBOrderDetailSellid];
     self.dstatus = [aDecoder decodeObjectForKey:kYHBOrderDetailDstatus];
+    self.paytime = [aDecoder decodeObjectForKey:kYHBOrderDetailPaytime];
+    self.buyerAddress = [aDecoder decodeObjectForKey:kYHBOrderDetailBuyerAddress];
+    self.title = [aDecoder decodeObjectForKey:kYHBOrderDetailTitle];
+    self.money = [aDecoder decodeObjectForKey:kYHBOrderDetailMoney];
+    self.updatetime = [aDecoder decodeObjectForKey:kYHBOrderDetailUpdatetime];
+    self.buyerMobile = [aDecoder decodeObjectForKey:kYHBOrderDetailBuyerMobile];
+    self.note = [aDecoder decodeObjectForKey:kYHBOrderDetailNote];
+    self.amount = [aDecoder decodeObjectForKey:kYHBOrderDetailAmount];
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    
-    [aCoder encodeObject:_naction forKey:kYHBOrderDetailNaction];
-    [aCoder encodeObject:_seller forKey:kYHBOrderDetailSeller];
-    [aCoder encodeObject:_money forKey:kYHBOrderDetailMoney];
-    [aCoder encodeObject:_amount forKey:kYHBOrderDetailAmount];
-    [aCoder encodeObject:_title forKey:kYHBOrderDetailTitle];
-    [aCoder encodeObject:_sendDays forKey:kYHBOrderDetailSendDays];
-    [aCoder encodeDouble:_itemid forKey:kYHBOrderDetailItemid];
-    [aCoder encodeObject:_updatetime forKey:kYHBOrderDetailUpdatetime];
-    [aCoder encodeObject:_buyerReason forKey:kYHBOrderDetailBuyerReason];
-    [aCoder encodeDouble:_status forKey:kYHBOrderDetailStatus];
-    [aCoder encodeObject:_buyerName forKey:kYHBOrderDetailBuyerName];
+
     [aCoder encodeObject:_sendNo forKey:kYHBOrderDetailSendNo];
-    [aCoder encodeObject:_sendUrl forKey:kYHBOrderDetailSendUrl];
-    [aCoder encodeObject:_sendType forKey:kYHBOrderDetailSendType];
-    [aCoder encodeObject:_buyerAddress forKey:kYHBOrderDetailBuyerAddress];
-    [aCoder encodeObject:_orderid forKey:kYHBOrderDetailOrderid];
-    [aCoder encodeObject:_number forKey:kYHBOrderDetailNumber];
+    [aCoder encodeObject:_naction forKey:kYHBOrderDetailNaction];
     [aCoder encodeObject:_sellcom forKey:kYHBOrderDetailSellcom];
-    [aCoder encodeDouble:_sellid forKey:kYHBOrderDetailSellid];
-    [aCoder encodeObject:_thumb forKey:kYHBOrderDetailThumb];
-    [aCoder encodeObject:_feeName forKey:kYHBOrderDetailFeeName];
-    [aCoder encodeObject:_buyerMobile forKey:kYHBOrderDetailBuyerMobile];
+    [aCoder encodeObject:_receivedate forKey:kYHBOrderDetailReceivedate];
     [aCoder encodeObject:_addtime forKey:kYHBOrderDetailAddtime];
-    [aCoder encodeObject:_note forKey:kYHBOrderDetailNote];
-    [aCoder encodeObject:_fee forKey:kYHBOrderDetailFee];
-    [aCoder encodeObject:_tradeNo forKey:kYHBOrderDetailTradeNo];
-    [aCoder encodeObject:_price forKey:kYHBOrderDetailPrice];
-    [aCoder encodeObject:_sendTime forKey:kYHBOrderDetailSendTime];
+    [aCoder encodeObject:_receivetime forKey:kYHBOrderDetailReceivetime];
+    [aCoder encodeObject:_sendDays forKey:kYHBOrderDetailSendDays];
+    [aCoder encodeObject:_sendtime forKey:kYHBOrderDetailSendtime];
+    [aCoder encodeDouble:_itemid forKey:kYHBOrderDetailItemid];
+    [aCoder encodeObject:_orderid forKey:kYHBOrderDetailOrderid];
+    [aCoder encodeObject:_feeName forKey:kYHBOrderDetailFeeName];
+    [aCoder encodeObject:_thumb forKey:kYHBOrderDetailThumb];
     [aCoder encodeObject:_refundReason forKey:kYHBOrderDetailRefundReason];
+    [aCoder encodeObject:_sendUrl forKey:kYHBOrderDetailSendUrl];
+    [aCoder encodeObject:_number forKey:kYHBOrderDetailNumber];
+    [aCoder encodeObject:_paydate forKey:kYHBOrderDetailPaydate];
+    [aCoder encodeObject:_senddate forKey:kYHBOrderDetailSenddate];
+    [aCoder encodeObject:_seller forKey:kYHBOrderDetailSeller];
+    [aCoder encodeObject:_sendTime forKey:kYHBOrderDetailSendTime];
+    [aCoder encodeObject:_buyerName forKey:kYHBOrderDetailBuyerName];
+    [aCoder encodeObject:_tradeNo forKey:kYHBOrderDetailTradeNo];
+    [aCoder encodeDouble:_status forKey:kYHBOrderDetailStatus];
+    [aCoder encodeObject:_adddate forKey:kYHBOrderDetailAdddate];
+    [aCoder encodeObject:_price forKey:kYHBOrderDetailPrice];
+    [aCoder encodeObject:_buyerReason forKey:kYHBOrderDetailBuyerReason];
+    [aCoder encodeObject:_fee forKey:kYHBOrderDetailFee];
+    [aCoder encodeObject:_sendType forKey:kYHBOrderDetailSendType];
+    [aCoder encodeObject:_updatedate forKey:kYHBOrderDetailUpdatedate];
+    [aCoder encodeDouble:_sellid forKey:kYHBOrderDetailSellid];
     [aCoder encodeObject:_dstatus forKey:kYHBOrderDetailDstatus];
+    [aCoder encodeObject:_paytime forKey:kYHBOrderDetailPaytime];
+    [aCoder encodeObject:_buyerAddress forKey:kYHBOrderDetailBuyerAddress];
+    [aCoder encodeObject:_title forKey:kYHBOrderDetailTitle];
+    [aCoder encodeObject:_money forKey:kYHBOrderDetailMoney];
+    [aCoder encodeObject:_updatetime forKey:kYHBOrderDetailUpdatetime];
+    [aCoder encodeObject:_buyerMobile forKey:kYHBOrderDetailBuyerMobile];
+    [aCoder encodeObject:_note forKey:kYHBOrderDetailNote];
+    [aCoder encodeObject:_amount forKey:kYHBOrderDetailAmount];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -268,37 +346,45 @@ NSString *const kYHBOrderDetailDstatus = @"dstatus";
     YHBOrderDetail *copy = [[YHBOrderDetail alloc] init];
     
     if (copy) {
-        
-        copy.naction = [self.naction copyWithZone:zone];
-        copy.seller = [self.seller copyWithZone:zone];
-        copy.money = [self.money copyWithZone:zone];
-        copy.amount = [self.amount copyWithZone:zone];
-        copy.title = [self.title copyWithZone:zone];
-        copy.sendDays = [self.sendDays copyWithZone:zone];
-        copy.itemid = self.itemid;
-        copy.updatetime = [self.updatetime copyWithZone:zone];
-        copy.buyerReason = [self.buyerReason copyWithZone:zone];
-        copy.status = self.status;
-        copy.buyerName = [self.buyerName copyWithZone:zone];
+
         copy.sendNo = [self.sendNo copyWithZone:zone];
-        copy.sendUrl = [self.sendUrl copyWithZone:zone];
-        copy.sendType = [self.sendType copyWithZone:zone];
-        copy.buyerAddress = [self.buyerAddress copyWithZone:zone];
-        copy.orderid = [self.orderid copyWithZone:zone];
-        copy.number = [self.number copyWithZone:zone];
+        copy.naction = [self.naction copyWithZone:zone];
         copy.sellcom = [self.sellcom copyWithZone:zone];
-        copy.sellid = self.sellid;
-        copy.thumb = [self.thumb copyWithZone:zone];
-        copy.feeName = [self.feeName copyWithZone:zone];
-        copy.buyerMobile = [self.buyerMobile copyWithZone:zone];
+        copy.receivedate = [self.receivedate copyWithZone:zone];
         copy.addtime = [self.addtime copyWithZone:zone];
-        copy.note = [self.note copyWithZone:zone];
-        copy.fee = [self.fee copyWithZone:zone];
-        copy.tradeNo = [self.tradeNo copyWithZone:zone];
-        copy.price = [self.price copyWithZone:zone];
-        copy.sendTime = [self.sendTime copyWithZone:zone];
+        copy.receivetime = [self.receivetime copyWithZone:zone];
+        copy.sendDays = [self.sendDays copyWithZone:zone];
+        copy.sendtime = [self.sendtime copyWithZone:zone];
+        copy.itemid = self.itemid;
+        copy.orderid = [self.orderid copyWithZone:zone];
+        copy.feeName = [self.feeName copyWithZone:zone];
+        copy.thumb = [self.thumb copyWithZone:zone];
         copy.refundReason = [self.refundReason copyWithZone:zone];
+        copy.sendUrl = [self.sendUrl copyWithZone:zone];
+        copy.number = [self.number copyWithZone:zone];
+        copy.paydate = [self.paydate copyWithZone:zone];
+        copy.senddate = [self.senddate copyWithZone:zone];
+        copy.seller = [self.seller copyWithZone:zone];
+        copy.sendTime = [self.sendTime copyWithZone:zone];
+        copy.buyerName = [self.buyerName copyWithZone:zone];
+        copy.tradeNo = [self.tradeNo copyWithZone:zone];
+        copy.status = self.status;
+        copy.adddate = [self.adddate copyWithZone:zone];
+        copy.price = [self.price copyWithZone:zone];
+        copy.buyerReason = [self.buyerReason copyWithZone:zone];
+        copy.fee = [self.fee copyWithZone:zone];
+        copy.sendType = [self.sendType copyWithZone:zone];
+        copy.updatedate = [self.updatedate copyWithZone:zone];
+        copy.sellid = self.sellid;
         copy.dstatus = [self.dstatus copyWithZone:zone];
+        copy.paytime = [self.paytime copyWithZone:zone];
+        copy.buyerAddress = [self.buyerAddress copyWithZone:zone];
+        copy.title = [self.title copyWithZone:zone];
+        copy.money = [self.money copyWithZone:zone];
+        copy.updatetime = [self.updatetime copyWithZone:zone];
+        copy.buyerMobile = [self.buyerMobile copyWithZone:zone];
+        copy.note = [self.note copyWithZone:zone];
+        copy.amount = [self.amount copyWithZone:zone];
     }
     
     return copy;
