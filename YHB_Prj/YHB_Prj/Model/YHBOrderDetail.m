@@ -131,6 +131,21 @@ NSString *const kYHBOrderDetailAmount = @"amount";
     return array;
 }
 
+- (NSString *)getTitleOfNextStepForIndex:(int)index
+{
+    if (self.naction.count > index) {
+        NSString *str = self.naction[index];
+        if ([str isEqualToString:@"close"]) {
+            return @"取消订单";
+        }else if([str isEqualToString:@"pay"]) {
+            return @"付款";
+        }else if ([str isEqualToString:@"receive"]) {
+            return @"立即收货";
+        }
+    }
+    return nil;
+}
+
 - (instancetype)initWithDictionary:(NSDictionary *)dict
 {
     self = [super init];

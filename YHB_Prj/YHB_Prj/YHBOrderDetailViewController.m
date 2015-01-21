@@ -15,6 +15,8 @@
 #import "IntroduceViewController.h"
 #import "YHBOrderSecondView.h"
 #import "YHBOrderDetailInfoView.h"
+#define KAbtnWidth 70
+#define kAbtnHeight 25
 typedef enum : NSInteger {
     Com_phone = 0,//电话
     Com_message,//短信
@@ -29,7 +31,7 @@ typedef enum : NSInteger {
 @property (strong, nonatomic) YHBOrderFirstSectionView *firstSection;
 @property (strong, nonatomic) YHBOrderSecondView *secondSection;
 @property (strong, nonatomic) YHBOrderDetailInfoView *infoView;
-
+@property (strong, nonatomic) UIView *actionView;
 @end
 
 @implementation YHBOrderDetailViewController
@@ -85,7 +87,6 @@ typedef enum : NSInteger {
 - (void)reSetUI
 {
     [self.firstSection setUIWithBuyer:self.orderModel.buyerName address:self.orderModel.buyerAddress moble:self.orderModel.buyerMobile statusDes:self.orderModel.dstatus isNeedLogicView:(self.orderModel.sendUrl.length ? YES:NO) amount:self.orderModel.money fee:self.orderModel.fee];
-    [self.scrollView addSubview:self.firstSection];
     if (![self.firstSection superview]) {
         [self.scrollView addSubview:self.firstSection];
     }
@@ -102,7 +103,44 @@ typedef enum : NSInteger {
     if (![self.infoView superview]) {
         [self.scrollView addSubview:self.infoView];
     }
+    [self creatOrResetActonView];
     
+}
+
+- (void)creatOrResetActonView
+{
+    if (self.orderModel.naction.count) {
+        if (!_actionView) {
+            self.actionView = [[UIView alloc] initWithFrame:CGRectMake(0, kMainScreenHeight-20-44-40, kMainScreenWidth, 40)];
+            self.actionView.layer.borderColor = [kLineColor CGColor];
+            self.actionView.layer.borderWidth = 0.5;
+            self.actionView.backgroundColor = [UIColor whiteColor];
+        }
+        [self.actionView removeSubviews];
+        
+        for (int i = 0; i < self.orderModel.naction.count; i++) {
+            NSString *title = [self.orderModel getTitleOfNextStepForIndex:i];
+            if (title && title.length && i < 2) {
+                UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+                [btn setTitle:title forState:UIControlStateNormal];
+                btn.frame = CGRectMake(kMainScreenWidth-(!i + 1)*(KAbtnWidth+10) , _actionView.height/2.0-kAbtnHeight/2.0, KAbtnWidth, kAbtnHeight);
+                [btn addTarget:self action:@selector(touchActionBtn:) forControlEvents:UIControlEventTouchUpInside];
+                btn.layer.cornerRadius  =2.0;
+                btn.titleLabel.font = kFont12;
+                [btn setTitleColor:(!i%2 ? [UIColor blackColor] : [UIColor whiteColor] ) forState:UIControlStateNormal];
+                [btn setBackgroundColor:(!i%2 ? RGBCOLOR(238, 238, 238) : KColor)];
+                btn.tag = i;
+                btn.layer.borderColor = [kLineColor CGColor];
+                btn.layer.borderWidth = 0.5f;
+                [self.actionView addSubview:btn];
+            }
+            
+        }
+        if (![self.actionView superview]) {
+            [self.view addSubview:self.actionView];
+            self.scrollView.height -= self.actionView.height;
+        }
+    }
 }
 
 #pragma mark - Action
@@ -115,6 +153,26 @@ typedef enum : NSInteger {
         vc.isSysPush = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }
+}
+
+#pragma mark 点击功能按钮
+- (void)touchActionBtn : (UIButton *)sender
+{
+    NSString *action = self.orderModel.naction[sender.tag];
+    [SVProgressHUD showWithStatus:@"操作中..." cover:YES offsetY:0];
+    __weak YHBOrderDetailViewController *weakself = self;
+    [self.orderManager changeOrderStatusWithToken:([YHBUser sharedYHBUser].token ? :@"") ItemID:(NSInteger)self.orderModel.itemid Action:action?:@"" Success:^{
+        [SVProgressHUD showWithStatus:@"操作成功,正在重新加载订单信息.." cover:YES offsetY:0];
+        [weakself.orderManager getOrderDetailWithToken:([YHBUser sharedYHBUser].token?:@"") ItemID:(NSInteger)weakself.orderModel.itemid Success:^(YHBOrderDetail *model) {
+            weakself.orderModel = model;
+            [weakself reSetUI];
+            [SVProgressHUD dismissWithSuccess:@"操作成功!"];
+        } failure:^{
+            [SVProgressHUD dismissWithError:@"加载订单信息失败,请重新尝试"];
+        }];
+    } failure:^{
+        [SVProgressHUD dismissWithError:@"操作失败，请稍后重试"];
+    }];
 }
 
 #pragma mark 点击交流

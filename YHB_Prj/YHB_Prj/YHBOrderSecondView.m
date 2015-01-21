@@ -47,7 +47,7 @@
         _smallShopTitle = [self getTitleLabelWithText:@"" Y:10 isLeft:YES isHighColor:NO];
         [_communicateCell addSubview:_smallShopTitle];
         //95 26
-        CGFloat blankWidth = (kMainScreenWidth-20-3*95)/2.0;
+        CGFloat blankWidth = (kMainScreenWidth-20-3*80)/2.0;
         for (int i = 0; i < 3; i++) {
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.frame = CGRectMake(10+(80+blankWidth)*i, _smallShopTitle.bottom+10, 80, 26);

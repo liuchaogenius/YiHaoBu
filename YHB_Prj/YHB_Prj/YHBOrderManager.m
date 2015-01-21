@@ -70,4 +70,26 @@
 
 }
 
+- (void)changeOrderStatusWithToken:(NSString *)token ItemID:(NSInteger)itemID Action:(NSString *)action Success:(void(^)())sBlock failure:(void(^)())fBlock
+{
+    NSString *url = nil;
+    kYHBRequestUrl(@"postOrderStatus.php", url);
+    NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",[NSNumber numberWithInteger:itemID],@"itemid",action,@"action",nil];
+    [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
+        NSInteger result = [successDict[@"result"] integerValue];
+        if (result == 1) {
+            if (sBlock) {
+                sBlock();
+            }
+        }else{
+            if (fBlock) {
+                fBlock();
+            }
+        }
+    } failure:^(NSDictionary *failDict, NSError *error) {
+        fBlock();
+    }];
+
+}
+
 @end

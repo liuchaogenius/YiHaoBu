@@ -54,5 +54,5 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 - (NSDictionary *)dictionaryRepresentation;
 - (NSMutableArray *)getDetailTextArray;
-
+- (NSString *)getTitleOfNextStepForIndex:(int)index;
 @end
