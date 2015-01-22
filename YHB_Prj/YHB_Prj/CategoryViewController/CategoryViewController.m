@@ -307,6 +307,7 @@
         }
     }
     chooseArray = [NSMutableArray new];
+    self.tableView.contentOffset = CGPointMake(0, 0);
 }
 
 - (void)deleteItemWithItemID:(int)aCatid
