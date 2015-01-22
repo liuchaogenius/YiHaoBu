@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LookQuoteViewController : UIViewController
+@interface LookQuoteViewController : BaseViewController
 
 @end

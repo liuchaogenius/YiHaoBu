@@ -17,6 +17,7 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])
     {
         self.goodImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
+        self.goodImgView.backgroundColor = KColor;
         
 //        UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 0.25)];
 //        topLineView.backgroundColor = [UIColor lightGrayColor];
@@ -48,27 +49,14 @@
         self.goodEditTimeLabel.textAlignment = NSTextAlignmentRight;
         self.goodEditTimeLabel.textColor = [UIColor lightGrayColor];
         
-//        self.goodSkimCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 68, 80, 15)];
-//        self.goodSkimCountLabel.font = kFont12;
-//        self.goodSkimCountLabel.textColor = [UIColor lightGrayColor];
-//        
-//        self.goodPaidView = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-60, 10, 40, 40)];
-//        self.goodPaidView.backgroundColor = KColor;
+        self.goodTodayLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.goodCatNameLabel.left, self.goodCatNameLabel.top, 120, 15)];
+        self.goodTodayLabel.font = kFont12;
+//        self.goodTodayLabel.text = @"供应周期30天";
         
-//        UILabel *paidLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 20)];
-//        paidLabel.textAlignment = NSTextAlignmentCenter;
-//        paidLabel.font = kFont14;
-//        paidLabel.text = @"偿";
-//        paidLabel.textColor = [UIColor whiteColor];
-//        [self.goodPaidView addSubview:paidLabel];
-        
-//        self.goodPaidPriceView = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 40, 20)];
-//        self.goodPaidPriceView.textAlignment = NSTextAlignmentCenter;
-//        self.goodPaidPriceView.font = kFont14;
-//        self.goodPaidPriceView.textColor = [UIColor whiteColor];
-//        [self.goodPaidView addSubview:self.goodPaidPriceView];
-        
-        
+        self.goodAmountLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.goodCatNameLabel.left, self.goodEditTimeLabel.top, 120, 15)];
+        self.goodAmountLabel.font = kFont12;
+//        self.goodAmountLabel.text = @"采购数量5000米";
+
         [self addSubview:self.goodImgView];
         [self addSubview:self.goodTitleLabel];
         [self addSubview:self.goodCatNameLabel];
@@ -76,14 +64,120 @@
         [self addSubview:self.goodEditTimeLabel];
         [self addSubview:self.goodCatDetailLabel];
         [self addSubview:self.vipImgView];
-//        [self addSubview:self.goodSkimCountLabel];
-//        [self addSubview:self.goodPaidView];
+        [self addSubview:self.goodTodayLabel];
+        [self addSubview:self.goodAmountLabel];
         
-        UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, cellHeight-0.3, kMainScreenWidth, 0.3)];
+        UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, cellHeight-0.5, kMainScreenWidth, 0.5)];
         bottomLineView.backgroundColor = [UIColor lightGrayColor];
         [self addSubview:bottomLineView];
     }
     return self;
+}
+
+- (void)setCellWithModel:(YHBSupplyModel *)aModel
+{
+    if (aModel.thumb)
+    {
+        [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aModel.thumb]];
+    }
+    
+    if (aModel.title)
+    {
+        self.goodTitleLabel.text = aModel.title;
+        CGSize strSize = [aModel.title sizeWithFont:kFont16];
+        CGRect temFrame = self.goodTitleLabel.frame;
+        if (strSize.width+temFrame.origin.x>kMainScreenWidth-50)
+        {
+            strSize.width = kMainScreenWidth-50-temFrame.origin.x;
+        }
+        temFrame.size.width = strSize.width;
+        self.goodTitleLabel.frame = temFrame;
+        CGRect vipFrame = self.vipImgView.frame;
+        vipFrame.origin.x = self.goodTitleLabel.right+3;
+        self.vipImgView.frame = vipFrame;
+    }
+    else
+    {
+        self.goodTitleLabel.text = @"未命名";
+    }
+    
+    
+    if (aModel.typename)
+    {
+        self.goodTypeNameLabel.text = [NSString stringWithFormat:@"状态 : %@", aModel.typename];
+    }
+    else
+    {
+        self.goodTypeNameLabel.text = @"";
+    }
+    
+    CGRect typeNameFrame = CGRectMake(kMainScreenWidth-90, self.goodTitleLabel.bottom+10, 80, 15);
+    self.goodTypeNameLabel.frame = typeNameFrame;
+    
+    CGRect catNameFrame = CGRectMake(self.goodCatNameLabel.right, self.goodCatNameLabel.top, self.goodTypeNameLabel.left-self.goodCatNameLabel.right, 17);
+    self.goodCatDetailLabel.frame = catNameFrame;
+    
+    CGSize typeSize = [self.goodTypeNameLabel.text sizeWithFont:kFont14];
+    if (typeSize.width>80)
+    {
+        CGRect temTypeFrame = self.goodTypeNameLabel.frame;
+        temTypeFrame.size.width = typeSize.width;
+        temTypeFrame.origin.x = kMainScreenWidth-10-typeSize.width;
+        self.goodTypeNameLabel.frame = temTypeFrame;
+        
+        CGRect temCatFrame = self.goodCatDetailLabel.frame;
+        temCatFrame.size.width -= typeSize.width-80;
+        self.goodCatDetailLabel.frame = temCatFrame;
+    }
+    
+    self.goodCatDetailLabel.numberOfLines=1;
+    if (aModel.catname)
+    {
+        self.goodCatDetailLabel.text = aModel.catname;
+        CGSize strSize = [aModel.catname sizeWithFont:kFont14];
+        if (strSize.width>self.goodTypeNameLabel.left-self.goodCatNameLabel.right) {
+            self.goodCatDetailLabel.numberOfLines = 2;
+            CGRect temFrame = self.goodCatDetailLabel.frame;
+            temFrame.size.height = 34;
+            self.goodCatDetailLabel.frame = temFrame;
+        }
+    }
+    else
+    {
+        self.goodCatNameLabel.text = @"";
+    }
+    
+    if (aModel.editdate)
+    {
+        self.goodEditTimeLabel.text = aModel.editdate;
+    }
+    else
+    {
+        self.goodEditTimeLabel.text = @"";
+    }
+    
+    if (aModel.vip==1)
+    {
+        self.vipImgView.hidden=NO;
+    }
+    else
+    {
+        self.vipImgView.hidden=YES;
+    }
+    self.goodTodayLabel.hidden=YES;
+    self.goodAmountLabel.hidden=YES;
+    self.goodCatNameLabel.hidden = NO;
+    self.goodCatDetailLabel.hidden = NO;
+    if (aModel.today)
+    {
+        self.goodTodayLabel.hidden=NO;
+        self.goodAmountLabel.hidden=NO;
+        self.goodCatNameLabel.hidden = YES;
+        self.goodCatDetailLabel.hidden = YES;
+        
+        self.goodTodayLabel.text = [NSString stringWithFormat:@"供应周期 : %@天", aModel.today];
+        self.goodAmountLabel.text = [NSString stringWithFormat:@"采购数量 : %@%@", aModel.amount, aModel.unit];
+    }
 }
 
 -(void)setCellWithGoodImage:(NSString *)aImageUrl title:(NSString *)aTitle catName:(NSString *)aCatName typeName:(NSString *)aTypeName editTime:(NSString *)aEditTime isVip:(BOOL)aIsVip
@@ -94,6 +188,8 @@
 - (void)setCellWithGoodImage:(NSString *)aImageUrl title:(NSString *)aTitle catName:(NSString *)aCatName typeName:(NSString *)aTypeName editTime:(NSString *)aEditTime skimCount:(int)aSkimCount paidPrice:(int)aPrice isVip:(BOOL)aIsVip
 {
 //    self.goodPaidView.hidden = YES;
+    self.goodTodayLabel.hidden=YES;
+    self.goodAmountLabel.hidden=YES;
     if (aImageUrl)
     {
         [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aImageUrl]];

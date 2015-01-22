@@ -320,6 +320,8 @@
 - (void)touchCat
 {
     CategoryViewController *vc = [CategoryViewController sharedInstancetype];
+    [vc cleanAll];
+    vc.isPushed = YES;
     [vc setBlock:^(NSArray *aArray) {
         NSString *str = @"";
         for (YHBCatSubcate *subModel in aArray) {

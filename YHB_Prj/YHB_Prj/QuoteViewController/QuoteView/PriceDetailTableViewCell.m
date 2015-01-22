@@ -53,7 +53,7 @@
         self.goodEditTimeLabel.textAlignment = NSTextAlignmentRight;
         [self addSubview:self.goodEditTimeLabel];
         
-        self.bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(10, self.goodImgView.bottom+10-0.3, kMainScreenWidth-20, 0.3)];
+        self.bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(10, 70-0.5, kMainScreenWidth-20, 0.5)];
         self.bottomLineView.backgroundColor = [UIColor lightGrayColor];
         [self addSubview:self.bottomLineView];
         
@@ -66,7 +66,7 @@
         self.noteLabel.textColor = [UIColor lightGrayColor];
         [self.noteView addSubview:self.noteLabel];
         
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 25-0.3, kMainScreenWidth, 0.3)];
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 25-0.5, kMainScreenWidth, 0.5)];
         lineView.backgroundColor = [UIColor lightGrayColor];
         [self.noteView addSubview:lineView];
     }
@@ -75,6 +75,7 @@
 
 - (void)setCellWithModel:(PriceDetailRslist *)aModel
 {
+    self.noteView.hidden = YES;
     self.goodTitleLabel.text = aModel.company;
     [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aModel.avatar]];
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@", aModel.price];
@@ -83,15 +84,15 @@
     self.nameLabel.text = aModel.truename;
     if (aModel.note)
     {
-        self.noteLabel.text = [NSString stringWithFormat:@"备注 : %@", aModel.note];
         self.noteView.hidden = NO;
-        CGRect frame = CGRectMake(10, self.goodImgView.bottom+10-0.3, kMainScreenWidth-20, 0.3);
+        self.noteLabel.text = [NSString stringWithFormat:@"备注 : %@", aModel.note];
+        CGRect frame = CGRectMake(10, self.goodImgView.bottom+10-0.5, kMainScreenWidth-20, 0.5);
         self.bottomLineView.frame = frame;
     }
     else
     {
         self.noteView.hidden = YES;
-        CGRect frame = CGRectMake(0, self.goodImgView.bottom+10-0.3, kMainScreenWidth, 0.3);
+        CGRect frame = CGRectMake(0, self.goodImgView.bottom+10-0.5, kMainScreenWidth, 0.5);
         self.bottomLineView.frame = frame;
     }
 }

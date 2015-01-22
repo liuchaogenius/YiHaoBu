@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PriceDetailViewController : UIViewController
+@interface PriceDetailViewController : BaseViewController
 
 - (instancetype)initWithItemid:(int)aItemid;
 @end

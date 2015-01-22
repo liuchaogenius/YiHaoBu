@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YHBSupplyModel.h"
 
 @interface GoodsTableViewCell : UITableViewCell
 
@@ -17,11 +18,10 @@
 @property(nonatomic, strong) UILabel *goodEditTimeLabel;
 @property(nonatomic, strong) UILabel *goodCatDetailLabel;
 @property(nonatomic, strong) UIImageView *vipImgView;
-//@property(nonatomic, strong) UILabel *goodSkimCountLabel;
-
-//@property(nonatomic, strong) UIView *goodPaidView;
-//@property(nonatomic, strong) UILabel *goodPaidPriceView;
+@property(nonatomic, strong) UILabel *goodTodayLabel;
+@property(nonatomic, strong) UILabel *goodAmountLabel;
 
 - (void)setCellWithGoodImage:(NSString *)aImageUrl title:(NSString *)aTitle catName:(NSString *)aCatName typeName:(NSString *)aTypeName editTime:(NSString *)aEditTime isVip:(BOOL)aIsVip;
 - (void)setCellWithGoodImage:(NSString *)aImageUrl title:(NSString *)aTitle catName:(NSString *)aCatName typeName:(NSString *)aTypeName editTime:(NSString *)aEditTime skimCount:(int)aSkimCount paidPrice:(int)aPrice isVip:(BOOL)aIsVip;
+- (void)setCellWithModel:(YHBSupplyModel *)aModel;
 @end

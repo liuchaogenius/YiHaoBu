@@ -41,9 +41,9 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"查看报价";
     self.tableViewArray = [NSMutableArray new];
-    
+    self.automaticallyAdjustsScrollViewInsets = NO;
 #pragma mark tableview
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 62, kMainScreenWidth, kMainScreenHeight-62)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -150,18 +150,43 @@
     [maskView addGestureRecognizer:tapGesture];
     [[[UIApplication sharedApplication] keyWindow] addSubview:maskView];
     
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(10, kMainScreenHeight/2.0-45, kMainScreenWidth-20, 85)];
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(10, kMainScreenHeight/2.0-45, kMainScreenWidth-20, 95)];
     backView.backgroundColor = [UIColor whiteColor];
     backView.tag = 10000;
     backView.layer.cornerRadius = 5;
     [[[UIApplication sharedApplication] keyWindow] addSubview:backView];
     
-    PriceDetailContactView *contactView = [[PriceDetailContactView alloc] initWithFrame:CGRectMake(0, 25, kMainScreenWidth-20, 60) andBlock:^{
+    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth-20, 35)];
+    topView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapStore = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toStore)];
+    [topView addGestureRecognizer:tapStore];
+    [backView addSubview:topView];
+    
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 9, kMainScreenWidth-100, 17)];
+    nameLabel.font = kFont15;
+    nameLabel.text = model.company;
+    [topView addSubview:nameLabel];
+    
+    UIImageView *arrowImg = [[UIImageView alloc] initWithFrame:CGRectMake(kMainScreenWidth-20-20, 10, 9, 15)];
+    arrowImg.image = [UIImage imageNamed:@"arrowRight"];
+    [topView addSubview:arrowImg];
+    
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 34.5, kMainScreenWidth-20, 0.5)];
+    lineView.backgroundColor = [UIColor lightGrayColor];
+    [topView addSubview:lineView];
+    
+    PriceDetailContactView *contactView = [[PriceDetailContactView alloc] initWithFrame:CGRectMake(0, 35, kMainScreenWidth-20, 60) andBlock:^{
         [self removeMaskView];
     }];
+    contactView.layer.cornerRadius=10;
     [contactView.fourthView addTarget:self action:@selector(chatWithItemid:) forControlEvents:UIControlEventTouchUpInside];
     [contactView setPhoneNumber:model.mobile storeName:model.company itemId:myItemid];
     [backView addSubview:contactView];
+}
+
+- (void)toStore
+{
+    MLOG(@"进入店铺");
 }
 
 - (void)removeMaskView

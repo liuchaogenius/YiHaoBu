@@ -16,6 +16,10 @@ NSString *const kYHBSupplyModelEditdate = @"editdate";
 NSString *const kYHBSupplyModelThumb = @"thumb";
 NSString *const kYHBSupplyModelVip = @"vip";
 NSString *const kYHBSupplyModelEdittime = @"edittime";
+NSString *const kYHBSupplyModelAmount = @"amount";
+NSString *const kYHBSupplyModelUnit = @"unit";
+NSString *const kYHBSupplyModelToday = @"today";
+
 
 
 @interface YHBSupplyModel ()
@@ -34,6 +38,9 @@ NSString *const kYHBSupplyModelEdittime = @"edittime";
 @synthesize thumb = _thumb;
 @synthesize vip = _vip;
 @synthesize edittime = _edittime;
+@synthesize amount = _amount;
+@synthesize unit = _unit;
+@synthesize today = _today;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
@@ -56,6 +63,9 @@ NSString *const kYHBSupplyModelEdittime = @"edittime";
             self.thumb = [self objectOrNilForKey:kYHBSupplyModelThumb fromDictionary:dict];
             self.vip = [[self objectOrNilForKey:kYHBSupplyModelVip fromDictionary:dict] intValue];
             self.edittime = [self objectOrNilForKey:kYHBSupplyModelEdittime fromDictionary:dict];
+        self.amount = [self objectOrNilForKey:kYHBSupplyModelAmount fromDictionary:dict];
+        self.unit = [self objectOrNilForKey:kYHBSupplyModelUnit fromDictionary:dict];
+        self.today = [self objectOrNilForKey:kYHBSupplyModelToday fromDictionary:dict];
 
     }
     
@@ -74,7 +84,12 @@ NSString *const kYHBSupplyModelEdittime = @"edittime";
     [mutableDict setValue:self.thumb forKey:kYHBSupplyModelThumb];
     [mutableDict setValue:[NSNumber numberWithDouble:self.vip] forKey:kYHBSupplyModelVip];
     [mutableDict setValue:self.edittime forKey:kYHBSupplyModelEdittime];
+    [mutableDict setValue:self.amount forKey:kYHBSupplyModelAmount];
+    [mutableDict setValue:self.unit forKey:kYHBSupplyModelUnit];
+    [mutableDict setValue:self.today forKey:kYHBSupplyModelToday];
 
+    
+    
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
 

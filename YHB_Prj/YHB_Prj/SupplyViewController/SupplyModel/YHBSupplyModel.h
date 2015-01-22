@@ -19,6 +19,9 @@
 @property (nonatomic, strong) NSString *thumb;
 @property (nonatomic, assign) int vip;
 @property (nonatomic, strong) NSString *edittime;
+@property(nonatomic, strong) NSString *amount;
+@property(nonatomic, strong) NSString *unit;
+@property(nonatomic, strong) NSString *today;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
