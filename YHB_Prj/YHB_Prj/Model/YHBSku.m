@@ -9,8 +9,8 @@
 
 
 NSString *const kYHBSkuLarge = @"large";
-NSString *const kYHBSkuTitle = @"title";
-NSString *const kYHBSkuColorid = @"colorid";
+NSString *const kYHBSkuTitle = @"skuname";
+NSString *const kYHBSkuColorid = @"skuid";
 NSString *const kYHBSkuThumb = @"thumb";
 NSString *const kYHBSkuMiddle = @"middle";
 

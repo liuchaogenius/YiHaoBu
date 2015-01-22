@@ -7,17 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YHBSku.h"
 @class YHBProductDetail;
 
 @protocol YHBSelViewDelegate <NSObject>
 
-- (void)selViewShouldDismiss;
+- (void)selViewShouldDismissWithSelNum:(double)num andSelSku:(YHBSku *)sku;
 
 @end
 
 @interface YHBSelNumColorView : UIView
 
 @property (weak, nonatomic) id<YHBSelViewDelegate> delegate;
+
 - (instancetype)initWithProductModel:(YHBProductDetail *)model;
+
+@property (assign, nonatomic) double number;//数量
+@property (strong, nonatomic) YHBSku *selSku;
+
+- (void)registerForKeyboradNotifications;
 
 @end

@@ -10,6 +10,7 @@
 #import "YHBOrderList.h"
 #import "NetManager.h"
 #import "YHBOrderDetail.h"
+#import "YHBOConfirmModel.h"
 @implementation YHBOrderManager
 
 + (YHBOrderManager *)sharedManager
@@ -80,6 +81,30 @@
         if (result == 1) {
             if (sBlock) {
                 sBlock();
+            }
+        }else{
+            if (fBlock) {
+                fBlock();
+            }
+        }
+    } failure:^(NSDictionary *failDict, NSError *error) {
+        fBlock();
+    }];
+
+}
+
+- (void)getOrderConfirmWithToken:(NSString *)token source:(NSString *)source ListArray:(NSArray *)listArray Success:(void (^)(YHBOConfirmModel *model))sBlock failure:(void (^)())fBlock
+{
+    NSString *url = nil;
+    kYHBRequestUrl(@"getOrder.php", url);
+    NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",source,@"source",listArray,@"rslist",nil];
+    [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
+        NSInteger result = [successDict[@"result"] integerValue];
+        if (result == 1) {
+            NSDictionary *data = successDict[@"data"];
+            YHBOConfirmModel *model = [YHBOConfirmModel modelObjectWithDictionary:data];
+            if (sBlock) {
+                sBlock(model);
             }
         }else{
             if (fBlock) {

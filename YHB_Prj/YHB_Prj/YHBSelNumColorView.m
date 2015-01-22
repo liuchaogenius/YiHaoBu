@@ -11,8 +11,8 @@
 #import "CCTextfieldToolView.h"
 #import "YHBSelColorCell.h"
 #import "UIImageView+WebCache.h"
-#import "YHBSku.h"
 #import "YHBAlbum.h"
+#import "YHBNumControl.h"
 #define kInfoHeight 50
 #define kImageheight 30
 #define kHeadHeight 25
@@ -22,7 +22,7 @@
 #define kbtnHeight 25
 #define kBackColor [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]
 
-@interface YHBSelNumColorView()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,YHBSelColorCellDelefate>
+@interface YHBSelNumColorView()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,YHBSelColorCellDelefate,YHBNumControlDelegate>
 {
     UIButton *_selectedBtn;
     NSInteger _selectSkuIndex; //已选色块的编号
@@ -35,9 +35,10 @@
 @property (strong, nonatomic) UIView *headView;
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) UIView *numbFooterView;
-@property (strong, nonatomic) UIView *numControlView;//数量控件
-@property (strong, nonatomic) UITextField *numberTextfield;
-@property (assign, nonatomic) double number;//数量
+//@property (strong, nonatomic) UIView *numControlView;//数量控件
+@property (strong, nonatomic) YHBNumControl *numControl;//数量控件
+//@property (strong, nonatomic) UITextField *numberTextfield;
+
 @property (assign, nonatomic) double totalPrice;//价格
 @property (assign, nonatomic) BOOL isNumFloat;//是否需要小数 数量
 @property (strong, nonatomic) UIView *keybordTool;
@@ -48,45 +49,33 @@
 
 #pragma mark - getter and setter
 
-- (UIView *)numControlView
+- (BOOL)isNumFloat
 {
-    if (!_numControlView) {
-        _numControlView = [[UIView alloc] initWithFrame:CGRectMake(0, (kFooterHeight-kbtnHeight)/2.0, 45+2*kbtnHeight, kbtnHeight)];
-        _numControlView.backgroundColor = [UIColor clearColor];
-        
-        UIButton *decButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        decButton.frame = CGRectMake(0, 0, kbtnHeight, kbtnHeight);
-        decButton.layer.borderWidth = 0.5f;
-        decButton.layer.borderColor = [kLineColor CGColor];
-        [decButton setTitle:@"-" forState:UIControlStateNormal];
-        [decButton addTarget:self action:@selector(decNum) forControlEvents:UIControlEventTouchUpInside];
-        [decButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        decButton.titleLabel.font = kFont14;
-        [_numControlView addSubview:decButton];
-        
-        UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        addButton.frame = CGRectMake(kbtnHeight+45, 0, kbtnHeight, kbtnHeight);
-        addButton.layer.borderWidth = 0.5f;
-        [addButton setTitle:@"+" forState:UIControlStateNormal];
-        addButton.layer.borderColor = [kLineColor CGColor];
-        [addButton addTarget:self action:@selector(addNum) forControlEvents:UIControlEventTouchUpInside];
-        [addButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        addButton.titleLabel.font = kFont14;
-        [_numControlView addSubview:addButton];
-        
-        UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(kbtnHeight, 0, 45, kbtnHeight)];
-        tf.layer.borderWidth = 0.5f;
-        tf.layer.borderColor = [kLineColor CGColor];
-        tf.textAlignment = NSTextAlignmentCenter;
-        tf.delegate = self;
-        tf.keyboardType = self.isNumFloat ? UIKeyboardTypeDecimalPad : UIKeyboardTypeNumberPad;
-        tf.textColor = [UIColor lightGrayColor];
-        tf.font = [UIFont systemFontOfSize:kTitleFont];
-        tf.text = self.isNumFloat ? [NSString stringWithFormat:@"%.1f",self.number] : [NSString stringWithFormat:@"%d",(int)self.number];
-        _numberTextfield = tf;
-        [_numControlView addSubview:tf];
+    return self.numControl.isNumFloat;
+}
+
+- (void)setIsNumFloat:(BOOL)isNumFloat
+{
+    self.numControl.isNumFloat = isNumFloat;
+}
+
+- (double)number
+{
+    return self.numControl.number;
+}
+
+- (void)setNumber:(double)number
+{
+    self.numControl.number = number;
+}
+
+- (YHBNumControl *)numControl
+{
+    if (!_numControl) {
+        _numControl = [[YHBNumControl alloc] init];
+        _numControl.delegate = self;
     }
-    return _numControlView;
+    return _numControl;
 }
 
 - (UIView *)headView
@@ -118,10 +107,13 @@
         label.text = @"数量";
         [_numbFooterView addSubview:label];
         
-        self.numControlView.left = label.right + 10;
-        [_numbFooterView addSubview:self.numControlView];
+        //self.numControlView.left = label.right + 10;
+        self.numControl.left = label.right + 10;
+        self.numControl.centerY = _numbFooterView.height/2.0;
+        //[_numbFooterView addSubview:self.numControlView];
+        [_numbFooterView addSubview:self.numControl];
         
-        UILabel *unit = [[UILabel alloc] initWithFrame:CGRectMake(self.numControlView.right+10, _numControlView.bottom-kTitleFont, 100, kTitleFont)];
+        UILabel *unit = [[UILabel alloc] initWithFrame:CGRectMake(self.numControl.right+10, _numControl.bottom-kTitleFont, 100, kTitleFont)];
         unit.textColor = [UIColor lightGrayColor];
         unit.font = [UIFont systemFontOfSize:kTitleFont-2];
         unit.text = @"米";
@@ -136,12 +128,11 @@
     if (self) {
         self.productModel = model;
         self.number = 1.0;
-        _isNumFloat = NO;
-        if ([self.productModel.unit isEqualToString:@"米"]) {
+        self.isNumFloat = NO;
+        if ([self.productModel.unit1 isEqualToString:@"米"]) {
             self.isNumFloat = YES;
         }
         _selectSkuIndex = -1;
-        [self registerForKeyboradNotifications];
         self.backgroundColor = [UIColor whiteColor];
         self.frame = CGRectMake(0, 0, kMainScreenWidth, kHeadHeight+kInfoHeight+kFooterHeight+2*kCellHeight);
         [self creatUI];
@@ -243,40 +234,20 @@
 #pragma mark - Action
 - (void)touchQuitButton
 {
-    if ([self.numberTextfield isFirstResponder]) {
-        [self.numberTextfield resignFirstResponder];
+    
+    if ([self.numControl.numberTextfield isFirstResponder]) {
+        [self.numControl.numberTextfield resignFirstResponder];
     }
-    if ([self.delegate respondsToSelector:@selector(selViewShouldDismiss)]) {
-        [self.delegate selViewShouldDismiss];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    if ([self.delegate respondsToSelector:@selector(selViewShouldDismissWithSelNum:andSelSku:)]) {
+        [self.delegate selViewShouldDismissWithSelNum:self.number andSelSku:self.selSku];
     }
 }
 
-//减
-- (void)decNum
+- (void)numberControlValueDidChanged
 {
-    if (self.isNumFloat && self.number > 0.11) {
-        self.number -= 0.1;
-        MLOG(@"%lf",self.number);
-        self.numberTextfield.text = [NSString stringWithFormat:@"%.1f",self.number];
-    }else if((int)self.number >= 1){
-        self.number -= 1;
-        self.numberTextfield.text = [NSString stringWithFormat:@"%d",(int)self.number];
-    }
     [self calulatePrice];
 }
-//加
-- (void)addNum
-{
-    if (self.isNumFloat) {
-        self.number += 0.1;
-        self.numberTextfield.text = [NSString stringWithFormat:@"%.1f",self.number];
-    }else{
-        self.number += 1;
-        self.numberTextfield.text = [NSString stringWithFormat:@"%d",(int)self.number];
-    }
-    [self calulatePrice];
-}
-
 - (void)calulatePrice
 {
     self.totalPrice = [self.productModel.price doubleValue] * self.number;
@@ -298,6 +269,7 @@
         _selectedBtn = btn;
         _selectedBtn.layer.borderColor = [KColor CGColor];
         _selectSkuIndex = index;
+        self.selSku = sku;
     }
 }
 #pragma mark 长按色块
@@ -317,6 +289,7 @@
 
 - (void)registerForKeyboradNotifications
 {
+    MLOG(@"%@",self.numControl.numberTextfield);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keybordWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHid:) name:UIKeyboardWillHideNotification object:nil];
@@ -327,22 +300,17 @@
 {
     NSDictionary *info = [notif userInfo];
     NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
-    CGSize keyboardSize = [value CGRectValue].size
-    ;
-    NSString *oldText = self.numberTextfield.text;
-    [[CCTextfieldToolView sharedView] showToolWithY:kMainScreenHeight-keyboardSize.height-kTextFieldToolHeight comfirmBlock:^{
-        [self.numberTextfield resignFirstResponder];
-        self.number = [self.numberTextfield.text doubleValue];
-        [self calulatePrice];
-    } cancelBlock:^{
-        [self.numberTextfield resignFirstResponder];
-        self.numberTextfield.text = [oldText copy];
-    }];
-    self.center = CGPointMake(self.centerX, self.centerY - keyboardSize.height - kTextFieldToolHeight);
+    CGSize keyboardSize = [value CGRectValue].size;
+    MLOG(@"通知--%@",(UITextField *)value);
+    [self.numControl keyBoardShowActionWithKeybordHeight:keyboardSize.height];
 }
 
 - (void)keyboardDidShow:(NSNotification *)notif
 {
+    NSDictionary *info = [notif userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    self.centerY -= keyboardSize.height+kTextFieldToolHeight;
 }
 
 - (void)keyboardWillHid:(NSNotification *)notif
@@ -350,12 +318,17 @@
     NSDictionary *info = [notif userInfo];
     NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
     CGSize keyboardSize = [value CGRectValue].size;
-    self.center = CGPointMake(self.centerX, self.centerY + keyboardSize.height + kTextFieldToolHeight);
+    self.bottom = kMainScreenHeight;
 }
 
 - (void)keyboardDidHid:(NSNotification *)notif
 {
     
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*

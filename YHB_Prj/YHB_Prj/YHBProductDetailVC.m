@@ -25,6 +25,8 @@
 #import "YHBStoreDetailViewController.h"
 #import "YHBSelNumColorView.h"
 #import "YHBPrivateManager.h"
+#import "YHBShopCartManage.h"
+#import "YHBOrderConfirmVC.h"
 
 #define kBlankHeight 15
 #define kCCellHeight 35
@@ -33,6 +35,11 @@
 @interface YHBProductDetailVC()<YHBBannerDelegate,YHBConStoreDelegate,YHBSelViewDelegate>
 {
     CGFloat _currentY;
+    BOOL _isBuy; //yes代表点击了购买 no代表点击了购物车
+    
+    double _number;//购买的数量
+    YHBSku *_selSku;//选择的色块
+    
 }
 @property (assign, nonatomic) NSInteger productID;
 @property (strong, nonatomic) YHBBannerVeiw *bannerView;
@@ -49,12 +56,20 @@
 @property (strong, nonatomic) YHBSelNumColorView *selView;
 @property (strong, nonatomic) UIVisualEffectView *visualEffectView;
 @property (strong, nonatomic) YHBPrivateManager *privateManager;
+@property (strong, nonatomic) YHBShopCartManage *shopCartManger;
 
 @end
 
 @implementation YHBProductDetailVC
 
 #pragma mark - getter and setter
+- (YHBShopCartManage *)shopCartManger
+{
+    if (!_shopCartManger) {
+        _shopCartManger = [[YHBShopCartManage alloc] init];
+    }
+    return _shopCartManger;
+}
 - (YHBPrivateManager *)privateManager
 {
     if (!_privateManager) {
@@ -85,6 +100,7 @@
     if (self) {
         self.productID = productID;
         self.title = @"产品详情";
+        _number = 1;
     }
     return self;
 }
@@ -280,13 +296,47 @@
 #pragma mark 点击购物车
 - (void)touchCartButton
 {
-    
+    _isBuy = NO;
+    if ([self infoCheck]) {
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:self.productID],@"itemid",[NSString stringWithFormat:@"%lf",_number],@"number",[NSNumber numberWithInt:(int)_selSku.colorid],@"skuid", nil];
+        [self.shopCartManger changeShopCartWithArray:@[dic] andSuccBlock:^{
+            [SVProgressHUD showSuccessWithStatus:@"添加购物车成功！" cover:YES offsetY:0];
+        } failBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"添加鼓舞车失败，请重新尝试！" cover:YES offsetY:0];
+        }];
+    }
 }
 
 #pragma mark 点击购买按钮
 - (void)touchBuyButton
 {
-    
+    _isBuy = YES;
+    if ([self infoCheck]) {
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:self.productID],@"itemid",[NSString stringWithFormat:@"%lf",_number],@"number",[NSNumber numberWithInt:(int)_selSku.colorid],@"skuid", nil];
+        YHBOrderConfirmVC *vc = [[YHBOrderConfirmVC alloc] initWithSource:@"mall" requestArray:@[dic]];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
+
+#pragma mark 信息完整性检查
+- (BOOL)infoCheck
+{
+    if ([YHBUser sharedYHBUser].isLogin) {
+        if (_selSku) {
+            return YES;
+        }else{
+            [SVProgressHUD showErrorWithStatus:@"你还没有选择色块/型号哦" cover:YES offsetY:0];
+            return NO;
+        }
+    }else{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLoginForUserMessage object:[NSNumber numberWithBool:NO]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessItem) name:kLoginSuccessMessae object:nil];
+        return NO;
+    }
+}
+- (void)loginSuccessItem
+{
+    _isBuy ? [self touchBuyButton] : [self touchCartButton];
 }
 
 #pragma mark 点击选择色块
@@ -298,6 +348,7 @@
             _selView.delegate = self;
         }
         _selView.top = kMainScreenHeight;
+        [_selView registerForKeyboradNotifications];
         /*
         UIView *dimView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight)];
         dimView.backgroundColor = [UIColor clearColor];
@@ -333,8 +384,10 @@
 }
 
 #pragma mark selView dismiss
-- (void)selViewShouldDismiss
+- (void)selViewShouldDismissWithSelNum:(double)num andSelSku:(YHBSku *)sku
 {
+    _number = num;
+    _selSku = sku;
     [UIView animateWithDuration:0.2f animations:^{
         self.selView.top = kMainScreenHeight;
     } completion:^(BOOL finished) {

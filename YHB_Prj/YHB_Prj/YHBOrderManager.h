@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 @class YHBOrderList;
 @class YHBOrderDetail;
+@class YHBOConfirmModel;
 @interface YHBOrderManager : NSObject
 
 + (YHBOrderManager *)sharedManager;
@@ -20,4 +21,8 @@
 
 //更改订单状态
 - (void)changeOrderStatusWithToken:(NSString *)token ItemID:(NSInteger)itemID Action:(NSString *)action Success:(void(^)())sBlock failure:(void(^)())fBlock;
+
+//获取确认订单信息
+- (void)getOrderConfirmWithToken:(NSString *)token source:(NSString *)source ListArray:(NSArray *)listArray Success:(void (^)(YHBOConfirmModel *model))sBlock failure:(void (^)())fBlock;
+
 @end
