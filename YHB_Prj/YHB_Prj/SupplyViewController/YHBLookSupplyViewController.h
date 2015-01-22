@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YHBLookSupplyViewController : BaseViewController
+@interface YHBLookSupplyViewController : UIViewController
 
 
 - (instancetype)initWithIsSupply:(BOOL)aIsSupply;

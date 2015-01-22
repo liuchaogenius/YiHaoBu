@@ -9,7 +9,6 @@
 #import "YHBMySupplyManage.h"
 #import "NetManager.h"
 #import "YHBSupplyModel.h"
-#import "YHBUser.h"
 
 BOOL isSupply;
 int pagesize;
@@ -27,8 +26,8 @@ int buyPagetotal;
     isSupply = aBool;
     NSString *supplyUrl = nil;
     NSDictionary *dict;
-    YHBUser *user = [YHBUser sharedYHBUser];
-    dict = [NSDictionary dictionaryWithObjectsAndKeys:@"1",@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",[NSString stringWithFormat:@"%d", (int)user.userInfo.userid],@"userid",nil];
+#warning userid czx
+    dict = [NSDictionary dictionaryWithObjectsAndKeys:@"1",@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",@"1",@"userid",nil];
     if (isSupply)
     {
         kYHBRequestUrl(@"getSellList.php", supplyUrl);
@@ -78,9 +77,9 @@ int buyPagetotal;
             buyPageid++;
         }
         NSString *supplyUrl = nil;
-        YHBUser *user = [YHBUser sharedYHBUser];
         NSDictionary *dict;
-        dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", pageId],@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",[NSString stringWithFormat:@"%d", (int)user.userInfo.userid],@"userid",nil];
+#warning userid czx
+        dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", pageId],@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",@"1",@"userid",nil];
         if (isSupply)
         {
             kYHBRequestUrl(@"getSellList.php", supplyUrl);

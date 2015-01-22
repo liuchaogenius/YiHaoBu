@@ -41,8 +41,9 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"查看报价";
     self.tableViewArray = [NSMutableArray new];
+    self.automaticallyAdjustsScrollViewInsets = NO;
 #pragma mark tableview
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 62, kMainScreenWidth, kMainScreenHeight-62)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

@@ -15,7 +15,6 @@
 #import "YHBContactView.h"
 #import "PushPriceViewController.h"
 #import "YHBPublishBuyViewController.h"
-#import "YHBStoreViewController.h"
 
 #define kContactViewHeight 60
 @interface YHBBuyDetailViewController ()
@@ -155,8 +154,7 @@
 
 - (void)watchStoreBtn
 {
-    YHBStoreViewController *vc = [[YHBStoreViewController alloc] initWithShopID:(int)myModel.userid];
-    [self.navigationController pushViewController:vc animated:YES];
+    MLOG(@"浏览店铺");
 }
 
 #pragma mark 菊花

@@ -37,7 +37,6 @@
     UITapGestureRecognizer *tapTitleGesture;
     UITapGestureRecognizer *tapDayGesture;
     YHBSupplyDetailModel *myModel;
-    BOOL isClean;
 }
 
 @property(nonatomic, strong) UIPickerView *dayPickerView;
@@ -66,7 +65,6 @@
     
     self.title = @"发布供应";
     self.view.backgroundColor = RGBCOLOR(241, 241, 241);
-    isClean = NO;
     
     scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:scrollView];
@@ -343,10 +341,7 @@
 - (void)touchCat
 {
     CategoryViewController *vc = [CategoryViewController sharedInstancetype];
-    if (!isClean) {
-        isClean = YES;
-        [vc cleanAll];
-    }
+    [vc cleanAll];
     vc.isPushed = YES;
     [vc setBlock:^(NSArray *aArray) {
         NSString *str = @"";
@@ -580,11 +575,6 @@
 - (void)keyboardDidDisappear
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    
 }
 
 

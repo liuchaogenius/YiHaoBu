@@ -37,7 +37,6 @@
     UITapGestureRecognizer *tapDayGesture;
     
     YHBBuyDetailData *myModel;
-    BOOL isClean;
 }
 
 @property(nonatomic, strong) UIPickerView *dayPickerView;
@@ -64,7 +63,6 @@
     [super viewDidLoad];
     [self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(dismissSelf)];
     
-    isClean = NO;
     self.title = @"发布采购";
     self.view.backgroundColor = RGBCOLOR(241, 241, 241);
     
@@ -322,10 +320,8 @@
 - (void)touchCat
 {
     CategoryViewController *vc = [CategoryViewController sharedInstancetype];
-    if (!isClean) {
-        isClean = YES;
-        [vc cleanAll];
-    }    vc.isPushed = YES;
+    [vc cleanAll];
+    vc.isPushed = YES;
     [vc setBlock:^(NSArray *aArray) {
         NSString *str = @"";
         for (YHBCatSubcate *subModel in aArray) {
@@ -558,9 +554,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
