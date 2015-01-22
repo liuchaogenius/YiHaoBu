@@ -13,6 +13,7 @@
 #import "SVProgressHUD.h"
 #import "YHBContactView.h"
 #import "YHBPublishSupplyViewController.h"
+#import "YHBShopMallViewController.h"
 
 #define kContactViewHeight 60
 @interface YHBSupplyDetailViewController ()
@@ -156,7 +157,8 @@
 #pragma mark 浏览商城
 - (void)watchStoreBtn
 {
-    MLOG(@"浏览商城");
+    YHBShopMallViewController *shopMallVC = [[YHBShopMallViewController alloc] init];
+    [self.navigationController pushViewController:shopMallVC animated:YES];
 }
 
 #pragma mark 菊花

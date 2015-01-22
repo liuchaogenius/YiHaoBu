@@ -38,7 +38,7 @@
     isMe=NO;
     
 #pragma mark 建立topView
-    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 62, kMainScreenWidth, topViewHeight)];
+    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, topViewHeight)];
     [self.view addSubview:topView];
     
     self.selectAllBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth/2, topViewHeight)];
@@ -68,7 +68,7 @@
     [topView addSubview:underLine];
 
 #pragma mark tableview
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, topViewHeight+62, kMainScreenWidth, kMainScreenHeight-topViewHeight-62)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, topViewHeight, kMainScreenWidth, kMainScreenHeight-topViewHeight-62)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

@@ -63,7 +63,7 @@
     }
     
 #pragma mark 建立topView
-    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 62, kMainScreenWidth, topViewHeight)];
+    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, topViewHeight)];
     [self.view addSubview:topView];
 
     self.selectAllBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth/2, topViewHeight)];
@@ -89,7 +89,7 @@
     [topView addSubview:underLineView];
     
 #pragma mark 建立tableview
-    self.supplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, topViewHeight+62, kMainScreenWidth, kMainScreenHeight-topViewHeight-62)];
+    self.supplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, topViewHeight, kMainScreenWidth, kMainScreenHeight-topViewHeight-62)];
     self.supplyTableView.delegate = self;
     self.supplyTableView.dataSource = self;
     self.supplyTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
