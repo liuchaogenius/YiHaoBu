@@ -7,6 +7,8 @@
 //
 
 #import "YHBContactView.h"
+#import "ChatViewController.h"
+
 typedef enum:NSUInteger{
     btnTypePhone = 12,
     btnTypeText = 13,
@@ -20,7 +22,7 @@ typedef enum:NSUInteger{
         self.backgroundColor = [UIColor whiteColor];
         CGFloat viewHeight = frame.size.height;
         
-        UIView *redLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 3)];
+        redLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 3)];
         redLine.backgroundColor = KColor;
         [self addSubview:redLine];
         
@@ -87,6 +89,15 @@ typedef enum:NSUInteger{
     return self;
 }
 
+- (void)setPhoneNumber:(NSString *)aNumber storeName:(NSString *)aName itemId:(int)aItemId
+{
+    phoneLabel.text = aNumber;
+    storeLabel.text = aName;
+    phoneNumber = aNumber;
+    itemId=aItemId;
+    redLine.hidden = YES;
+}
+
 - (void)setPhoneNumber:(NSString *)aNumber storeName:(NSString *)aName itemId:(int)aItemId isVip:(int)aisVip
 {
     if (aisVip==1)
@@ -128,7 +139,31 @@ typedef enum:NSUInteger{
     else if(aBtn.tag==btnTypeChat)
     {
         MLOG(@"在线沟通");
+        EMError *error = nil;
+        BOOL isSuccess = [[EaseMob sharedInstance].chatManager registerNewAccount:@"8001" password:@"111111" error:&error];
+        if (isSuccess && !isSuccess) {
+            NSLog(@"注册成功");
+        }
+        NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginWithUsername:@"8001" password:@"111111" error:&error];
+        if (!error && loginInfo) {
+            NSLog(@"登陆成功");
+        }
+        NSString *userName = @"123";
+        ChatViewController *vc = [[ChatViewController alloc] initWithChatter:userName isGroup:NO];
+        vc.title = userName;
+        [[self viewController].navigationController pushViewController:vc animated:YES];
     }
+}
+
+//获取viewcontroller
+- (UIViewController *)viewController {
+    for (UIView* next = [self superview]; next; next = next.superview) {
+        UIResponder *nextResponder = [next nextResponder];
+        if ([nextResponder isKindOfClass:[UIViewController class]]) {
+            return (UIViewController *)nextResponder;
+        }
+    }
+    return nil;
 }
 
 

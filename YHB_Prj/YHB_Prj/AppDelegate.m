@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "RootTabBarController.h"
+#import "EaseMob.h"
  
 @interface AppDelegate ()
 
@@ -26,12 +27,41 @@
     
     self.window.rootViewController = rootvc;
     [self.window makeKeyAndVisible];
+    
+    [self registerRemoteNotification];
+    
+    //注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
+    NSString *apnsCertName = @"chatdemo";
+    [[EaseMob sharedInstance] registerSDKWithAppKey:@"easemob-demo#chatdemo" apnsCertName:apnsCertName];
+    // 需要在注册sdk后写上该方法
+    [[EaseMob sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+
     return YES;
 }
 
+- (void)registerRemoteNotification
+{
+#if !TARGET_IPHONE_SIMULATOR
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    //iOS8 注册APNS
+    if ([application respondsToSelector:@selector(registerForRemoteNotifications)]) {
+        [application registerForRemoteNotifications];
+        UIUserNotificationType notificationTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
+        [application registerUserNotificationSettings:settings];
+    }else{
+        UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeBadge |
+        UIRemoteNotificationTypeSound |
+        UIRemoteNotificationTypeAlert;
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
+    }
+    
+#endif
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    [[EaseMob sharedInstance] applicationWillResignActive:application];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -43,18 +73,50 @@
 //            [[HbhUser sharedHbhUser] writeUserInfoToFile];
 //        }
 //    }];
+    [[EaseMob sharedInstance] applicationDidEnterBackground:application];
+
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [[EaseMob sharedInstance] applicationWillEnterForeground:application];
+
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [[EaseMob sharedInstance] applicationDidBecomeActive:application];
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [[EaseMob sharedInstance] applicationWillTerminate:application];
+}
+
+// 将得到的deviceToken传给SDK
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    [[EaseMob sharedInstance] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+
+// 注册deviceToken失败
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    [[EaseMob sharedInstance] application:application didFailToRegisterForRemoteNotificationsWithError:error];
+    MLOG(@"error -- %@",error);
+}
+
+//系统方法
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    //SDK方法调用
+    [[EaseMob sharedInstance] application:application didReceiveRemoteNotification:userInfo];
+}
+
+//系统方法
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    //SDK方法调用
+    [[EaseMob sharedInstance] application:application didReceiveLocalNotification:notification];
 }
 
 @end

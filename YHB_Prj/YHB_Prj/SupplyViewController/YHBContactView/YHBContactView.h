@@ -18,6 +18,7 @@
     UIButton *fourthView;
     NSString *phoneNumber;
     int itemId;
+    UIView *redLine;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame;
