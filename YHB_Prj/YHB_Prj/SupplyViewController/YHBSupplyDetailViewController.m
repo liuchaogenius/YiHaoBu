@@ -51,6 +51,11 @@
     }
     return self;
 }
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden = NO;
+    [super viewWillAppear:YES];
+}
 
 - (instancetype)init
 {

@@ -21,6 +21,8 @@
 #import "YHBSortTagsCell.h"
 #import "YHBStoreViewController.h"
 #import "YHBProductDetailVC.h"
+#import "YHBSupplyDetailViewController.h"
+#import "YHBBuyDetailViewController.h"
 
 #define ksegBtnWidth (kMainScreenWidth/4.0)
 #define kFilBtnWidth (kMainScreenWidth/3.0)
@@ -402,9 +404,8 @@ typedef enum : NSUInteger {
                 if (!cell) {
                     cell = [[GoodsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier1];
                 }
-                YHBRslist *list = dataArray[indexPath.row];
-                [cell setCellWithGoodImage:list.thumb title:list.title catName:list.catname typeName:list.typename editTime:list.editdate isVip:list.vip];
-                //[cell setCellWithGoodImage:list.thumb title:list.title catName:list.catname typeName:list editTime:list.editdate skimCount:list.hits paidPrice:0 isVip:list.vip];
+                YHBSupplyModel *list = dataArray[indexPath.row];
+                [cell setCellWithModel:list];
                 return cell;
             }
                 break;
@@ -415,8 +416,8 @@ typedef enum : NSUInteger {
                 if (!cell) {
                     cell = [[GoodsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier2];
                 }
-                YHBRslist *list = dataArray[indexPath.row];
-                [cell setCellWithGoodImage:list.thumb title:list.title catName:list.catname typeName:list.typename editTime:list.editdate isVip:list.vip];
+                YHBSupplyModel *list = dataArray[indexPath.row];
+                [cell setCellWithModel:list];
                 return cell;
             }
                 break;
@@ -464,11 +465,18 @@ typedef enum : NSUInteger {
                 case Search_buy:
                 {
                     //求购
+                    YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:((YHBSupplyModel *)model).itemid andIsMine:NO isModal:NO];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
                 }
                     break;
                 case Search_sell:
                 {
                     //供应
+                    YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:((YHBSupplyModel *)model).itemid andIsMine:NO isModal:NO];
+                    vc.hidesBottomBarWhenPushed  = YES;
+                    vc.navigationController.navigationBar.hidden = NO;
+                    [self.navigationController pushViewController:vc animated:YES];
                 }
                     break;
                 case Search_mall:
@@ -476,6 +484,7 @@ typedef enum : NSUInteger {
                     //店铺
                     YHBStoreViewController *vc = [[YHBStoreViewController alloc] initWithShopID:(int)((YHBCRslist *)model).userid];
                     vc.hidesBottomBarWhenPushed = YES;
+                    vc.navigationController.navigationBar.hidden = NO;
                     [self.navigationController pushViewController:vc animated:YES];
                 }
                     break;

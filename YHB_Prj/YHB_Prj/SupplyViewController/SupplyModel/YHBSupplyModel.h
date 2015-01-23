@@ -22,6 +22,7 @@
 @property(nonatomic, strong) NSString *amount;
 @property(nonatomic, strong) NSString *unit;
 @property(nonatomic, strong) NSString *today;
+@property (nonatomic, assign) int hits;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;

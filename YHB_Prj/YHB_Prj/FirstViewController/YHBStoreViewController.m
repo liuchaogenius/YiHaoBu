@@ -21,6 +21,8 @@
 #import "YHBPrivateManager.h"
 #import "YHBUser.h"
 #import "YHBProductDetailVC.h"
+#import "YHBSupplyModel.h"
+#import "YHBSupplyDetailViewController.h"
 
 #define kSgmBtnHeight 50
 #define kSelectTagBase 100
@@ -177,6 +179,12 @@ enum SgmBtn_tag
         [self refreshSgmBtmScrollView];
     }
     return _sgmBtmScrollView;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden = NO;
+    [super viewWillAppear:YES];
 }
 
 - (instancetype)initWithShopID:(int)shopID
@@ -401,7 +409,7 @@ enum SgmBtn_tag
                 if(indexPath.row * 3 + i > count){//空白部分
                     [cell setBlankWithPart:i];
                 }else{
-                    YHBRslist *list = array[indexPath.row *3 + i];
+                    YHBSupplyModel *list = array[indexPath.row *3 + i];
                     [cell setImage:list.thumb title:list.title time:list.editdate hits:list.hits part:i];
                 }
             }
@@ -476,7 +484,8 @@ enum SgmBtn_tag
         case SgmBtn_sellInfo:
         {
             //供应
-#warning 此处带跳转供应详情-cc
+            YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:((YHBSupplyModel *)model).itemid andIsMine:NO isModal:NO];
+            [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case SgmBtn_templetInfo:

@@ -12,6 +12,7 @@
 #import "YHBRslist.h"
 #import "YHBUser.h"
 #import "YHBCRslist.h"
+#import "YHBSupplyModel.h"
 
 @implementation YHBInfoListManager
 
@@ -114,7 +115,7 @@
             NSMutableArray *modelArray = [NSMutableArray array];
             if (array.count > 0) {
                 for (int i=0; i < array.count; i++) {
-                    YHBRslist *list = [YHBRslist modelObjectWithDictionary:(NSDictionary *)array[i]];
+                    YHBSupplyModel *list = [YHBSupplyModel modelObjectWithDictionary:(NSDictionary *)array[i]];
                     modelArray[i] = list;
                 }
             }
@@ -171,7 +172,7 @@
             NSMutableArray *modelArray = [NSMutableArray array];
             if (array.count > 0) {
                 for (int i=0; i < array.count; i++) {
-                    YHBRslist *list = [YHBRslist modelObjectWithDictionary:(NSDictionary *)array[i]];
+                    YHBSupplyModel *list = [YHBSupplyModel modelObjectWithDictionary:(NSDictionary *)array[i]];
                     modelArray[i] = list;
                 }
             }

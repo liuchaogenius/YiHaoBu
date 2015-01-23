@@ -19,6 +19,7 @@ NSString *const kYHBSupplyModelEdittime = @"edittime";
 NSString *const kYHBSupplyModelAmount = @"amount";
 NSString *const kYHBSupplyModelUnit = @"unit";
 NSString *const kYHBSupplyModelToday = @"today";
+NSString *const kYHBSupplyModelHits = @"hits";
 
 
 
@@ -41,6 +42,7 @@ NSString *const kYHBSupplyModelToday = @"today";
 @synthesize amount = _amount;
 @synthesize unit = _unit;
 @synthesize today = _today;
+@synthesize hits = _hits;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
@@ -66,6 +68,7 @@ NSString *const kYHBSupplyModelToday = @"today";
         self.amount = [self objectOrNilForKey:kYHBSupplyModelAmount fromDictionary:dict];
         self.unit = [self objectOrNilForKey:kYHBSupplyModelUnit fromDictionary:dict];
         self.today = [self objectOrNilForKey:kYHBSupplyModelToday fromDictionary:dict];
+        self.hits = [[self objectOrNilForKey:kYHBSupplyModelHits fromDictionary:dict] intValue];
 
     }
     
@@ -87,7 +90,7 @@ NSString *const kYHBSupplyModelToday = @"today";
     [mutableDict setValue:self.amount forKey:kYHBSupplyModelAmount];
     [mutableDict setValue:self.unit forKey:kYHBSupplyModelUnit];
     [mutableDict setValue:self.today forKey:kYHBSupplyModelToday];
-
+    [mutableDict setValue:[NSNumber numberWithInt:self.hits] forKey:kYHBSupplyModelHits];
     
     
     return [NSDictionary dictionaryWithDictionary:mutableDict];
@@ -120,6 +123,8 @@ NSString *const kYHBSupplyModelToday = @"today";
     self.thumb = [aDecoder decodeObjectForKey:kYHBSupplyModelThumb];
     self.vip = [aDecoder decodeDoubleForKey:kYHBSupplyModelVip];
     self.edittime = [aDecoder decodeObjectForKey:kYHBSupplyModelEdittime];
+    self.hits = [aDecoder decodeIntForKey:kYHBSupplyModelHits];
+    
     return self;
 }
 
@@ -134,6 +139,7 @@ NSString *const kYHBSupplyModelToday = @"today";
     [aCoder encodeObject:_thumb forKey:kYHBSupplyModelThumb];
     [aCoder encodeDouble:_vip forKey:kYHBSupplyModelVip];
     [aCoder encodeObject:_edittime forKey:kYHBSupplyModelEdittime];
+    [aCoder encodeDouble:_hits forKey:kYHBSupplyModelHits];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -150,6 +156,7 @@ NSString *const kYHBSupplyModelToday = @"today";
         copy.thumb = [self.thumb copyWithZone:zone];
         copy.vip = self.vip;
         copy.edittime = [self.edittime copyWithZone:zone];
+        copy.hits = self.hits;
     }
     
     return copy;
