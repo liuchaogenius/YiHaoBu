@@ -129,9 +129,8 @@ enum Button_Type
     switch (sender.tag) {
         case Button_purchase:{
             //跳入我的采购
-            LookQuoteViewController *vc = [[LookQuoteViewController alloc] init];
-            
-//            YHBMySupplyViewController *vc = [[YHBMySupplyViewController alloc] initWithIsSupply:NO];
+//            LookQuoteViewController *vc = [[LookQuoteViewController alloc] init];
+            YHBMySupplyViewController *vc = [[YHBMySupplyViewController alloc] initWithIsSupply:NO];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }

@@ -16,6 +16,7 @@
 #import "YHBProductDetailVC.h"
 #import "TableSectionHeaderView.h"
 #import "SVPullToRefresh.h"
+#import "YHBOrderConfirmVC.h"
 
 #define bottomHeight 60
 @interface FifthViewController ()<UITableViewDataSource, UITableViewDelegate, ShoppingCartCellDelegate, TableViewHeaderViewDelegate>
@@ -569,8 +570,25 @@
     }
     else
     {
+        NSMutableArray *resultArray = [NSMutableArray new];
+        NSArray *keyArray = [selectedDict allKeys];
+        for (NSString *str in keyArray)
+        {
+            NSArray *array = [selectedDict objectForKey:str];
+            YHBShopCartRslist *model = [self.tableViewArray objectAtIndex:[str intValue]];
+            for (NSString *itemStr in array)
+            {
+                YHBShopCartCartlist *cartModel = [model.cartlist objectAtIndex:[itemStr intValue]];
+                NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", (int)cartModel.itemid],@"itemid",cartModel.number,@"number",[NSString stringWithFormat:@"%d", (int)cartModel.skuid],@"skuid",nil];
+
+                [resultArray addObject:dict];
+            }
+        }
+        YHBOrderConfirmVC *vc = [[YHBOrderConfirmVC alloc] initWithSource:@"cart" requestArray:resultArray];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
         
-    }
+        }
 }
 
 - (void)viewWillDisappear:(BOOL)animated

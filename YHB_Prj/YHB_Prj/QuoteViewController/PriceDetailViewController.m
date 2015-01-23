@@ -14,12 +14,14 @@
 #import "PriceDetailRslist.h"
 #import "PriceDetailContactView.h"
 #import "ChatViewController.h"
+#import "YHBStoreDetailViewController.h"
 
 #define kContactViewHeight 60
 @interface PriceDetailViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
     int myItemid;
     QuoteDetailManage *netManage;
+    PriceDetailRslist *myModel;
 }
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) NSMutableArray *tableViewArray;
@@ -140,6 +142,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PriceDetailRslist *model = [self.tableViewArray objectAtIndex:indexPath.row];
+    myModel = model;
     UIView *maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight)];
     maskView.tag = 1000;
     maskView.backgroundColor = [UIColor blackColor];
@@ -185,7 +188,9 @@
 
 - (void)toStore
 {
-    MLOG(@"进入店铺");
+    [self removeMaskView];
+    YHBStoreDetailViewController *vc = [[YHBStoreDetailViewController alloc] initWithItemID:(int)myModel.userid];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)removeMaskView
