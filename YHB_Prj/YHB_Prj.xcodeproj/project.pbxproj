@@ -14,6 +14,10 @@
 		5B13A4DC1A58128900713C5E /* YHBBuytoolBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B13A4DB1A58128900713C5E /* YHBBuytoolBarView.m */; };
 		5B13A4DF1A58200F00713C5E /* YHBCommentCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B13A4DE1A58200F00713C5E /* YHBCommentCellView.m */; };
 		5B13A4E21A5951A800713C5E /* YHBConnectStoreVeiw.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B13A4E11A5951A800713C5E /* YHBConnectStoreVeiw.m */; };
+		5B18C9861A722F4800336215 /* YHBAddressListsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B18C9851A722F4800336215 /* YHBAddressListsCell.m */; };
+		5B18C98C1A7249C600336215 /* YHBCity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B18C9881A7249C600336215 /* YHBCity.m */; };
+		5B18C98D1A7249C600336215 /* YHBAreaModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B18C98A1A7249C600336215 /* YHBAreaModel.m */; };
+		5B18C9911A724DE400336215 /* YHBAddressEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B18C9901A724DE400336215 /* YHBAddressEditViewController.m */; };
 		5B23F4461A442A8D00F39D8E /* YHBSelllist.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B23F43F1A442A8D00F39D8E /* YHBSelllist.m */; };
 		5B23F4471A442A8D00F39D8E /* YHBMalllist.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B23F4421A442A8D00F39D8E /* YHBMalllist.m */; };
 		5B23F4481A442A8D00F39D8E /* YHBFirstPageIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B23F4441A442A8D00F39D8E /* YHBFirstPageIndex.m */; };
@@ -68,7 +72,6 @@
 		5BCBB07C1A6FDA5D00BF5E5C /* YHBOrderConfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBB07B1A6FDA5D00BF5E5C /* YHBOrderConfirmVC.m */; };
 		5BCBB07F1A6FDAB000BF5E5C /* YHBOrderAddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBB07E1A6FDAB000BF5E5C /* YHBOrderAddressView.m */; };
 		5BCBB0841A6FDBCD00BF5E5C /* YHBAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBB0821A6FDBCD00BF5E5C /* YHBAddressModel.m */; };
-		5BCBB0881A6FDC6F00BF5E5C /* YHBAddressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBB0871A6FDC6F00BF5E5C /* YHBAddressManager.m */; };
 		5BCBB08B1A6FF20000BF5E5C /* YHBOrderShopHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBB08A1A6FF20000BF5E5C /* YHBOrderShopHeadView.m */; };
 		5BCBB0901A6FF39900BF5E5C /* YHBOrderConfirmCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBB08F1A6FF39900BF5E5C /* YHBOrderConfirmCell.m */; };
 		5BCBB0931A6FF81700BF5E5C /* YHBNumControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBB0921A6FF81700BF5E5C /* YHBNumControl.m */; };
@@ -84,6 +87,8 @@
 		5BE46AE71A52A00C008EF2D3 /* YHBRslist.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE46AE51A52A00C008EF2D3 /* YHBRslist.m */; };
 		5BE76FF51A6C9D3000E3F62A /* YHBOrderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE76FF41A6C9D3000E3F62A /* YHBOrderManager.m */; };
 		5BE76FF81A6CA04100E3F62A /* YHBOrderShopInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE76FF71A6CA04100E3F62A /* YHBOrderShopInfoView.m */; };
+		5BE847ED1A72243C00DC1254 /* YHBAdressListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE847EC1A72243C00DC1254 /* YHBAdressListViewController.m */; };
+		5BE847F11A7224A600DC1254 /* YHBAddressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE847F01A7224A600DC1254 /* YHBAddressManager.m */; };
 		5BFBC23F1A70BBC800FE65E5 /* YHBOConfirmExpress.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFBC2371A70BBC800FE65E5 /* YHBOConfirmExpress.m */; };
 		5BFBC2401A70BBC800FE65E5 /* YHBOConfirmMalllist.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFBC2381A70BBC800FE65E5 /* YHBOConfirmMalllist.m */; };
 		5BFBC2411A70BBC800FE65E5 /* YHBOConfirmRslist.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFBC2391A70BBC800FE65E5 /* YHBOConfirmRslist.m */; };
@@ -466,6 +471,14 @@
 		5B13A4DE1A58200F00713C5E /* YHBCommentCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBCommentCellView.m; sourceTree = "<group>"; };
 		5B13A4E01A5951A800713C5E /* YHBConnectStoreVeiw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBConnectStoreVeiw.h; sourceTree = "<group>"; };
 		5B13A4E11A5951A800713C5E /* YHBConnectStoreVeiw.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBConnectStoreVeiw.m; sourceTree = "<group>"; };
+		5B18C9841A722F4800336215 /* YHBAddressListsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBAddressListsCell.h; sourceTree = "<group>"; };
+		5B18C9851A722F4800336215 /* YHBAddressListsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBAddressListsCell.m; sourceTree = "<group>"; };
+		5B18C9881A7249C600336215 /* YHBCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBCity.m; sourceTree = "<group>"; };
+		5B18C9891A7249C600336215 /* YHBCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBCity.h; sourceTree = "<group>"; };
+		5B18C98A1A7249C600336215 /* YHBAreaModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBAreaModel.m; sourceTree = "<group>"; };
+		5B18C98B1A7249C600336215 /* YHBAreaModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBAreaModel.h; sourceTree = "<group>"; };
+		5B18C98F1A724DE400336215 /* YHBAddressEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBAddressEditViewController.h; sourceTree = "<group>"; };
+		5B18C9901A724DE400336215 /* YHBAddressEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBAddressEditViewController.m; sourceTree = "<group>"; };
 		5B23F43E1A442A8D00F39D8E /* YHBSlidelist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YHBSlidelist.h; path = ../../FirstViewController/YHBSlidelist.h; sourceTree = "<group>"; };
 		5B23F43F1A442A8D00F39D8E /* YHBSelllist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YHBSelllist.m; path = ../../FirstViewController/YHBSelllist.m; sourceTree = "<group>"; };
 		5B23F4401A442A8D00F39D8E /* YHBFirstPageIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YHBFirstPageIndex.h; path = ../../FirstViewController/YHBFirstPageIndex.h; sourceTree = "<group>"; };
@@ -573,8 +586,6 @@
 		5BCBB07E1A6FDAB000BF5E5C /* YHBOrderAddressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderAddressView.m; sourceTree = "<group>"; };
 		5BCBB0821A6FDBCD00BF5E5C /* YHBAddressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBAddressModel.m; sourceTree = "<group>"; };
 		5BCBB0831A6FDBCD00BF5E5C /* YHBAddressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBAddressModel.h; sourceTree = "<group>"; };
-		5BCBB0861A6FDC6F00BF5E5C /* YHBAddressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBAddressManager.h; sourceTree = "<group>"; };
-		5BCBB0871A6FDC6F00BF5E5C /* YHBAddressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBAddressManager.m; sourceTree = "<group>"; };
 		5BCBB0891A6FF20000BF5E5C /* YHBOrderShopHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YHBOrderShopHeadView.h; path = YHB_Prj/YHBOrderShopHeadView.h; sourceTree = SOURCE_ROOT; };
 		5BCBB08A1A6FF20000BF5E5C /* YHBOrderShopHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YHBOrderShopHeadView.m; path = YHB_Prj/YHBOrderShopHeadView.m; sourceTree = SOURCE_ROOT; };
 		5BCBB08E1A6FF39900BF5E5C /* YHBOrderConfirmCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YHBOrderConfirmCell.h; path = YHB_Prj/YHBOrderConfirmCell.h; sourceTree = SOURCE_ROOT; };
@@ -606,6 +617,10 @@
 		5BE76FF41A6C9D3000E3F62A /* YHBOrderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderManager.m; sourceTree = "<group>"; };
 		5BE76FF61A6CA04100E3F62A /* YHBOrderShopInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderShopInfoView.h; sourceTree = "<group>"; };
 		5BE76FF71A6CA04100E3F62A /* YHBOrderShopInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderShopInfoView.m; sourceTree = "<group>"; };
+		5BE847EB1A72243C00DC1254 /* YHBAdressListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBAdressListViewController.h; sourceTree = "<group>"; };
+		5BE847EC1A72243C00DC1254 /* YHBAdressListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBAdressListViewController.m; sourceTree = "<group>"; };
+		5BE847EF1A7224A600DC1254 /* YHBAddressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBAddressManager.h; sourceTree = "<group>"; };
+		5BE847F01A7224A600DC1254 /* YHBAddressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBAddressManager.m; sourceTree = "<group>"; };
 		5BFBC2371A70BBC800FE65E5 /* YHBOConfirmExpress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOConfirmExpress.m; sourceTree = "<group>"; };
 		5BFBC2381A70BBC800FE65E5 /* YHBOConfirmMalllist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOConfirmMalllist.m; sourceTree = "<group>"; };
 		5BFBC2391A70BBC800FE65E5 /* YHBOConfirmRslist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOConfirmRslist.m; sourceTree = "<group>"; };
@@ -1310,6 +1325,35 @@
 			name = Manager;
 			sourceTree = "<group>";
 		};
+		5B18C9831A722F2500336215 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5B18C9841A722F4800336215 /* YHBAddressListsCell.h */,
+				5B18C9851A722F4800336215 /* YHBAddressListsCell.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		5B18C9871A7249B800336215 /* AreaModel */ = {
+			isa = PBXGroup;
+			children = (
+				5B18C9881A7249C600336215 /* YHBCity.m */,
+				5B18C9891A7249C600336215 /* YHBCity.h */,
+				5B18C98A1A7249C600336215 /* YHBAreaModel.m */,
+				5B18C98B1A7249C600336215 /* YHBAreaModel.h */,
+			);
+			name = AreaModel;
+			sourceTree = "<group>";
+		};
+		5B18C98E1A724DC300336215 /* AddressEditViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5B18C98F1A724DE400336215 /* YHBAddressEditViewController.h */,
+				5B18C9901A724DE400336215 /* YHBAddressEditViewController.m */,
+			);
+			name = AddressEditViewController;
+			sourceTree = "<group>";
+		};
 		5B3B6BDB1A41469800903880 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -1356,6 +1400,7 @@
 		5B46484F1A49507A00566BC5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5B18C9871A7249B800336215 /* AreaModel */,
 				5BCBB0941A70B9F600BF5E5C /* OrderConfirmModel */,
 				5BCBB0811A6FDBAD00BF5E5C /* AddressModel */,
 				5B7C40991A6CEE3600FB2DF5 /* OrderDetailModel */,
@@ -1558,7 +1603,6 @@
 			isa = PBXGroup;
 			children = (
 				5BCBB08D1A6FF21200BF5E5C /* View */,
-				5BCBB0851A6FDC3F00BF5E5C /* Manager */,
 				5BCBB07A1A6FDA5D00BF5E5C /* YHBOrderConfirmVC.h */,
 				5BCBB07B1A6FDA5D00BF5E5C /* YHBOrderConfirmVC.m */,
 			);
@@ -1573,13 +1617,6 @@
 				5BCBB0821A6FDBCD00BF5E5C /* YHBAddressModel.m */,
 			);
 			name = AddressModel;
-			sourceTree = "<group>";
-		};
-		5BCBB0851A6FDC3F00BF5E5C /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Manager;
 			sourceTree = "<group>";
 		};
 		5BCBB08D1A6FF21200BF5E5C /* View */ = {
@@ -1658,8 +1695,6 @@
 			children = (
 				5BB4A9161A1721F300DB4636 /* YHBUserManager.h */,
 				5BB4A9171A1721F300DB4636 /* YHBUserManager.m */,
-				5BCBB0861A6FDC6F00BF5E5C /* YHBAddressManager.h */,
-				5BCBB0871A6FDC6F00BF5E5C /* YHBAddressManager.m */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -1682,6 +1717,26 @@
 			children = (
 				5BE76FF31A6C9D3000E3F62A /* YHBOrderManager.h */,
 				5BE76FF41A6C9D3000E3F62A /* YHBOrderManager.m */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
+		5BE847EA1A7223A300DC1254 /* AddressListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5B18C9831A722F2500336215 /* View */,
+				5BE847EE1A72244F00DC1254 /* Manager */,
+				5BE847EB1A72243C00DC1254 /* YHBAdressListViewController.h */,
+				5BE847EC1A72243C00DC1254 /* YHBAdressListViewController.m */,
+			);
+			name = AddressListViewController;
+			sourceTree = "<group>";
+		};
+		5BE847EE1A72244F00DC1254 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				5BE847EF1A7224A600DC1254 /* YHBAddressManager.h */,
+				5BE847F01A7224A600DC1254 /* YHBAddressManager.m */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -3091,6 +3146,8 @@
 		FF2A6C8B1A0F3C58001607AC /* UIParty */ = {
 			isa = PBXGroup;
 			children = (
+				5B18C98E1A724DC300336215 /* AddressEditViewController */,
+				5BE847EA1A7223A300DC1254 /* AddressListViewController */,
 				5BCBB0791A6FD9DC00BF5E5C /* OrderConfirmViewController */,
 				AB6247E71A6FD293002BA418 /* QuoteViewController */,
 				5B7C409E1A6CEE6F00FB2DF5 /* OrderDetailViewController */,
@@ -3466,6 +3523,7 @@
 				FF2A6C3A1A0F3B59001607AC /* NSData+Base64.m in Sources */,
 				FF2A6C2F1A0F3B50001607AC /* AFURLConnectionOperation.m in Sources */,
 				FF2A6C331A0F3B50001607AC /* UIImageView+AFNetworking.m in Sources */,
+				5B18C98C1A7249C600336215 /* YHBCity.m in Sources */,
 				FF2A6BE31A0F3780001607AC /* AppDelegate.m in Sources */,
 				FF2A6C9C1A0F3D30001607AC /* FourthViewController.m in Sources */,
 				5B4648621A495D4F00566BC5 /* YHBSerchCell.m in Sources */,
@@ -3474,6 +3532,7 @@
 				ABBE32E21A3C7E94005EA9EE /* ChangeCountView.m in Sources */,
 				ABE5BBC71A2AD77A000F5505 /* YHBPublishSupplyViewController.m in Sources */,
 				FF2A6C871A0F3B8A001607AC /* DataOC.mm in Sources */,
+				5B18C9861A722F4800336215 /* YHBAddressListsCell.m in Sources */,
 				ABC646BB1A6B8BC8003A8FB1 /* EMSDWebImageDecoder.m in Sources */,
 				ABC646CB1A6B8BC8003A8FB1 /* PSTCollectionViewCell.m in Sources */,
 				FF2A6C861A0F3B8A001607AC /* DataCenterDeal.mm in Sources */,
@@ -3490,6 +3549,7 @@
 				FF2A6C961A0F3D06001607AC /* SecondViewController.m in Sources */,
 				ABC646241A6B8B3C003A8FB1 /* EMChatVideoBubbleView.m in Sources */,
 				FF2A6C031A0F398D001607AC /* RootTabBarController.m in Sources */,
+				5BE847F11A7224A600DC1254 /* YHBAddressManager.m in Sources */,
 				ABC646AF1A6B8BC8003A8FB1 /* MBProgressHUD.m in Sources */,
 				ABC646D51A6B8BC8003A8FB1 /* PSTGridLayoutSection.m in Sources */,
 				FF2A6C741A0F3B7B001607AC /* UIButton+WebCache.m in Sources */,
@@ -3527,7 +3587,6 @@
 				ABC645EC1A6B8B3C003A8FB1 /* ConvertToCommonEmoticonsHelper.m in Sources */,
 				5B46485C1A49509F00566BC5 /* YHBShoplist.m in Sources */,
 				ABE5BBB91A2AD4A7000F5505 /* YHBVariousView.m in Sources */,
-				5BCBB0881A6FDC6F00BF5E5C /* YHBAddressManager.m in Sources */,
 				ABC646F11A6B8BE2003A8FB1 /* UIViewController+HUD.m in Sources */,
 				ABC646BC1A6B8BC8003A8FB1 /* EMSDWebImageDownloader.m in Sources */,
 				ABE5BBB41A2AD452000F5505 /* YHBPhotoViewController.m in Sources */,
@@ -3583,7 +3642,6 @@
 				ABD75E581A33EB3100198FBC /* YHBSupplyDetailPic.m in Sources */,
 				5B85F3CE1A6767AA00B91DA4 /* YHBComment.m in Sources */,
 				ABC646DC1A6B8BC8003A8FB1 /* TTGlobalUICommon.m in Sources */,
-				5BC0D6E21A650E1700F0EE35 /* YHBSelectNumColorVC.m in Sources */,
 				ABC646B71A6B8BC8003A8FB1 /* MWZoomingScrollView.m in Sources */,
 				5B67750C1A56E8B900457012 /* YHBProductDetail.m in Sources */,
 				5BD632991A5F93EF00095DFD /* YHBMoreCommentsVC.m in Sources */,
@@ -3608,6 +3666,7 @@
 				ABC646211A6B8B3C003A8FB1 /* EMChatImageBubbleView.m in Sources */,
 				ABC646B91A6B8BC8003A8FB1 /* EMSDImageCache.m in Sources */,
 				FF2A6C311A0F3B50001607AC /* MyHttpClient.m in Sources */,
+				5B18C9911A724DE400336215 /* YHBAddressEditViewController.m in Sources */,
 				5BE76FF51A6C9D3000E3F62A /* YHBOrderManager.m in Sources */,
 				ABC647081A6B8C99003A8FB1 /* XHMessageTextView.m in Sources */,
 				AB9C29861A4CFF380084C912 /* YHBMySupplyManage.m in Sources */,
@@ -3627,6 +3686,7 @@
 				FF2A6C6E1A0F3B7B001607AC /* SDWebImageCompat.m in Sources */,
 				5BB4A9181A1721F300DB4636 /* YHBUserManager.m in Sources */,
 				5B26533D1A1B17C200D0C418 /* YHBAboutUsViewController.m in Sources */,
+				5BE847ED1A72243C00DC1254 /* YHBAdressListViewController.m in Sources */,
 				ABE5BBBD1A2AD511000F5505 /* YHBEditSupplyView.m in Sources */,
 				ABC646D11A6B8BC8003A8FB1 /* PSTCollectionViewUpdateItem.m in Sources */,
 				FF2A6C2B1A0F3B50001607AC /* AFImageRequestOperation.m in Sources */,
@@ -3663,6 +3723,7 @@
 				AB37699F1A3BEE8B00D8B507 /* TableSectionHeaderView.m in Sources */,
 				ABC646D41A6B8BC8003A8FB1 /* PSTGridLayoutRow.m in Sources */,
 				AB6247F61A6FD904002BA418 /* QuoteRslist.m in Sources */,
+				5B18C98D1A7249C600336215 /* YHBAreaModel.m in Sources */,
 				AB65A4EE1A6774E9009475DC /* CategoryViewController.m in Sources */,
 				FF2A6C731A0F3B7B001607AC /* SDWebImagePrefetcher.m in Sources */,
 				5BC5211C1A4C000F00B78E52 /* YHBInfoListManager.m in Sources */,

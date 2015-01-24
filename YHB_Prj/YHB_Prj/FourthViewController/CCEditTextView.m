@@ -178,8 +178,7 @@
 #pragma mark - delegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [textField resignFirstResponder];
-    [self removeFromSuperview];
+    [self touchConfirmButton];
     return YES;
 }
 

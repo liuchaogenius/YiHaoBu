@@ -18,6 +18,7 @@
 #import "YHBOConfirmMalllist.h"
 #import "YHBOConfirmRslist.h"
 #import "YHBOConfirmExpress.h"
+#import "CCEditTextView.h"
 #define kBarHeight 80
 #define kPriceFont 17
 @interface YHBOrderConfirmVC ()<UITableViewDataSource,UITableViewDelegate,YHBOrderConfirmCellDelegate>
@@ -39,6 +40,7 @@
 @property (strong, nonatomic) NSString *sourse;
 @property (strong, nonatomic) NSArray *requestArray;
 @property (strong, nonatomic) NSMutableDictionary *expressSelDic;
+@property (strong, nonatomic) NSMutableDictionary *messagesDic;
 
 @property (nonatomic,strong) UIImageView *alipayLogoImgview;
 
@@ -47,6 +49,14 @@
 
 @implementation YHBOrderConfirmVC
 #pragma mark - Getter and Setter
+
+- (NSMutableDictionary *)messagesDic
+{
+    if (!_messagesDic) {
+        _messagesDic = [NSMutableDictionary dictionaryWithCapacity:5];
+    }
+    return _messagesDic;
+}
 
 - (UIView *)priceBar
 {
@@ -120,6 +130,7 @@
         _priceStr = @"￥0.0";
         _payPathArr = @[@"      支付宝支付"];
         _price = 0;
+        self.title = @"确认订单";
     }
     return self;
 }
@@ -241,7 +252,7 @@
         NSArray *listArray = ((YHBOConfirmRslist *)self.orderConfirmModel.rslist[indexPath.section]).malllist;
         YHBOConfirmMalllist *model = listArray[indexPath.row];
         
-        [cell setUIWithTitle:model.title sku:model.skuname price:model.price number:model.number isFloat:[model.unit1 isEqualToString:@"米"]];
+        [cell setUIWithTitle:model.title sku:model.skuname price:model.price number:model.number isFloat:[model.unit1 isEqualToString:@"米"] message:self.messagesDic[[self expressKeyWithI:(int)indexPath.section andJ:(int)indexPath.row]]];
         
         return cell;
     }else{
@@ -298,6 +309,7 @@
     
 }
 
+#pragma mark 价格计算
 - (void)priceCalculate
 {
     _price = 0;
@@ -322,10 +334,7 @@
     [self resetPriceLabel];
 }
 
-- (NSString *)expressKeyWithI:(int)i andJ:(int)j
-{
-    return [NSString stringWithFormat:@"%d",100*i+j];
-}
+
 
 -(void)resetPriceLabel
 {
@@ -336,6 +345,21 @@
         _titleLabel.right = _priceLabel.left;
     }
 }
+
+#pragma mark - 留言 delagte Action
+
+- (void)touchMessageTextField:(UITextField *)textField IndexPath:(NSIndexPath *)indexPath
+{
+    __weak YHBOrderConfirmVC *weakself = self;
+    [[CCEditTextView sharedView] showEditTextViewWithTitle:@"买家留言" textfieldText:textField.text comfirmBlock:^(NSString *text) {
+        weakself.messagesDic[[weakself expressKeyWithI:(int)indexPath.section andJ:(int)indexPath.row]] = text;
+        textField.text = text;
+    } cancelBlock:^{
+        
+    }];
+}
+
+#pragma mark - keyboard notification
 
 - (void)keybordWillShow:(NSNotification *)notif
 {
@@ -376,6 +400,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHid:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHid:) name:UIKeyboardDidHideNotification object:nil];
+}
+
+- (NSString *)expressKeyWithI:(int)i andJ:(int)j
+{
+    return [NSString stringWithFormat:@"%d",100*i+j];
 }
 
 - (void)didReceiveMemoryWarning {

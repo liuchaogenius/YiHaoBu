@@ -56,11 +56,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
         NSDictionary *userDic = [NSDictionary dictionaryWithContentsOfFile:self.userFilePath];
         NSString *token = userDic[@"token"];
         NSData *infoData = userDic[@"userInfo"];
-        YHBUserInfo *info = [NSKeyedUnarchiver unarchiveObjectWithData:infoData];
-        if (token.length && info) {
-            self.userInfo = info;
+        if (token.length>1) {
             _isLogin = YES;
-            [[NetManager shareInstance] setUserid:self.userInfo.userid];
+            if (infoData) {
+                YHBUserInfo *info = [NSKeyedUnarchiver unarchiveObjectWithData:infoData];
+                self.userInfo = info;
+                [[NetManager shareInstance] setUserid:self.userInfo.userid];
+            }
             //刷新用户数据
             [self refreshUserInfoWithSuccess:nil failure:nil];
         }
@@ -93,8 +95,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
 {
     self.token = token;
     _isLogin = YES;
-
-    [self refreshUserInfoWithSuccess:nil failure:nil];
+    [self refreshUserInfoWithSuccess:^{
+    } failure:nil];
     //[self writeUserInfoToFile];
 }
 
@@ -117,9 +119,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
 //保存用户信息文件至沙箱
 - (void)writeUserInfoToFile
 {
-    self.token = self.token ? :@"";
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:2];
-    [dic setObject:self.token forKey:@"token"];
+    [dic setObject:self.token?:@"" forKey:@"token"];
     if (self.userInfo.userid ) {
 #warning have problem to be tested
         NSData *info = [NSKeyedArchiver archivedDataWithRootObject:self.userInfo];

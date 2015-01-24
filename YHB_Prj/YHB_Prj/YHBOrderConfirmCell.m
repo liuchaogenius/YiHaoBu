@@ -48,6 +48,7 @@ typedef enum : NSUInteger
         self.messageTf.textColor = [UIColor blackColor];
         self.messageTf.font = kFont12;
         self.messageTf.tag = TextFieldMessage;
+        self.messageTf.delegate = self;
         [_messageCell addSubview:_messageTf];
         
         [_messageCell addSubview:[self getLineWithX:0 AndY:_messageCell.height-1]];
@@ -160,7 +161,7 @@ typedef enum : NSUInteger
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)setUIWithTitle:(NSString *)title sku:(NSString *)sku price:(NSString *)price number:(NSString *)number isFloat:(BOOL)isFloat
+- (void)setUIWithTitle:(NSString *)title sku:(NSString *)sku price:(NSString *)price number:(NSString *)number isFloat:(BOOL)isFloat message:(NSString *)message
 {
     _productTitle.text = title;
     _priceLabel.text = [NSString stringWithFormat:@"￥%@",price];;
@@ -168,6 +169,7 @@ typedef enum : NSUInteger
     self.numControl.number = [number doubleValue];
     self.numControl.isNumFloat = isFloat;
     _skuLabel.text = [NSString stringWithFormat:@"分类:%@",sku];
+    self.messageTf.text = message?:@"";
 }
 
 #pragma mark - Action
@@ -183,7 +185,16 @@ typedef enum : NSUInteger
     }
 }
 
-
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if (textField.tag == TextFieldMessage) {
+        if([self.delegate respondsToSelector:@selector(touchMessageTextField:IndexPath:)])
+           [self.delegate touchMessageTextField:textField IndexPath:self.cellIndexPath];
+        return NO;
+    }else{
+        return YES;
+    }
+}
 
 - (void)awakeFromNib {
     // Initialization code

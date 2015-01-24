@@ -19,7 +19,8 @@ enum cellsTag
     Cell_aboutUs,//关于我们
     Cell_clause,//服务条款
     Cell_tips,//使用帮助
-    Cell_share//分享给好友
+    Cell_share,//分享给好友
+    Cell_Myprice//我的报价
 };
 
 @protocol userCellsDelegate <NSObject>

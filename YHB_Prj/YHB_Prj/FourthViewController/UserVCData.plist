@@ -19,6 +19,14 @@
 			<key>title</key>
 			<string>我的认证</string>
 		</dict>
+		<dict>
+			<key>tag</key>
+			<integer>9</integer>
+			<key>image</key>
+			<string>UserCellIcon_9</string>
+			<key>title</key>
+			<string>我的报价</string>
+		</dict>
 	</array>
 	<array>
 		<dict>

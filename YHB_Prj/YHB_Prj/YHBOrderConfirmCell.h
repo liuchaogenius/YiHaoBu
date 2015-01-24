@@ -12,6 +12,7 @@
 @protocol YHBOrderConfirmCellDelegate <NSObject>
 
 - (void)numberChangedWithValue:(NSString *)num IndexPath:(NSIndexPath *)indexPath;
+- (void)touchMessageTextField:(UITextField *)textField IndexPath:(NSIndexPath *)indexPath;
 
 @end
 
@@ -20,7 +21,7 @@
 @property (weak, nonatomic) id<YHBOrderConfirmCellDelegate> delegate;
 @property (weak, nonatomic) NSIndexPath *cellIndexPath;
 
-- (void)setUIWithTitle:(NSString *)title sku:(NSString *)sku price:(NSString *)price number:(NSString *)number isFloat:(BOOL)isFloat;
+- (void)setUIWithTitle:(NSString *)title sku:(NSString *)sku price:(NSString *)price number:(NSString *)number isFloat:(BOOL)isFloat message:(NSString *)message;
 
 - (void)keyboardWillShowWithHeight:(CGFloat)height;
 

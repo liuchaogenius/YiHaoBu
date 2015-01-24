@@ -17,6 +17,7 @@
 #import "YHBMySupplyViewController.h"
 #import "YHBOrderListViewController.h"
 #import "LookQuoteViewController.h"
+#import "YHBAdressListViewController.h"
 
 #define kBtnsViewHeight 65
 #define kBtnImageWidth 25
@@ -193,7 +194,9 @@ enum Button_Type
                 break;
             case Cell_address:
             {
-                
+                YHBAdressListViewController *vc = [[YHBAdressListViewController alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
             }
                 break;
             case Cell_private:
@@ -220,6 +223,12 @@ enum Button_Type
                 break;
             case Cell_share:
             {
+                
+            }
+                break;
+            case Cell_Myprice:
+            {
+                //我的报价
                 
             }
                 break;
