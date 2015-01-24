@@ -27,7 +27,7 @@
     
     self.window.rootViewController = rootvc;
     [self.window makeKeyAndVisible];
-    
+    self.window.tintColor = [UIColor blackColor];
     [self registerRemoteNotification];
     
     //注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应

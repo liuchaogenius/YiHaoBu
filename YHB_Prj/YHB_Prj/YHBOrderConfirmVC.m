@@ -19,9 +19,11 @@
 #import "YHBOConfirmRslist.h"
 #import "YHBOConfirmExpress.h"
 #import "CCEditTextView.h"
+#import "YHBAddressEditViewController.h"
+#import "YHBAdressListViewController.h"
 #define kBarHeight 80
 #define kPriceFont 17
-@interface YHBOrderConfirmVC ()<UITableViewDataSource,UITableViewDelegate,YHBOrderConfirmCellDelegate>
+@interface YHBOrderConfirmVC ()<UITableViewDataSource,UITableViewDelegate,YHBOrderConfirmCellDelegate,UIAlertViewDelegate>
 {
     NSString *_priceStr;
     UILabel *_titleLabel;
@@ -68,7 +70,7 @@
         
         self.payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _payBtn.frame = CGRectMake(10, kBarHeight-35-10, kMainScreenWidth-20, 35);
-        [_payBtn setBackgroundColor:KColor];
+        [_payBtn setBackgroundColor:[UIColor lightGrayColor]];
         [_payBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_payBtn setTitle:@"确认支付" forState:UIControlStateNormal];
         [_payBtn addTarget:self action:@selector(touchPayBtn) forControlEvents:UIControlEventTouchUpInside];
@@ -98,6 +100,8 @@
 {
     if (!_addressView) {
         _addressView = [[YHBOrderAddressView alloc] init];
+        UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchAddressHead)];
+        [_addressView addGestureRecognizer:gr];
     }
     return _addressView;
 }
@@ -145,6 +149,10 @@
 {
     [super viewWillDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    if (_payBtn && self.orderConfirmModel.buyerAddress.length<1) {
+        _payBtn.enabled = NO;
+        _payBtn.backgroundColor = [UIColor lightGrayColor];
+    }
 }
 
 - (void)viewDidLoad {
@@ -155,7 +163,15 @@
     self.view.backgroundColor = kViewBackgroundColor;
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.view addSubview:self.tableView];
+    
+    [self getDataAndSetUI];
+}
 
+#pragma mark - 网络数据请求 并设置UI
+
+- (void)getDataAndSetUI
+{
+    self.orderConfirmModel = nil;
     if (self.requestArray.count) {
         __weak YHBOrderConfirmVC *weakself = self;
         [self.orderManager getOrderConfirmWithToken:([YHBUser sharedYHBUser].token ? :@"") source:self.sourse?:@"" ListArray:self.requestArray?:@[@""] Success:^(YHBOConfirmModel *model) {
@@ -163,22 +179,24 @@
             [weakself.tableView reloadData];
             [weakself reloadHeader];
             [weakself priceCalculate];
-            weakself.payBtn.enabled = YES;
         } failure:^{
             [SVProgressHUD showErrorWithStatus:@"读取订单信息失败，请重新尝试！" cover:YES offsetY:0];
         }];
     }else{
         [SVProgressHUD showErrorWithStatus:@"发生错误!" cover:YES offsetY:0];
     }
-    
 }
-
+//刷新地址view
 - (void)reloadHeader
 {
-    if (self.orderConfirmModel.buyerAddress.length) {
+    if (self.orderConfirmModel.buyerAddress.length>1) {
         [self.addressView setUIWithName:self.orderConfirmModel.buyerName Address:self.orderConfirmModel.buyerAddress Phone:self.orderConfirmModel.buyerMobile];
+        [self.payBtn setBackgroundColor:KColor];
+        self.payBtn.enabled = YES;
     }else{
-#warning 弹出地址页面，用户添加地址-cc
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有设置收货地址" message:@"现在就添加收货地址？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"添加", nil];
+        [alertView show];
+
     }
     
 }
@@ -293,13 +311,23 @@
 #pragma mark 点击支付
 - (void)touchPayBtn
 {
-
+    MLOG(@"pay");
 }
 
 - (void)touchSelBtn
 {
     //选择支付方式
 }
+
+- (void)touchAddressHead
+{
+    //选择地址
+    YHBAdressListViewController *vc = [[YHBAdressListViewController alloc] init];
+    vc.isfromOrder = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
 #pragma mark - 产品数量改变
 - (void)numberChangedWithValue:(NSString *)num IndexPath:(NSIndexPath *)indexPath
 {
@@ -357,6 +385,20 @@
     } cancelBlock:^{
         
     }];
+}
+
+#pragma mark - alertView delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        __weak YHBOrderConfirmVC *weakself = self;
+        YHBAddressEditViewController *vc = [[YHBAddressEditViewController alloc] initWithAddressModel:nil isNew:YES SuccessHandle:^{
+            [weakself getDataAndSetUI];
+        }];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 #pragma mark - keyboard notification

@@ -182,5 +182,27 @@
     }];
 }
 
+- (void)editUserInfoWithInfoDic:(NSMutableDictionary *)dic withSuccess:(void(^)())sBlock failure:(void(^)(int result,NSString *errorString))fBlock
+{
+    NSString *url = nil;
+    kYHBRequestUrl(@"postUser.php", url);
+    [NetManager requestWith:dic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
+        NSInteger result = [successDict[@"result"] integerValue];
+        if (result == 1) {
+            if (sBlock) {
+                sBlock();
+            }
+        }else{
+            NSString *error = successDict[@"error"];
+            if (fBlock) {
+                fBlock((int)result,error);
+            }
+        }
+    } failure:^(NSDictionary *failDict, NSError *error) {
+        fBlock(-25,@"您的网络有点问题，请稍后再试");
+    }];
+
+}
+
 
 @end

@@ -14,11 +14,41 @@
 @property (strong, nonatomic) NSString *userFilePath; //用户文件路径
 //@property (strong, nonatomic) NSMutableDictionary *userInfoDic;//用户信息字典
 @property (strong, nonatomic) YHBUserManager *userManger;
+@property (strong, nonatomic) NSString *docPath;
 @end
 
 @implementation YHBUser
 SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
 #pragma mark - getter and setter
+
+- (NSString *)docPath
+{
+    if (!_docPath) {
+        NSArray *storeFilePath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        _docPath = storeFilePath[0];
+    }
+    return _docPath;
+}
+
+- (NSString *)localHeadUrl
+{
+    if (!_localHeadUrl) {
+        
+        NSString *path = [self.docPath stringByAppendingPathComponent:@"head.png"];
+        _localHeadUrl = path;
+    }
+    return _localHeadUrl;
+}
+
+- (NSString *)localBannerUrl
+{
+    if (!_localBannerUrl) {
+        NSString *path = [self.docPath stringByAppendingPathComponent:@"banner.png"];
+        _localBannerUrl = path;
+    }
+    return _localBannerUrl;
+}
+
 - (YHBUserManager *)userManger
 {
     if (!_userManger) {
@@ -30,9 +60,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
 - (NSString *)userFilePath
 {
     if (!_userFilePath) {
-        NSArray *storeFilePath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *docPath = storeFilePath[0];
-        _userFilePath = [docPath stringByAppendingPathComponent:@"user.plist"];
+        _userFilePath = [self.docPath stringByAppendingPathComponent:@"user.plist"];
         //MLOG(@"%@",_userFilePath);
     }
     return _userFilePath;
@@ -42,6 +70,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
 {
     MLOG(@"%@",self.userFilePath);
     self = [super init];
+    self.token = nil;
     _isLogin = NO;
     _userInfo = nil;
     _statusIsChanged = NO;
@@ -57,6 +86,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
         NSString *token = userDic[@"token"];
         NSData *infoData = userDic[@"userInfo"];
         if (token.length>1) {
+            self.token = token;
             _isLogin = YES;
             if (infoData) {
                 YHBUserInfo *info = [NSKeyedUnarchiver unarchiveObjectWithData:infoData];
@@ -120,7 +150,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
 - (void)writeUserInfoToFile
 {
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:2];
+    MLOG(@"写入了用户信息--------------------token = '%@'",self.token);
     [dic setObject:self.token?:@"" forKey:@"token"];
+    
     if (self.userInfo.userid ) {
 #warning have problem to be tested
         NSData *info = [NSKeyedArchiver archivedDataWithRootObject:self.userInfo];

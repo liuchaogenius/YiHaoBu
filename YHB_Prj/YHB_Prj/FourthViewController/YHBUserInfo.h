@@ -36,6 +36,7 @@
 @property (nonatomic, assign) NSInteger vmobile;//手机验证，默认手机注册均验证
 @property (nonatomic, strong) NSString *address;//地址
 @property (nonatomic, strong) NSString *introduce;//店铺简介/企业简介
+@property (nonatomic, strong) NSString *telephone;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;

@@ -21,6 +21,10 @@
 
 @property (weak, nonatomic) id<UserHeadDelegate> delegate;
 
+@property (strong, nonatomic) UIImageView *bannerImageView;
+
+@property (strong, nonatomic) UIImageView *userImageView;
+
 //显示的是自己时，刷新方法
 - (void)refreshSelfHeadWithIsLogin:(BOOL)isLogin name:(NSString *)name avator:(NSString *)avator thumb:(NSString *)thumb group:(NSInteger)group company:(NSString *)company;
 

@@ -3285,6 +3285,7 @@
 				TargetAttributes = {
 					FF2A6BD91A0F3780001607AC = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = JERPD52W3W;
 					};
 					FF2A6BEC1A0F3780001607AC = {
 						CreatedOnToolsVersion = 6.0;
@@ -3860,7 +3861,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Huizhen Zhu (9B9A455VM7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = "YHB_Prj/YHB-Prefix.pch";
 				INFOPLIST_FILE = YHB_Prj/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -3873,6 +3875,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -3881,7 +3884,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Huizhen Zhu (9B9A455VM7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = "YHB_Prj/YHB-Prefix.pch";
 				INFOPLIST_FILE = YHB_Prj/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -3894,6 +3898,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

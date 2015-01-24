@@ -5,7 +5,7 @@
 //  Created by yato_kami on 14/11/12.
 //  Copyright (c) 2014年 striveliu. All rights reserved.
 //
-#define isTest 1
+#define isTest 0
 #import "YHBUserHeadView.h"
 #import "UIImageView+WebCache.h"
 #define kImageWith 50
@@ -16,9 +16,7 @@
 @property (strong, nonatomic) UIView *notLoginedView;
 
 @property (strong, nonatomic) UILabel *companylabel;
-@property (strong, nonatomic) UIImageView *bannerImageView;
 
-@property (strong, nonatomic) UIImageView *userImageView;
 @property (strong, nonatomic) UILabel *userName;
 //企供求
 @property (strong, nonatomic) UIImageView *comTag;
@@ -122,10 +120,10 @@
 {
     self = [super initWithFrame:frame];
     self.bannerImageView = [[UIImageView alloc] initWithFrame:self.frame];
-    self.bannerImageView.image = [UIImage imageNamed:@"userBannerDefault"];
+    self.bannerImageView.image = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"userBannerDefault"]];
     //self.backgroundColor = RGBCOLOR(58, 155, 9);
     [self addSubview:self.bannerImageView];
-    self.backgroundColor = [UIColor blackColor];
+    self.backgroundColor = [UIColor lightGrayColor];
     [self refreshSelfHeadWithIsLogin:NO name:nil avator:nil thumb:nil group:0 company:nil];
     //[self refreshViewWithIslogin:NO vcompany:0 sell:0 buy:0 name:@"" avator:nil];
     
@@ -146,8 +144,8 @@
         self.selTag.hidden = group >= 6 ? NO : YES;
         self.buyTag.hidden = group >= 5 ? NO : YES;
         self.userName.text = name ? name : @"";
-        if(avator) [self.userImageView sd_setImageWithURL:[NSURL URLWithString:avator]];
-        if(thumb) [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:thumb] placeholderImage:[UIImage imageNamed:@"userBannerDefault"]];
+        if(avator) [self.userImageView sd_setImageWithURL:[NSURL URLWithString:avator] placeholderImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"DefualtUser"]]];
+        if(thumb) [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:thumb]];
     }else{
         [self addSubview:self.notLoginedView];
         [self.loginedView removeFromSuperview];

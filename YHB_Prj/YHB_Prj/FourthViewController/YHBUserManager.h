@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-
 @interface YHBUserManager : NSObject
 
 + (YHBUserManager *)sharedManager;
@@ -29,4 +28,6 @@
 //注册账号
 - (void)registerWithPhone:(NSString *)phone checkCode:(NSString *)checkcode passWord:(NSString *)password withSuccess:(void(^)())sBlock failure:(void(^)(int result,NSString *errorString))fBlock;
 
+//修改用户信息
+- (void)editUserInfoWithInfoDic:(NSMutableDictionary *)dic withSuccess:(void(^)())sBlock failure:(void(^)(int result,NSString *errorString))fBlock;
 @end

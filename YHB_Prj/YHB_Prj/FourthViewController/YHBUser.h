@@ -15,6 +15,9 @@
 @property (strong, nonatomic) YHBUserInfo *userInfo;//用户信息
 @property (strong, nonatomic) NSString *token;
 
+@property (strong, nonatomic) NSString *localHeadUrl;//本地头像文件路径
+@property (strong, nonatomic) NSString *localBannerUrl;//本地背景图文件路径
+
 @property (nonatomic) BOOL statusIsChanged; //用户状态是否发生了变化
 
 + (YHBUser *)sharedYHBUser;

@@ -9,6 +9,7 @@
 #import "YHBAboutUsViewController.h"
 #import "NetManager.h"
 #import "SVProgressHUD.h"
+
 @interface YHBAboutUsViewController ()
 
 @property (strong, nonatomic) UITextView *textView;
@@ -67,10 +68,14 @@
     }];
 }
 
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 /*
 #pragma mark - Navigation

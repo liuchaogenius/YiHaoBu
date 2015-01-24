@@ -33,7 +33,7 @@ NSString *const kYHBUserInfoCredit = @"credit";
 NSString *const kYHBUserInfoVmobile = @"vmobile";
 NSString *const kYHBUserInfoAddress = @"address";
 NSString *const kYHBUserInfoIntroduce = @"introduce";
-
+NSString *const kYHBUserInfoTelephone = @"telephone";
 
 @interface YHBUserInfo ()
 
@@ -68,6 +68,7 @@ NSString *const kYHBUserInfoIntroduce = @"introduce";
 @synthesize vmobile = _vmobile;
 @synthesize address = _address;
 @synthesize introduce = _introduce;
+@synthesize telephone = _telephone;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
@@ -107,7 +108,8 @@ NSString *const kYHBUserInfoIntroduce = @"introduce";
         self.vmobile = [[self objectOrNilForKey:kYHBUserInfoVmobile fromDictionary:dict] integerValue];
         self.address = [self objectOrNilForKey:kYHBUserInfoAddress fromDictionary:dict];
         self.introduce = [self objectOrNilForKey:kYHBUserInfoIntroduce fromDictionary:dict];
-        
+        self.telephone = [self objectOrNilForKey:kYHBUserInfoTelephone fromDictionary:dict];
+
     }
     
     return self;
@@ -142,6 +144,7 @@ NSString *const kYHBUserInfoIntroduce = @"introduce";
     [mutableDict setValue:[NSNumber numberWithInteger:self.vmobile] forKey:kYHBUserInfoVmobile];
     [mutableDict setValue:self.address forKey:kYHBUserInfoAddress];
     [mutableDict setValue:self.introduce forKey:kYHBUserInfoIntroduce];
+    [mutableDict setValue:self.telephone forKey:kYHBUserInfoTelephone];
     
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
@@ -190,6 +193,7 @@ NSString *const kYHBUserInfoIntroduce = @"introduce";
     self.vmobile = [aDecoder decodeIntegerForKey:kYHBUserInfoVmobile];
     self.address = [aDecoder decodeObjectForKey:kYHBUserInfoAddress];
     self.introduce = [aDecoder decodeObjectForKey:kYHBUserInfoIntroduce];
+    self.telephone = [aDecoder decodeObjectForKey:kYHBUserInfoTelephone];
     return self;
 }
 
@@ -221,6 +225,7 @@ NSString *const kYHBUserInfoIntroduce = @"introduce";
     [aCoder encodeInteger:_vmobile forKey:kYHBUserInfoVmobile];
     [aCoder encodeObject:_address forKey:kYHBUserInfoAddress];
     [aCoder encodeObject:_introduce forKey:kYHBUserInfoIntroduce];
+    [aCoder encodeObject:_telephone forKey:kYHBUserInfoTelephone];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -254,6 +259,7 @@ NSString *const kYHBUserInfoIntroduce = @"introduce";
         copy.vmobile = self.vmobile;
         copy.address = [self.address copyWithZone:zone];
         copy.introduce = [self.introduce copyWithZone:zone];
+        copy.telephone = [self.telephone copyWithZone:zone];
     }
     
     return copy;

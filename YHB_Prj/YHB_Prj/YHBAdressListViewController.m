@@ -15,10 +15,10 @@
 #import "YHBAddressEditViewController.h"
 
 typedef enum : NSUInteger {
-    action_deleate = 0,
-    action_edit,
+    action_edit = 0,
     action_default,
-    action_cancel
+    action_deleate ,
+    action_cancelOrChoose,
 } ActionSheet_Action;
 
 @interface YHBAdressListViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
@@ -127,8 +127,14 @@ typedef enum : NSUInteger {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     YHBAddressModel *model = self.modelArray[indexPath.section];
     _selModel = model;
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"请问想怎么操作这条地址" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除" otherButtonTitles:@"查看或修改",@"设为默认地址", nil];
-    [actionSheet showInView:self.view];
+    if (self.isfromOrder) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"请问想怎么操作这条地址" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"查看或修改"otherButtonTitles:@"设为默认地址",@"删除",@"设为收货地址", nil];
+        [actionSheet showInView:self.view];
+    }else {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"请问想怎么操作这条地址" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"查看或修改" otherButtonTitles:@"设为默认地址",@"删除", nil];
+        [actionSheet showInView:self.view];
+    }
+    
 }
 
 #pragma mark - Action
@@ -170,9 +176,13 @@ typedef enum : NSUInteger {
             }];
         }
             break;
-        case action_cancel:
+        case action_cancelOrChoose:
         {
+            if (self.isfromOrder && [self.delegate respondsToSelector:@selector(choosedAddressModel:)]) {
+                [self.delegate choosedAddressModel:_selModel];
+            }
         }
+            break;
             break;
         default:
             break;

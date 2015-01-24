@@ -18,6 +18,7 @@
 #import "YHBOrderListViewController.h"
 #import "LookQuoteViewController.h"
 #import "YHBAdressListViewController.h"
+#import "UIImageView+WebCache.h"
 
 #define kBtnsViewHeight 65
 #define kBtnImageWidth 25
@@ -64,6 +65,19 @@ enum Button_Type
         _dataArray = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"UserVCData" ofType:@"plist"]];
     }
     return _dataArray;
+}
+
+#pragma mark - life
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if ([YHBUser sharedYHBUser].isLogin && [YHBUser sharedYHBUser].statusIsChanged) {
+        [YHBUser sharedYHBUser].statusIsChanged = NO;
+        [[YHBUser sharedYHBUser] refreshUserInfoWithSuccess:^{
+            [self refreshUserHeadView];
+        } failure:nil];
+    }
+    [super viewWillAppear:YES];
 }
 
 - (void)viewDidLoad {
@@ -260,7 +274,8 @@ enum Button_Type
     if ([YHBUser sharedYHBUser].isLogin ) {
         [self.loginItem setTitle:@"注销"];
         YHBUser *user = [YHBUser sharedYHBUser];
-        [self.userHeadView refreshSelfHeadWithIsLogin:YES name:user.userInfo.truename avator:user.userInfo.avatar thumb:user.userInfo.thumb group:user.userInfo.groupid company:user.userInfo.company];
+        [self loadUserPhoto];
+        [self.userHeadView refreshSelfHeadWithIsLogin:YES name:user.userInfo.truename avator:nil thumb:nil group:user.userInfo.groupid company:user.userInfo.company];
     }else{
         [self.loginItem setTitle:@"登陆"];
         [self.userHeadView refreshSelfHeadWithIsLogin:NO name:nil avator:nil thumb:nil group:0 company:nil];
@@ -295,6 +310,24 @@ enum Button_Type
     [button addSubview:label];
     
     return button;
+}
+
+- (void)loadUserPhoto
+{
+    YHBUser *user = [YHBUser sharedYHBUser];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:user.localBannerUrl]) {
+        self.userHeadView.bannerImageView.image = [UIImage imageWithContentsOfFile:user.localBannerUrl];
+        
+    }else{
+        [self.userHeadView.bannerImageView sd_setImageWithURL:[NSURL URLWithString:user.userInfo.thumb] placeholderImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"userBannerDefault"]]];
+    }
+    if ([[NSFileManager defaultManager] fileExistsAtPath:user.localHeadUrl]) {
+        self.userHeadView.userImageView.image = [UIImage imageWithContentsOfFile:user.localHeadUrl];
+        
+    }else{
+        [self.userHeadView.userImageView sd_setImageWithURL:[NSURL URLWithString:user.userInfo.avatar]];
+    }
 }
 
 /*
