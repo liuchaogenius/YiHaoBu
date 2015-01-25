@@ -253,6 +253,14 @@ enum TextField_Type
     
 }
 
+- (void)clearText
+{
+    _phoneNumberTextField.text = @"";
+    _passwordTextField.text = @"";
+    _rgPasswordTextField.text = @"";
+    _rgPhoneNumberTextField.text = @"";
+}
+
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self resignAllKeybord];

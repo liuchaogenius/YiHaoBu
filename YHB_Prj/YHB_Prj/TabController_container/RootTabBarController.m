@@ -60,6 +60,7 @@
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushLeftView) name:kLeftViewPushMessage object:nil];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popLeftView) name:kLeftViewPopMessage object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLoginViewController:) name:kLoginForUserMessage object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clearLoginVCInfo) name:kLogoutMessage object:nil];
 }
 
 - (void)initTabViewController
@@ -180,6 +181,13 @@
                 
             }];
         }];
+    }
+}
+
+- (void)clearLoginVCInfo
+{
+    if (_loginVC) {
+        [_loginVC clearText];
     }
 }
 

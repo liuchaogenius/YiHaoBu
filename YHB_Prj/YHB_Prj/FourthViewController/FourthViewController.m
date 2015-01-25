@@ -19,6 +19,7 @@
 #import "YHBAdressListViewController.h"
 #import "UIImageView+WebCache.h"
 #import "YHBMyPrivateViewController.h"
+#import "YHBCertificListViewController.h"
 
 #define kBtnsViewHeight 65
 #define kBtnImageWidth 25
@@ -176,6 +177,7 @@ enum Button_Type
     }else{
         //注销
         [[YHBUser sharedYHBUser] logoutUser];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLoginForUserMessage object:[NSNumber numberWithBool:NO]];
         [self refreshUserHeadView];//刷新
     }
     
@@ -196,7 +198,9 @@ enum Button_Type
                 break;
             case Cell_certification:
             {
-                
+                YHBCertificListViewController *vc = [[YHBCertificListViewController alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
             }
                 break;
             case Cell_myOrder:

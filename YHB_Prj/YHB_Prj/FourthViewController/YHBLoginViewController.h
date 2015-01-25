@@ -14,5 +14,8 @@ typedef NS_ENUM(int, loginType)
     eLoginBack//点击返回按钮
 };
 @interface YHBLoginViewController : BaseViewController
+
 @property (nonatomic, assign)loginType type;
+- (void)clearText;
+
 @end

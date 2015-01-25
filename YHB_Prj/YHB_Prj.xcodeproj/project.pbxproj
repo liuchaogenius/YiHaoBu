@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5B0531901A74B8620020077D /* YHBProductWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B05318F1A74B8620020077D /* YHBProductWebVC.m */; };
+		5B0531C61A752F200020077D /* YHBCertificListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0531C51A752F200020077D /* YHBCertificListViewController.m */; };
+		5B0531C91A7538CB0020077D /* YHBComCertificVieController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0531C81A7538CB0020077D /* YHBComCertificVieController.m */; };
 		5B0A34B81A45862A0071A357 /* YHBFuncBlockCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0A34B71A45862A0071A357 /* YHBFuncBlockCell.m */; };
 		5B0A34BB1A458E180071A357 /* YHBHotTagsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0A34BA1A458E180071A357 /* YHBHotTagsCell.m */; };
 		5B13A4D61A57EC4B00713C5E /* YHBProductManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B13A4D51A57EC4B00713C5E /* YHBProductManager.m */; };
@@ -459,6 +461,10 @@
 /* Begin PBXFileReference section */
 		5B05318E1A74B8620020077D /* YHBProductWebVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBProductWebVC.h; sourceTree = "<group>"; };
 		5B05318F1A74B8620020077D /* YHBProductWebVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBProductWebVC.m; sourceTree = "<group>"; };
+		5B0531C41A752F200020077D /* YHBCertificListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBCertificListViewController.h; sourceTree = "<group>"; };
+		5B0531C51A752F200020077D /* YHBCertificListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBCertificListViewController.m; sourceTree = "<group>"; };
+		5B0531C71A7538CB0020077D /* YHBComCertificVieController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBComCertificVieController.h; sourceTree = "<group>"; };
+		5B0531C81A7538CB0020077D /* YHBComCertificVieController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBComCertificVieController.m; sourceTree = "<group>"; };
 		5B0A34B61A45862A0071A357 /* YHBFuncBlockCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBFuncBlockCell.h; sourceTree = "<group>"; };
 		5B0A34B71A45862A0071A357 /* YHBFuncBlockCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBFuncBlockCell.m; sourceTree = "<group>"; };
 		5B0A34B91A458E180071A357 /* YHBHotTagsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBHotTagsCell.h; sourceTree = "<group>"; };
@@ -1291,6 +1297,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B0531C31A752ECB0020077D /* CertificViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5B0531C41A752F200020077D /* YHBCertificListViewController.h */,
+				5B0531C51A752F200020077D /* YHBCertificListViewController.m */,
+				5B0531C71A7538CB0020077D /* YHBComCertificVieController.h */,
+				5B0531C81A7538CB0020077D /* YHBComCertificVieController.m */,
+			);
+			name = CertificViewController;
+			sourceTree = "<group>";
+		};
 		5B13A4D21A57EBFA00713C5E /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -3148,6 +3165,7 @@
 		FF2A6C8B1A0F3C58001607AC /* UIParty */ = {
 			isa = PBXGroup;
 			children = (
+				5B0531C31A752ECB0020077D /* CertificViewController */,
 				5B18C98E1A724DC300336215 /* AddressEditViewController */,
 				5BE847EA1A7223A300DC1254 /* AddressListViewController */,
 				5BCBB0791A6FD9DC00BF5E5C /* OrderConfirmViewController */,
@@ -3601,6 +3619,7 @@
 				5BCBB07F1A6FDAB000BF5E5C /* YHBOrderAddressView.m in Sources */,
 				FF2A6C6F1A0F3B7B001607AC /* SDWebImageDecoder.m in Sources */,
 				5BE46AE71A52A00C008EF2D3 /* YHBRslist.m in Sources */,
+				5B0531C61A752F200020077D /* YHBCertificListViewController.m in Sources */,
 				5B13A4E21A5951A800713C5E /* YHBConnectStoreVeiw.m in Sources */,
 				5B8D077E1A6BF5B100AF6341 /* YHBOrderListCell.m in Sources */,
 				FF2A6CA51A0F40B0001607AC /* ThreadSafeMutableDictionary.m in Sources */,
@@ -3706,6 +3725,7 @@
 				ABC646CF1A6B8BC8003A8FB1 /* PSTCollectionViewItemKey.m in Sources */,
 				ABE5BBCE1A2AF036000F5505 /* YHBSupplyDetailView.m in Sources */,
 				ABC646B51A6B8BC8003A8FB1 /* MWTapDetectingImageView.m in Sources */,
+				5B0531C91A7538CB0020077D /* YHBComCertificVieController.m in Sources */,
 				AB5062F61A4CFBFA0006EA94 /* YHBMySupplyViewController.m in Sources */,
 				FF2A6C3E1A0F3B66001607AC /* UIViewAdditions.m in Sources */,
 				ABE5BBD11A2B4291000F5505 /* YHBPhotoTableViewCell.m in Sources */,
