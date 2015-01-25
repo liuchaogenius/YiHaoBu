@@ -204,14 +204,14 @@
     int section = (int)aBtn.tag/100;
     YHBCatData *dataModel = [self.tableViewArray objectAtIndex:section-1];
     NSArray *temArray = dataModel.subcate;
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:section-1];
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    for (int i=0; i<temArray.count; i++)
-    {
-        UIButton *btn = (UIButton *)[cell viewWithTag:section*100+i];
-        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-        [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    }
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:section-1];
+//    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+//    for (int i=0; i<temArray.count; i++)
+//    {
+//        UIButton *btn = (UIButton *)[cell viewWithTag:section*100+i];
+//        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+//        [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+//    }
     [aBtn setTitleColor:KColor forState:UIControlStateNormal];
     aBtn.layer.borderColor = [KColor CGColor];
     
@@ -238,22 +238,22 @@
     
     if (isHave==NO)
     {
-        YHBCatSubcate *deleteModel;
-        for (YHBCatSubcate *temModel in chooseArray)
-        {
-            for (YHBCatSubcate *anTemModel in temArray)
-            {
-                if ((int)temModel.catid == (int)anTemModel.catid)
-                {
-                    deleteModel = temModel;
-                    break;
-                }
-            }
-        }
-        if (deleteModel)
-        {
-            [chooseArray removeObject:deleteModel];
-        }
+//        YHBCatSubcate *deleteModel;
+//        for (YHBCatSubcate *temModel in chooseArray)
+//        {
+//            for (YHBCatSubcate *anTemModel in temArray)
+//            {
+//                if ((int)temModel.catid == (int)anTemModel.catid)
+//                {
+//                    deleteModel = temModel;
+//                    break;
+//                }
+//            }
+//        }
+//        if (deleteModel)
+//        {
+//            [chooseArray removeObject:deleteModel];
+//        }
         [chooseArray addObject:subModel];
     }
 }
