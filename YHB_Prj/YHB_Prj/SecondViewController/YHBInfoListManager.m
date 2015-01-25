@@ -14,7 +14,21 @@
 #import "YHBCRslist.h"
 #import "YHBSupplyModel.h"
 
+@interface YHBInfoListManager()
+
+@property (strong, nonatomic) NSArray *actionArray;
+
+@end
+
 @implementation YHBInfoListManager
+
+- (NSArray *)actionArray
+{
+    if (!_actionArray) {
+        _actionArray = @[@"sell",@"buy",@"mall",@"company"];
+    }
+    return _actionArray;
+}
 
 - (void)getProductListWithUserID:(NSInteger)userID typeID:(NSInteger)typeID pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock
 {
@@ -224,6 +238,60 @@
             if (sBlock) {
                 sBlock(modelArray,page);
             }
+        }else{
+            if (fBlock) {
+                fBlock();
+            }
+        }
+    } failure:^(NSDictionary *failDict, NSError *error) {
+        fBlock();
+    }];
+}
+
+- (void)getMyFavoriteWithToken:(NSString *)token Action:(GetPrivateTag)tag PageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock
+{
+    NSString *url = nil;
+    NSMutableDictionary *postDic = [NSMutableDictionary dictionaryWithCapacity:4];
+    if (tag == Get_Company) {
+        kYHBRequestUrl(@"getFriend.php", url);
+    }else{
+        kYHBRequestUrl(@"getFavorite.php", url);
+        [postDic setObject:self.actionArray[tag] forKey:@"action"];
+    }
+    if ([YHBUser sharedYHBUser].token.length) {
+        [postDic setObject:[YHBUser sharedYHBUser].token forKey:@"token"];
+    }
+    [postDic setObject:[NSNumber numberWithInteger:pageID] forKey:@"pageid"];
+    [postDic setObject:[NSNumber numberWithInteger:pageSize] forKey:@"pagesize"];
+
+    [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
+        NSInteger result = [successDict[@"result"] integerValue];
+        if (result == 1) {
+            NSDictionary *data = successDict[@"data"];
+            YHBPage *page = [YHBPage modelObjectWithDictionary:(NSDictionary *)data[@"page"]];
+            NSArray *array = data[@"rslist"];
+            NSMutableArray *modelArray = [NSMutableArray array];
+            NSDictionary *dic = array[0];
+            MLOG(@"%@",dic);
+            if (array.count > 0) {
+                
+                for (int i=0; i < array.count; i++) {
+                    if(tag == Get_Buy || tag == Get_Sell){
+                        YHBSupplyModel *list = [YHBSupplyModel modelObjectWithDictionary:(NSDictionary *)array[i]];
+                        modelArray[i] = list;
+                    }else if (tag == Get_Product){
+                        YHBRslist *list = [YHBRslist modelObjectWithDictionary:(NSDictionary *)array[i]];
+                        modelArray[i] = list;
+                    }else if(tag == Get_Company){
+                        YHBCRslist *list = [YHBCRslist modelObjectWithDictionary:(NSDictionary *)array[i]];
+                        modelArray[i] = list;
+                    }
+                }
+            }
+            if (sBlock) {
+                sBlock(modelArray,page);
+            }
+                    
         }else{
             if (fBlock) {
                 fBlock();

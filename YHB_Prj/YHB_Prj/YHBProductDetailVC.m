@@ -27,6 +27,7 @@
 #import "YHBPrivateManager.h"
 #import "YHBShopCartManage.h"
 #import "YHBOrderConfirmVC.h"
+#import "YHBProductWebVC.h"
 
 #define kBlankHeight 15
 #define kCCellHeight 35
@@ -57,12 +58,22 @@
 @property (strong, nonatomic) UIVisualEffectView *visualEffectView;
 @property (strong, nonatomic) YHBPrivateManager *privateManager;
 @property (strong, nonatomic) YHBShopCartManage *shopCartManger;
+@property (strong, nonatomic) YHBProductWebVC *webVc;
 
 @end
 
 @implementation YHBProductDetailVC
 
 #pragma mark - getter and setter
+
+- (YHBProductWebVC *)webVc
+{
+    if (!_webVc) {
+        _webVc = [[YHBProductWebVC alloc] init];
+    }
+    return _webVc;
+}
+
 - (YHBShopCartManage *)shopCartManger
 {
     if (!_shopCartManger) {
@@ -403,7 +414,10 @@
 #pragma mark 点击查看产品详情
 - (void)touchProductDetailCell
 {
-    
+    if (self.productModel.content.length) {
+        [self.navigationController pushViewController:self.webVc animated:YES];
+        [self.webVc sethtmlStr:self.productModel.content];
+    }
 }
 
 #pragma mark 点击更多评论

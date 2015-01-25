@@ -137,6 +137,17 @@
     self.storeTag.hidden = groupID > 6 ? YES : NO;
 }
 
+- (void)setUIWithImage:(NSString *)urlStr title:(NSString *)title Name:(NSString *)name GroupID:(int)groupID
+{
+    self.star1Label.hidden = YES;
+    self.star2Label.hidden = YES;
+    [self.shopImageView sd_setImageWithURL:[NSURL URLWithString:urlStr]];
+    self.nameLabel.text = [NSString stringWithFormat:@"掌柜：%@",name];
+    self.titleLabel.text = title;
+    self.mallTag.hidden =  groupID > 6 ? NO : YES ;
+    self.storeTag.hidden = groupID > 6 ? YES : NO;
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

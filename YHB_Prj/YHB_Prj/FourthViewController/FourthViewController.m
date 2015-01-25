@@ -10,7 +10,6 @@
 #import "YHBUserHeadView.h"
 #import "YHBUserCellsView.h"
 #import "YHBShopInfoViewController.h"
-#import "YHBAboutUsViewController.h"
 #import "YHBUser.h"
 #import "YHBUserInfo.h"
 #import "SVProgressHUD.h"
@@ -19,6 +18,7 @@
 #import "LookQuoteViewController.h"
 #import "YHBAdressListViewController.h"
 #import "UIImageView+WebCache.h"
+#import "YHBMyPrivateViewController.h"
 
 #define kBtnsViewHeight 65
 #define kBtnImageWidth 25
@@ -215,14 +215,14 @@ enum Button_Type
                 break;
             case Cell_private:
             {
-                
+                YHBMyPrivateViewController *vc = [[YHBMyPrivateViewController alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
             }
                 break;
             case Cell_aboutUs:
             {
-                YHBAboutUsViewController *aboutVC = [[YHBAboutUsViewController alloc] init];
-                aboutVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:aboutVC animated:YES];
+
             }
                 break;
             case Cell_clause:

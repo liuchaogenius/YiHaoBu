@@ -97,6 +97,14 @@ typedef enum : NSUInteger {
     return _tagsArray;
 }
 
+- (NSMutableDictionary *)pageDic
+{
+    if (!_pageDic) {
+        _pageDic = [NSMutableDictionary dictionaryWithCapacity:4];
+    }
+    return _pageDic;
+}
+
 - (NSMutableDictionary *)modelsDic
 {
     if (!_modelsDic) {

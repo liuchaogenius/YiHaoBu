@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #define kAll -1
+
+typedef enum : NSUInteger {
+    Get_Sell = 0,
+    Get_Buy,
+    Get_Product,
+    Get_Company
+} GetPrivateTag;
+
 @class YHBPage;
 @interface YHBInfoListManager : NSObject
 
@@ -31,5 +39,8 @@
 
 //搜索商城列表
 - (void)searchCompanyListWithKeyWord:(NSString *)keyWord cateID:(NSString *)cateID Vip:(int)vip pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock;
+
+//获取我的收藏
+- (void)getMyFavoriteWithToken:(NSString *)token Action:(GetPrivateTag)tag PageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock;
 
 @end
