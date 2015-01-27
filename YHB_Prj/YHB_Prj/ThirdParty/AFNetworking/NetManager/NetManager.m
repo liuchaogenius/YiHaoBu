@@ -163,9 +163,9 @@
         [aRequest setValue:[NSString stringWithFormat:@"%.3f",[net getLon]] forHTTPHeaderField:@"hbh-lon"];
     }
 #if DEBUG
-    [aRequest addValue:@"1" forHTTPHeaderField:@"mock"];
+    [aRequest addValue:@"0" forHTTPHeaderField:@"mock"];
 #else
-    [aRequest addValue:@"1" forHTTPHeaderField:@"mock"];
+    [aRequest addValue:@"0" forHTTPHeaderField:@"mock"];
 #endif
     
     NSDictionary *bundleDic = [[NSBundle mainBundle] infoDictionary];

@@ -44,6 +44,8 @@
             [[YHBUser sharedYHBUser] loginUserWithUserToken:data[@"token"]];
             sBlock();
         }else if (result == 0){
+            NSString *str = successDict[@"error"];
+            MLOG(@"%@",str);
             fBlock(0,@"发生了未知错误，请稍后重试");
         }else if (result == -1){
             fBlock(result,@"登录失败，用户不存在");

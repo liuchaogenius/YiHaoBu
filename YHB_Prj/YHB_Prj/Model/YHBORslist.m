@@ -21,7 +21,7 @@ NSString *const kYHBORslistItemid = @"itemid";
 NSString *const kYHBORslistFeeName = @"fee_name";
 NSString *const kYHBORslistSellcom = @"sellcom";
 NSString *const kYHBORslistDstatus = @"dstatus";
-NSString *const kYHBORslistSeller = @"seller";
+NSString *const kYHBORslistSeller = @"sellname";
 NSString *const kYHBORslistStatus = @"status";
 
 

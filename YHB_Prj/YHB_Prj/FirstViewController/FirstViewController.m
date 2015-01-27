@@ -25,6 +25,9 @@
 #import "YHBHotTagsCell.h"
 #import "YHBShopMallCell.h"
 #import "YHBProductDetailVC.h"
+#import "YHBUser.h"
+#import "YHBOrderListViewController.h"
+#import "YHBSupplyDetailViewController.h"
 
 #define kBannerHeight (kMainScreenWidth * 397/1080.0f)
 #define kFuncCellHeight 60
@@ -157,7 +160,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if (section > 1 && section < 5) {
+    if (self.pageIndexMdoel && section > 1 && section < 5) {
         return self.headersArray[section-2];
     }else{
         return nil;
@@ -319,6 +322,11 @@
         case button_orders:
         {
             //我的订单
+            if ([self userLoginConfirm]) {
+                YHBOrderListViewController *vc = [[YHBOrderListViewController alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
         }
             break;
         case button_sell:
@@ -378,10 +386,16 @@
 #pragma mark 点击产品推荐、商机推荐部分
 - (void)selectCellPartWithIndexPath : (NSIndexPath*)indexPath part:(NSInteger)part
 {
+    
     if (indexPath.section == 3) {
         YHBMalllist *list = self.pageIndexMdoel.malllist[indexPath.row*3+part];
         YHBProductDetailVC *vc = [[YHBProductDetailVC alloc] initWithProductID:(NSInteger)list.itemid];
         vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if (indexPath.section == 4){
+        YHBSelllist *list = self.pageIndexMdoel.malllist[indexPath.row*3+part];
+        YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:(int)list.itemid andIsMine:NO isModal:NO];
+        vc.hidesBottomBarWhenPushed  = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
@@ -390,7 +404,6 @@
 {
     if (self.pageIndexMdoel.taglist.count > tag) {
         NSString *hotTag = self.pageIndexMdoel.taglist[tag];
-#warning 待传hottag进入搜索页
         self.tabBarController.selectedIndex = 1;
         NSDictionary * dic = [NSDictionary dictionaryWithObject:(hotTag?:@"") forKey:kSearchMessage];
         [[NSNotificationCenter defaultCenter] postNotificationName:kSearchMessage object:nil userInfo:dic];
@@ -429,6 +442,18 @@
              */
             [iVC setUrl:slideModel.linkurl title:@""];
         }
+    }
+}
+
+#pragma mark - 登陆状态校验
+- (BOOL)userLoginConfirm
+{
+    if ([YHBUser sharedYHBUser].isLogin) {
+        return YES;
+    }else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLoginForUserMessage object:[NSNumber numberWithBool:NO]];
+        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessItem) name:kLoginSuccessMessae object:nil];
+        return NO;
     }
 }
 

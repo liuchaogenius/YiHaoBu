@@ -1,7 +1,7 @@
 //
 //  YHBOConfirmModel.m
 //
-//  Created by   on 15/1/22
+//  Created by   on 15/1/26
 //  Copyright (c) 2015 __MyCompanyName__. All rights reserved.
 //
 
@@ -9,10 +9,11 @@
 #import "YHBOConfirmRslist.h"
 
 
+NSString *const kYHBOConfirmModelAddAddress = @"add_address";
+NSString *const kYHBOConfirmModelAddItemid = @"add_itemid";
+NSString *const kYHBOConfirmModelAddMobile = @"add_mobile";
 NSString *const kYHBOConfirmModelRslist = @"rslist";
-NSString *const kYHBOConfirmModelBuyerAddress = @"buyer_address";
-NSString *const kYHBOConfirmModelBuyerName = @"buyer_name";
-NSString *const kYHBOConfirmModelBuyerMobile = @"buyer_mobile";
+NSString *const kYHBOConfirmModelAddTruename = @"add_truename";
 
 
 @interface YHBOConfirmModel ()
@@ -23,10 +24,11 @@ NSString *const kYHBOConfirmModelBuyerMobile = @"buyer_mobile";
 
 @implementation YHBOConfirmModel
 
+@synthesize addAddress = _addAddress;
+@synthesize addItemid = _addItemid;
+@synthesize addMobile = _addMobile;
 @synthesize rslist = _rslist;
-@synthesize buyerAddress = _buyerAddress;
-@synthesize buyerName = _buyerName;
-@synthesize buyerMobile = _buyerMobile;
+@synthesize addTruename = _addTruename;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
@@ -41,6 +43,9 @@ NSString *const kYHBOConfirmModelBuyerMobile = @"buyer_mobile";
     // This check serves to make sure that a non-NSDictionary object
     // passed into the model class doesn't break the parsing.
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
+            self.addAddress = [self objectOrNilForKey:kYHBOConfirmModelAddAddress fromDictionary:dict];
+            self.addItemid = [[self objectOrNilForKey:kYHBOConfirmModelAddItemid fromDictionary:dict] doubleValue];
+            self.addMobile = [self objectOrNilForKey:kYHBOConfirmModelAddMobile fromDictionary:dict];
     NSObject *receivedYHBOConfirmRslist = [dict objectForKey:kYHBOConfirmModelRslist];
     NSMutableArray *parsedYHBOConfirmRslist = [NSMutableArray array];
     if ([receivedYHBOConfirmRslist isKindOfClass:[NSArray class]]) {
@@ -54,9 +59,7 @@ NSString *const kYHBOConfirmModelBuyerMobile = @"buyer_mobile";
     }
 
     self.rslist = [NSArray arrayWithArray:parsedYHBOConfirmRslist];
-            self.buyerAddress = [self objectOrNilForKey:kYHBOConfirmModelBuyerAddress fromDictionary:dict];
-            self.buyerName = [self objectOrNilForKey:kYHBOConfirmModelBuyerName fromDictionary:dict];
-            self.buyerMobile = [self objectOrNilForKey:kYHBOConfirmModelBuyerMobile fromDictionary:dict];
+            self.addTruename = [self objectOrNilForKey:kYHBOConfirmModelAddTruename fromDictionary:dict];
 
     }
     
@@ -67,6 +70,9 @@ NSString *const kYHBOConfirmModelBuyerMobile = @"buyer_mobile";
 - (NSDictionary *)dictionaryRepresentation
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];
+    [mutableDict setValue:self.addAddress forKey:kYHBOConfirmModelAddAddress];
+    [mutableDict setValue:[NSNumber numberWithDouble:self.addItemid] forKey:kYHBOConfirmModelAddItemid];
+    [mutableDict setValue:self.addMobile forKey:kYHBOConfirmModelAddMobile];
     NSMutableArray *tempArrayForRslist = [NSMutableArray array];
     for (NSObject *subArrayObject in self.rslist) {
         if([subArrayObject respondsToSelector:@selector(dictionaryRepresentation)]) {
@@ -78,9 +84,7 @@ NSString *const kYHBOConfirmModelBuyerMobile = @"buyer_mobile";
         }
     }
     [mutableDict setValue:[NSArray arrayWithArray:tempArrayForRslist] forKey:kYHBOConfirmModelRslist];
-    [mutableDict setValue:self.buyerAddress forKey:kYHBOConfirmModelBuyerAddress];
-    [mutableDict setValue:self.buyerName forKey:kYHBOConfirmModelBuyerName];
-    [mutableDict setValue:self.buyerMobile forKey:kYHBOConfirmModelBuyerMobile];
+    [mutableDict setValue:self.addTruename forKey:kYHBOConfirmModelAddTruename];
 
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
@@ -104,20 +108,22 @@ NSString *const kYHBOConfirmModelBuyerMobile = @"buyer_mobile";
 {
     self = [super init];
 
+    self.addAddress = [aDecoder decodeObjectForKey:kYHBOConfirmModelAddAddress];
+    self.addItemid = [aDecoder decodeDoubleForKey:kYHBOConfirmModelAddItemid];
+    self.addMobile = [aDecoder decodeObjectForKey:kYHBOConfirmModelAddMobile];
     self.rslist = [aDecoder decodeObjectForKey:kYHBOConfirmModelRslist];
-    self.buyerAddress = [aDecoder decodeObjectForKey:kYHBOConfirmModelBuyerAddress];
-    self.buyerName = [aDecoder decodeObjectForKey:kYHBOConfirmModelBuyerName];
-    self.buyerMobile = [aDecoder decodeObjectForKey:kYHBOConfirmModelBuyerMobile];
+    self.addTruename = [aDecoder decodeObjectForKey:kYHBOConfirmModelAddTruename];
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
 
+    [aCoder encodeObject:_addAddress forKey:kYHBOConfirmModelAddAddress];
+    [aCoder encodeDouble:_addItemid forKey:kYHBOConfirmModelAddItemid];
+    [aCoder encodeObject:_addMobile forKey:kYHBOConfirmModelAddMobile];
     [aCoder encodeObject:_rslist forKey:kYHBOConfirmModelRslist];
-    [aCoder encodeObject:_buyerAddress forKey:kYHBOConfirmModelBuyerAddress];
-    [aCoder encodeObject:_buyerName forKey:kYHBOConfirmModelBuyerName];
-    [aCoder encodeObject:_buyerMobile forKey:kYHBOConfirmModelBuyerMobile];
+    [aCoder encodeObject:_addTruename forKey:kYHBOConfirmModelAddTruename];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -126,10 +132,11 @@ NSString *const kYHBOConfirmModelBuyerMobile = @"buyer_mobile";
     
     if (copy) {
 
+        copy.addAddress = [self.addAddress copyWithZone:zone];
+        copy.addItemid = self.addItemid;
+        copy.addMobile = [self.addMobile copyWithZone:zone];
         copy.rslist = [self.rslist copyWithZone:zone];
-        copy.buyerAddress = [self.buyerAddress copyWithZone:zone];
-        copy.buyerName = [self.buyerName copyWithZone:zone];
-        copy.buyerMobile = [self.buyerMobile copyWithZone:zone];
+        copy.addTruename = [self.addTruename copyWithZone:zone];
     }
     
     return copy;

@@ -310,10 +310,14 @@
     //HbuAreaListModelAreas *area = self.cityArray[0];
     [self.clearView removeFromSuperview];
     //[self.tableView shouldScrolltoPointY:0];
-    [self pickedAreaToModelAndUI];
     if ([_areaPicker superview]) {
         if (sender.tag != kButtonTag_Cancel) {
-            //[self areaPikerValueToTextField];
+            [self pickedAreaToModelAndUI];
+        }else{
+            _selProvince = 0;
+            _selCity = 0;
+            [_areaPicker selectRow:0 inComponent:0 animated:NO];
+            [_areaPicker selectRow:0 inComponent:1 animated:NO];
         }
         [UIView animateWithDuration:0.2 animations:^{
             _areaPicker.top = kMainScreenHeight;

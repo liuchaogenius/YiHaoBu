@@ -295,13 +295,15 @@
 #pragma mark 收藏
 - (void)touchPrivateBtn : (UIButton *)sender
 {
-#warning 此处是否一定是产品,以及用户登录验证，带解决-cc
-    sender.selected = !sender.selected;
-    [self.privateManager privateOrDisPrivateWithItemID:[NSString stringWithFormat:@"%ld",(long)self.productID] privateType:private_mall token:[YHBUser sharedYHBUser].token ? :@"" Success:^{
-        
-    } failure:^{
+    if ([self userLoginConfirm]) {
         sender.selected = !sender.selected;
-    }];
+        [self.privateManager privateOrDisPrivateWithItemID:[NSString stringWithFormat:@"%ld",(long)self.productID] privateType:private_mall token:[YHBUser sharedYHBUser].token ? :@"" Success:^{
+            
+        } failure:^{
+            [SVProgressHUD showErrorWithStatus:@"收藏失败，请重新尝试" cover:YES offsetY:0];
+            sender.selected = !sender.selected;
+        }];
+    }
 }
 
 #pragma mark 点击购物车
@@ -348,6 +350,17 @@
 - (void)loginSuccessItem
 {
     _isBuy ? [self touchBuyButton] : [self touchCartButton];
+}
+
+- (BOOL)userLoginConfirm
+{
+    if ([YHBUser sharedYHBUser].isLogin) {
+        return YES;
+    }else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLoginForUserMessage object:[NSNumber numberWithBool:NO]];
+        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessItem) name:kLoginSuccessMessae object:nil];
+        return NO;
+    }
 }
 
 #pragma mark 点击选择色块

@@ -1,7 +1,7 @@
 //
 //  YHBOConfirmModel.h
 //
-//  Created by   on 15/1/22
+//  Created by   on 15/1/26
 //  Copyright (c) 2015 __MyCompanyName__. All rights reserved.
 //
 
@@ -11,10 +11,11 @@
 
 @interface YHBOConfirmModel : NSObject <NSCoding, NSCopying>
 
+@property (nonatomic, strong) NSString *addAddress;
+@property (nonatomic, assign) double addItemid;
+@property (nonatomic, strong) NSString *addMobile;
 @property (nonatomic, strong) NSArray *rslist;
-@property (nonatomic, strong) NSString *buyerAddress;
-@property (nonatomic, strong) NSString *buyerName;
-@property (nonatomic, strong) NSString *buyerMobile;
+@property (nonatomic, strong) NSString *addTruename;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;

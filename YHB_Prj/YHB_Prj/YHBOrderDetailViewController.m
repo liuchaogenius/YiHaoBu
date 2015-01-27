@@ -15,6 +15,7 @@
 #import "IntroduceViewController.h"
 #import "YHBOrderSecondView.h"
 #import "YHBOrderDetailInfoView.h"
+#import "YHBPublicCommentVC.h"
 
 #define KAbtnWidth 70
 #define kAbtnHeight 25
@@ -118,7 +119,7 @@ typedef enum : NSInteger {
             self.actionView.backgroundColor = [UIColor whiteColor];
         }
         [self.actionView removeSubviews];
-        
+#warning 下一步动作 have problem
         for (int i = 0; i < self.orderModel.naction.count; i++) {
             NSString *title = [self.orderModel getTitleOfNextStepForIndex:i];
             if (title && title.length && i < 2) {
@@ -159,6 +160,10 @@ typedef enum : NSInteger {
 #pragma mark 点击功能按钮
 - (void)touchActionBtn : (UIButton *)sender
 {
+#warning 评价vc未引入
+//    YHBPublicCommentVC *vc = [[YHBPublicCommentVC alloc] initWithOrderDetailModel:self.orderModel];
+//    [self.navigationController pushViewController:vc animated:YES];
+    
     NSString *action = self.orderModel.naction[sender.tag];
     [SVProgressHUD showWithStatus:@"操作中..." cover:YES offsetY:0];
     __weak YHBOrderDetailViewController *weakself = self;
@@ -174,6 +179,7 @@ typedef enum : NSInteger {
     } failure:^{
         [SVProgressHUD dismissWithError:@"操作失败，请稍后重试"];
     }];
+    
 }
 
 #pragma mark 点击交流

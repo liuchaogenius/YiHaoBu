@@ -77,9 +77,9 @@
         UIImageView *comTag = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"comTag"]];
         UIImageView *selTag = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selTag"]];
         UIImageView *buyTag = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buyTag"]];
-        buyTag.frame = CGRectMake(_userName.right+5, self.userName.top-5, 40/2.5, 45/2.5);
-        selTag.frame = CGRectMake(buyTag.right+5, self.userName.top-5, 40/2.5, 45/2.5);
-        comTag.frame = CGRectMake(selTag.right+5, self.userName.top-5, 40/2.5, 45/2.5);
+        buyTag.frame = CGRectMake(_userName.right+5, self.userName.top, 40/2.5, 45/2.5);
+        selTag.frame = CGRectMake(buyTag.right+5, self.userName.top, 40/2.5, 45/2.5);
+        comTag.frame = CGRectMake(selTag.right+5, self.userName.top, 40/2.5, 45/2.5);
         
         _comTag = comTag;
         _selTag = selTag;
@@ -139,6 +139,14 @@
         if([self.privateButton superview]) [self.privateButton removeFromSuperview];
         [self.notLoginedView removeFromSuperview];
         self.companylabel.text = company;
+        
+        CGSize size = CGSizeMake(kMainScreenWidth-self.userName.left-10-70, self.userName.height);
+        CGSize newSize = [name sizeWithFont:self.userName.font constrainedToSize:size];
+        self.userName.frame = CGRectMake(self.userName.left, self.userName.top, newSize.width, newSize.height);
+        self.comTag.left = self.userName.right;
+        self.selTag.left = self.comTag.right + 5;
+        self.buyTag.left = self.selTag.right + 5;
+        
         self.userName.text = name;
         self.comTag.hidden = group >= 7 ? NO : YES;
         self.selTag.hidden = group >= 6 ? NO : YES;

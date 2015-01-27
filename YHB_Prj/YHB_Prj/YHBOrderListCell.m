@@ -90,7 +90,7 @@
     }
     return self;
 }
-
+#warning 图片链接无
 - (void)setUIWithStatus:(NSInteger)status Title:(NSString *)title price:(NSString *)price number:(NSString *)num amount:(NSString *)amount itemID:(NSInteger)itemid
 {
     self.tag = itemid;

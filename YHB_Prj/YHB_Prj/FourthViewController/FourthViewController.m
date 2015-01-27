@@ -140,31 +140,32 @@ enum Button_Type
 #pragma mark touchBtnsView
 - (void)touchFuncButtons:(UIButton *)sender
 {
-    MLOG(@"touchFuncButtons");
-#warning 带登陆验证-cc
-    switch (sender.tag) {
-        case Button_purchase:{
-            //跳入我的采购
-//            LookQuoteViewController *vc = [[LookQuoteViewController alloc] init];
-            YHBMySupplyViewController *vc = [[YHBMySupplyViewController alloc] initWithIsSupply:NO];
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
+    if ([self userLoginConfirm]) {
+        switch (sender.tag) {
+            case Button_purchase:{
+                //跳入我的采购
+                //            LookQuoteViewController *vc = [[LookQuoteViewController alloc] init];
+                YHBMySupplyViewController *vc = [[YHBMySupplyViewController alloc] initWithIsSupply:NO];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+                break;
+            case Button_supply:{
+                //跳入我的供应
+                YHBMySupplyViewController *vc = [[YHBMySupplyViewController alloc] initWithIsSupply:YES];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+                break;
+            case Button_lookStore:{
+                //跳入浏览商店
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        case Button_supply:{
-            //跳入我的供应
-            YHBMySupplyViewController *vc = [[YHBMySupplyViewController alloc] initWithIsSupply:YES];
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-            break;
-        case Button_lookStore:{
-            //跳入浏览商店
-        }
-            break;
-        default:
-            break;
     }
+    
 }
 
 #pragma mark 登陆或注销
@@ -191,37 +192,48 @@ enum Button_Type
         switch (tag) {
             case Cell_shopInfo:
             {
-                YHBShopInfoViewController *shopInfoVC = [[YHBShopInfoViewController alloc] init];
-                shopInfoVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:shopInfoVC animated:YES];
+                if ([self userLoginConfirm]) {
+                    YHBShopInfoViewController *shopInfoVC = [[YHBShopInfoViewController alloc] init];
+                    shopInfoVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:shopInfoVC animated:YES];
+                }
             }
                 break;
             case Cell_certification:
             {
-                YHBCertificListViewController *vc = [[YHBCertificListViewController alloc] init];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
+                if ([self userLoginConfirm]) {
+                    YHBCertificListViewController *vc = [[YHBCertificListViewController alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
             }
                 break;
             case Cell_myOrder:
             {
-                YHBOrderListViewController *vc = [[YHBOrderListViewController alloc] init];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
+                if ([self userLoginConfirm]) {
+                    YHBOrderListViewController *vc = [[YHBOrderListViewController alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
             }
                 break;
             case Cell_address:
             {
-                YHBAdressListViewController *vc = [[YHBAdressListViewController alloc] init];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
+                if ([self userLoginConfirm]) {
+                    YHBAdressListViewController *vc = [[YHBAdressListViewController alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
             }
                 break;
             case Cell_private:
             {
-                YHBMyPrivateViewController *vc = [[YHBMyPrivateViewController alloc] init];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
+                if ([self userLoginConfirm]) {
+                    YHBMyPrivateViewController *vc = [[YHBMyPrivateViewController alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                
             }
                 break;
             case Cell_aboutUs:
@@ -247,6 +259,9 @@ enum Button_Type
             case Cell_Myprice:
             {
                 //我的报价
+                if ([self userLoginConfirm]) {
+#warning 此处加入【我的报价】
+                }
                 
             }
                 break;
@@ -283,6 +298,17 @@ enum Button_Type
     }else{
         [self.loginItem setTitle:@"登陆"];
         [self.userHeadView refreshSelfHeadWithIsLogin:NO name:nil avator:nil thumb:nil group:0 company:nil];
+    }
+}
+
+- (BOOL)userLoginConfirm
+{
+    if ([YHBUser sharedYHBUser].isLogin) {
+        return YES;
+    }else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLoginForUserMessage object:[NSNumber numberWithBool:NO]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessItem) name:kLoginSuccessMessae object:nil];
+        return NO;
     }
 }
 
@@ -330,7 +356,7 @@ enum Button_Type
         self.userHeadView.userImageView.image = [UIImage imageWithContentsOfFile:user.localHeadUrl];
         
     }else{
-        [self.userHeadView.userImageView sd_setImageWithURL:[NSURL URLWithString:user.userInfo.avatar]];
+        [self.userHeadView.userImageView sd_setImageWithURL:[NSURL URLWithString:user.userInfo.avatar] placeholderImage:[UIImage imageNamed:@"userDefault"]];
     }
 }
 

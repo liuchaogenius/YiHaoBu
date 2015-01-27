@@ -149,7 +149,7 @@
 {
     [super viewWillDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    if (_payBtn && self.orderConfirmModel.buyerAddress.length<1) {
+    if (_payBtn && self.orderConfirmModel.addAddress.length<1) {
         _payBtn.enabled = NO;
         _payBtn.backgroundColor = [UIColor lightGrayColor];
     }
@@ -189,8 +189,8 @@
 //刷新地址view
 - (void)reloadHeader
 {
-    if (self.orderConfirmModel.buyerAddress.length>1) {
-        [self.addressView setUIWithName:self.orderConfirmModel.buyerName Address:self.orderConfirmModel.buyerAddress Phone:self.orderConfirmModel.buyerMobile];
+    if (self.orderConfirmModel.addAddress.length>1) {
+        [self.addressView setUIWithName:self.orderConfirmModel.addTruename Address:self.orderConfirmModel.addAddress Phone:self.orderConfirmModel.addMobile];
         [self.payBtn setBackgroundColor:KColor];
         self.payBtn.enabled = YES;
     }else{
@@ -405,10 +405,10 @@
 
 - (void)keybordWillShow:(NSNotification *)notif
 {
-    NSDictionary *info = [notif userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
-    CGSize keyboardSize = [value CGRectValue].size;
-    MLOG(@"通知--%@",(UITextField *)value);
+//    NSDictionary *info = [notif userInfo];
+//    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+//    CGSize keyboardSize = [value CGRectValue].size;
+//    MLOG(@"通知--%@",(UITextField *)value);
     
     
 }
@@ -424,9 +424,9 @@
 
 - (void)keyboardWillHid:(NSNotification *)notif
 {
-    NSDictionary *info = [notif userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
-    CGSize keyboardSize = [value CGRectValue].size;
+//    NSDictionary *info = [notif userInfo];
+//    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+//    CGSize keyboardSize = [value CGRectValue].size;
     
     self.tableView.top = 0;
 }

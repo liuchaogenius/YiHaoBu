@@ -104,7 +104,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
 {
     __weak YHBUser *weakSelf = self;
     [self.userManger getUserInfoWithToken:self.token orUserId:nil Success:^(NSDictionary *dataDic) {
-        [weakSelf loadUserInfoAndSaveWithUserDictionnary:dataDic];
+        
+        MLOG(@"%@",dataDic);
+        weakSelf.userInfo = [YHBUserInfo modelObjectWithDictionary:dataDic];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserInfoGetMessage object:nil];
         if (sBlock) sBlock();
     } failure:^{
@@ -126,6 +128,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
     self.token = token;
     _isLogin = YES;
     [self refreshUserInfoWithSuccess:^{
+        [self writeUserInfoToFile];
     } failure:nil];
     //[self writeUserInfoToFile];
 }
@@ -154,7 +157,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
     [dic setObject:self.token?:@"" forKey:@"token"];
     
     if (self.userInfo.userid ) {
-#warning have problem to be tested
         NSData *info = [NSKeyedArchiver archivedDataWithRootObject:self.userInfo];
         [dic setObject:info forKey:@"userInfo"];
     }

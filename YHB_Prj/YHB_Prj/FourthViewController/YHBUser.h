@@ -30,6 +30,7 @@
 
 //退出登陆
 - (void)logoutUser;
+
 //保存文件至沙箱
 - (void)writeUserInfoToFile;
 

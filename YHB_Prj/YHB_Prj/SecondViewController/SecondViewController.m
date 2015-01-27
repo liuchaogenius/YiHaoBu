@@ -257,7 +257,9 @@ typedef enum : NSUInteger {
                     NSMutableArray *array = self.modelsDic[[NSString stringWithFormat:@"%lu",(unsigned long)Search_buy * _selectFilType]];
                     [array addObjectsFromArray:modelArray];
                 }
-                
+                if((int)page.pagetotal <= 0){
+                    [SVProgressHUD showErrorWithStatus:@"未找到符合条件的采购" cover:YES offsetY:0];
+                }
                 [self.tableView reloadData];
             } failure:^{
                 [SVProgressHUD showErrorWithStatus:@"搜索失败，请稍后再试！" cover:NO offsetY:0];
@@ -273,6 +275,9 @@ typedef enum : NSUInteger {
                 }else{
                     NSMutableArray *array = self.modelsDic[[NSString stringWithFormat:@"%lu",(unsigned long)Search_sell * _selectFilType]];
                     [array addObjectsFromArray:modelArray];
+                }
+                if((int)page.pagetotal <= 0){
+                    [SVProgressHUD showErrorWithStatus:@"未找到符合条件的供应" cover:YES offsetY:0];
                 }
                 [self.tableView reloadData];
             } failure:^{
@@ -290,7 +295,9 @@ typedef enum : NSUInteger {
                     NSMutableArray *array = self.modelsDic[[NSString stringWithFormat:@"%lu",(unsigned long)Search_product * _selectFilType]];
                     [array addObjectsFromArray:modelArray];
                 }
-
+                if((int)page.pagetotal <= 0){
+                    [SVProgressHUD showErrorWithStatus:@"未找到符合条件的产品" cover:YES offsetY:0];
+                }
                 [self.tableView reloadData];
             } failure:^{
                 [SVProgressHUD showErrorWithStatus:@"搜索失败，请稍后再试！" cover:NO offsetY:0];
@@ -306,6 +313,9 @@ typedef enum : NSUInteger {
                 }else{
                     NSMutableArray *array = self.modelsDic[[NSString stringWithFormat:@"%lu",(unsigned long)Search_mall * _selectFilType]];
                     [array addObjectsFromArray:modelArray];
+                }
+                if((int)page.pagetotal <= 0){
+                    [SVProgressHUD showErrorWithStatus:@"未找到符合条件的店铺" cover:YES offsetY:0];
                 }
                 [self.tableView reloadData];
 

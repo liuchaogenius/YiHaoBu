@@ -257,7 +257,7 @@ enum TextTag
     _selProvince = 0;
     
     [self settitleLabel:@"店铺详情"];
-    _tipTitleArray = @[@"编辑姓名",@"编辑名称",@"编辑联系电话",@"编辑我的关注",@"编辑地址"];
+    _tipTitleArray = @[@"编辑姓名",@"编辑名称",@"编辑联系电话",@"编辑我的关注",@"编辑地区",@"编辑地址"];
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - 49)];
     self.scrollView.backgroundColor = kViewBackgroundColor;
     [self.view addSubview:self.scrollView];
@@ -283,9 +283,9 @@ enum TextTag
     UITextField *tf;
     tf = self.textFieldArray[TextField_Name];
     tf.text = user.userInfo.truename;
-    
+    MLOG(@"%@",user.userInfo.catname);
     tf = self.textFieldArray[TextField_Attention];
-    tf.text = user.userInfo.catname;
+    tf.text = [user.userInfo.catname isKindOfClass:[NSString class]]?user.userInfo.catname:@"";
 
     tf = self.textFieldArray[TextField_Address];
     tf.text = user.userInfo.address;
@@ -299,6 +299,8 @@ enum TextTag
     tf = self.textFieldArray[TextField_area];
     tf.text = user.userInfo.area;
     
+    self.cateID = [YHBUser sharedYHBUser].userInfo.catid;
+    
     self.mProductTextView.text = user.userInfo.business;
     self.mIntroduceTextView.text = user.userInfo.introduce;
 }
@@ -308,7 +310,6 @@ enum TextTag
 - (void)touchConfirmButton
 {
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:9];
-#warning cateid? catename? -cc
     [dic setObject:[YHBUser sharedYHBUser].token forKey:@"token"];
     if (((UITextField *)self.textFieldArray[TextField_Name]).text.length) {
         [dic setObject:((UITextField *)self.textFieldArray[TextField_Name]).text forKey:@"truename"];
@@ -325,19 +326,20 @@ enum TextTag
     if (((UITextField *)self.textFieldArray[TextField_Address]).text.length) {
         [dic setObject:((UITextField *)self.textFieldArray[TextField_Address]).text forKey:@"address"];
     }
-    if (((UITextField *)self.textFieldArray[TextField_Name]).text.length) {
-        [dic setObject:((UITextField *)self.textFieldArray[TextField_Name]).text?:@"" forKey:@"introduce"];
+    if (self.mIntroduceTextView.text.length) {
+        [dic setObject:self.mIntroduceTextView.text?:@"" forKey:@"introduce"];
     }
     if (self.cateID.length) {
         [dic setObject:self.cateID forKey:@"catid"];
     }
-    if (_selCity) {
+    if (_selCity && _selProvince) {
         YHBAreaModel *area = self.areaArray[_selProvince-1];
         YHBCity *city = area.city[_selCity -1];
-        [dic setObject:city.areaname?:@"" forKey:@"areaid"];
+        [dic setObject:[NSString stringWithFormat:@"%d",(int)city.areaid]forKey:@"areaid"];
     }
     //
     //[dic setObject:((UITextField *)self.textFieldArray[TextField_Name]).text?:@"" forKey:@"truename"];
+    MLOG(@"%@",dic);
     [self.userManager editUserInfoWithInfoDic:dic withSuccess:^{
         [SVProgressHUD showSuccessWithStatus:@"修改成功!" cover:YES offsetY:0];
         [YHBUser sharedYHBUser].statusIsChanged = YES;
@@ -375,7 +377,7 @@ enum TextTag
     NSString *uploadPhototUrl = nil;
     kYHBRequestUrl(@"uploadPhoto.ashx", uploadPhototUrl);
     
-    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,"token",(type == Picker_Banner ? @"banner":@"avatar"),@"action", nil];
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",(type == Picker_Banner ? @"banner":@"avatar"),@"action", nil];
     
     [NetManager uploadImg:image parameters:dic uploadUrl:uploadPhototUrl uploadimgName:(type == Picker_Banner ? @"banner":@"avatar") parameEncoding:AFJSONParameterEncoding progressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
         
@@ -426,7 +428,7 @@ enum TextTag
                 YHBCatData *cate = aArray[i];
                 [text appendString:cate.catname];
                 
-                [cateids stringByAppendingString:[NSString stringWithFormat:@"%d",(int)cate.catid]];
+                [cateids appendString:[NSString stringWithFormat:@"%d",(int)cate.catid]];
                 
                 if(i != aArray.count-1){
                     [text appendString:@","];
@@ -626,10 +628,14 @@ enum TextTag
     //HbuAreaListModelAreas *area = self.cityArray[0];
     [self.clearView removeFromSuperview];
     //[self.tableView shouldScrolltoPointY:0];
-    [self pickedAreaToModelAndUI];
     if ([_areaPicker superview]) {
         if (sender.tag != kButtonTag_Cancel) {
-            //[self areaPikerValueToTextField];
+            [self pickedAreaToModelAndUI];
+        }else{
+            _selProvince = 0;
+            _selCity = 0;
+            [_areaPicker selectRow:0 inComponent:0 animated:NO];
+            [_areaPicker selectRow:0 inComponent:1 animated:NO];
         }
         [UIView animateWithDuration:0.2 animations:^{
             _areaPicker.top = kMainScreenHeight;

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "RootTabBarController.h"
 #import "EaseMob.h"
+#import "YHBUser.h"
  
 @interface AppDelegate ()
 
@@ -66,12 +67,12 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-//    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^(){
-//        //程序在10分钟内未被系统关闭或者强制关闭，则程序会调用此代码块，可以在这里做一些保存或者清理工作
-//        if ([HbhUser sharedHbhUser].isLogin) {
-//            [[HbhUser sharedHbhUser] writeUserInfoToFile];
-//        }
-//    }];
+    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^(){
+        //程序在10分钟内未被系统关闭或者强制关闭，则程序会调用此代码块，可以在这里做一些保存或者清理工作
+        if ([YHBUser sharedYHBUser].isLogin) {
+            [[YHBUser sharedYHBUser] writeUserInfoToFile];
+        }
+    }];
     [[EaseMob sharedInstance] applicationDidEnterBackground:application];
 
 }

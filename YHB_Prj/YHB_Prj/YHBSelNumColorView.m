@@ -315,9 +315,9 @@
 
 - (void)keyboardWillHid:(NSNotification *)notif
 {
-    NSDictionary *info = [notif userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
-    CGSize keyboardSize = [value CGRectValue].size;
+//    NSDictionary *info = [notif userInfo];
+//    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+//    CGSize keyboardSize = [value CGRectValue].size;
     self.bottom = kMainScreenHeight;
 }
 
