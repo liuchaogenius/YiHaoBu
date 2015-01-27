@@ -33,6 +33,7 @@
 
 //text
 @property (nonatomic, strong) NSString *content;
+@property (nonatomic, strong) NSDictionary *ext;
 
 //image
 @property (nonatomic) CGSize size;

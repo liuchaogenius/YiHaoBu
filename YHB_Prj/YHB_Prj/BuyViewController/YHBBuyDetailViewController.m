@@ -128,7 +128,7 @@
              [buyDetailView setDetailWithModel:aModel];
              [variousImageView setMyWebPhotoArray:aModel.pic];
              if (!isMine) {
-                 [contactView setPhoneNumber:aModel.mobile storeName:aModel.truename itemId:itemId isVip:aModel.vip];
+                 [contactView setPhoneNumber:aModel.mobile storeName:aModel.truename itemId:itemId isVip:aModel.vip imgUrl:@"1" Title:myModel.title andType:@"buy"];
              }
              [self dismissFlower];
          } andFailBlock:^{

@@ -261,12 +261,12 @@
 - (void)touchYesBtn
 {
     self.myBlock(chooseArray);
+    self.tableView.contentOffset = CGPointMake(0, 0);
     if (self.isPushed) {
         [self.navigationController popViewControllerAnimated:YES];
     }else{
         [self dismissViewControllerAnimated:YES completion:nil];
     }
-    
 }
 
 - (void)back

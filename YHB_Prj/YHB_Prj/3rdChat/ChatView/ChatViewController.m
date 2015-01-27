@@ -31,6 +31,11 @@
 #import "NSDate+Category.h"
 #import "DXMessageToolBar.h"
 #import "DXChatBarMoreView.h"
+#import "UIImageView+WebCache.h"
+#import "YHBBuyDetailViewController.h"
+#import "YHBSupplyDetailViewController.h"
+#import "MessageLinkModel.h"
+#import "ChatLinkTableViewCell.h"
 
 #define KPageCount 20
 
@@ -47,6 +52,11 @@
     
     NSMutableArray *_messages;
     BOOL _isScrollToBottom;
+    
+    int myItemid;
+    NSString *myImgUrl;
+    NSString *myTitle;
+    NSString *myType;
 }
 
 @property (nonatomic) BOOL isChatGroup;
@@ -85,6 +95,27 @@
         [_conversation markAllMessagesAsRead:YES];
     }
     
+    return self;
+}
+
+- (instancetype)initWithChatter:(NSString *)chatter itemid:(int)aItemid ImageUrl:(NSString *)aImgUrl Title:(NSString *)aTitle andType:(NSString *)aType
+{
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+        _isPlayingAudio = NO;
+        _chatter = chatter;
+        _isChatGroup = NO;
+        _messages = [NSMutableArray array];
+        
+        myImgUrl = aImgUrl;
+        myItemid = aItemid;
+        myTitle = aTitle;
+        myType = aType;
+//        [self.dataSource addObject:[[MessageLinkModel alloc] init]];
+        //根据接收者的username获取当前会话的管理者
+        _conversation = [[EaseMob sharedInstance].chatManager conversationForChatter:chatter isGroup:_isChatGroup];
+        [_conversation markAllMessagesAsRead:YES];
+    }
     return self;
 }
 
@@ -354,13 +385,17 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.dataSource.count;
+//    int count = myItemid?(int)self.dataSource.count+1:(int)self.dataSource.count;
+    int count = (int)self.dataSource.count;
+    return count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < [self.dataSource count]) {
-        id obj = [self.dataSource objectAtIndex:indexPath.row];
+    int row = (int)indexPath.row;
+    if (row < self.dataSource.count)//|| row==self.dataSource.count)
+    {
+        id obj = [self.dataSource objectAtIndex:row];
         if ([obj isKindOfClass:[NSString class]]) {
             EMChatTimeCell *timeCell = (EMChatTimeCell *)[tableView dequeueReusableCellWithIdentifier:@"MessageCellTime"];
             if (timeCell == nil) {
@@ -373,18 +408,61 @@
             
             return timeCell;
         }
-        else{
-            MessageModel *model = (MessageModel *)obj;
-            NSString *cellIdentifier = [EMChatViewCell cellIdentifierForMessageModel:model];
-            EMChatViewCell *cell = (EMChatViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            if (cell == nil) {
-                cell = [[EMChatViewCell alloc] initWithMessageModel:model reuseIdentifier:cellIdentifier];
-                cell.backgroundColor = [UIColor clearColor];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            cell.messageModel = model;
-            
+        else if([obj isKindOfClass:[MessageLinkModel class]])
+        {
+            UITableViewCell *cell = [[UITableViewCell alloc] init];
+            cell.backgroundColor = [UIColor whiteColor];
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:myImgUrl]];
+            UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageView.right+10, imageView.top+5, kMainScreenWidth-90, 17)];
+            titleLabel.font = kFont15;
+            titleLabel.text = myTitle;
+            UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(titleLabel.left, titleLabel.bottom+10, 80, 20)];
+            btn.layer.borderColor = [[UIColor blueColor] CGColor];
+            btn.layer.borderWidth = 1;
+            btn.titleLabel.font = kFont12;
+            [btn setTitle:@"发送链接" forState:UIControlStateNormal];
+            [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            [btn addTarget:self action:@selector(touchBtn) forControlEvents:UIControlEventTouchUpInside];
+
+            UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 79, kMainScreenWidth, 1)];
+            bottomLineView.backgroundColor = [UIColor lightGrayColor];
+
+            UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 1)];
+            topLineView.backgroundColor = [UIColor lightGrayColor];
+
+            [cell addSubview:topLineView];
+            [cell addSubview:bottomLineView];
+            [cell addSubview:imageView];
+            [cell addSubview:titleLabel];
+            [cell addSubview:btn];
             return cell;
+        }
+        else
+        {
+            MessageModel *model = (MessageModel *)obj;
+            if (model.ext)
+            {
+                model.type = eMessageBodyType_Command;
+                EMChatViewCell *linkCell = [[EMChatViewCell alloc] initWithMessageModel:model reuseIdentifier:nil];
+                linkCell.backgroundColor = [UIColor clearColor];
+                linkCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                linkCell.messageModel = model;
+                return linkCell;
+            }
+            else
+            {
+                NSString *cellIdentifier = [EMChatViewCell cellIdentifierForMessageModel:model];
+                EMChatViewCell *cell = (EMChatViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                if (cell == nil) {
+                    cell = [[EMChatViewCell alloc] initWithMessageModel:model reuseIdentifier:cellIdentifier];
+                    cell.backgroundColor = [UIColor clearColor];
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
+                cell.messageModel = model;
+
+                return cell;
+            }
         }
     }
     
@@ -395,38 +473,73 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSObject *obj = [self.dataSource objectAtIndex:indexPath.row];
+    int row = (int)indexPath.row;
+//    if (myItemid)
+//    {
+//        if (indexPath.row==self.dataSource.count)
+//        {
+//            return 80;
+//        }
+//    }
+    NSObject *obj = [self.dataSource objectAtIndex:row];
     if ([obj isKindOfClass:[NSString class]]) {
         return 40;
     }
+    else if([obj isKindOfClass:[MessageLinkModel class]])
+    {
+        return 80;
+    }
     else{
+        MessageModel *model = (MessageModel *)obj;
+        if (model.ext)
+        {
+            return 100;
+        }
         return [EMChatViewCell tableView:tableView heightForRowAtIndexPath:indexPath withObject:(MessageModel *)obj];
     }
 }
 
+#pragma mark touchBtn
+- (void)touchBtn
+{
+//    [self sendTextMessage:[NSString stringWithFormat:@"http://HZ.YHB/%@/%d", myType, myItemid]];
+//    [self didSendText:[NSString stringWithFormat:@"http://HZ.YHB/%@/%d", myType, myItemid]];
+    EMChatText *txtChat = [[EMChatText alloc] initWithText:@"要发送的消息"];
+    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithChatObject:txtChat];
+    
+    // 生成message
+    EMMessage *message = [[EMMessage alloc] initWithReceiver:_conversation.chatter bodies:@[body]];
+    message.isGroup = NO; // 设置是否是群聊
+    message.ext = [NSDictionary dictionaryWithObjectsAndKeys:myImgUrl,@"itemImage",myTitle,@"itemTitle",myType,@"itemType",[NSString stringWithFormat:@"%d", myItemid],@"itemId", nil];// 添加扩展，key和value必须是基本类型，且不能是json
+    
+    // 发送消息
+    [[EaseMob sharedInstance].chatManager asyncSendMessage:message progress:nil];
+    [self addMessage:message];
+}
+
 #pragma mark - scrollView delegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (_slimeView) {
-        [_slimeView scrollViewDidScroll];
-    }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    if (_slimeView) {
-        [_slimeView scrollViewDidEndDraging];
-    }
-}
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    if (_slimeView) {
+//        [_slimeView scrollViewDidScroll];
+//    }
+//}
+//
+//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+//{
+//    if (_slimeView) {
+//        [_slimeView scrollViewDidEndDraging];
+//    }
+//}
 
 #pragma mark - slimeRefresh delegate
-//加载更多
-- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
-{
-    [self loadMoreMessages];
-    [_slimeView endRefresh];
-}
+////加载更多
+//- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
+//{
+//    [self loadMoreMessages];
+//    [_slimeView endRefresh];
+//}
 
 #pragma mark - GestureRecognizer
 
@@ -482,13 +595,56 @@
     }else if([eventName isEqualToString:kRouterEventChatCellVideoTapEventName]){
         [self chatVideoCellPressed:model];
     }
+    else if ([eventName isEqualToString:kRouterEventCommandTapEventName])
+    {
+        [self chatLinkPressed:model];
+    }
+}
+
+//link被点击
+- (void)chatLinkPressed:(MessageModel *)model
+{
+    NSDictionary *dict = model.ext;
+    NSString *itemid = [dict objectForKey:@"itemId"];
+    NSString *itemType = [dict objectForKey:@"itemType"];
+    if ([itemType isEqualToString:@"buy"])
+    {
+        YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:[itemid intValue] andIsMine:NO isModal:NO];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if ([itemType isEqualToString:@"supply"])
+    {
+        YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:[itemid intValue] andIsMine:NO isModal:NO];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 //链接被点击
 - (void)chatTextCellUrlPressed:(NSURL *)url
 {
-    if (url) {
-        [[UIApplication sharedApplication] openURL:url];
+//    if (url) {
+//        [[UIApplication sharedApplication] openURL:url];
+//    }
+    NSString *str = [url absoluteString];
+    NSArray *array = [str componentsSeparatedByString:@"/"];
+    if (array.count==5)
+    {
+        NSString *typeStr = [array objectAtIndex:3];
+        NSString *itemidStr = [array objectAtIndex:4];
+        if ([typeStr isEqualToString:@"supply"])
+        {
+            YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:[itemidStr intValue] andIsMine:NO isModal:NO];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else if([typeStr isEqualToString:@"buy"])
+        {
+            YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:[itemidStr intValue] andIsMine:NO isModal:NO];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else
+        {
+            
+        }
     }
 }
 
@@ -1001,13 +1157,17 @@
         long long timestamp = [[NSDate date] timeIntervalSince1970] * 1000 + 1;
         
         NSArray *messages = [weakSelf.conversation loadNumbersOfMessages:([weakSelf.messages count] + KPageCount) before:timestamp];
-        if ([messages count] > 0) {
+        if ([messages count] > 0 || myItemid) {
             [weakSelf.messages removeAllObjects];
             [weakSelf.messages addObjectsFromArray:messages];
             
             NSInteger currentCount = [weakSelf.dataSource count];
             [weakSelf.dataSource removeAllObjects];
             [weakSelf.dataSource addObjectsFromArray:[weakSelf formatMessages:messages]];
+            if (myItemid)
+            {
+                [weakSelf.dataSource addObject:[[MessageLinkModel alloc] init]];
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf.tableView reloadData];
                 

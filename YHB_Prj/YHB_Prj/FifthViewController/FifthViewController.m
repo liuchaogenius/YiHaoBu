@@ -314,10 +314,10 @@
     return view;
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-//{
-//    return 30;
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 1;
+}
 //
 //- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 //{
@@ -537,36 +537,7 @@
 {
     if (isEdit)
     {
-        NSMutableArray *itemidArray = [NSMutableArray new];
-        NSArray *keyArray = [selectedDict allKeys];
-        for (int i=0; i<keyArray.count; i++)
-        {
-            NSString *section = [keyArray objectAtIndex:i];
-            NSArray *temarray = [selectedDict objectForKey:section];
-            NSArray *array = [temarray sortedArrayUsingSelector:@selector(compare:)];
-            for (int j=(int)array.count-1; j>=0; j--)
-            {
-                NSString *row = [array objectAtIndex:j];
-                YHBShopCartRslist *model = [self.tableViewArray objectAtIndex:[section intValue]];
-                YHBShopCartCartlist *cartModel = [model.cartlist objectAtIndex:[row intValue]];
-                NSString *itemid = [NSString stringWithFormat:@"%d", (int)cartModel.itemid];
-                [itemidArray addObject:itemid];
-                [model.cartlist removeObject:cartModel];
-                if (model.cartlist.count==0)
-                {
-                    [self.tableViewArray removeObject:model];
-                }
-            }
-        }
-        [selectedDict removeAllObjects];
-        [selectedHeaderViewArray removeAllObjects];
-        isAllSelected = NO;
-        [self.tableView reloadData];
-        [self.netManage deleteShopCartWithArray:itemidArray andSuccBlock:^{
-            
-        } failBlock:^{
-            
-        }];
+
     }
     else
     {
@@ -587,8 +558,37 @@
         YHBOrderConfirmVC *vc = [[YHBOrderConfirmVC alloc] initWithSource:@"cart" requestArray:resultArray];
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
-        
+    }
+    NSMutableArray *itemidArray = [NSMutableArray new];
+    NSArray *keyArray = [selectedDict allKeys];
+    for (int i=0; i<keyArray.count; i++)
+    {
+        NSString *section = [keyArray objectAtIndex:i];
+        NSArray *temarray = [selectedDict objectForKey:section];
+        NSArray *array = [temarray sortedArrayUsingSelector:@selector(compare:)];
+        for (int j=(int)array.count-1; j>=0; j--)
+        {
+            NSString *row = [array objectAtIndex:j];
+            YHBShopCartRslist *model = [self.tableViewArray objectAtIndex:[section intValue]];
+            YHBShopCartCartlist *cartModel = [model.cartlist objectAtIndex:[row intValue]];
+            NSString *itemid = [NSString stringWithFormat:@"%d", (int)cartModel.itemid];
+            [itemidArray addObject:itemid];
+            [model.cartlist removeObject:cartModel];
+            if (model.cartlist.count==0)
+            {
+                [self.tableViewArray removeObject:model];
+            }
         }
+    }
+    [selectedDict removeAllObjects];
+    [selectedHeaderViewArray removeAllObjects];
+    isAllSelected = NO;
+    [self.tableView reloadData];
+    [self.netManage deleteShopCartWithArray:itemidArray andSuccBlock:^{
+        
+    } failBlock:^{
+        
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

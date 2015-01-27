@@ -19,8 +19,11 @@
     NSString *phoneNumber;
     int itemId;
     UIView *redLine;
+    NSString *myImgUrl;
+    NSString *myTitle;
+    NSString *myType;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame;
-- (void)setPhoneNumber:(NSString *)aNumber storeName:(NSString *)aName itemId:(int)aItemId isVip:(int)aisVip;
+- (void)setPhoneNumber:(NSString *)aNumber storeName:(NSString *)aName itemId:(int)aItemId isVip:(int)aisVip imgUrl:(NSString *)aImgUrl Title:(NSString *)aTitle andType:(NSString *)aType;
 @end

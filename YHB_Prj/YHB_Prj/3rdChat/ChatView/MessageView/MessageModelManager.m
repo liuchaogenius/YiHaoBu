@@ -56,6 +56,7 @@
             NSString *didReceiveText = [ConvertToCommonEmoticonsHelper
                                         convertToSystemEmoticons:((EMTextMessageBody *)messageBody).text];
             model.content = didReceiveText;
+            model.ext = messageBody.message.ext;
         }
             break;
         case eMessageBodyType_Image:

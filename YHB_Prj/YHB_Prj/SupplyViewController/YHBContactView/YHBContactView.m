@@ -98,7 +98,7 @@ typedef enum:NSUInteger{
     redLine.hidden = YES;
 }
 
-- (void)setPhoneNumber:(NSString *)aNumber storeName:(NSString *)aName itemId:(int)aItemId isVip:(int)aisVip
+- (void)setPhoneNumber:(NSString *)aNumber storeName:(NSString *)aName itemId:(int)aItemId isVip:(int)aisVip imgUrl:(NSString *)aImgUrl Title:(NSString *)aTitle andType:(NSString *)aType
 {
     if (aisVip==1)
     {
@@ -113,6 +113,9 @@ typedef enum:NSUInteger{
     storeLabel.text = aName;
     phoneNumber = aNumber;
     itemId=aItemId;
+    myImgUrl = aImgUrl;
+    myTitle = aTitle;
+    myType = aType;
 }
 
 - (void)touchBtn:(UIButton *)aBtn
@@ -149,7 +152,7 @@ typedef enum:NSUInteger{
             NSLog(@"登陆成功");
         }
         NSString *userName = @"123";
-        ChatViewController *vc = [[ChatViewController alloc] initWithChatter:userName isGroup:NO];
+        ChatViewController *vc = [[ChatViewController alloc] initWithChatter:userName itemid:itemId ImageUrl:myImgUrl Title:myTitle andType:myType];
         vc.title = userName;
         [[self viewController].navigationController pushViewController:vc animated:YES];
     }
