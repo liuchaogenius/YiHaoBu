@@ -10,5 +10,5 @@
 
 @interface YHBPublishSupplyManage : NSObject
 
-- (void)publishSupplyWithItemid:(int)aItemId title:(NSString *)aTitle price:(NSString *)aPrice catid:(NSString *)aCatId typeid:(NSString *)aTypeid today:(NSString *)aToday content:(NSString *)aContent truename:(NSString *)aName mobile:(NSString *)aMobile andSuccBlock:(void(^)(int aItemId))aSuccBlock failBlock:(void(^)(void))aFailBlock;
+- (void)publishSupplyWithItemid:(int)aItemId title:(NSString *)aTitle price:(NSString *)aPrice catid:(NSString *)aCatId typeid:(NSString *)aTypeid today:(NSString *)aToday content:(NSString *)aContent truename:(NSString *)aName mobile:(NSString *)aMobile andSuccBlock:(void(^)(int aItemId))aSuccBlock failBlock:(void (^)(NSString *aStr))aFailBlock;
 @end

@@ -14,6 +14,7 @@
 #import "YHBPublishSupplyManage.h"
 #import "CategoryViewController.h"
 #import "YHBCatSubcate.h"
+#import "YHBUser.h"
 
 
 #define kButtonTag_Yes 100
@@ -38,6 +39,8 @@
     UITapGestureRecognizer *tapDayGesture;
     YHBSupplyDetailModel *myModel;
     BOOL isClean;
+    
+    NSString *catidString;
 }
 
 @property(nonatomic, strong) UIPickerView *dayPickerView;
@@ -224,13 +227,15 @@
     phoneLabel.font = kFont15;
     phoneLabel.text = @"联系电话 : ";
     
+    YHBUser *user = [YHBUser sharedYHBUser];
+    
     nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(contentTextView.left, personNameLabel.top-5, 200, labelHeight+10)];
     nameTextField.font = kFont15;
     nameTextField.delegate = self;
     nameTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     nameTextField.layer.borderWidth = 0.5;
     nameTextField.returnKeyType = UIReturnKeyDone;
-    nameTextField.text = @"何某某";
+    nameTextField.text = user.userInfo.truename;
     
     phoneTextField = [[UITextField alloc] initWithFrame:CGRectMake(contentTextView.left, phoneLabel.top-5, 200, labelHeight+10)];
     phoneTextField.font = kFont15;
@@ -239,7 +244,7 @@
     phoneTextField.layer.borderWidth = 0.5;
     phoneTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     phoneTextField.returnKeyType = UIReturnKeyDone;
-    phoneTextField.text = @"13000000000";
+    phoneTextField.text = user.userInfo.mobile;
     
     [contactView addSubview:phoneTextField];
     [contactView addSubview:nameTextField];
@@ -350,9 +355,12 @@
     vc.isPushed = YES;
     [vc setBlock:^(NSArray *aArray) {
         NSString *str = @"";
+        NSString *idStr = @"";
         for (YHBCatSubcate *subModel in aArray) {
             str = [str stringByAppendingString:[NSString stringWithFormat:@" %@", subModel.catname]];
+            idStr = [str stringByAppendingString:[NSString stringWithFormat:@",%d", (int)subModel.catid]];
         }
+        catidString = [idStr substringFromIndex:1];
         catNameLabel.text = str;
     }];
     [self.navigationController pushViewController:vc animated:YES];
@@ -429,15 +437,34 @@
 #pragma mark 发布
 - (void)TouchPublish
 {
-    [self showFlower];
-    [self.netManage publishSupplyWithItemid:0 title:@"1" price:@"1" catid:@"1" typeid:@"1" today:@"1" content:@"1" truename:@"1" mobile:@"1" andSuccBlock:^(int aItemId) {
-        [self dismissFlower];
-        YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:aItemId andIsMine:YES isModal:YES];
-        [self.navigationController pushViewController:vc animated:YES];
-    } failBlock:^{
-        [self dismissFlower];
-        [SVProgressHUD showErrorWithStatus:@"发布失败" cover:YES offsetY:kMainScreenHeight/2.0];
-    }];
+    if ([self isTextNotNil:titleLabel.text]&&[self isTextNotNil:priceTextField.text]&&[self isTextNotNil:dayLabel.text]&&[self isTextNotNil:contentTextView.text]&&[self isTextNotNil:catNameLabel.text]&&[self isTextNotNil:nameTextField.text]&&[self isTextNotNil:phoneTextField.text])
+    {
+        [self showFlower];
+        [self.netManage publishSupplyWithItemid:0 title:titleLabel.text price:priceTextField.text catid:catidString typeid:[NSString stringWithFormat:@"%d", typeId] today:dayLabel.text content:contentTextView.text truename:nameTextField.text mobile:phoneTextField.text andSuccBlock:^(int aItemId) {
+            [self dismissFlower];
+            YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:aItemId andIsMine:YES isModal:YES];
+            [self.navigationController pushViewController:vc animated:YES];
+        } failBlock:^(NSString *aStr) {
+            [self dismissFlower];
+            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
+        }];
+    }
+    else
+    {
+        [SVProgressHUD showErrorWithStatus:@"请核对输入信息" cover:YES offsetY:kMainScreenHeight/2.0];
+    }
+}
+
+- (BOOL)isTextNotNil:(NSString *)aStr
+{
+    if (aStr.length==0 || aStr==nil || [aStr isEqualToString:@" "] || [aStr isEqualToString:@"请输入您要发布的名称"])
+    {
+        return NO;
+    }
+    else
+    {
+        return YES;
+    }
 }
 
 #pragma mark 键盘

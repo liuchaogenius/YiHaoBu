@@ -11,7 +11,7 @@
 
 @implementation YHBPublishSupplyManage
 
-- (void)publishSupplyWithItemid:(int)aItemId title:(NSString *)aTitle price:(NSString *)aPrice catid:(NSString *)aCatId typeid:(NSString *)aTypeid today:(NSString *)aToday content:(NSString *)aContent truename:(NSString *)aName mobile:(NSString *)aMobile andSuccBlock:(void(^)(int aItemId))aSuccBlock failBlock:(void(^)(void))aFailBlock
+- (void)publishSupplyWithItemid:(int)aItemId title:(NSString *)aTitle price:(NSString *)aPrice catid:(NSString *)aCatId typeid:(NSString *)aTypeid today:(NSString *)aToday content:(NSString *)aContent truename:(NSString *)aName mobile:(NSString *)aMobile andSuccBlock:(void(^)(int aItemId))aSuccBlock failBlock:(void (^)(NSString *aStr))aFailBlock
 {
     NSString *supplyUrl = nil;
     NSDictionary *dict;
@@ -26,11 +26,19 @@
     kYHBRequestUrl(@"postSell.php", supplyUrl);
     [NetManager requestWith:dict url:supplyUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
-        NSDictionary *dict = [successDict objectForKey:@"data"];
-        int itemid = [[dict objectForKey:@"itemid"] intValue];
-        aSuccBlock(itemid);
+        NSString *result = [successDict objectForKey:@"result"];
+        if ([result intValue] != 1)
+        {
+            aFailBlock([successDict objectForKey:@"error"]);
+        }
+        else
+        {
+            NSDictionary *dict = [successDict objectForKey:@"data"];
+            int itemid = [[dict objectForKey:@"itemid"] intValue];
+            aSuccBlock(itemid);
+        }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        aFailBlock();
+        aFailBlock([failDict objectForKey:@"error"]);
     }];
 }
 @end

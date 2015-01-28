@@ -10,5 +10,5 @@
 
 @interface YHBPublishBuyManage : NSObject
 
-- (void)publishBuyWithItemid:(int)aItemId title:(NSString *)aTitle catid:(NSString *)aCatId today:(NSString *)aToday content:(NSString *)aContent truename:(NSString *)aName mobile:(NSString *)aMobile andSuccBlock:(void (^)(int aItemId))aSuccBlock failBlock:(void (^)(void))aFailBlock;
+- (void)publishBuyWithItemid:(int)aItemId title:(NSString *)aTitle catid:(NSString *)aCatId today:(NSString *)aToday content:(NSString *)aContent truename:(NSString *)aName mobile:(NSString *)aMobile andSuccBlock:(void (^)(int aItemId))aSuccBlock failBlock:(void (^)(NSString *aStr))aFailBlock;
 @end
