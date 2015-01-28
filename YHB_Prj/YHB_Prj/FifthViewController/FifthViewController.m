@@ -535,60 +535,63 @@
 #pragma mark 完成
 - (void)touchAccontBtn
 {
-    if (isEdit)
+    if (selectedDict.count>0)
     {
+        if (isEdit)
+        {
 
-    }
-    else
-    {
-        NSMutableArray *resultArray = [NSMutableArray new];
+        }
+        else
+        {
+            NSMutableArray *resultArray = [NSMutableArray new];
+            NSArray *keyArray = [selectedDict allKeys];
+            for (NSString *str in keyArray)
+            {
+                NSArray *array = [selectedDict objectForKey:str];
+                YHBShopCartRslist *model = [self.tableViewArray objectAtIndex:[str intValue]];
+                for (NSString *itemStr in array)
+                {
+                    YHBShopCartCartlist *cartModel = [model.cartlist objectAtIndex:[itemStr intValue]];
+                    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", (int)cartModel.itemid],@"itemid",cartModel.number,@"number",[NSString stringWithFormat:@"%d", (int)cartModel.skuid],@"skuid",nil];
+
+                    [resultArray addObject:dict];
+                }
+            }
+            YHBOrderConfirmVC *vc = [[YHBOrderConfirmVC alloc] initWithSource:@"cart" requestArray:resultArray];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        NSMutableArray *itemidArray = [NSMutableArray new];
         NSArray *keyArray = [selectedDict allKeys];
-        for (NSString *str in keyArray)
+        for (int i=0; i<keyArray.count; i++)
         {
-            NSArray *array = [selectedDict objectForKey:str];
-            YHBShopCartRslist *model = [self.tableViewArray objectAtIndex:[str intValue]];
-            for (NSString *itemStr in array)
+            NSString *section = [keyArray objectAtIndex:i];
+            NSArray *temarray = [selectedDict objectForKey:section];
+            NSArray *array = [temarray sortedArrayUsingSelector:@selector(compare:)];
+            for (int j=(int)array.count-1; j>=0; j--)
             {
-                YHBShopCartCartlist *cartModel = [model.cartlist objectAtIndex:[itemStr intValue]];
-                NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", (int)cartModel.itemid],@"itemid",cartModel.number,@"number",[NSString stringWithFormat:@"%d", (int)cartModel.skuid],@"skuid",nil];
-
-                [resultArray addObject:dict];
+                NSString *row = [array objectAtIndex:j];
+                YHBShopCartRslist *model = [self.tableViewArray objectAtIndex:[section intValue]];
+                YHBShopCartCartlist *cartModel = [model.cartlist objectAtIndex:[row intValue]];
+                NSString *itemid = [NSString stringWithFormat:@"%d", (int)cartModel.itemid];
+                [itemidArray addObject:itemid];
+                [model.cartlist removeObject:cartModel];
+                if (model.cartlist.count==0)
+                {
+                    [self.tableViewArray removeObject:model];
+                }
             }
         }
-        YHBOrderConfirmVC *vc = [[YHBOrderConfirmVC alloc] initWithSource:@"cart" requestArray:resultArray];
-        vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
+        [selectedDict removeAllObjects];
+        [selectedHeaderViewArray removeAllObjects];
+        isAllSelected = NO;
+        [self.tableView reloadData];
+        [self.netManage deleteShopCartWithArray:itemidArray andSuccBlock:^{
+            
+        } failBlock:^{
+            
+        }];
     }
-    NSMutableArray *itemidArray = [NSMutableArray new];
-    NSArray *keyArray = [selectedDict allKeys];
-    for (int i=0; i<keyArray.count; i++)
-    {
-        NSString *section = [keyArray objectAtIndex:i];
-        NSArray *temarray = [selectedDict objectForKey:section];
-        NSArray *array = [temarray sortedArrayUsingSelector:@selector(compare:)];
-        for (int j=(int)array.count-1; j>=0; j--)
-        {
-            NSString *row = [array objectAtIndex:j];
-            YHBShopCartRslist *model = [self.tableViewArray objectAtIndex:[section intValue]];
-            YHBShopCartCartlist *cartModel = [model.cartlist objectAtIndex:[row intValue]];
-            NSString *itemid = [NSString stringWithFormat:@"%d", (int)cartModel.itemid];
-            [itemidArray addObject:itemid];
-            [model.cartlist removeObject:cartModel];
-            if (model.cartlist.count==0)
-            {
-                [self.tableViewArray removeObject:model];
-            }
-        }
-    }
-    [selectedDict removeAllObjects];
-    [selectedHeaderViewArray removeAllObjects];
-    isAllSelected = NO;
-    [self.tableView reloadData];
-    [self.netManage deleteShopCartWithArray:itemidArray andSuccBlock:^{
-        
-    } failBlock:^{
-        
-    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

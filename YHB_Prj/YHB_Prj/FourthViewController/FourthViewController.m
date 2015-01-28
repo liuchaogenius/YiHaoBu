@@ -259,8 +259,11 @@ enum Button_Type
             case Cell_Myprice:
             {
                 //我的报价
-                if ([self userLoginConfirm]) {
-#warning 此处加入【我的报价】
+                if ([self userLoginConfirm])
+                {
+                    LookQuoteViewController *vc = [[LookQuoteViewController alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
                 }
                 
             }
