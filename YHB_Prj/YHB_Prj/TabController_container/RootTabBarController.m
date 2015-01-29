@@ -16,6 +16,7 @@
 #import "FifthViewController.h"
 #import "YHBUser.h"
 #import "YHBLoginViewController.h"
+#import "ChatListViewController.h"
 
 @interface RootTabBarController ()
 {
@@ -24,12 +25,14 @@
     UINavigationController *thirdNav;
     UINavigationController *fourthNav;
     UINavigationController *fifthNav;
+    UINavigationController *chatListNav;
     
     FirstViewController *firstVC;
     SecondViewController *secondVC;
     ThirdViewController *thirdVC;
     FourthViewController *fourthVC;
     FifthViewController *fifthVC;
+    ChatListViewController *chatListVC;
     
     NSInteger newSelectIndex;
     NSInteger oldSelectIndex;
@@ -74,12 +77,15 @@
     thirdVC = [[ThirdViewController alloc] init];
     thirdNav = [[UINavigationController alloc] initWithRootViewController:thirdVC];
     
+    chatListVC = [[ChatListViewController alloc] init];
+    chatListNav = [[UINavigationController alloc] initWithRootViewController:chatListVC];
+    
     fourthVC = [[FourthViewController alloc] init];
     fourthNav = [[UINavigationController alloc] initWithRootViewController:fourthVC];
     
     fifthVC = [[FifthViewController alloc] init];
     fifthNav = [[UINavigationController alloc] initWithRootViewController:fifthVC];
-    self.viewControllers = @[firstNav,secondNav,thirdNav,fourthNav,fifthNav];
+    self.viewControllers = @[firstNav,secondNav,chatListNav,fourthNav,fifthNav];
 }
 
 - (void)initTabBarItem
