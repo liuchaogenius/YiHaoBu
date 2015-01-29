@@ -11,5 +11,5 @@
 
 @interface YHBBuyDetailManage : NSObject
 
-- (void)getBuyDetailWithItemid:(int)aItemId SuccessBlock:(void(^)(YHBBuyDetailData *aModel))aSuccBlock andFailBlock:(void(^)(void))aFailBlock;
+-(void)getBuyDetailWithItemid:(int)aItemId SuccessBlock:(void (^)(YHBBuyDetailData *aModel))aSuccBlock andFailBlock:(void (^)(NSString *aStr))aFailBlock;
 @end

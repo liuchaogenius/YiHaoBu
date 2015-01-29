@@ -131,8 +131,10 @@
                  [contactView setPhoneNumber:aModel.mobile storeName:aModel.truename itemId:itemId isVip:aModel.vip imgUrl:@"1" Title:myModel.title andType:@"buy"];
              }
              [self dismissFlower];
-         } andFailBlock:^{
+         } andFailBlock:^(NSString *aStr) {
              [self dismissFlower];
+//             [self.navigationController popViewControllerAnimated:YES];
+             [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
          }];
 //    }
 }

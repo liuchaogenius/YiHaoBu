@@ -11,5 +11,5 @@
 
 @interface YHBSupplyDetailManage : NSObject
 
-- (void)getSupllyDetailWithItemid:(int)aItemId SuccessBlock:(void(^)(YHBSupplyDetailModel *aModel))aSuccBlock andFailBlock:(void(^)(void))aFailBlock;
+- (void)getSupllyDetailWithItemid:(int)aItemId SuccessBlock:(void(^)(YHBSupplyDetailModel *aModel))aSuccBlock andFailBlock:(void(^)(NSString *aStr))aFailBlock;
 @end
