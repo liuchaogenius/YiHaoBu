@@ -101,6 +101,7 @@
         _shopImageView.layer.borderColor = [kLineColor CGColor];
         _shopImageView.layer.borderWidth = 0.5;
         _shopImageView.backgroundColor = [UIColor whiteColor];
+        _shopImageView.clipsToBounds = YES;
         [_shopImageView setContentMode:UIViewContentModeScaleAspectFill];
     }
     return _shopImageView;

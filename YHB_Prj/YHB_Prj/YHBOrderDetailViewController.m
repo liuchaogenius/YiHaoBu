@@ -105,6 +105,7 @@ typedef enum : NSInteger {
     if (![self.infoView superview]) {
         [self.scrollView addSubview:self.infoView];
     }
+    
     [self creatOrResetActonView];
     
 }

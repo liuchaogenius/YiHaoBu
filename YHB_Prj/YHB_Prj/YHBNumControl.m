@@ -41,7 +41,7 @@
         self.number = 1.0;
         self.isNumFloat = NO;
         [self CreatnumControl];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keybordWillShow:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keybordWShow:) name:UIKeyboardWillShowNotification object:nil];
     }
     return self;
 }
@@ -114,7 +114,7 @@
     //[self calulatePrice];
 }
 
-- (void)keybordWillShow:(NSNotification *)notif
+- (void)keybordWShow:(NSNotification *)notif
 {
     
     if ([self.numberTextfield isFirstResponder]) {
@@ -144,6 +144,9 @@
 
 }
 
-
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 @end

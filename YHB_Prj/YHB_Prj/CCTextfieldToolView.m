@@ -79,7 +79,7 @@
     _cancelBlock = cancleBlock;
     self.top = kMainScreenHeight;
     [[UIApplication sharedApplication].keyWindow addSubview:self];
-    [UIView animateWithDuration:0.2f animations:^{
+    [UIView animateWithDuration:0.25f animations:^{
         self.top = y;
     } completion:^(BOOL finished) {
         

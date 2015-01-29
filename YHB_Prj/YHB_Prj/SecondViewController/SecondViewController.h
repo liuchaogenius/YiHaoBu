@@ -10,4 +10,6 @@
 
 @interface SecondViewController : BaseViewController
 
+- (instancetype)initFromMall;
+
 @end

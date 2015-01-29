@@ -24,6 +24,7 @@
 #import "YHBShopMallCell.h"
 #import "YHBShopListsCell.h"
 #import "YHBProductDetailVC.h"
+#import "SecondViewController.h"
 
 #define kSearchTag 200
 #define kBannerHeight (kMainScreenWidth * 397/1075.0f)
@@ -321,7 +322,9 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField;
 {
     if (textField.tag == kSearchTag) {
-#warning 此处跳转搜索-cc
+        SecondViewController *vc = [[SecondViewController alloc] initFromMall];
+        [self.navigationController pushViewController:vc animated:YES];
+        
         return NO;
     }
     return YES;

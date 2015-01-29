@@ -23,6 +23,6 @@
 - (void)changeOrderStatusWithToken:(NSString *)token ItemID:(NSInteger)itemID Action:(NSString *)action Success:(void(^)())sBlock failure:(void(^)())fBlock;
 
 //获取确认订单信息
-- (void)getOrderConfirmWithToken:(NSString *)token source:(NSString *)source ListArray:(NSArray *)listArray Success:(void (^)(YHBOConfirmModel *model))sBlock failure:(void (^)())fBlock;
+- (void)getOrderConfirmWithToken:(NSString *)token source:(NSString *)source ListArray:(NSArray *)listArray Success:(void (^)(YHBOConfirmModel *model))sBlock failure:(void (^)(NSInteger result))fBlock;
 
 @end

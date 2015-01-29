@@ -93,7 +93,7 @@
 
 }
 
-- (void)getOrderConfirmWithToken:(NSString *)token source:(NSString *)source ListArray:(NSArray *)listArray Success:(void (^)(YHBOConfirmModel *model))sBlock failure:(void (^)())fBlock
+- (void)getOrderConfirmWithToken:(NSString *)token source:(NSString *)source ListArray:(NSArray *)listArray Success:(void (^)(YHBOConfirmModel *model))sBlock failure:(void (^)(NSInteger result))fBlock
 {
     NSString *url = nil;
     kYHBRequestUrl(@"getOrder.php", url);
@@ -108,11 +108,11 @@
             }
         }else{
             if (fBlock) {
-                fBlock();
+                fBlock(result);
             }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock();
+        fBlock(-20);
     }];
 
 }

@@ -157,7 +157,7 @@ enum SgmBtn_tag
 - (YHBInfoListManager *)listManger
 {
     if (!_listManger) {
-        _listManger = [[YHBInfoListManager alloc] init];
+        _listManger = [YHBInfoListManager sharedManager];
     }
     return _listManger;
 }

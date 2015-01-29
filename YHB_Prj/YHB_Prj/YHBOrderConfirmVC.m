@@ -23,12 +23,16 @@
 #import "YHBAdressListViewController.h"
 #define kBarHeight 80
 #define kPriceFont 17
-@interface YHBOrderConfirmVC ()<UITableViewDataSource,UITableViewDelegate,YHBOrderConfirmCellDelegate,UIAlertViewDelegate>
+#define kButtonTag_Cancel 202
+@interface YHBOrderConfirmVC ()<UITableViewDataSource,UITableViewDelegate,YHBOrderConfirmCellDelegate,UIAlertViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 {
     NSString *_priceStr;
     UILabel *_titleLabel;
     NSArray *_payPathArr;
     double _price;
+    UIButton *_cancelBtn;
+    NSIndexPath *_selIndexPath;
+    YHBOConfirmExpress *_selExpress;
 }
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) YHBOrderAddressView *addressView;
@@ -43,6 +47,9 @@
 @property (strong, nonatomic) NSArray *requestArray;
 @property (strong, nonatomic) NSMutableDictionary *expressSelDic;
 @property (strong, nonatomic) NSMutableDictionary *messagesDic;
+@property (strong, nonatomic) UIView *clearView;
+@property (strong, nonatomic) UIButton *tool;
+@property (strong, nonatomic) UIPickerView *expressPicker;
 
 @property (nonatomic,strong) UIImageView *alipayLogoImgview;
 
@@ -51,6 +58,17 @@
 
 @implementation YHBOrderConfirmVC
 #pragma mark - Getter and Setter
+- (UIPickerView *)expressPicker
+{
+    if (!_expressPicker) {
+        _expressPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, kMainScreenHeight, kMainScreenWidth, 200)];
+        _expressPicker.backgroundColor = [UIColor whiteColor];
+        _expressPicker.dataSource =self;
+        _expressPicker.delegate = self;
+        _expressPicker.showsSelectionIndicator = YES;
+    }
+    return _expressPicker;
+}
 
 - (NSMutableDictionary *)messagesDic
 {
@@ -58,6 +76,14 @@
         _messagesDic = [NSMutableDictionary dictionaryWithCapacity:5];
     }
     return _messagesDic;
+}
+
+- (NSMutableDictionary *)expressSelDic
+{
+    if (!_expressSelDic) {
+        _expressSelDic = [NSMutableDictionary dictionaryWithCapacity:5];
+    }
+    return _expressSelDic;
 }
 
 - (UIView *)priceBar
@@ -179,8 +205,15 @@
             [weakself.tableView reloadData];
             [weakself reloadHeader];
             [weakself priceCalculate];
-        } failure:^{
-            [SVProgressHUD showErrorWithStatus:@"读取订单信息失败，请重新尝试！" cover:YES offsetY:0];
+        } failure:^(NSInteger result) {
+            if (result == -1) {
+                //没有默认地址
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有设置收货地址" message:@"现在就添加收货地址？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"添加", nil];
+                [alertView show];
+            }else{
+                [SVProgressHUD showErrorWithStatus:@"读取订单信息失败，请重新尝试！" cover:YES offsetY:0];
+            }
+            
         }];
     }else{
         [SVProgressHUD showErrorWithStatus:@"发生错误!" cover:YES offsetY:0];
@@ -189,16 +222,9 @@
 //刷新地址view
 - (void)reloadHeader
 {
-    if (self.orderConfirmModel.addAddress.length>1) {
-        [self.addressView setUIWithName:self.orderConfirmModel.addTruename Address:self.orderConfirmModel.addAddress Phone:self.orderConfirmModel.addMobile];
-        [self.payBtn setBackgroundColor:KColor];
-        self.payBtn.enabled = YES;
-    }else{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有设置收货地址" message:@"现在就添加收货地址？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"添加", nil];
-        [alertView show];
-
-    }
-    
+    [self.addressView setUIWithName:self.orderConfirmModel.addTruename Address:self.orderConfirmModel.addAddress Phone:self.orderConfirmModel.addMobile];
+    [self.payBtn setBackgroundColor:KColor];
+    self.payBtn.enabled = YES;
 }
 
 #pragma mark - 数据源方法
@@ -269,8 +295,12 @@
         cell.cellIndexPath = indexPath;
         NSArray *listArray = ((YHBOConfirmRslist *)self.orderConfirmModel.rslist[indexPath.section]).malllist;
         YHBOConfirmMalllist *model = listArray[indexPath.row];
-        
-        [cell setUIWithTitle:model.title sku:model.skuname price:model.price number:model.number isFloat:[model.unit1 isEqualToString:@"米"] message:self.messagesDic[[self expressKeyWithI:(int)indexPath.section andJ:(int)indexPath.row]]];
+        YHBOConfirmExpress *express = self.expressSelDic[[self expressKeyWithI:(int)indexPath.section andJ:(int)indexPath.row]];
+        if (!express) {
+            express = model.express[0];
+        }
+        NSString *exPricie = [NSString stringWithFormat:@"%d",(int)[self expressPriceWithExpress:express andNum:[model.number doubleValue]]];
+        [cell setUIWithTitle:model.title sku:model.skuname price:model.price number:model.number isFloat:[model.unit1 isEqualToString:@"米"] message:self.messagesDic[[self expressKeyWithI:(int)indexPath.section andJ:(int)indexPath.row]] Express:express.name exPrice:exPricie];
         
         return cell;
     }else{
@@ -312,6 +342,18 @@
 - (void)touchPayBtn
 {
     MLOG(@"pay");
+    /*
+    NSMutableArray *rslit = [NSMutableArray arrayWithCapacity:5];
+    for (int i = 0; i <self.orderConfirmModel.rslist.count; i++) {
+        YHBOConfirmRslist *rlist = self.orderConfirmModel.rslist[i];
+        for (int j = 0; j < rlist.malllist.count; j++) {
+            YHBOConfirmMalllist *mall = rlist.malllist[j];
+            YHBOConfirmExpress *express = self.expressSelDic[[self expressKeyWithI:i andJ:j]];
+            NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithDouble:mall.itemid],@"itemid",mall.number,@"number",[NSString stringWithFormat:@"%d",(int)mall.skuid],@"", nil]
+
+        }
+    }
+     */
 }
 
 - (void)touchSelBtn
@@ -326,6 +368,12 @@
     vc.isfromOrder = YES;
     [self.navigationController pushViewController:vc animated:YES];
     
+}
+
+- (void)touchExpressCellWithIndexPath:(NSIndexPath *)indexPath
+{
+    _selIndexPath = indexPath;
+    [self showExpressPickView];
 }
 
 #pragma mark - 产品数量改变
@@ -345,24 +393,28 @@
         YHBOConfirmRslist *rlist = self.orderConfirmModel.rslist[i];
         for (int j = 0; j < rlist.malllist.count; j++) {
             YHBOConfirmMalllist *mall = rlist.malllist[j];
-            NSInteger index = 0;
-            if (self.expressSelDic[[self expressKeyWithI:i andJ:j]]) {
-                index = [self.expressSelDic[[self expressKeyWithI:i andJ:j]] integerValue];
+            YHBOConfirmExpress *express = self.expressSelDic[[self expressKeyWithI:i andJ:j]];
+            if (express == nil) {
+                express = mall.express[0];
+                self.expressSelDic[[self expressKeyWithI:i andJ:j]] = express;
             }
-            YHBOConfirmExpress *express = mall.express[index];
             double number = [mall.number doubleValue];
-            double start = [express.start doubleValue];
-            double step = [express.step doubleValue];
-            MLOG(@"%f %f",number, [mall.price doubleValue]);
-            _price += ([mall.price doubleValue] * number + (number<1.0 ? start : ((number - 1.0) * step + start)));
+            _price += ([mall.price doubleValue] * number + [self expressPriceWithExpress:express andNum:number]);
             MLOG(@"%lf",_price);
         }
     }
     _priceStr = [NSString stringWithFormat:@"￥%.1lf",_price];
     [self resetPriceLabel];
 }
-
-
+//运费计算
+- (double)expressPriceWithExpress:(YHBOConfirmExpress *)express andNum:(double)number
+{
+    MLOG(@"name = %@",express.name);
+    double start = [express.start doubleValue];
+    double step = [express.step doubleValue];
+    int calNum= (number-(int)number)>0.099 ? number+1 : number;
+    return (calNum <= 1 ? start : ((calNum - 1) * step + start));
+}
 
 -(void)resetPriceLabel
 {
@@ -373,6 +425,11 @@
         _titleLabel.right = _priceLabel.left;
     }
 }
+////将index转化为留言dic 与 快递dic的key
+//- (NSString *)keyWithSection:(NSInteger)aSection Row:(NSInteger)aRow
+//{
+//    return [NSString stringWithFormat:@"%ld",aSection * 1000 + aRow];
+//}
 
 #pragma mark - 留言 delagte Action
 
@@ -401,14 +458,123 @@
     }
 }
 
+
+- (NSString *)expressKeyWithI:(int)i andJ:(int)j
+{
+    return [NSString stringWithFormat:@"%d",1000*i+j];
+}
+
+#pragma mark - Picker View
+
+- (void)showExpressPickView
+{
+    if (![self.expressPicker superview]) {
+        UIView *toolView = [[UIView alloc] initWithFrame:CGRectMake(0, _expressPicker.top-30, kMainScreenWidth, 40)];
+        toolView.backgroundColor = [UIColor lightGrayColor];
+        _tool = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth - 60, 0, 60, 40)];
+        [_tool setTitle:@"完成" forState:UIControlStateNormal];
+        _tool.titleLabel.textAlignment = NSTextAlignmentCenter;
+        _tool.titleLabel.font = kFont15;
+        _tool.backgroundColor = [UIColor clearColor];
+        [_tool addTarget:self action:@selector(pickerPickEnd:) forControlEvents:UIControlEventTouchDown];
+        [toolView addSubview:_tool];
+        
+        _cancelBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+        [_cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+        _cancelBtn.tag = kButtonTag_Cancel;
+        _cancelBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+        _cancelBtn.titleLabel.font = kFont15;
+        _cancelBtn.backgroundColor = [UIColor clearColor];
+        [_cancelBtn addTarget:self action:@selector(pickerPickEnd:) forControlEvents:UIControlEventTouchDown];
+        [toolView addSubview:_cancelBtn];
+        
+        [[UIApplication sharedApplication].keyWindow addSubview:self.clearView];
+        [[UIApplication sharedApplication].keyWindow addSubview:self.expressPicker];
+        [[UIApplication sharedApplication].keyWindow addSubview:toolView];
+        
+        [UIView animateWithDuration:0.2 animations:^{
+            _expressPicker.top = kMainScreenHeight - 180;
+            toolView.top = _expressPicker.top - 30;
+        }];
+    }
+}
+
+
+
+#pragma 快递选择结果更新模型 ui
+- (void)pickedExpressToModelAndUI
+{
+    if (_selExpress) {
+        MLOG(@"_selex:%@",_selExpress.name);
+        self.expressSelDic[[self expressKeyWithI:_selIndexPath.section andJ:_selIndexPath.row]] = _selExpress;
+        [self.tableView reloadRowsAtIndexPaths:@[_selIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self priceCalculate];
+    }
+}
+
+#pragma mark - pickerView delegate and datasource
+
+- (void)pickerPickEnd:(UIButton *)sender{
+    [self.clearView removeFromSuperview];
+    if ([_expressPicker superview]) {
+        if (sender.tag != kButtonTag_Cancel) {
+            [self pickedExpressToModelAndUI];
+        }else{
+            //[_areaPicker selectRow:0 inComponent:0 animated:NO];
+            //[_areaPicker selectRow:0 inComponent:1 animated:NO];
+        }
+        _selIndexPath = nil;
+        _selExpress = nil;
+        [UIView animateWithDuration:0.2 animations:^{
+            _expressPicker.top = kMainScreenHeight;
+            [_expressPicker  removeFromSuperview];
+            [sender.superview removeFromSuperview];
+        }];
+    }
+}
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return  1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    
+    YHBOConfirmRslist *rlist = self.orderConfirmModel.rslist[_selIndexPath.section];
+    YHBOConfirmMalllist *mallist = rlist.malllist[_selIndexPath.row];
+    return mallist.express.count;
+}
+
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component{
+    return 280;
+    
+}
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component{
+    return 30;
+}
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    YHBOConfirmRslist *rlist = self.orderConfirmModel.rslist[_selIndexPath.section];
+    YHBOConfirmMalllist *mallist = rlist.malllist[_selIndexPath.row];
+    YHBOConfirmExpress *ex = mallist.express[row];
+    return [NSString stringWithFormat:@"%@  起步价：%@",ex.name,ex.start];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    YHBOConfirmRslist *rlist = self.orderConfirmModel.rslist[_selIndexPath.section];
+    YHBOConfirmMalllist *mallist = rlist.malllist[_selIndexPath.row];
+    _selExpress = mallist.express[row];
+}
+
+
 #pragma mark - keyboard notification
 
 - (void)keybordWillShow:(NSNotification *)notif
 {
-//    NSDictionary *info = [notif userInfo];
-//    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
-//    CGSize keyboardSize = [value CGRectValue].size;
-//    MLOG(@"通知--%@",(UITextField *)value);
+    MLOG(@"object:%@",notif.object);
+    NSDictionary *info = [notif userInfo];
+    MLOG(@"%@",info);
+    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    MLOG(@"通知--%@",(UITextField *)value);
     
     
 }
@@ -424,9 +590,9 @@
 
 - (void)keyboardWillHid:(NSNotification *)notif
 {
-//    NSDictionary *info = [notif userInfo];
-//    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
-//    CGSize keyboardSize = [value CGRectValue].size;
+    //    NSDictionary *info = [notif userInfo];
+    //    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+    //    CGSize keyboardSize = [value CGRectValue].size;
     
     self.tableView.top = 0;
 }
@@ -444,10 +610,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHid:) name:UIKeyboardDidHideNotification object:nil];
 }
 
-- (NSString *)expressKeyWithI:(int)i andJ:(int)j
-{
-    return [NSString stringWithFormat:@"%d",100*i+j];
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

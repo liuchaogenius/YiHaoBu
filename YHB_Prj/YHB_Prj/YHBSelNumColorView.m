@@ -302,7 +302,7 @@
     NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
     CGSize keyboardSize = [value CGRectValue].size;
     MLOG(@"通知--%@",(UITextField *)value);
-    [self.numControl keyBoardShowActionWithKeybordHeight:keyboardSize.height];
+    //[self.numControl keyBoardShowActionWithKeybordHeight:keyboardSize.height];
 }
 
 - (void)keyboardDidShow:(NSNotification *)notif

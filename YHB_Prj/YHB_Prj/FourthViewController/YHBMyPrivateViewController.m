@@ -22,7 +22,7 @@
 #import "YHBSupplyDetailViewController.h"
 #import "YHBProductDetailVC.h"
 #import "YHBStoreViewController.h"
-#define kSgmBtnHeight 35
+#define kSgmBtnHeight 45
 #define kPageSize 30
 #define kGoodsCellHeight 80
 
@@ -65,7 +65,7 @@
 - (YHBInfoListManager *)listManager
 {
     if (!_listManager) {
-        _listManager = [[YHBInfoListManager alloc] init];
+        _listManager = [YHBInfoListManager sharedManager];
     }
     return _listManager;
 }
@@ -109,6 +109,7 @@
 {
     GetPrivateTag tag = _selTag;
     [self.listManager getMyFavoriteWithToken:[YHBUser sharedYHBUser].token?:@"" Action:tag PageID:pageid pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
+        MLOG(@"%@",modelArray);
         [self.pageDic setObject:page forKey:[NSString stringWithFormat:@"%lu",(unsigned long)tag]];
         if (pageid == 1) {
             [self.modelsDic setObject:modelArray forKey:[NSString stringWithFormat:@"%lu",tag]];
@@ -240,7 +241,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section == 1) {
+    if (indexPath.section == 0) {
         NSMutableArray *modelArray = self.modelsDic[[NSString stringWithFormat:@"%lu", _selTag]];
         if (modelArray.count > indexPath.row) {
             YHBRslist *model = modelArray[indexPath.row];
@@ -321,12 +322,12 @@
     if (!_sgmBtmScrollView) {
         _sgmBtmScrollView = [[UIScrollView alloc] init];
         self.sgmCount = self.titleArray.count;
-        _sgmBtmScrollView.layer.borderColor = [RGBCOLOR(207, 207, 207) CGColor];
+        _sgmBtmScrollView.layer.borderColor = [kLineColor CGColor];
         _sgmBtmScrollView.layer.borderWidth = 0.7f;
         _sgmBtmScrollView.layer.masksToBounds = YES;
         _sgmBtmScrollView.showsHorizontalScrollIndicator = NO;
         [_sgmBtmScrollView setFrame:CGRectMake(0, 0, kMainScreenWidth, kSgmBtnHeight)];
-        _sgmBtmScrollView.backgroundColor = RGBCOLOR(245, 245, 245);
+        _sgmBtmScrollView.backgroundColor = [UIColor whiteColor];
         //通过分栏数量调整content宽度
         CGFloat contentWidth = (self.sgmCount > 5 ? self.sgmCount*kMainScreenWidth/5.0f : kMainScreenWidth);
         [_sgmBtmScrollView setContentSize:CGSizeMake(contentWidth, kSgmBtnHeight)];
@@ -355,8 +356,11 @@
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [button setTitleColor:KColor forState:UIControlStateSelected];
     [button setTitle:title forState:UIControlStateNormal];
-    [button setBackgroundColor:[UIColor clearColor]];
-    button.titleLabel.font = kFont14;
+    [button setBackgroundColor:[UIColor whiteColor]];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 10, 0.6, kSgmBtnHeight-20)];
+    line.backgroundColor = kLineColor;
+    [button addSubview:line];
+    button.titleLabel.font = kFont16;
     //button.layer.borderWidth = 0.7f;
     //button.layer.borderColor = [RGBCOLOR(207, 207, 207) CGColor];
     button.selected = NO;

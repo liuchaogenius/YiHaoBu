@@ -10,7 +10,7 @@
 
 #define kPrice 16
 #define ktext 12
-#define kBtnWidth 28
+#define kBtnWidth 35
 @interface YHBPdtInfoView()
 
 @property (strong, nonatomic) UILabel *titleLabel;
@@ -44,7 +44,7 @@
     //self.titleLabel.text = @"xxxxsdfsdfsgdfgdfgdsdfasdfasdfasdfgdxxx电视机";
     
     self.privateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.privateButton.frame = CGRectMake(self.titleLabel.right+5, 10, kBtnWidth,31);
+    self.privateButton.frame = CGRectMake(kMainScreenWidth-kBtnWidth-20, 10, kBtnWidth,kBtnWidth*109/105.0);
     [self.privateButton setBackgroundImage:[UIImage imageNamed:@"privateImg"] forState:UIControlStateNormal];
     [self.privateButton setBackgroundImage:[UIImage imageNamed:@"privateHighImg"] forState:UIControlStateSelected];
     self.privateButton.selected = NO;
@@ -86,7 +86,6 @@
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@",price];
     self.cateLabel.text = cateStr;
     self.privateButton.selected = favt ? true : false;
-    
 }
 
 @end

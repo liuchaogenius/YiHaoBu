@@ -22,6 +22,16 @@
 
 @implementation YHBInfoListManager
 
++ (instancetype)sharedManager
+{
+    static dispatch_once_t once;
+    static YHBInfoListManager *sharedManger;
+    dispatch_once(&once, ^{
+        sharedManger = [[YHBInfoListManager alloc] init];
+    });
+    return sharedManger;
+}
+
 - (NSArray *)actionArray
 {
     if (!_actionArray) {
@@ -271,8 +281,6 @@
             YHBPage *page = [YHBPage modelObjectWithDictionary:(NSDictionary *)data[@"page"]];
             NSArray *array = data[@"rslist"];
             NSMutableArray *modelArray = [NSMutableArray array];
-            NSDictionary *dic = array[0];
-            MLOG(@"%@",dic);
             if (array.count > 0) {
                 
                 for (int i=0; i < array.count; i++) {

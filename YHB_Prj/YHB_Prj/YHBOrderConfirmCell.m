@@ -26,6 +26,7 @@ typedef enum : NSUInteger
     UILabel *_priceLabel;//单价
     UILabel *_skuLabel;
     UILabel *_productTitle;
+    UILabel *_logicLabel;
 }
 @property (strong, nonatomic) UIView *productInfoCell;
 @property (strong, nonatomic) UIView *numberCell;
@@ -62,9 +63,10 @@ typedef enum : NSUInteger
         _logicCell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kLogicCellheight)];
         _logicCell.backgroundColor = [UIColor whiteColor];
         UILabel *label = [self getTitleLabelWithHeight:kNumCellHeight Title:@"配送方式"];
+        label.width = kMainScreenWidth - 30;
         label.height = kLogicCellheight;
         [_logicCell addSubview: label];
-        
+        _logicLabel = label;
         [_logicCell addSubview:[self getArrowImageViewWithFrame:CGRectMake(kMainScreenWidth-18-10, (kLogicCellheight-20)/2.0, 18, 20)]];
         UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchLogicCell)];
         [_logicCell addGestureRecognizer:gr];
@@ -161,7 +163,7 @@ typedef enum : NSUInteger
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)setUIWithTitle:(NSString *)title sku:(NSString *)sku price:(NSString *)price number:(NSString *)number isFloat:(BOOL)isFloat message:(NSString *)message
+- (void)setUIWithTitle:(NSString *)title sku:(NSString *)sku price:(NSString *)price number:(NSString *)number isFloat:(BOOL)isFloat message:(NSString *)message Express:(NSString *)express exPrice:(NSString *)ePrice;
 {
     _productTitle.text = title;
     _priceLabel.text = [NSString stringWithFormat:@"￥%@",price];;
@@ -170,12 +172,15 @@ typedef enum : NSUInteger
     self.numControl.isNumFloat = isFloat;
     _skuLabel.text = [NSString stringWithFormat:@"分类:%@",sku];
     self.messageTf.text = message?:@"";
+    _logicLabel.text = [NSString stringWithFormat:@"配送方式 ：%@  价格：%@",express,ePrice];
 }
 
 #pragma mark - Action
 - (void)touchLogicCell
 {
-    
+    if ([self.delegate respondsToSelector:@selector(touchExpressCellWithIndexPath:)]) {
+        [self.delegate touchExpressCellWithIndexPath:self.cellIndexPath];
+    }
 }
 
 - (void)numberControlValueDidChanged

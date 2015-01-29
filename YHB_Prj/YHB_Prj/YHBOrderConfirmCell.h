@@ -13,6 +13,7 @@
 
 - (void)numberChangedWithValue:(NSString *)num IndexPath:(NSIndexPath *)indexPath;
 - (void)touchMessageTextField:(UITextField *)textField IndexPath:(NSIndexPath *)indexPath;
+- (void)touchExpressCellWithIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
@@ -21,7 +22,7 @@
 @property (weak, nonatomic) id<YHBOrderConfirmCellDelegate> delegate;
 @property (weak, nonatomic) NSIndexPath *cellIndexPath;
 
-- (void)setUIWithTitle:(NSString *)title sku:(NSString *)sku price:(NSString *)price number:(NSString *)number isFloat:(BOOL)isFloat message:(NSString *)message;
+- (void)setUIWithTitle:(NSString *)title sku:(NSString *)sku price:(NSString *)price number:(NSString *)number isFloat:(BOOL)isFloat message:(NSString *)message Express:(NSString *)express exPrice:(NSString *)ePrice;
 
 - (void)keyboardWillShowWithHeight:(CGFloat)height;
 

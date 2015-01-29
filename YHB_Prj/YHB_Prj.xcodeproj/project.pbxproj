@@ -45,6 +45,7 @@
 		5B4BABBD1A6A4DED00FEBC65 /* YHBShopsListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4BABBC1A6A4DED00FEBC65 /* YHBShopsListCell.m */; };
 		5B4BABC01A6A89FE00FEBC65 /* YHBSortTagsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4BABBF1A6A89FE00FEBC65 /* YHBSortTagsCell.m */; };
 		5B4BABC31A6AB07200FEBC65 /* YHBTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4BABC21A6AB07200FEBC65 /* YHBTagView.m */; };
+		5B5887841A78A301006FB319 /* YHBProductListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5887831A78A301006FB319 /* YHBProductListViewController.m */; };
 		5B5A6DA71A6620750043B246 /* CCTextfieldToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A6DA61A6620750043B246 /* CCTextfieldToolView.m */; };
 		5B5A6DAA1A66B1C40043B246 /* YHBPrivateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A6DA91A66B1C40043B246 /* YHBPrivateManager.m */; };
 		5B5A6DAD1A66B8990043B246 /* YHBSelColorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A6DAC1A66B8990043B246 /* YHBSelColorCell.m */; };
@@ -537,6 +538,8 @@
 		5B4BABBF1A6A89FE00FEBC65 /* YHBSortTagsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBSortTagsCell.m; sourceTree = "<group>"; };
 		5B4BABC11A6AB07200FEBC65 /* YHBTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBTagView.h; sourceTree = "<group>"; };
 		5B4BABC21A6AB07200FEBC65 /* YHBTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBTagView.m; sourceTree = "<group>"; };
+		5B5887821A78A301006FB319 /* YHBProductListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBProductListViewController.h; sourceTree = "<group>"; };
+		5B5887831A78A301006FB319 /* YHBProductListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBProductListViewController.m; sourceTree = "<group>"; };
 		5B5A6DA51A6620750043B246 /* CCTextfieldToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextfieldToolView.h; sourceTree = "<group>"; };
 		5B5A6DA61A6620750043B246 /* CCTextfieldToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTextfieldToolView.m; sourceTree = "<group>"; };
 		5B5A6DA81A66B1C40043B246 /* YHBPrivateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPrivateManager.h; sourceTree = "<group>"; };
@@ -1481,6 +1484,15 @@
 				5B4BABC21A6AB07200FEBC65 /* YHBTagView.m */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		5B5887811A78A2DD006FB319 /* ProductListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5B5887821A78A301006FB319 /* YHBProductListViewController.h */,
+				5B5887831A78A301006FB319 /* YHBProductListViewController.m */,
+			);
+			name = ProductListViewController;
 			sourceTree = "<group>";
 		};
 		5B6774F91A55996800457012 /* UserModel */ = {
@@ -3186,6 +3198,7 @@
 		FF2A6C8B1A0F3C58001607AC /* UIParty */ = {
 			isa = PBXGroup;
 			children = (
+				5B5887811A78A2DD006FB319 /* ProductListViewController */,
 				5B0531CD1A768F9C0020077D /* YHBPublishCommentVC */,
 				5B0531C31A752ECB0020077D /* CertificViewController */,
 				5B18C98E1A724DC300336215 /* AddressEditViewController */,
@@ -3537,6 +3550,7 @@
 				FF2A6C751A0F3B7B001607AC /* UIImage+GIF.m in Sources */,
 				5BCBB0781A6EAB1400BF5E5C /* YHBOrderDetail.m in Sources */,
 				AB59D9531A33224E002B76E1 /* GoodsTableViewCell.m in Sources */,
+				5B5887841A78A301006FB319 /* YHBProductListViewController.m in Sources */,
 				5B0531901A74B8620020077D /* YHBProductWebVC.m in Sources */,
 				ABC646EC1A6B8BE2003A8FB1 /* NSDate+Category.m in Sources */,
 				FF2A6CA41A0F40B0001607AC /* ThreadSafeMutableArry.m in Sources */,

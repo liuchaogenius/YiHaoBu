@@ -35,7 +35,7 @@
     //[self setNavgtionBarBg];
     if(kSystemVersion>=7.0)
     {
-        self.navigationController.navigationBar.barTintColor = KColor;//RGBCOLOR(249, 249, 249);
+        self.navigationController.navigationBar.barTintColor = RGBCOLOR(249, 249, 249);
     }
     else
     {
@@ -121,21 +121,25 @@
 }
 - (void)setLeftButton:(UIImage *)aImg title:(NSString *)aTitle target:(id)aTarget action:(SEL)aSelector
 {
-    CGRect buttonFrame = CGRectMake(-5, 0, 88/2, 44);
+    CGRect buttonFrame = CGRectMake(-5, 0, 44, 44);
     UIButton *button = [[UIButton alloc] initWithFrame:buttonFrame];
+    button.backgroundColor = [UIColor clearColor];
     
+    CGRect viewFrame = CGRectMake(0, 0, 88/2, 44);
+    UIView *view = [[UIView alloc]initWithFrame:viewFrame];
     if(aImg)
     {
-        [button setBackgroundImage:aImg forState:UIControlStateNormal];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 11, 13, 22)];
+        [imageView setContentMode:UIViewContentModeScaleToFill];
+        imageView.image = aImg;
+        [view addSubview:imageView];
     }
     if(aTitle)
     {
         [button setTitle:aTitle forState:UIControlStateNormal];
     }
     [button addTarget:aTarget action:aSelector forControlEvents:UIControlEventTouchUpInside];
-    CGRect viewFrame = CGRectMake(0, 0, 88/2, 44);
-    UIView *view = [[UIView alloc]initWithFrame:viewFrame];
-  
+    
     [view addSubview:button];
     
     if(self.navigationController && self.navigationItem)
@@ -164,7 +168,7 @@
 {
     CGRect buttonFrame = CGRectMake(5, 0, 59.0f, 44.0f);
     UIButton *button = [[UIButton alloc] initWithFrame:buttonFrame];
-    
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [button addTarget:aTarget action:aSelector forControlEvents:UIControlEventTouchUpInside];
     
     

@@ -20,6 +20,8 @@
 #import "UIImageView+WebCache.h"
 #import "YHBMyPrivateViewController.h"
 #import "YHBCertificListViewController.h"
+#import "YHBProductListViewController.h"
+#import "YHBStoreViewController.h"
 
 #define kBtnsViewHeight 65
 #define kBtnImageWidth 25
@@ -27,8 +29,9 @@
 #define kBtnsTagStart 40
 enum Button_Type
 {
-    Button_purchase = kBtnsTagStart,//我的购买
+    Button_purchase = kBtnsTagStart,//我的采购
     Button_supply,//我的供应
+    Button_product,//我的产品
     Button_lookStore//浏览商店
 };
 @interface FourthViewController ()<userCellsDelegate,UserHeadDelegate>
@@ -157,8 +160,26 @@ enum Button_Type
                 [self.navigationController pushViewController:vc animated:YES];
             }
                 break;
+            case Button_product:{
+                if ([YHBUser sharedYHBUser].userInfo.groupid == 7) {
+                    YHBProductListViewController *vc = [[YHBProductListViewController alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else{
+                    [SVProgressHUD showErrorWithStatus:@"只有通过企业认证的用户才能拥有产品" cover:YES offsetY:0];
+                }
+            }
+                break;
             case Button_lookStore:{
                 //跳入浏览商店
+                if ([YHBUser sharedYHBUser].userInfo.groupid >= 6) {
+                    YHBStoreViewController *vc = [[YHBStoreViewController alloc] initWithShopID:(int)[YHBUser sharedYHBUser].userInfo.userid];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else{
+                    [SVProgressHUD showErrorWithStatus:@"你还没有商城" cover:YES offsetY:0];
+                }
+                
             }
                 break;
             default:

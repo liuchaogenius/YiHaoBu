@@ -101,10 +101,13 @@
     if (self) {
         self.isNew = isnew;
         _handel = handel;
-        self.addModel = model;
+        _addModel = model;
         self.title = @"收货地址管理";
         _selCity = 0 ;
         _selProvince = 0;
+        if (isnew) {
+            self.addModel = [[YHBAddressModel alloc] init];
+        }
     }
     return self;
 }
@@ -173,30 +176,31 @@
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         cell.detailTextLabel.textColor = [UIColor lightGrayColor];
     }
+    cell.detailTextLabel.text = nil;
     switch (indexPath.row) {
         case 0:
         {
             //城市
-            cell.textLabel.text = self.addModel ? self.addModel.area : @"请选择所在地区";
+            cell.textLabel.text = self.addModel.area.length ? self.addModel.area : @"请选择所在地区";
             cell.detailTextLabel.text = @"所在地区";
         }
             break;
         case 1:
         {
             //地址
-            cell.textLabel.text = self.addModel ? [NSString stringWithFormat:@"详细地址：%@",self.addModel.address] : @"请输入详细地址";
+            cell.textLabel.text = self.addModel.address.length ? [NSString stringWithFormat:@"详细地址：%@",self.addModel.address] : @"请输入详细地址";
         }
             break;
         case 2:
         {
             //姓名
-            cell.textLabel.text = self.addModel ? [NSString stringWithFormat:@"姓名：%@",self.addModel.truename] : @"请输入收货人姓名";
+            cell.textLabel.text = self.addModel.truename.length ? [NSString stringWithFormat:@"姓名：%@",self.addModel.truename] : @"请输入收货人姓名";
         }
             break;
         case 3:
         {
             //联系电话
-            cell.textLabel.text = self.addModel ? [NSString stringWithFormat:@"联系电话：%@",self.addModel.mobile] : @"请输入收货人联系电话";
+            cell.textLabel.text = self.addModel.mobile.length ? [NSString stringWithFormat:@"联系电话：%@",self.addModel.mobile] : @"请输入收货人联系电话";
         }
             break;
         default:

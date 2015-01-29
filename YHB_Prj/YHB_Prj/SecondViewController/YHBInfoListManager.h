@@ -19,6 +19,9 @@ typedef enum : NSUInteger {
 @class YHBPage;
 @interface YHBInfoListManager : NSObject
 
+//单例
++ (instancetype)sharedManager;
+
 //获取产品&样板信息列表
 - (void)getProductListWithUserID:(NSInteger)userID typeID:(NSInteger)typeID pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock;
 

@@ -140,7 +140,10 @@ typedef enum : NSUInteger {
 #pragma mark - Action
 - (void)addAddress
 {
-    
+    YHBAddressEditViewController *vc = [[YHBAddressEditViewController alloc] initWithAddressModel:nil isNew:YES SuccessHandle:^{
+        [self getOrRefreshDataWithIsNeedTips:NO];
+    }];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - avtionsheet Delegate

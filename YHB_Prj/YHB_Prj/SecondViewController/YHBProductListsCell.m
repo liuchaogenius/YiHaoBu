@@ -30,6 +30,7 @@
         _prodImgeView.layer.borderColor = [kLineColor CGColor];
         _prodImgeView.layer.borderWidth = 0.5;
         _prodImgeView.backgroundColor = [UIColor whiteColor];
+        _prodImgeView.clipsToBounds = YES;
         [_prodImgeView setContentMode:UIViewContentModeScaleAspectFill];
     }
     return _prodImgeView;
@@ -72,7 +73,7 @@
 
 - (void)setUIWithImage:(NSString *)urlStr Title:(NSString *)title Price: (double)price
 {
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:urlStr]];
+    [self.prodImgeView sd_setImageWithURL:[NSURL URLWithString:urlStr]];
     self.titleLabel.text = title;
     self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",price];
 }

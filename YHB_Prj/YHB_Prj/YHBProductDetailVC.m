@@ -136,7 +136,7 @@
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight-44-ktoolHeight-20)];
     self.scrollView.delegate = self;
     self.scrollView.backgroundColor = kViewBackgroundColor;
-    self.scrollView.contentSize = CGSizeMake(kMainScreenWidth, 800);
+    self.scrollView.contentSize = CGSizeMake(kMainScreenWidth, 700);
     [self.view addSubview:self.scrollView];
     
     self.bannerView = [[YHBBannerVeiw alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kBannerHeight)];
@@ -172,6 +172,7 @@
         
         weakself.conStoreView.frame = CGRectMake(0, _currentY+=kBlankHeight, weakself.conStoreView.width, weakself.conStoreView.height);
         [weakself.conStoreView setUIWithTitle:weakself.productModel.company imageUrl:weakself.productModel.avatar desStar:weakself.productModel.star1 servStar:weakself.productModel.star2];
+        weakself.scrollView.contentSize = CGSizeMake(kMainScreenWidth, self.conStoreView.bottom+20);
         
         [weakself.scrollView addSubview:weakself.conStoreView];
     } failure:^{
@@ -279,7 +280,8 @@
     for (NSInteger i = 0; i < imageNum; i++) {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i * kMainScreenWidth, 0, kMainScreenWidth, self.bannerView.headScrollView.height)];
         imageView.backgroundColor = [UIColor whiteColor];
-        
+        imageView.layer.borderColor = [kLineColor CGColor];
+        imageView.layer.borderWidth = 0.6;
         YHBAlbum *album = self.productModel.album[i];
         //设置image
 #warning 以后带去掉placehold-cc

@@ -23,6 +23,7 @@
 #import "YHBProductDetailVC.h"
 #import "YHBSupplyDetailViewController.h"
 #import "YHBBuyDetailViewController.h"
+#import "SecondViewController.h"
 
 #define ksegBtnWidth (kMainScreenWidth/4.0)
 #define kFilBtnWidth (kMainScreenWidth/3.0)
@@ -54,7 +55,7 @@ typedef enum : NSUInteger {
     UIButton *_selectFilBtn;
     FilterType _selectFilType;
     YHBPage *_currentPage;
-    
+    BOOL _isNeedNav;
     UIButton *_secondBtn;
 }
 
@@ -76,7 +77,7 @@ typedef enum : NSUInteger {
 - (YHBInfoListManager *)listManager
 {
     if (!_listManager) {
-        _listManager = [[YHBInfoListManager alloc] init];
+        _listManager = [YHBInfoListManager sharedManager];
     }
     return _listManager;
 }
@@ -116,7 +117,7 @@ typedef enum : NSUInteger {
 - (UITableView *)tableView
 {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.filterView.bottom, kMainScreenWidth, kMainScreenHeight-49-self.filterView.bottom) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.filterView.bottom, kMainScreenWidth, kMainScreenHeight-(_isNeedNav?44:49)-self.filterView.bottom) style:UITableViewStylePlain];
         _tableView.backgroundColor = kViewBackgroundColor;
         _tableView.delegate = self;
         _tableView.dataSource = self;
@@ -180,7 +181,7 @@ typedef enum : NSUInteger {
 - (UIView *)segmentView
 {
     if (!_segmentView) {
-        _segmentView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, kMainScreenWidth, kSegViewHeight)];
+        _segmentView = [[UIView alloc] initWithFrame:CGRectMake(0, _isNeedNav ? 0:20, kMainScreenWidth, kSegViewHeight)];
         _segmentView.backgroundColor = [UIColor whiteColor];
         //_segmentView.layer.borderColor = [kLineColor CGColor];
         //_segmentView.layer.borderWidth = 1.0;
@@ -210,14 +211,24 @@ typedef enum : NSUInteger {
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    self.tabBarController.tabBarController.tabBar.hidden = NO;
-    self.navigationController.navigationBarHidden = YES;
+    if (!_isNeedNav) {
+        self.tabBarController.tabBarController.tabBar.hidden = NO;
+        self.navigationController.navigationBarHidden = YES;
+    }
+    
     [super viewWillAppear:YES];
+}
+
+- (instancetype)initFromMall
+{
+    self = [super init];
+    _isNeedNav = YES;
+    return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self settitleLabel:@"搜索"];
     //ui
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.segmentView];
@@ -227,7 +238,6 @@ typedef enum : NSUInteger {
     [self setExtraCellLineHidden:self.tableView];
     
     [self addTableViewTragWithTableView:self.tableView];
-    
 
 }
 

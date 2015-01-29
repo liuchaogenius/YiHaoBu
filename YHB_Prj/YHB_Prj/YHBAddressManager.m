@@ -104,7 +104,7 @@
     [postDic setObject:model.address?: @"" forKey:@"address"];
     [postDic setObject:model.mobile?: @"" forKey:@"mobile"];
     [postDic setObject:[NSNumber numberWithInt:(int)model.ismain] forKey:@"ismain"];
-    if(isNew) [postDic setObject:[NSNumber numberWithDouble:model.itemid] forKey:@"itemid"];
+    if(!isNew) [postDic setObject:[NSNumber numberWithDouble:model.itemid] forKey:@"itemid"];
     
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
