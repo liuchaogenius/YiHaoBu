@@ -22,6 +22,4 @@
 @property (assign, nonatomic) double number;
 @property (strong, nonatomic) UITextField *numberTextfield;
 
-- (void)keyBoardShowActionWithKeybordHeight:(CGFloat)height;
-
 @end

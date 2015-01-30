@@ -571,12 +571,13 @@ enum TextTag
 - (void)showAreaPickView
 {
     if (![self.areaPicker superview]) {
-        UIView *toolView = [[UIView alloc] initWithFrame:CGRectMake(0, _areaPicker.top-30, kMainScreenWidth, 40)];
-        toolView.backgroundColor = [UIColor lightGrayColor];
+        UIToolbar *toolView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, _areaPicker.top-30, kMainScreenWidth, 40)];
+        toolView.backgroundColor = RGBCOLOR(240, 240, 240);
         _tool = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth - 60, 0, 60, 40)];
         [_tool setTitle:@"完成" forState:UIControlStateNormal];
         _tool.titleLabel.textAlignment = NSTextAlignmentCenter;
         _tool.titleLabel.font = kFont15;
+        [_tool setTitleColor:RGBCOLOR(3, 122, 255) forState:UIControlStateNormal];
         _tool.backgroundColor = [UIColor clearColor];
         [_tool addTarget:self action:@selector(pickerPickEnd:) forControlEvents:UIControlEventTouchDown];
         [toolView addSubview:_tool];
@@ -584,6 +585,7 @@ enum TextTag
         _cancelBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
         [_cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
         _cancelBtn.tag = kButtonTag_Cancel;
+        [_cancelBtn setTitleColor:RGBCOLOR(3, 122, 255) forState:UIControlStateNormal];
         _cancelBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
         _cancelBtn.titleLabel.font = kFont15;
         _cancelBtn.backgroundColor = [UIColor clearColor];

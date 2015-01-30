@@ -369,15 +369,11 @@
     NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
     CGSize keyboardSize = [value CGRectValue].size;
     MLOG(@"通知--%@",(UITextField *)value);
-    //[self.numControl keyBoardShowActionWithKeybordHeight:keyboardSize.height];
+    self.centerY -= keyboardSize.height;
 }
 
 - (void)keyboardDidShow:(NSNotification *)notif
 {
-    NSDictionary *info = [notif userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
-    CGSize keyboardSize = [value CGRectValue].size;
-    self.centerY -= keyboardSize.height+kTextFieldToolHeight;
 }
 
 - (void)keyboardWillHid:(NSNotification *)notif

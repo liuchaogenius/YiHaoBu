@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#define kTextFieldToolHeight 25
+#define kTextFieldToolHeight 30
 typedef void (^unary_operation_confirm)();
 typedef void (^unary_operation_cancel)();
 
-@interface CCTextfieldToolView : UIView
+@interface CCTextfieldToolView : UIToolbar
 
-+ (instancetype)sharedView;
++ (instancetype)toolView;
 
-- (void)showToolWithY:(CGFloat)y comfirmBlock: (unary_operation_confirm)cBlock cancelBlock:(unary_operation_cancel)cancleBlock;
+- (void)showToolComfirmBlock: (unary_operation_confirm)cBlock cancelBlock:(unary_operation_cancel)cancleBlock;
 
 @end

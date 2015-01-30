@@ -12,8 +12,10 @@
 #define kbtnHeight 25
 #define kTitleFont 12
 
-@interface YHBNumControl()
-
+@interface YHBNumControl()<UITextFieldDelegate>
+{
+    CCTextfieldToolView *_toolView;
+}
 @end
 
 @implementation YHBNumControl
@@ -41,7 +43,6 @@
         self.number = 1.0;
         self.isNumFloat = NO;
         [self CreatnumControl];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keybordWShow:) name:UIKeyboardWillShowNotification object:nil];
     }
     return self;
 }
@@ -74,7 +75,11 @@
     _numberTextfield.layer.borderWidth = 0.5f;
     _numberTextfield.layer.borderColor = [kLineColor CGColor];
     _numberTextfield.textAlignment = NSTextAlignmentCenter;
-    //_numberTextfield.delegate = self;
+    _numberTextfield.delegate = self;
+    if (!_toolView) {
+        _toolView = [CCTextfieldToolView toolView];
+    }
+    _numberTextfield.inputAccessoryView = _toolView;
     _numberTextfield.keyboardType = self.isNumFloat ? UIKeyboardTypeDecimalPad : UIKeyboardTypeNumberPad;
     _numberTextfield.textColor = [UIColor lightGrayColor];
     _numberTextfield.font = [UIFont systemFontOfSize:kTitleFont];
@@ -114,24 +119,14 @@
     //[self calulatePrice];
 }
 
-- (void)keybordWShow:(NSNotification *)notif
-{
-    
-    if ([self.numberTextfield isFirstResponder]) {
-        NSDictionary *info = [notif userInfo];
-        NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
-        CGSize keyboardSize = [value CGRectValue].size;
-        MLOG(@"通知--%@",(UITextField *)value);
-        [self keyBoardShowActionWithKeybordHeight:keyboardSize.height];
-    }
-     
-}
 
-- (void)keyBoardShowActionWithKeybordHeight:(CGFloat)height
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     NSString *oldText = self.numberTextfield.text;
-    [[CCTextfieldToolView sharedView] showToolWithY:kMainScreenHeight-height-kTextFieldToolHeight comfirmBlock:^{
-        [self.numberTextfield resignFirstResponder];
+    [_toolView showToolComfirmBlock:^{
+        //[self.numberTextfield resignFirstResponder];
+        [self endEditing:YES];
         double thNum = [self.numberTextfield.text doubleValue];
         self.number = ((int)(thNum *10))/10.0f;
         if ([self.delegate respondsToSelector:@selector(numberControlValueDidChanged)]) {
@@ -141,12 +136,8 @@
         [self.numberTextfield resignFirstResponder];
         self.numberTextfield.text = [oldText copy];
     }];
-
+    return YES;
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
 @end
