@@ -9,6 +9,7 @@
 #import "YHBShopCartManage.h"
 #import "NetManager.h"
 #import "YHBShopCartRslist.h"
+#import "YHBUser.h"
 
 int pageid;
 int pagesize;
@@ -20,7 +21,8 @@ int pagetotal;
     pageid=1;
     pagesize=10;
     NSString *shopCartUrl = nil;
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"NlJQXmtcXzltUngTQy5kCAw8ZQQqJmFfSENGIgluG38IaVxiQSFvBWhReUxxS0YnXmZ7Tg86CzJlBA1kXTstGzZcUDZrD19hbQZ4T0N7ZF4MamVSKhxhC0hzRh8Jaw",@"token",[NSString stringWithFormat:@"%d", pageid],@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",nil];
+    NSString *token = [YHBUser sharedYHBUser].token;
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",[NSString stringWithFormat:@"%d", pageid],@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",nil];
     kYHBRequestUrl(@"getCartList.php", shopCartUrl);
     [NetManager requestWith:dict url:shopCartUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
 //        MLOG(@"%@", successDict);

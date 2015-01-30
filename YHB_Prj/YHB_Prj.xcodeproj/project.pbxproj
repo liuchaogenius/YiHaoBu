@@ -98,6 +98,12 @@
 		5BFBC2401A70BBC800FE65E5 /* YHBOConfirmMalllist.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFBC2381A70BBC800FE65E5 /* YHBOConfirmMalllist.m */; };
 		5BFBC2411A70BBC800FE65E5 /* YHBOConfirmRslist.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFBC2391A70BBC800FE65E5 /* YHBOConfirmRslist.m */; };
 		5BFBC2451A7124A000FE65E5 /* YHBPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFBC2441A7124A000FE65E5 /* YHBPayCell.m */; };
+		AB0D090A1A7B9C3F00E6123A /* RecommendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0D09091A7B9C3F00E6123A /* RecommendTableViewCell.m */; };
+		AB0D090D1A7B9F8D00E6123A /* YHBGetPushManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0D090C1A7B9F8D00E6123A /* YHBGetPushManage.m */; };
+		AB0D09101A7BA21E00E6123A /* YHBDataService.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0D090F1A7BA21E00E6123A /* YHBDataService.m */; };
+		AB0D09181A7BA7AB00E6123A /* YHBGetPushBuylist.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0D09131A7BA7AB00E6123A /* YHBGetPushBuylist.m */; };
+		AB0D09191A7BA7AB00E6123A /* YHBGetPushData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0D09151A7BA7AB00E6123A /* YHBGetPushData.m */; };
+		AB0D091A1A7BA7AB00E6123A /* YHBGetPushSyslist.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0D09171A7BA7AB00E6123A /* YHBGetPushSyslist.m */; };
 		AB0ED65E1A591C52006EF96F /* YHBPublishSupplyManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0ED65D1A591C52006EF96F /* YHBPublishSupplyManage.m */; };
 		AB0ED6611A592530006EF96F /* YHBPublishBuyManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0ED6601A592530006EF96F /* YHBPublishBuyManage.m */; };
 		AB1A2F7F1A6A31400018942A /* libEaseMobClientSDKLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1A2F7C1A6A31400018942A /* libEaseMobClientSDKLite.a */; };
@@ -648,6 +654,18 @@
 		5BFBC23C1A70BBC800FE65E5 /* YHBOConfirmRslist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOConfirmRslist.h; sourceTree = "<group>"; };
 		5BFBC2431A7124A000FE65E5 /* YHBPayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YHBPayCell.h; path = YHB_Prj/YHBPayCell.h; sourceTree = SOURCE_ROOT; };
 		5BFBC2441A7124A000FE65E5 /* YHBPayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YHBPayCell.m; path = YHB_Prj/YHBPayCell.m; sourceTree = SOURCE_ROOT; };
+		AB0D09081A7B9C3F00E6123A /* RecommendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendTableViewCell.h; sourceTree = "<group>"; };
+		AB0D09091A7B9C3F00E6123A /* RecommendTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendTableViewCell.m; sourceTree = "<group>"; };
+		AB0D090B1A7B9F8D00E6123A /* YHBGetPushManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBGetPushManage.h; sourceTree = "<group>"; };
+		AB0D090C1A7B9F8D00E6123A /* YHBGetPushManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBGetPushManage.m; sourceTree = "<group>"; };
+		AB0D090E1A7BA21E00E6123A /* YHBDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBDataService.h; sourceTree = "<group>"; };
+		AB0D090F1A7BA21E00E6123A /* YHBDataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBDataService.m; sourceTree = "<group>"; };
+		AB0D09121A7BA7AB00E6123A /* YHBGetPushBuylist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBGetPushBuylist.h; sourceTree = "<group>"; };
+		AB0D09131A7BA7AB00E6123A /* YHBGetPushBuylist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBGetPushBuylist.m; sourceTree = "<group>"; };
+		AB0D09141A7BA7AB00E6123A /* YHBGetPushData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBGetPushData.h; sourceTree = "<group>"; };
+		AB0D09151A7BA7AB00E6123A /* YHBGetPushData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBGetPushData.m; sourceTree = "<group>"; };
+		AB0D09161A7BA7AB00E6123A /* YHBGetPushSyslist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBGetPushSyslist.h; sourceTree = "<group>"; };
+		AB0D09171A7BA7AB00E6123A /* YHBGetPushSyslist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBGetPushSyslist.m; sourceTree = "<group>"; };
 		AB0ED65C1A591C52006EF96F /* YHBPublishSupplyManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPublishSupplyManage.h; sourceTree = "<group>"; };
 		AB0ED65D1A591C52006EF96F /* YHBPublishSupplyManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBPublishSupplyManage.m; sourceTree = "<group>"; };
 		AB0ED65F1A592530006EF96F /* YHBPublishBuyManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPublishBuyManage.h; sourceTree = "<group>"; };
@@ -1801,6 +1819,19 @@
 			name = Manager;
 			sourceTree = "<group>";
 		};
+		AB0D09111A7BA78A00E6123A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AB0D09121A7BA7AB00E6123A /* YHBGetPushBuylist.h */,
+				AB0D09131A7BA7AB00E6123A /* YHBGetPushBuylist.m */,
+				AB0D09141A7BA7AB00E6123A /* YHBGetPushData.h */,
+				AB0D09151A7BA7AB00E6123A /* YHBGetPushData.m */,
+				AB0D09161A7BA7AB00E6123A /* YHBGetPushSyslist.h */,
+				AB0D09171A7BA7AB00E6123A /* YHBGetPushSyslist.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		AB1A2F1D1A6A313F0018942A /* EaseMobSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -2072,6 +2103,7 @@
 		AB4EF1EE1A7A56E800CDB9EB /* ChatList */ = {
 			isa = PBXGroup;
 			children = (
+				AB0D09111A7BA78A00E6123A /* Model */,
 				AB4EF1EF1A7A56E800CDB9EB /* ChatListCell.h */,
 				AB4EF1F01A7A56E800CDB9EB /* ChatListCell.m */,
 				AB4EF1F11A7A56E800CDB9EB /* ChatListViewController.h */,
@@ -2080,6 +2112,12 @@
 				AB1DD1421A7A618800F85B40 /* YHBMessageViewController.m */,
 				AB1DD1441A7A61AD00F85B40 /* YHBRecommendViewController.h */,
 				AB1DD1451A7A61AD00F85B40 /* YHBRecommendViewController.m */,
+				AB0D09081A7B9C3F00E6123A /* RecommendTableViewCell.h */,
+				AB0D09091A7B9C3F00E6123A /* RecommendTableViewCell.m */,
+				AB0D090B1A7B9F8D00E6123A /* YHBGetPushManage.h */,
+				AB0D090C1A7B9F8D00E6123A /* YHBGetPushManage.m */,
+				AB0D090E1A7BA21E00E6123A /* YHBDataService.h */,
+				AB0D090F1A7BA21E00E6123A /* YHBDataService.m */,
 			);
 			path = ChatList;
 			sourceTree = "<group>";
@@ -3672,6 +3710,7 @@
 				ABC645EC1A6B8B3C003A8FB1 /* ConvertToCommonEmoticonsHelper.m in Sources */,
 				5B46485C1A49509F00566BC5 /* YHBShoplist.m in Sources */,
 				ABE5BBB91A2AD4A7000F5505 /* YHBVariousView.m in Sources */,
+				AB0D091A1A7BA7AB00E6123A /* YHBGetPushSyslist.m in Sources */,
 				ABC646F11A6B8BE2003A8FB1 /* UIViewController+HUD.m in Sources */,
 				ABC646BC1A6B8BC8003A8FB1 /* EMSDWebImageDownloader.m in Sources */,
 				ABE5BBB41A2AD452000F5505 /* YHBPhotoViewController.m in Sources */,
@@ -3714,6 +3753,7 @@
 				5BFBC2411A70BBC800FE65E5 /* YHBOConfirmRslist.m in Sources */,
 				5BD6329D1A5F941500095DFD /* YHBCommentManager.m in Sources */,
 				FF2A6C6C1A0F3B7B001607AC /* NSData+ImageContentType.m in Sources */,
+				AB0D090D1A7B9F8D00E6123A /* YHBGetPushManage.m in Sources */,
 				5BE76FF81A6CA04100E3F62A /* YHBOrderShopInfoView.m in Sources */,
 				ABC646231A6B8B3C003A8FB1 /* EMChatTextBubbleView.m in Sources */,
 				ABC646ED1A6B8BE2003A8FB1 /* NSDateFormatter+Category.m in Sources */,
@@ -3800,11 +3840,13 @@
 				AB9FD99B1A4694F8003EBE40 /* YHBBuyDetailViewController.m in Sources */,
 				FF2A6C931A0F3CEB001607AC /* FirstViewController.m in Sources */,
 				5B8D07731A6BDEC300AF6341 /* YHBORslist.m in Sources */,
+				AB0D09191A7BA7AB00E6123A /* YHBGetPushData.m in Sources */,
 				5B85F3CD1A6767AA00B91DA4 /* YHBExpress.m in Sources */,
 				5BFBC23F1A70BBC800FE65E5 /* YHBOConfirmExpress.m in Sources */,
 				5BD8F96C1A1374A500B3A4F2 /* YHBUserHeadView.m in Sources */,
 				ABC646B81A6B8BC8003A8FB1 /* DACircularProgressView.m in Sources */,
 				ABC646281A6B8B3C003A8FB1 /* EMChatViewCell.m in Sources */,
+				AB0D090A1A7B9C3F00E6123A /* RecommendTableViewCell.m in Sources */,
 				FF2A6C441A0F3B6D001607AC /* SVProgressHUD.m in Sources */,
 				5B23F44C1A45399900F39D8E /* YHBFunctionCell.m in Sources */,
 				5B5A6DA71A6620750043B246 /* CCTextfieldToolView.m in Sources */,
@@ -3825,7 +3867,9 @@
 				5B4BABBD1A6A4DED00FEBC65 /* YHBShopsListCell.m in Sources */,
 				FF2A6C721A0F3B7B001607AC /* SDWebImageManager.m in Sources */,
 				5BD8F96F1A13874D00B3A4F2 /* YHBUserCellsView.m in Sources */,
+				AB0D09181A7BA7AB00E6123A /* YHBGetPushBuylist.m in Sources */,
 				5B3B6BDE1A4146E800903880 /* YHBShopIndexManager.m in Sources */,
+				AB0D09101A7BA21E00E6123A /* YHBDataService.m in Sources */,
 				FF2A6C891A0F3B8A001607AC /* UIScrollView+SVPullToRefresh.m in Sources */,
 				AB9FD9A61A4697CB003EBE40 /* YHBBuyDetailData.m in Sources */,
 				5B8D077B1A6BE73D00AF6341 /* YHBOrderInfoView.m in Sources */,

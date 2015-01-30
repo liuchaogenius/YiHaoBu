@@ -21,6 +21,9 @@
 #import "ConvertToCommonEmoticonsHelper.h"
 #import "YHBMessageViewController.h"
 #import "YHBRecommendViewController.h"
+#import "YHBGetPushManage.h"
+#import "SVProgressHUD.h"
+#import "YHBDataService.h"
 
 @interface ChatListViewController ()<UITableViewDelegate,UITableViewDataSource, UISearchDisplayDelegate,SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
 
@@ -30,7 +33,8 @@
 //@property (nonatomic, strong) EMSearchBar           *searchBar;
 @property (nonatomic, strong) SRRefreshView         *slimeView;
 @property (nonatomic, strong) UIView                *networkStateView;
-
+@property(nonatomic, strong) YHBGetPushManage *netManage;
+@property(nonatomic, strong) NSMutableArray *pushArray;
 //@property (strong, nonatomic) EMSearchDisplayController *searchController;
 
 @end
@@ -51,7 +55,7 @@
     [super viewDidLoad];
     
 //    [self.view addSubview:self.searchBar];
-    [self setTitle:@"消息"];
+    [self settitleLabel:@"消息"];
     [self.view addSubview:self.tableView];
     [self.tableView addSubview:self.slimeView];
     [self networkStateView];
@@ -68,6 +72,7 @@
 {
     [super viewWillAppear:animated];
     
+    [self refreshGetPush];
     [self refreshDataSource];
     [self registerNotifications];
 }
@@ -78,7 +83,35 @@
     [self unregisterNotifications];
 }
 
+- (void)refreshGetPush
+{
+    [self.netManage getPushSucc:^(NSMutableArray *aArray) {
+        self.pushArray = [NSMutableArray new];
+        self.pushArray = aArray;
+        NSMutableArray *buylist = [self.pushArray objectAtIndex:0];
+        NSMutableArray *syslist = [self.pushArray objectAtIndex:1];
+        if (buylist)
+        {
+            [[YHBDataService sharedYHBDataSevice] saveBuyList:buylist];
+        }
+        if (syslist)
+        {
+            [[YHBDataService sharedYHBDataSevice] saveSysList:syslist];
+        }
+    } andFail:^(NSString *aStr) {
+        [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
+    }];
+}
+
 #pragma mark - getter
+
+- (YHBGetPushManage *)netManage
+{
+    if (!_netManage) {
+        _netManage = [[YHBGetPushManage alloc] init];
+    }
+    return _netManage;
+}
 
 - (SRRefreshView *)slimeView
 {
