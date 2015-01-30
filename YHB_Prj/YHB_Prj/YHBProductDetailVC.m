@@ -28,12 +28,13 @@
 #import "YHBShopCartManage.h"
 #import "YHBOrderConfirmVC.h"
 #import "YHBProductWebVC.h"
+#import "MWPhotoBrowser.h"
 
 #define kBlankHeight 15
 #define kCCellHeight 35
 #define kBannerHeight (kMainScreenWidth * 625/1080.0f)
 
-@interface YHBProductDetailVC()<YHBBannerDelegate,YHBConStoreDelegate,YHBSelViewDelegate>
+@interface YHBProductDetailVC()<YHBBannerDelegate,YHBConStoreDelegate,YHBSelViewDelegate,UIScrollViewDelegate,MWPhotoBrowserDelegate>
 {
     CGFloat _currentY;
     BOOL _isBuy; //yes代表点击了购买 no代表点击了购物车
@@ -59,6 +60,7 @@
 @property (strong, nonatomic) YHBPrivateManager *privateManager;
 @property (strong, nonatomic) YHBShopCartManage *shopCartManger;
 @property (strong, nonatomic) YHBProductWebVC *webVc;
+@property (strong, nonatomic) NSMutableArray *photos;
 
 @end
 
@@ -140,7 +142,7 @@
     [self.view addSubview:self.scrollView];
     
     self.bannerView = [[YHBBannerVeiw alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kBannerHeight)];
-    self.bannerView.headScrollView.delegate = self;
+    self.bannerView.delegate = self;
     [self.scrollView addSubview:self.bannerView];
     
     self.infoView = [[YHBPdtInfoView alloc] init];
@@ -275,23 +277,16 @@
 {
     
     NSInteger imageNum = self.productModel.album.count;
-    [self.bannerView.headScrollView setContentSize:CGSizeMake(imageNum * kMainScreenWidth, self.bannerView.headScrollView.height)];
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:imageNum];
+    
     
     for (NSInteger i = 0; i < imageNum; i++) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i * kMainScreenWidth, 0, kMainScreenWidth, self.bannerView.headScrollView.height)];
-        imageView.backgroundColor = [UIColor whiteColor];
-        imageView.layer.borderColor = [kLineColor CGColor];
-        imageView.layer.borderWidth = 0.6;
         YHBAlbum *album = self.productModel.album[i];
-        //设置image
-#warning 以后带去掉placehold-cc
-        [imageView sd_setImageWithURL:[NSURL URLWithString:album.middle] placeholderImage:[UIImage imageNamed:@"productDefault"]];
-        [self.bannerView.headScrollView addSubview:imageView];
-        imageView.tag = i;
+        array[i] = album.middle;
     }
-    [self.bannerView.pageControl setNumberOfPages:imageNum];
-    [self.bannerView.pageControl setCurrentPage:0];
-     
+    self.bannerView.isNeedCycle = NO;
+    [self.bannerView resetUIWithUrlStrArray:[NSArray arrayWithArray:array]];
+ 
 }
 #pragma mark - Action
 #pragma mark 收藏
@@ -386,16 +381,17 @@
             
             _visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
             
-            _visualEffectView.frame = CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight);
+            _visualEffectView.frame = CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight-64);
         }
         self.visualEffectView.alpha = 1.0f;
+        [self.view addSubview:_visualEffectView];
+        [self.view addSubview:_selView];
+        //[[UIApplication sharedApplication].keyWindow addSubview:_visualEffectView];
         
-        [[UIApplication sharedApplication].keyWindow addSubview:_visualEffectView];
-        
-        [[UIApplication sharedApplication].keyWindow addSubview:_selView];
+        //[[UIApplication sharedApplication].keyWindow addSubview:_selView];
         
         [UIView animateWithDuration:0.6f animations:^{
-            _selView.bottom -= _selView.height;
+            _selView.bottom =_selView.bottom- _selView.height-64;
         } completion:^(BOOL finished) {
             
         }];
@@ -426,6 +422,14 @@
     }];
 }
 
+- (void)selViewShouldPushViewController:(UIViewController *)vc
+{
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nav animated:NO completion:^{
+        
+    }];
+}
+
 #pragma mark 点击查看产品详情
 - (void)touchProductDetailCell
 {
@@ -453,18 +457,72 @@
     
 }
 
-#pragma mark 点击head的Banner 广告
+#pragma mark 点击head的Banner
 - (void)touchBannerWithNum:(NSInteger)num;
 {
-
+    
+    if (!self.photos.count) {
+        MWPhoto *photo = nil;
+        self.photos = [NSMutableArray arrayWithCapacity:5];
+        NSInteger imageNum = self.productModel.album.count;
+        for (NSInteger i = 0; i < imageNum; i++) {
+            YHBAlbum *album = self.productModel.album[i];
+            photo = [MWPhoto photoWithURL:[NSURL URLWithString:album.large?:@""]];
+            self.photos[i] = photo;
+        }
+    }
+    [self showPhotoBrownserWithIndex:num];
 }
 
-#pragma mark scrollView delegat
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+#pragma mark - 照片浏览
+- (void)showPhotoBrownserWithIndex:(NSInteger)num
 {
-    if (scrollView == self.bannerView.headScrollView) {
-        NSInteger pageNo = scrollView.contentOffset.x / kMainScreenWidth;
-        [self.bannerView.pageControl setCurrentPage:pageNo];
+    BOOL displayActionButton = NO;
+    BOOL displaySelectionButtons = NO;
+    BOOL displayNavArrows = NO;
+    BOOL enableGrid = YES;
+    BOOL startOnGrid = NO;
+
+    // Create browser
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+    browser.displayActionButton = displayActionButton;//分享按钮,默认是
+    browser.displayNavArrows = displayNavArrows;//左右分页切换,默认否
+    browser.displaySelectionButtons = displaySelectionButtons;//是否显示选择按钮在图片上,默认否
+    browser.alwaysShowControls = displaySelectionButtons;//控制条件控件 是否显示,默认否
+    browser.zoomPhotosToFill = NO;//是否全屏,默认是
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
+    browser.wantsFullScreenLayout = YES;//是否全屏
+#endif
+    browser.enableGrid = enableGrid;//是否允许用网格查看所有图片,默认是
+    browser.startOnGrid = startOnGrid;//是否第一张,默认否
+    browser.enableSwipeToDismiss = YES;
+    [browser showNextPhotoAnimated:YES];
+    [browser showPreviousPhotoAnimated:YES];
+    [browser setCurrentPhotoIndex:num+1];
+    //browser.photoTitles = @[@"000",@"111",@"222",@"333"];//标题
+    
+    //   [self presentViewController:browser animated:YES completion:nil];
+    [self.navigationController pushViewController:browser animated:NO];
+}
+
+#pragma mark - MWPhotoBrowserDelegate
+
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return _photos.count;
+}
+
+- (id )photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    if (index < _photos.count)
+        return [_photos objectAtIndex:index];
+    return nil;
+}
+
+#pragma mark banner delegat
+- (void)didScrollOverRight
+{
+    if (self.productModel.content.length) {
+        [self.navigationController pushViewController:self.webVc animated:YES];
+        [self.webVc sethtmlStr:self.productModel.content];
     }
 }
 

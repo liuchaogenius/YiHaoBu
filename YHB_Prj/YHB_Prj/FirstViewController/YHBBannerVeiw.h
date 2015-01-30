@@ -8,17 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol YHBBannerDelegate <NSObject,UIScrollViewDelegate>
+@protocol YHBBannerDelegate <NSObject>
 
 - (void)touchBannerWithNum:(NSInteger)num;
 
+@optional
+- (void)didScrollOverRight;
+
 @end
 
-@interface YHBBannerVeiw : UIView
+@interface YHBBannerVeiw : UIView<UIScrollViewDelegate>
 
-@property (weak, nonatomic) UIPageControl *pageControl; //分页
-@property (strong, nonatomic) UIScrollView *headScrollView;
+@property (assign, nonatomic) BOOL isNeedCycle;
 
 @property (weak, nonatomic) id<YHBBannerDelegate> delegate;
+
+- (void)resetUIWithUrlStrArray:(NSArray *)urlArray;
 
 @end

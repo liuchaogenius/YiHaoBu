@@ -12,6 +12,7 @@
 
 @protocol YHBSelViewDelegate <NSObject>
 
+- (void)selViewShouldPushViewController:(UIViewController *)vc;
 - (void)selViewShouldDismissWithSelNum:(double)num andSelSku:(YHBSku *)sku;
 
 @end

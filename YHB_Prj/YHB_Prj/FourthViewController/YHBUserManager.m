@@ -35,7 +35,6 @@
     NSString *loginUrl = nil;
     kYHBRequestUrl(@"login.php", loginUrl);
     NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:phone ? phone:@"",@"mobile",password ? :@"",@"password", nil];
-#warning result = -3 后台提示手机号码错误？|| 登陆token问题？
     [NetManager requestWith:postDic url:loginUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@",successDict);
         int result = [successDict[@"result"] intValue];
@@ -134,18 +133,17 @@
     
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         int result = [successDict[@"result"] intValue];
-        if ( result >= -1 && result <=0) {
-            //已经注册
+        if ( result == -1) {
             fBlock(result,@"60秒内只能发送一次验证码，请稍后重试");
         }else if (result == -2){
-            //2分钟只能发送1次
             fBlock(result,@"短信验证码发送失败，请稍后重试");
         }else if (result == -3){
-            //发送失败
             fBlock(result,@"手机号码有误,请换一个手机号码");
         }else if (result == 1){
             //成功
             sBlock();
+        }else{
+            fBlock(result,@"验证码发送失败，请稍后重试");
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
         fBlock(-4,@"请求失败，请检查网络，稍后重试");

@@ -8,6 +8,7 @@
 
 #import "YHBSelColorCell.h"
 #import "UIButton+WebCache.h"
+#import "UIImageView+WebCache.h"
 #define kBlankWidth 20
 #define kTitleFont 10
 #define kImageWidth (kMainScreenWidth/3.0-20)
@@ -54,12 +55,12 @@
     return _rightBlankView;
 }
 
-- (NSMutableArray *)imageBtnArray
+- (NSMutableArray *)imageViewArray
 {
-    if (!_imageBtnArray) {
-        _imageBtnArray = [NSMutableArray arrayWithCapacity:3];
+    if (!_imageViewArray) {
+        _imageViewArray = [NSMutableArray arrayWithCapacity:3];
     }
-    return _imageBtnArray;
+    return _imageViewArray;
 }
 
 - (NSMutableArray *)titleLabelArray
@@ -91,8 +92,9 @@
     else view = self.rightBlankView;
     
     if (title.length) {
-        UIButton *btn = self.imageBtnArray[part];
-        [btn sd_setBackgroundImageWithURL:[NSURL URLWithString:urlStr] forState:UIControlStateNormal];
+        UIImageView *imgv = self.imageViewArray[part];
+        //[btn sd_setBackgroundImageWithURL:[NSURL URLWithString:urlStr] forState:UIControlStateNormal];
+        [imgv sd_setImageWithURL:[NSURL URLWithString:urlStr]];
         UILabel *label = self.titleLabelArray[part];
         label.text = title;
         if ([view superview]) {
@@ -107,17 +109,19 @@
 
 
 #pragma mark - Action
-- (void)touchImgBtm:(UIButton *)sender
+- (void)touchImgView:(UIGestureRecognizer *)gr
 {
-    if ([self.delegate respondsToSelector:@selector(selectCellPartWithIndexPath:part:imgBtn:)]) {
-        [self.delegate selectCellPartWithIndexPath:self.cellIndexPath part:sender.tag imgBtn:sender];
+    UIImageView *sender = (UIImageView *)gr.view;
+    if ([self.delegate respondsToSelector:@selector(selectCellPartWithIndexPath:part:imgView:)]) {
+        [self.delegate selectCellPartWithIndexPath:self.cellIndexPath part:sender.tag imgView:sender];
     }
 }
 
 - (void)longPress:(UIGestureRecognizer *)gr
 {
-    if ([self.delegate respondsToSelector:@selector(longPressCellPartWithIndexPath:part:)]) {
-        [self.delegate longPressCellPartWithIndexPath:self.cellIndexPath part:gr.view.tag];
+    if ([self.delegate respondsToSelector:@selector(longPressCellPartWithIndexPath:part:imgView:)]) {
+        [self.delegate longPressCellPartWithIndexPath:self.cellIndexPath part:gr.view.tag imgView:(UIImageView *)gr.view ];
+
     }
 }
 
@@ -126,16 +130,21 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(num*kMainScreenWidth/3.0, 0, kMainScreenWidth/3.0, kCellHeight)];
     view.backgroundColor = [UIColor clearColor];
     
-    UIButton *imgBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 5, kImageWidth, kImageHeight)];
-    imgBtn.layer.borderWidth = 0.5f;
-    imgBtn.layer.borderColor = [kLineColor CGColor];
-    imgBtn.backgroundColor = [UIColor whiteColor];
-    [imgBtn addTarget:self action:@selector(touchImgBtm:) forControlEvents:UIControlEventTouchUpInside];
-    imgBtn.tag = num;
+    UIImageView *imgView= [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, kImageWidth, kImageHeight)];
+    imgView.layer.borderWidth = 1.5f;
+    imgView.layer.borderColor = [kLineColor CGColor];
+    [imgView setContentMode:UIViewContentModeScaleAspectFill];
+    imgView.clipsToBounds = YES;
+    imgView.backgroundColor = [UIColor whiteColor];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchImgView:)];
+    [imgView addGestureRecognizer:tap];
+    imgView.userInteractionEnabled  = YES;
+    //[imgBtn addTarget:self action:@selector(touchImgBtm:) forControlEvents:UIControlEventTouchUpInside];
+    imgView.tag = num;
     UILongPressGestureRecognizer *lGR = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
-    [imgBtn addGestureRecognizer:lGR];
-    self.imageBtnArray[num] = imgBtn;
-    [view addSubview:imgBtn];
+    [imgView addGestureRecognizer:lGR];
+    self.imageViewArray[num] = imgView;
+    [view addSubview:imgView];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, view.bottom-kTitleFont, kImageWidth, kTitleFont)];
     label.backgroundColor = [UIColor clearColor];

@@ -29,6 +29,8 @@
     return _tableView;
 }
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = kViewBackgroundColor;
@@ -84,8 +86,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-#warning test
-    if (indexPath.row == 1 && [YHBUser sharedYHBUser].userInfo.groupid == 7) {
+    if (indexPath.row == 1 && [YHBUser sharedYHBUser].userInfo.groupid != 7) {
         YHBComCertificVieController *vc = [[YHBComCertificVieController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }

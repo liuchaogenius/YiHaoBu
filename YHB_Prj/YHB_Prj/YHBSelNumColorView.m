@@ -13,6 +13,8 @@
 #import "UIImageView+WebCache.h"
 #import "YHBAlbum.h"
 #import "YHBNumControl.h"
+#import "MWPhotoBrowser.h"
+
 #define kInfoHeight 50
 #define kImageheight 30
 #define kHeadHeight 25
@@ -22,9 +24,9 @@
 #define kbtnHeight 25
 #define kBackColor [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]
 
-@interface YHBSelNumColorView()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,YHBSelColorCellDelefate,YHBNumControlDelegate>
+@interface YHBSelNumColorView()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,YHBSelColorCellDelefate,YHBNumControlDelegate,MWPhotoBrowserDelegate>
 {
-    UIButton *_selectedBtn;
+    UIImageView *_selectedImg;
     NSInteger _selectSkuIndex; //已选色块的编号
 }
 @property (strong, nonatomic) YHBProductDetail *productModel;
@@ -38,6 +40,7 @@
 //@property (strong, nonatomic) UIView *numControlView;//数量控件
 @property (strong, nonatomic) YHBNumControl *numControl;//数量控件
 //@property (strong, nonatomic) UITextField *numberTextfield;
+@property (strong, nonatomic) NSMutableArray *photos;
 
 @property (assign, nonatomic) double totalPrice;//价格
 @property (assign, nonatomic) BOOL isNumFloat;//是否需要小数 数量
@@ -256,27 +259,91 @@
 
 #pragma mark - cell Delegate
 #pragma mark 点击色块
-- (void)selectCellPartWithIndexPath:(NSIndexPath *)indexPath part:(NSInteger)part imgBtn:(UIButton *)btn
+- (void)selectCellPartWithIndexPath:(NSIndexPath *)indexPath part:(NSInteger)part imgView:(UIImageView *)imageView
 {
     MLOG(@"touch cell part");
     NSInteger index = indexPath.row *3 + part;
     if (self.productModel.sku.count > index) {
         YHBSku *sku = self.productModel.sku[index];
         self.tipLabel.text = [NSString stringWithFormat:@"已选“%@”",sku.title];
-        if (_selectedBtn) {
-            _selectedBtn.layer.borderColor = [kLineColor CGColor];
+        if (_selectedImg) {
+            _selectedImg.layer.borderColor = [kLineColor CGColor];
         }
-        _selectedBtn = btn;
-        _selectedBtn.layer.borderColor = [KColor CGColor];
+        _selectedImg = imageView;
+        _selectedImg.layer.borderColor = [KColor CGColor];
         _selectSkuIndex = index;
         self.selSku = sku;
     }
 }
 #pragma mark 长按色块
-- (void)longPressCellPartWithIndexPath:(NSIndexPath *)indexPath part:(NSInteger)part
+- (void)longPressCellPartWithIndexPath:(NSIndexPath *)indexPath part:(NSInteger)part imgView:(UIImageView *)imagView
 {
 #warning 此处带打开图片浏览的界面
     MLOG(@"long press part");
+    NSInteger index = indexPath.row *3 + part;
+    if (self.productModel.sku.count > index) {
+        
+        if (!self.photos.count) {
+            MWPhoto *photo = nil;
+            self.photos = [NSMutableArray arrayWithCapacity:self.productModel.sku.count];
+            NSInteger imageNum = self.productModel.album.count;
+            for (NSInteger i = 0; i < imageNum; i++) {
+                YHBSku *sku = self.productModel.sku[index];
+                photo = [MWPhoto photoWithURL:[NSURL URLWithString:sku.large?:@""]];
+                self.photos[i] = photo;
+                photo.caption = sku.title;
+            }
+        }
+        [self showPhotoBrownserWithIndex:index];
+    }
+    
+}
+
+
+#pragma mark - 照片浏览
+- (void)showPhotoBrownserWithIndex:(NSInteger)num
+{
+    BOOL displayActionButton = NO;
+    BOOL displaySelectionButtons = NO;
+    BOOL displayNavArrows = NO;
+    BOOL enableGrid = YES;
+    BOOL startOnGrid = NO;
+    
+    // Create browser
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+    browser.displayActionButton = displayActionButton;//分享按钮,默认是
+    browser.displayNavArrows = displayNavArrows;//左右分页切换,默认否
+    browser.displaySelectionButtons = displaySelectionButtons;//是否显示选择按钮在图片上,默认否
+    browser.alwaysShowControls = displaySelectionButtons;//控制条件控件 是否显示,默认否
+    browser.zoomPhotosToFill = NO;//是否全屏,默认是
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
+    browser.wantsFullScreenLayout = YES;//是否全屏
+#endif
+    browser.enableGrid = enableGrid;//是否允许用网格查看所有图片,默认是
+    browser.startOnGrid = startOnGrid;//是否第一张,默认否
+    browser.enableSwipeToDismiss = YES;
+    [browser showNextPhotoAnimated:YES];
+    [browser showPreviousPhotoAnimated:YES];
+    [browser setCurrentPhotoIndex:num+1];
+    //browser.photoTitles = @[@"000",@"111",@"222",@"333"];//标题
+    
+   // [self presentViewController:browser animated:YES completion:nil];
+    //[self.navigationController pushViewController:browser animated:NO];
+    if ([self.delegate respondsToSelector:@selector(selViewShouldPushViewController:)]) {
+        [self.delegate selViewShouldPushViewController:browser];
+    }
+}
+
+#pragma mark - MWPhotoBrowserDelegate
+
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return _photos.count;
+}
+
+- (id )photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    if (index < _photos.count)
+        return [_photos objectAtIndex:index];
+    return nil;
 }
 
 #pragma mark - text delegate
@@ -318,7 +385,7 @@
 //    NSDictionary *info = [notif userInfo];
 //    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
 //    CGSize keyboardSize = [value CGRectValue].size;
-    self.bottom = kMainScreenHeight;
+    self.bottom = kMainScreenHeight-64;
 }
 
 - (void)keyboardDidHid:(NSNotification *)notif

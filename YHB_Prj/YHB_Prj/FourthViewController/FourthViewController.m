@@ -96,9 +96,11 @@ enum Button_Type
     _scollView = scrollView;
     [self.view addSubview:scrollView];
     
+    
+//    [self setRightButton:nil title:[YHBUser sharedYHBUser].isLogin ? @"注销" : @"登陆" target:self action:@selector(touchLoginItem)];
     NSString *btnTitle = [YHBUser sharedYHBUser].isLogin ? @"注销" : @"登陆";
     UIBarButtonItem *loginItem = [[UIBarButtonItem alloc] initWithTitle:btnTitle style:UIBarButtonItemStylePlain target:self action:@selector(touchLoginItem)];
-    loginItem.tintColor = [UIColor whiteColor];
+    loginItem.tintColor = [UIColor blackColor];
     self.navigationItem.rightBarButtonItem = loginItem;
     self.loginItem = loginItem;
     
@@ -107,8 +109,17 @@ enum Button_Type
     [self creatButtonsView];
     [self creatCellsView];
     
+    
     //通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshUserHeadView) name:kUserInfoGetMessage object:nil];
+}
+
+
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [SVProgressHUD dismiss];
+    [super viewWillDisappear:animated];
 }
 
 #pragma mark - UI
@@ -199,7 +210,7 @@ enum Button_Type
     }else{
         //注销
         [[YHBUser sharedYHBUser] logoutUser];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kLoginForUserMessage object:[NSNumber numberWithBool:NO]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLogoutMessage object:nil];
         [self refreshUserHeadView];//刷新
     }
     
@@ -209,92 +220,87 @@ enum Button_Type
 #pragma mark  点击cell
 - (void)touchCellWithTag:(NSInteger)tag
 {
-    if ([YHBUser sharedYHBUser].isLogin) {
-        switch (tag) {
-            case Cell_shopInfo:
-            {
-                if ([self userLoginConfirm]) {
-                    YHBShopInfoViewController *shopInfoVC = [[YHBShopInfoViewController alloc] init];
-                    shopInfoVC.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:shopInfoVC animated:YES];
-                }
+    switch (tag) {
+        case Cell_shopInfo:
+        {
+            if ([self userLoginConfirm]) {
+                YHBShopInfoViewController *shopInfoVC = [[YHBShopInfoViewController alloc] init];
+                shopInfoVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:shopInfoVC animated:YES];
             }
-                break;
-            case Cell_certification:
-            {
-                if ([self userLoginConfirm]) {
-                    YHBCertificListViewController *vc = [[YHBCertificListViewController alloc] init];
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
-            }
-                break;
-            case Cell_myOrder:
-            {
-                if ([self userLoginConfirm]) {
-                    YHBOrderListViewController *vc = [[YHBOrderListViewController alloc] init];
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
-            }
-                break;
-            case Cell_address:
-            {
-                if ([self userLoginConfirm]) {
-                    YHBAdressListViewController *vc = [[YHBAdressListViewController alloc] init];
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
-            }
-                break;
-            case Cell_private:
-            {
-                if ([self userLoginConfirm]) {
-                    YHBMyPrivateViewController *vc = [[YHBMyPrivateViewController alloc] init];
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
-                
-            }
-                break;
-            case Cell_aboutUs:
-            {
-
-            }
-                break;
-            case Cell_clause:
-            {
-                
-            }
-                break;
-            case Cell_tips:
-            {
-                
-            }
-                break;
-            case Cell_share:
-            {
-                
-            }
-                break;
-            case Cell_Myprice:
-            {
-                //我的报价
-                if ([self userLoginConfirm])
-                {
-                    LookQuoteViewController *vc = [[LookQuoteViewController alloc] init];
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
-                
-            }
-                break;
-            default:
-                break;
         }
-
-    }else{
-        [self touchLoginItem];
+            break;
+        case Cell_certification:
+        {
+            if ([self userLoginConfirm]) {
+                YHBCertificListViewController *vc = [[YHBCertificListViewController alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+            break;
+        case Cell_myOrder:
+        {
+            if ([self userLoginConfirm]) {
+                YHBOrderListViewController *vc = [[YHBOrderListViewController alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+            break;
+        case Cell_address:
+        {
+            if ([self userLoginConfirm]) {
+                YHBAdressListViewController *vc = [[YHBAdressListViewController alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+            break;
+        case Cell_private:
+        {
+            if ([self userLoginConfirm]) {
+                YHBMyPrivateViewController *vc = [[YHBMyPrivateViewController alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
+        }
+            break;
+        case Cell_aboutUs:
+        {
+            
+        }
+            break;
+        case Cell_clause:
+        {
+            
+        }
+            break;
+        case Cell_tips:
+        {
+            
+        }
+            break;
+        case Cell_share:
+        {
+            
+        }
+            break;
+        case Cell_Myprice:
+        {
+            //我的报价
+            if ([self userLoginConfirm])
+            {
+                LookQuoteViewController *vc = [[LookQuoteViewController alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
+        }
+            break;
+        default:
+            break;
     }
 }
 

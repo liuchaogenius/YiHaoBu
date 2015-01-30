@@ -54,6 +54,12 @@
     [self addTableViewTragWithTableView:self.tableView];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [SVProgressHUD dismiss];
+    [super viewWillDisappear:animated];
+}
+
 #pragma mark 网络请求
 - (void)getDataWithPageID:(NSInteger)pageid
 {

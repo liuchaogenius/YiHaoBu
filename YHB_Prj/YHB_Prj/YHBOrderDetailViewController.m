@@ -86,6 +86,12 @@ typedef enum : NSInteger {
     }];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [SVProgressHUD dismiss];
+    [super viewWillDisappear:animated];
+}
+
 - (void)reSetUI
 {
     [self.firstSection setUIWithBuyer:self.orderModel.buyerName address:self.orderModel.buyerAddress moble:self.orderModel.buyerMobile statusDes:self.orderModel.dstatus isNeedLogicView:(self.orderModel.sendUrl.length ? YES:NO) amount:self.orderModel.money fee:self.orderModel.fee];
@@ -161,26 +167,34 @@ typedef enum : NSInteger {
 #pragma mark 点击功能按钮
 - (void)touchActionBtn : (UIButton *)sender
 {
-#warning 评价vc未引入
-//    YHBPublicCommentVC *vc = [[YHBPublicCommentVC alloc] initWithOrderDetailModel:self.orderModel];
-//    [self.navigationController pushViewController:vc animated:YES];
-    
-    NSString *action = self.orderModel.naction[sender.tag];
-    [SVProgressHUD showWithStatus:@"操作中..." cover:YES offsetY:0];
-    __weak YHBOrderDetailViewController *weakself = self;
-    [self.orderManager changeOrderStatusWithToken:([YHBUser sharedYHBUser].token ? :@"") ItemID:(NSInteger)self.orderModel.itemid Action:action?:@"" Success:^{
-        [SVProgressHUD showWithStatus:@"操作成功,正在重新加载订单信息.." cover:YES offsetY:0];
-        [weakself.orderManager getOrderDetailWithToken:([YHBUser sharedYHBUser].token?:@"") ItemID:(NSInteger)weakself.orderModel.itemid Success:^(YHBOrderDetail *model) {
-            weakself.orderModel = model;
-            [weakself reSetUI];
-            [SVProgressHUD dismissWithSuccess:@"操作成功!"];
-        } failure:^{
-            [SVProgressHUD dismissWithError:@"加载订单信息失败,请重新尝试"];
+    if ([sender.titleLabel.text isEqualToString:@"评价"]) {
+        YHBPublicCommentVC *vc = [[YHBPublicCommentVC alloc] initWithOrderDetailModel:self.orderModel];
+        [vc setPublishSuccessHandler:^{
+            __weak YHBOrderDetailViewController *weakself = self;
+            [self.orderManager getOrderDetailWithToken:([YHBUser sharedYHBUser].token ? :@"") ItemID:self.itemID Success:^(YHBOrderDetail *model) {
+                weakself.orderModel = model;
+                [weakself reSetUI];
+            } failure:^{
+            }];
         }];
-    } failure:^{
-        [SVProgressHUD dismissWithError:@"操作失败，请稍后重试"];
-    }];
-    
+        [self.navigationController pushViewController:vc animated:YES];
+    }else{
+        NSString *action = self.orderModel.naction[sender.tag];
+        [SVProgressHUD showWithStatus:@"操作中..." cover:YES offsetY:0];
+        __weak YHBOrderDetailViewController *weakself = self;
+        [self.orderManager changeOrderStatusWithToken:([YHBUser sharedYHBUser].token ? :@"") ItemID:(NSInteger)self.orderModel.itemid Action:action?:@"" Success:^{
+            [SVProgressHUD showWithStatus:@"操作成功,正在重新加载订单信息.." cover:YES offsetY:0];
+            [weakself.orderManager getOrderDetailWithToken:([YHBUser sharedYHBUser].token?:@"") ItemID:(NSInteger)weakself.orderModel.itemid Success:^(YHBOrderDetail *model) {
+                weakself.orderModel = model;
+                [weakself reSetUI];
+                [SVProgressHUD dismissWithSuccess:@"操作成功!"];
+            } failure:^{
+                [SVProgressHUD dismissWithError:@"加载订单信息失败,请重新尝试"];
+            }];
+        } failure:^{
+            [SVProgressHUD dismissWithError:@"操作失败，请稍后重试"];
+        }];
+    }
 }
 
 #pragma mark 点击交流

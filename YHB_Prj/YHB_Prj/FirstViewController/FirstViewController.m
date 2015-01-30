@@ -97,6 +97,12 @@
     [super viewWillAppear:YES];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [SVProgressHUD dismiss];
+    [super viewWillDisappear:animated];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -109,7 +115,7 @@
     [self.view addSubview:self.tableView];
     
     self.bannerView = [[YHBBannerVeiw alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kBannerHeight)];
-    self.bannerView.headScrollView.delegate = self;
+    self.bannerView.delegate = self;
     self.tableView.tableHeaderView = self.bannerView;
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self setExtraCellLineHidden:self.tableView]; //隐藏多需的cell线
@@ -291,21 +297,14 @@
 - (void)refreshAddView
 {
     NSInteger imageNum = self.pageIndexMdoel.slidelist.count;
-    [self.bannerView.headScrollView setContentSize:CGSizeMake(imageNum * kMainScreenWidth, self.bannerView.headScrollView.height)];
-    
+    //[self.bannerView.headScrollView setContentSize:CGSizeMake(imageNum * kMainScreenWidth, self.bannerView.headScrollView.height)];
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:imageNum];
     for (NSInteger i = 0; i < imageNum; i++) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i * kMainScreenWidth, 0, kMainScreenWidth, self.bannerView.headScrollView.height)];
-        imageView.backgroundColor = [UIColor lightTextColor];
-        
         YHBSelllist *slide = self.pageIndexMdoel.slidelist[i];
-        //设置image
-    
-        [imageView sd_setImageWithURL:[NSURL URLWithString:slide.thumb] placeholderImage:[UIImage imageNamed:@"bannerDefault"]];
-        [self.bannerView.headScrollView addSubview:imageView];
-        imageView.tag = i;
+        array[i] = slide.thumb;
     }
-    [self.bannerView.pageControl setNumberOfPages:imageNum];
-    [self.bannerView.pageControl setCurrentPage:0];
+    self.bannerView.isNeedCycle = YES;
+    [self.bannerView resetUIWithUrlStrArray:[NSArray arrayWithArray:array]];
 }
 
 #pragma mark - Action with Delegate
@@ -457,12 +456,6 @@
     }
 }
 
-#pragma mark scrollView delegat
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    NSInteger pageNo = scrollView.contentOffset.x / kMainScreenWidth;
-    [self.bannerView.pageControl setCurrentPage:pageNo];
-}
 
 /*
 #pragma mark - Navigation

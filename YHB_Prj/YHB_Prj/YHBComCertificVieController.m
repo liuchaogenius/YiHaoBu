@@ -94,6 +94,12 @@ typedef enum : NSUInteger{
     
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [SVProgressHUD dismiss];
+    [super viewWillDisappear:animated];
+}
+
 - (void)creatCellsView
 {
     self.cellsView = [[UIView alloc] initWithFrame:CGRectMake(10, self.bigTitleLabel.bottom+20+kCellHeight, kMainScreenWidth-20, kCellHeight*5)];

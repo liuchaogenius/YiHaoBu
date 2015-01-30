@@ -141,6 +141,8 @@ NSString *const kYHBOrderDetailAmount = @"amount";
             return @"付款";
         }else if ([str isEqualToString:@"receive"]) {
             return @"立即收货";
+        }else if ([str isEqualToString:@"comment"]) {
+            return @"评价";
         }
     }
     return nil;

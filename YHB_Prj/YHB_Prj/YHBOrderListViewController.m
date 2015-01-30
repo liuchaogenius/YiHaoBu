@@ -56,6 +56,12 @@
     [super viewWillAppear:animated];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [SVProgressHUD dismiss];
+    [super viewWillDisappear:animated];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"我的订单";

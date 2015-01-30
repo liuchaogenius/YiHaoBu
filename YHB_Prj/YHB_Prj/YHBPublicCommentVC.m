@@ -165,6 +165,12 @@
     self.orderInfoView.priceLabel.text = [NSString stringWithFormat:@"价格：%@",self.model.money];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [SVProgressHUD dismiss];
+    [super viewWillDisappear:animated];
+}
+
 - (void)touchSubBtn
 {
     if (self.commentTextView.text.length) {

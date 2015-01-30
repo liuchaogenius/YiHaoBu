@@ -10,8 +10,8 @@
 #import "SVProgressHUD.h"
 #import "YHBUser.h"
 #import "YHBUserManager.h"
-#define kWhiteleft 2
-#define kButtonleft 10
+#define kWhiteleft 0
+#define kButtonleft 25
 enum TextField_Type
 {
     TextField_phoneNumber = 30,//账号文本框-登录
@@ -41,13 +41,13 @@ enum TextField_Type
 {
     if (!_findPswView) {
         
-        _findPswView = [[UIView alloc] initWithFrame:CGRectMake(kWhiteleft, 20, kMainScreenWidth-2*kWhiteleft, 215)];
+        _findPswView = [[UIView alloc] initWithFrame:CGRectMake(kWhiteleft, 0, kMainScreenWidth-2*kWhiteleft, 215+20+20)];
         _findPswView.backgroundColor = [UIColor whiteColor];
         _findPswView.layer.borderColor = [kLineColor CGColor];//[RGBCOLOR(207, 207, 207) CGColor];
         _findPswView.layer.borderWidth = 1.0f;
         _findPswView.layer.cornerRadius = 4.0;
         
-        _phoneNumberTextField = [self customedTextFieldWithFrame:CGRectMake(kButtonleft, 15, _findPswView.bounds.size.width-2*kButtonleft, 35)  andPlaceholder:@"输入手机号" andTag:TextField_phoneNumber andReturnKeyType:UIReturnKeyNext];
+        _phoneNumberTextField = [self customedTextFieldWithFrame:CGRectMake(kButtonleft, 15+20, _findPswView.bounds.size.width-2*kButtonleft, 35)  andPlaceholder:@"输入手机号" andTag:TextField_phoneNumber andReturnKeyType:UIReturnKeyNext];
         [_phoneNumberTextField setKeyboardType:UIKeyboardTypeNumberPad];
         [_findPswView addSubview:self.phoneNumberTextField];
         
@@ -64,7 +64,7 @@ enum TextField_Type
         
         //验证码button
         UIButton *checkCodeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        checkCodeButton.frame = CGRectMake(_findPswView.bounds.size.width-10-_checkCodeTextField.width/2.0f,_checkCodeTextField.top, _checkCodeTextField.width/2.0f, 35);
+        checkCodeButton.frame = CGRectMake(_findPswView.bounds.size.width-kButtonleft-_checkCodeTextField.width/2.0f,_checkCodeTextField.top, _checkCodeTextField.width/2.0f, 35);
         checkCodeButton.titleLabel.font = kFont14;
         [checkCodeButton setBackgroundColor:RGBCOLOR(220, 220, 220)];
         [checkCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
@@ -102,24 +102,29 @@ enum TextField_Type
     
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [SVProgressHUD dismiss];
+    [super viewWillDisappear:animated];
+}
 
 #pragma mark - Action
 - (void)getCheckCode
 {
     
      if (self.phoneNumberTextField.text && self.phoneNumberTextField.text.length) {
-     [SVProgressHUD showWithStatus:@"验证码发送中" cover:YES offsetY:kMainScreenHeight/2.0];
-     [[YHBUserManager sharedManager] getCheckCodeWithPhone:self.phoneNumberTextField.text smstpl:@"findpassword"  Success:^(){
-         [SVProgressHUD dismissWithSuccess:@"验证码已发送到您的手机"];
-         self.checkCodeButton.enabled = NO;
-         _secondCountDown = ksecond;
-         if (!self.checkCodeTimer) {
-             self.checkCodeTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timeClicked) userInfo:nil repeats:YES];
-         }
-    } failure:^(int result, NSString *errorString) {
-         [SVProgressHUD showErrorWithStatus:errorString cover:YES offsetY:kMainScreenHeight/2.0];
-         //self.checkCode = nil;
-     }];
+         [SVProgressHUD showWithStatus:@"验证码发送中" cover:YES offsetY:kMainScreenHeight/2.0];
+         [[YHBUserManager sharedManager] getCheckCodeWithPhone:self.phoneNumberTextField.text smstpl:@"findpassword"  Success:^(){
+             [SVProgressHUD dismissWithSuccess:@"验证码已发送到您的手机"];
+             self.checkCodeButton.enabled = NO;
+             _secondCountDown = ksecond;
+             if (!self.checkCodeTimer) {
+                 self.checkCodeTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timeClicked) userInfo:nil repeats:YES];
+             }
+        } failure:^(int result, NSString *errorString) {
+             [SVProgressHUD showErrorWithStatus:errorString cover:YES offsetY:kMainScreenHeight/2.0];
+             //self.checkCode = nil;
+         }];
      }else{
          [SVProgressHUD showErrorWithStatus:@"请输入手机号" cover:YES offsetY:kMainScreenHeight/2.0];
      }

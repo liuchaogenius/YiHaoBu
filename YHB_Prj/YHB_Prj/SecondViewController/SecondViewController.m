@@ -239,6 +239,12 @@ typedef enum : NSUInteger {
     
     [self addTableViewTragWithTableView:self.tableView];
 
+    
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [SVProgressHUD dismiss];
+    [super viewWillDisappear:animated];
 }
 
 - (NSString *)getCateID
@@ -569,6 +575,8 @@ typedef enum : NSUInteger {
         _selectSegBtn.backgroundColor = KColor;
         _selectSearchType = sender.tag;
         
+        UIButton *btn = (UIButton *)[self.filterView viewWithTag:Filter_all];
+        [self touchFilterButton:btn];
     }
 }
 

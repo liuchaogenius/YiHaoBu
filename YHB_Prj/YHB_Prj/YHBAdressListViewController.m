@@ -52,6 +52,12 @@ typedef enum : NSUInteger {
     return _tableView;
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [SVProgressHUD dismiss];
+    [super viewWillDisappear:animated];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     _selModel = nil;

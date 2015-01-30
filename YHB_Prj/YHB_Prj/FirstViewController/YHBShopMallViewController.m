@@ -95,7 +95,7 @@
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     self.bannerView = [[YHBBannerVeiw alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kBannerHeight)];
-    self.bannerView.headScrollView.delegate = self;
+    self.bannerView.delegate = self;
     self.tableView.tableHeaderView = self.bannerView;
     [self setExtraCellLineHidden:self.tableView]; //隐藏多需的cell线
 
@@ -115,6 +115,13 @@
     if (self.navigationController.navigationBar.hidden) {
         self.navigationController.navigationBarHidden = NO;
     }
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [SVProgressHUD dismiss];
+    [super viewWillDisappear:animated];
 }
 
 #pragma mark - tableView delegate and datasource
@@ -244,21 +251,15 @@
 - (void)refreshAddView
 {
     NSInteger imageNum = self.indexModel.slidelist.count;
-    [self.bannerView.headScrollView setContentSize:CGSizeMake(imageNum * kMainScreenWidth, self.bannerView.headScrollView.height)];
-    
+
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:imageNum];
     for (NSInteger i = 0; i < imageNum; i++) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i * kMainScreenWidth, 0, kMainScreenWidth, self.bannerView.headScrollView.height)];
-        imageView.backgroundColor = [UIColor whiteColor];
-        
         YHBSlidelist *slide = self.indexModel.slidelist[i];
         //设置image
-        
-        [imageView sd_setImageWithURL:[NSURL URLWithString:slide.thumb] placeholderImage:[UIImage imageNamed:@"bannerDefault"]];
-        [self.bannerView.headScrollView addSubview:imageView];
-        imageView.tag = i;
+        array[i] = slide.thumb;
     }
-    [self.bannerView.pageControl setNumberOfPages:imageNum];
-    [self.bannerView.pageControl setCurrentPage:0];
+    self.bannerView.isNeedCycle = YES;
+    [self.bannerView resetUIWithUrlStrArray:[NSArray arrayWithArray:array]];
 }
 
 
@@ -312,12 +313,6 @@
     }
 }
 
-#pragma mark scrollView delegat
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    NSInteger pageNo = scrollView.contentOffset.x / kMainScreenWidth;
-    [self.bannerView.pageControl setCurrentPage:pageNo];
-}
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField;
 {

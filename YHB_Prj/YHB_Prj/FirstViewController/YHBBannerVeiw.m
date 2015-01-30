@@ -7,6 +7,17 @@
 //
 
 #import "YHBBannerVeiw.h"
+#import "UIImageView+WebCache.h"
+
+@interface YHBBannerVeiw()
+
+@property (assign, nonatomic) NSInteger imageNum;
+
+@property (weak, nonatomic) UIPageControl *pageControl; //分页
+@property (strong, nonatomic) UIScrollView *headScrollView;
+
+
+@end
 
 @implementation YHBBannerVeiw
 
@@ -14,14 +25,15 @@
 {
     self = [super initWithFrame:frame];
     self.backgroundColor = [UIColor whiteColor];
-    
-    
+    self.isNeedCycle = NO;
+    self.imageNum = 0;
     UITapGestureRecognizer *tapgz = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchBanners)];
     [self addGestureRecognizer:tapgz];
     
     UIScrollView *headScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.width,self.height)];
     self.headScrollView = headScrollView;
-    [headScrollView setBounces:NO];
+    self.headScrollView.delegate = self;
+    [headScrollView setBounces:YES];
     headScrollView.backgroundColor = [UIColor whiteColor];
     [headScrollView setShowsHorizontalScrollIndicator:NO];
     [headScrollView setContentSize:CGSizeMake(self.width, self.height)];
@@ -30,7 +42,7 @@
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
     //设置image
-    imageView.image = [UIImage imageNamed:@"bannerDefault"];
+    //imageView.image = [UIImage imageNamed:@"bannerDefault"];
     [headScrollView addSubview:imageView];
     imageView.backgroundColor = [UIColor whiteColor];
     [headScrollView setPagingEnabled:YES];
@@ -45,19 +57,74 @@
     [pageControl setPageIndicatorTintColor:[UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1.0]];
     [self addSubview:pageControl];
     self.pageControl = pageControl;
-
+    self.imageNum = 1;
     return self;
+}
+
+- (void)resetUIWithUrlStrArray:(NSArray *)urlArray
+{
+    NSInteger imageNum = urlArray.count;
+    self.imageNum = imageNum;
+    [self.headScrollView removeSubviews];
+    [self.headScrollView setContentSize:CGSizeMake((self.isNeedCycle?imageNum+2:imageNum) * kMainScreenWidth, self.headScrollView.height)];
+    
+    for (NSInteger i = 0; i < (self.isNeedCycle?imageNum+2:imageNum); i++) {
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i * kMainScreenWidth, 0, kMainScreenWidth, self.headScrollView.height)];
+        imageView.backgroundColor = [UIColor lightGrayColor];
+        MLOG(@"%@",urlArray);
+        //[imageView sd_setImageWithURL:[NSURL URLWithString:urlArray[_isNeedCycle ? (i-1+imageNum)%imageNum : i]]];
+        [self.headScrollView addSubview:imageView];
+        imageView.tag = i;
+    }
+    [self.pageControl setNumberOfPages:imageNum];
+    [self.pageControl setCurrentPage:0];
+    if (self.isNeedCycle) {
+        self.headScrollView.contentOffset = CGPointMake(kMainScreenWidth, 0);
+    }
 }
 
 #pragma mark - Action
 - (void)touchBanners
 {
     NSInteger number = self.pageControl.currentPage;
-    if ([self.delegate respondsToSelector:@selector(touchBannerWithNum:)]) {
+    if (self.imageNum && [self.delegate respondsToSelector:@selector(touchBannerWithNum:)]) {
         [self.delegate touchBannerWithNum:number];
     }
 }
 
+#pragma mark - delegate
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSInteger pageNo = scrollView.contentOffset.x / kMainScreenWidth;
+    
+    if (self.isNeedCycle) {
+        if (pageNo+1 == self.imageNum+2) {
+            self.headScrollView.contentOffset = CGPointMake(kMainScreenWidth, 0);
+            pageNo = 0;
+        }else if(pageNo == 0){
+            self.headScrollView.contentOffset = CGPointMake(kMainScreenWidth*(self.imageNum), 0);
+            pageNo = self.imageNum-1;
+        }else{
+            --pageNo;
+        }
+    }
+    
+    [self.pageControl setCurrentPage:pageNo];
+}
 
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (self.pageControl.currentPage == self.imageNum-1 && !self.isNeedCycle) {
+        CGFloat offSetX = scrollView.contentOffset.x-kMainScreenWidth*self.pageControl.currentPage;
+        if (offSetX > 20.0) {
+            if ([self.delegate respondsToSelector:@selector(didScrollOverRight)]) {
+                [self.delegate didScrollOverRight];
+            }
+        }
+//        MLOG(@"didStop");
+//        MLOG(@"x=%f,y=%f",scrollView.contentOffset.x-kMainScreenWidth*self.pageControl.currentPage,scrollView.contentOffset.y);
+    }
+}
 
 @end

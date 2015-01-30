@@ -179,6 +179,7 @@
         _payBtn.enabled = NO;
         _payBtn.backgroundColor = [UIColor lightGrayColor];
     }
+    [SVProgressHUD dismiss];
 }
 
 - (void)viewDidLoad {
@@ -569,12 +570,12 @@
 
 - (void)keybordWillShow:(NSNotification *)notif
 {
-    MLOG(@"object:%@",notif.object);
-    NSDictionary *info = [notif userInfo];
-    MLOG(@"%@",info);
-    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
-    CGSize keyboardSize = [value CGRectValue].size;
-    MLOG(@"通知--%@",(UITextField *)value);
+//    MLOG(@"object:%@",notif.object);
+//    NSDictionary *info = [notif userInfo];
+//    MLOG(@"%@",info);
+//    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+//    CGSize keyboardSize = [value CGRectValue].size;
+//    MLOG(@"通知--%@",(UITextField *)value);
     
     
 }

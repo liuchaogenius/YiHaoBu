@@ -247,7 +247,11 @@ enum TextTag
     return _confirmButton;
 }
 
-
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [SVProgressHUD dismiss];
+    [super viewWillDisappear:animated];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
