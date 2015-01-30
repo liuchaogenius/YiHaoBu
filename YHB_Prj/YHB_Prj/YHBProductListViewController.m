@@ -64,7 +64,7 @@
 - (void)getDataWithPageID:(NSInteger)pageid
 {
     __weak YHBProductListViewController *weakself = self;
-    [self.manager getProductListWithUserID:[YHBUser sharedYHBUser].userInfo.userid typeID:kAll pageID:pageid pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
+    [self.manager getProductListWithUserID:(NSInteger)[YHBUser sharedYHBUser].userInfo.userid typeID:kAll pageID:pageid pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
         weakself.page = page;
         if ((int)page.pageid == 1) {
             weakself.modelList = modelArray;
@@ -72,8 +72,8 @@
             [weakself.modelList addObjectsFromArray:modelArray];
         }
         [self.tableView reloadData];
-    } failure:^{
-        [SVProgressHUD showErrorWithStatus:@"获取我的产品失败，请稍后重试!" cover:YES offsetY:0];
+    } failure:^(NSString *error) {
+        [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
     }];
 }
 

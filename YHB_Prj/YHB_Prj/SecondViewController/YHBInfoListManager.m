@@ -39,17 +39,17 @@
     }
     return _actionArray;
 }
-
-- (void)getProductListWithUserID:(NSInteger)userID typeID:(NSInteger)typeID pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock
+//NSString *error = successDict[@"error"];
+- (void)getProductListWithUserID:(NSInteger)userID typeID:(NSInteger)typeID pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)(NSString *error))fBlock
 {
     [self searchProductListWithUserID:userID typeID:typeID KeyWord:nil cateID:nil PageID:pageID pageSize:pageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
         sBlock(modelArray,page);
-    } failure:^{
-        if(fBlock) fBlock();
+    } failure:^(NSString *error){
+        if(fBlock) fBlock(error);
     }];
 }
 
-- (void)searchProductListWithUserID:(NSInteger)userID typeID:(NSInteger)typeID KeyWord:(NSString *)keyWord cateID:(NSString *)cateID PageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock
+- (void)searchProductListWithUserID:(NSInteger)userID typeID:(NSInteger)typeID KeyWord:(NSString *)keyWord cateID:(NSString *)cateID PageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)(NSString *error))fBlock
 {
     NSString *url = nil;
     kYHBRequestUrl(@"getMallList.php", url);
@@ -91,24 +91,24 @@
             }
         }else{
             if (fBlock) {
-                fBlock();
+                fBlock(kErrorStr);
             }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock();
+        fBlock(kNoNet);
     }];
 }
 
-- (void)getSellListWithUserID:(NSInteger)userID pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock
+- (void)getSellListWithUserID:(NSInteger)userID pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)(NSString *error))fBlock
 {
     [self searchSellListWithUserID:userID KeyWord:nil cateID:nil Vip:kAll pageID:pageID pageSize:pageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
         sBlock(modelArray,page);
-    } failure:^{
-        if(fBlock) fBlock();
+    } failure:^(NSString *error){
+        if(fBlock) fBlock(error);
     }];
 }
 
-- (void)searchSellListWithUserID:(NSInteger)userID KeyWord:(NSString *)keyWord cateID:(NSString *)cateID Vip:(NSInteger)vip pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock
+- (void)searchSellListWithUserID:(NSInteger)userID KeyWord:(NSString *)keyWord cateID:(NSString *)cateID Vip:(NSInteger)vip pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)(NSString *error))fBlock
 {
     NSString *url = nil;
     kYHBRequestUrl(@"getSellList.php", url);
@@ -148,25 +148,25 @@
             }
         }else{
             if (fBlock) {
-                fBlock();
+                fBlock(kErrorStr);
             }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock();
+        fBlock(kNoNet);
     }];
 }
 
 //获取/搜索求购信息列表
-- (void)getBuyListWithUserID:(NSInteger)userID pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock
+- (void)getBuyListWithUserID:(NSInteger)userID pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)(NSString *error))fBlock
 {
     [self searchBuyListWithUserID:userID KeyWord:nil cateID:nil pageID:pageID Vip:kAll pageSize:pageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
         sBlock(modelArray,page);
-    } failure:^{
-        if(fBlock) fBlock();
+    } failure:^(NSString *error){
+        if(fBlock) fBlock(error);
     }];
 }
 
-- (void)searchBuyListWithUserID:(NSInteger)userID KeyWord:(NSString *)keyWord cateID:(NSString *)cateID pageID:(NSInteger)pageID Vip:(NSInteger)vip pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock{
+- (void)searchBuyListWithUserID:(NSInteger)userID KeyWord:(NSString *)keyWord cateID:(NSString *)cateID pageID:(NSInteger)pageID Vip:(NSInteger)vip pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)(NSString *error))fBlock{
     NSString *url = nil;
     kYHBRequestUrl(@"getBuyList.php", url);
     NSMutableDictionary *postDic = [NSMutableDictionary dictionaryWithCapacity:7];
@@ -205,15 +205,15 @@
             }
         }else{
             if (fBlock) {
-                fBlock();
+                fBlock(kErrorStr);
             }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock();
+        fBlock(kNoNet);
     }];
 }
 
-- (void)searchCompanyListWithKeyWord:(NSString *)keyWord cateID:(NSString *)cateID Vip:(int)vip pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock
+- (void)searchCompanyListWithKeyWord:(NSString *)keyWord cateID:(NSString *)cateID Vip:(int)vip pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)(NSString *error))fBlock
 {
     NSString *url = nil;
     kYHBRequestUrl(@"getCompanyList.php", url);
@@ -250,15 +250,15 @@
             }
         }else{
             if (fBlock) {
-                fBlock();
+                fBlock(kErrorStr);
             }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock();
+        fBlock(kNoNet);
     }];
 }
 
-- (void)getMyFavoriteWithToken:(NSString *)token Action:(GetPrivateTag)tag PageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock
+- (void)getMyFavoriteWithToken:(NSString *)token Action:(GetPrivateTag)tag PageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)(NSString *error))fBlock
 {
     NSString *url = nil;
     NSMutableDictionary *postDic = [NSMutableDictionary dictionaryWithCapacity:4];
@@ -302,11 +302,11 @@
                     
         }else{
             if (fBlock) {
-                fBlock();
+                fBlock(kErrorStr);
             }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock();
+        fBlock(kNoNet);
     }];
 }
 

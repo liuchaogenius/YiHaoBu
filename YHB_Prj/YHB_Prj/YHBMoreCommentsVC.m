@@ -82,8 +82,8 @@
     [self.commentManager getCommentListWithItemID:self.itemID token:[YHBUser sharedYHBUser].token Success:^(NSMutableArray *modelArray) {
         weakself.modelArray = modelArray;
         [weakself.tableView reloadData];
-    } failure:^{
-        [SVProgressHUD showErrorWithStatus:@"获取数据失败，请稍后再试！" cover:YES offsetY:0];
+    } failure:^(NSString *error) {
+        [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
     }];
 }
 

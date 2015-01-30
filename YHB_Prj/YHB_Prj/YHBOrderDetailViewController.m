@@ -81,8 +81,8 @@ typedef enum : NSInteger {
         weakself.orderModel = model;
         [weakself reSetUI];
         [SVProgressHUD dismiss];
-    } failure:^{
-        [SVProgressHUD dismissWithError:@"加载订单信息失败，请稍后再试!"];
+    } failure:^(NSString *error) {
+        [SVProgressHUD dismissWithError:error];
     }];
 }
 
@@ -174,7 +174,7 @@ typedef enum : NSInteger {
             [self.orderManager getOrderDetailWithToken:([YHBUser sharedYHBUser].token ? :@"") ItemID:self.itemID Success:^(YHBOrderDetail *model) {
                 weakself.orderModel = model;
                 [weakself reSetUI];
-            } failure:^{
+            }failure:^(NSString *error) {
             }];
         }];
         [self.navigationController pushViewController:vc animated:YES];
@@ -188,11 +188,11 @@ typedef enum : NSInteger {
                 weakself.orderModel = model;
                 [weakself reSetUI];
                 [SVProgressHUD dismissWithSuccess:@"操作成功!"];
-            } failure:^{
-                [SVProgressHUD dismissWithError:@"加载订单信息失败,请重新尝试"];
+            } failure:^(NSString *error) {
+                [SVProgressHUD dismissWithError:error];
             }];
-        } failure:^{
-            [SVProgressHUD dismissWithError:@"操作失败，请稍后重试"];
+        } failure:^(NSString *error) {
+            [SVProgressHUD dismissWithError:error];
         }];
     }
 }

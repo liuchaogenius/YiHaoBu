@@ -80,8 +80,8 @@ typedef enum : NSUInteger {
         if(isNeed) [SVProgressHUD dismiss];
         self.modelArray = modelList;
         [self.tableView reloadData];
-    } failure:^{
-        if(isNeed) [SVProgressHUD dismissWithError:@"数据加载失败，请重新尝试"];
+    } failure:^(NSString *error) {
+        if(isNeed) [SVProgressHUD dismissWithError:error];
     }];
 }
 
@@ -161,8 +161,8 @@ typedef enum : NSUInteger {
         {
             [self.addManager deleteAddressWithToken:[YHBUser sharedYHBUser].token?:@"" AndItemID:(int)_selModel.itemid WithSuccess:^{
                 [weakself getOrRefreshDataWithIsNeedTips:NO];
-            } failure:^{
-                [SVProgressHUD showErrorWithStatus:@"删除失败，请重试！" cover:YES offsetY:0];
+            } failure:^(NSString *error) {
+                [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
             }];
         }
             break;
@@ -180,8 +180,8 @@ typedef enum : NSUInteger {
             [self.addManager addOrEditAddressWithAddModel:_selModel Token:[YHBUser sharedYHBUser].token?:@"" isNew:NO WithSuccess:^{
                 [SVProgressHUD showSuccessWithStatus:@"修改默认收货地址成功！" cover:YES offsetY:0];
                 [weakself getOrRefreshDataWithIsNeedTips:NO];
-            } failure:^{
-                [SVProgressHUD showSuccessWithStatus:@"修改默认收货地址失败，请重试！" cover:YES offsetY:0];
+            } failure:^(NSString *error) {
+                [SVProgressHUD showSuccessWithStatus:error cover:YES offsetY:0];
             }];
         }
             break;

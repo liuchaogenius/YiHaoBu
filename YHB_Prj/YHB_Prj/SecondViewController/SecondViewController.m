@@ -277,8 +277,8 @@ typedef enum : NSUInteger {
                     [SVProgressHUD showErrorWithStatus:@"未找到符合条件的采购" cover:YES offsetY:0];
                 }
                 [self.tableView reloadData];
-            } failure:^{
-                [SVProgressHUD showErrorWithStatus:@"搜索失败，请稍后再试！" cover:NO offsetY:0];
+            } failure:^(NSString *error) {
+                [SVProgressHUD showErrorWithStatus:error cover:NO offsetY:0];
             }];
         }
             break;
@@ -296,8 +296,8 @@ typedef enum : NSUInteger {
                     [SVProgressHUD showErrorWithStatus:@"未找到符合条件的供应" cover:YES offsetY:0];
                 }
                 [self.tableView reloadData];
-            } failure:^{
-                [SVProgressHUD showErrorWithStatus:@"搜索失败，请稍后再试！" cover:NO offsetY:0];
+            } failure:^(NSString *error) {
+                [SVProgressHUD showErrorWithStatus:error cover:NO offsetY:0];
             }];
         }
             break;
@@ -315,8 +315,8 @@ typedef enum : NSUInteger {
                     [SVProgressHUD showErrorWithStatus:@"未找到符合条件的产品" cover:YES offsetY:0];
                 }
                 [self.tableView reloadData];
-            } failure:^{
-                [SVProgressHUD showErrorWithStatus:@"搜索失败，请稍后再试！" cover:NO offsetY:0];
+            } failure:^(NSString *error) {
+                [SVProgressHUD showErrorWithStatus:error cover:NO offsetY:0];
             }];
         }
             break;
@@ -335,8 +335,8 @@ typedef enum : NSUInteger {
                 }
                 [self.tableView reloadData];
 
-            } failure:^{
-                [SVProgressHUD showErrorWithStatus:@"搜索失败，请稍后再试！" cover:NO offsetY:0];
+            } failure:^(NSString *error) {
+                [SVProgressHUD showErrorWithStatus:error cover:NO offsetY:0];
             }];
         }
             break;

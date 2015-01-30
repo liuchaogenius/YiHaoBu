@@ -10,6 +10,6 @@
 @class YHBProductDetail;
 @interface YHBProductManager : NSObject
 
-- (void)getProductDetailInfoWithProductID:(NSInteger)productID token:(NSString *)token Success : (void(^)(YHBProductDetail *model))sBlock failure:(void(^)())fBlock;
+- (void)getProductDetailInfoWithProductID:(NSInteger)productID token:(NSString *)token Success : (void(^)(YHBProductDetail *model))sBlock failure:(void(^)(NSString *error))fBlock;
 
 @end

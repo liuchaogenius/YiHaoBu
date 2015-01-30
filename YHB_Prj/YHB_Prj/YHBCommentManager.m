@@ -11,7 +11,7 @@
 #import "NetManager.h"
 @implementation YHBCommentManager
 
-- (void)getCommentListWithItemID:(NSInteger)itemID token:(NSString *)token Success:(void(^)(NSMutableArray *modelArray))sBlock failure:(void(^)())fBlock
+- (void)getCommentListWithItemID:(NSInteger)itemID token:(NSString *)token Success:(void(^)(NSMutableArray *modelArray))sBlock failure:(void(^)(NSString *error))fBlock
 {
     NSString *url = nil;
     kYHBRequestUrl(@"getCommentList.php", url);
@@ -29,13 +29,14 @@
                 sBlock(modelArray);
             }
         }else{
+            NSString *error = successDict[@"error"];
             if (fBlock) {
-                fBlock();
+                fBlock(error?:@"未知错误");
             }
         }
     }failure:^(NSDictionary *failDict, NSError *error) {
         if (fBlock) {
-            fBlock();
+            fBlock(kNoNet);
         }
     }];
 }

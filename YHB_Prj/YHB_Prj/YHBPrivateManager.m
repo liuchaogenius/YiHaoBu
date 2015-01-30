@@ -23,7 +23,7 @@
     return _privateArray;
 }
 
-- (void)privateOrDisPrivateWithItemID:(NSString *)itemID privateType:(NSInteger)privateType token:(NSString *)token Success:(void(^)())sBlock failure:(void(^)())fBlock
+- (void)privateOrDisPrivateWithItemID:(NSString *)itemID privateType:(NSInteger)privateType token:(NSString *)token Success:(void(^)())sBlock failure:(void(^)(NSString *error))fBlock
 {
     NSString *url = nil;
     kYHBRequestUrl(@"postFavorite.php", url);
@@ -36,11 +36,11 @@
             }
         }else{
             if (fBlock) {
-                fBlock();
+                fBlock(kErrorStr);
             }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock();
+        fBlock(kNoNet);
     }];
 
 }

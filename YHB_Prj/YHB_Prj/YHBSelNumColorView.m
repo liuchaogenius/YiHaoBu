@@ -278,7 +278,6 @@
 #pragma mark 长按色块
 - (void)longPressCellPartWithIndexPath:(NSIndexPath *)indexPath part:(NSInteger)part imgView:(UIImageView *)imagView
 {
-#warning 此处带打开图片浏览的界面
     MLOG(@"long press part");
     NSInteger index = indexPath.row *3 + part;
     if (self.productModel.sku.count > index) {

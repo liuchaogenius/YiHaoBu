@@ -226,8 +226,8 @@
             [self.addManager getAreaListWithSuccess:^(NSMutableArray *areaArray) {
                 weakself.areaArray = areaArray;
                 [weakself.areaPicker reloadAllComponents];
-            } failure:^{
-                [SVProgressHUD showErrorWithStatus:@"获取地区信息失败，请稍后再试!" cover:YES offsetY:0];
+            } failure:^(NSString *error) {
+                [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
             }];
         }
         [self showAreaPickView];
@@ -248,8 +248,8 @@
         [weakself.addManager addOrEditAddressWithAddModel:self.addModel Token:([YHBUser sharedYHBUser].token?:@"") isNew:self.isNew WithSuccess:^{
             [SVProgressHUD showSuccessWithStatus:@"更新收货地址成功！" cover:YES offsetY:0];
             if(_handel) _handel();
-        } failure:^{
-            [SVProgressHUD showErrorWithStatus:@"更新收货地址失败，请重试！" cover:YES offsetY:0];
+        } failure:^(NSString *error) {
+            [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
         }];
     }else{
         [SVProgressHUD showErrorWithStatus:@"请填写完整信息！" cover:YES offsetY:0];

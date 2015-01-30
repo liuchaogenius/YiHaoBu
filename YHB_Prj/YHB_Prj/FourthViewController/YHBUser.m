@@ -130,7 +130,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
     [self refreshUserInfoWithSuccess:^{
         [self writeUserInfoToFile];
     } failure:nil];
-    //[self writeUserInfoToFile];
+    [self writeUserInfoToFile];
 }
 
 //退出登录

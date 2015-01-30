@@ -10,6 +10,6 @@
 
 @interface YHBCommentManager : NSObject
 
-- (void)getCommentListWithItemID:(NSInteger)itemID token:(NSString *)token Success:(void(^)(NSMutableArray *modelArray))sBlock failure:(void(^)())fBlock;
+- (void)getCommentListWithItemID:(NSInteger)itemID token:(NSString *)token Success:(void(^)(NSMutableArray *modelArray))sBlock failure:(void(^)(NSString *error))fBlock;
 
 @end

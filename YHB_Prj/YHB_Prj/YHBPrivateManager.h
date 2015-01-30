@@ -16,7 +16,7 @@ enum privateType
 };
 @interface YHBPrivateManager : NSObject
 
-- (void)privateOrDisPrivateWithItemID:(NSString *)itemID privateType:(NSInteger)privateType token:(NSString *)token Success:(void(^)())sBlock failure:(void(^)())fBlock;
+- (void)privateOrDisPrivateWithItemID:(NSString *)itemID privateType:(NSInteger)privateType token:(NSString *)token Success:(void(^)())sBlock failure:(void(^)(NSString *error))fBlock;
 
 
 @end

@@ -11,7 +11,7 @@
 #import "NetManager.h"
 @implementation YHBProductManager
 
-- (void)getProductDetailInfoWithProductID:(NSInteger)productID token:(NSString *)token Success : (void(^)(YHBProductDetail *model))sBlock failure:(void(^)())fBlock
+- (void)getProductDetailInfoWithProductID:(NSInteger)productID token:(NSString *)token Success : (void(^)(YHBProductDetail *model))sBlock failure:(void(^)(NSString *error))fBlock
 {
     NSString *url = nil;
     kYHBRequestUrl(@"getMallDetail.php", url);
@@ -26,11 +26,11 @@
             }
         }else{
             if (fBlock) {
-                fBlock();
+                fBlock(kErrorStr);
             }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock();
+        fBlock(kNoNet);
     }];
     
 }

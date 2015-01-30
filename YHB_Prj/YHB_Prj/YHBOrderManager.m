@@ -23,7 +23,7 @@
     return orderManager;
 }
 
-- (void)getOrderListWithToken:(NSString *)token PageID:(NSInteger)pageid PageSize:(NSInteger)pageSize Success:(void (^)(YHBOrderList *listModel))sBlock failure:(void (^)())fBlock
+- (void)getOrderListWithToken:(NSString *)token PageID:(NSInteger)pageid PageSize:(NSInteger)pageSize Success:(void (^)(YHBOrderList *listModel))sBlock failure:(void (^)(NSString *error))fBlock
 {
     NSString *url = nil;
     kYHBRequestUrl(@"getOrderList.php", url);
@@ -38,16 +38,16 @@
             }
         }else{
             if (fBlock) {
-                fBlock();
+                fBlock(kErrorStr);
             }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock();
+        fBlock(kNoNet);
     }];
 
 }
 
-- (void)getOrderDetailWithToken:(NSString *)token ItemID:(NSInteger)itemID Success:(void (^)(YHBOrderDetail *model))sBlock failure:(void (^)())fBlock
+- (void)getOrderDetailWithToken:(NSString *)token ItemID:(NSInteger)itemID Success:(void (^)(YHBOrderDetail *model))sBlock failure:(void (^)(NSString *error))fBlock
 {
     NSString *url = nil;
     kYHBRequestUrl(@"getOrderDetail.php", url);
@@ -62,16 +62,16 @@
             }
         }else{
             if (fBlock) {
-                fBlock();
+                fBlock(kErrorStr);
             }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock();
+        fBlock(kNoNet);
     }];
 
 }
 
-- (void)changeOrderStatusWithToken:(NSString *)token ItemID:(NSInteger)itemID Action:(NSString *)action Success:(void(^)())sBlock failure:(void(^)())fBlock
+- (void)changeOrderStatusWithToken:(NSString *)token ItemID:(NSInteger)itemID Action:(NSString *)action Success:(void(^)())sBlock failure:(void(^)(NSString *error))fBlock
 {
     NSString *url = nil;
     kYHBRequestUrl(@"postOrderStatus.php", url);
@@ -84,16 +84,16 @@
             }
         }else{
             if (fBlock) {
-                fBlock();
+                fBlock(kErrorStr);
             }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock();
+        fBlock(kNoNet);
     }];
 
 }
 
-- (void)getOrderConfirmWithToken:(NSString *)token source:(NSString *)source ListArray:(NSArray *)listArray Success:(void (^)(YHBOConfirmModel *model))sBlock failure:(void (^)(NSInteger result))fBlock
+- (void)getOrderConfirmWithToken:(NSString *)token source:(NSString *)source ListArray:(NSArray *)listArray Success:(void (^)(YHBOConfirmModel *model))sBlock failure:(void (^)(NSInteger result,NSString *error))fBlock
 {
     NSString *url = nil;
     kYHBRequestUrl(@"getOrder.php", url);
@@ -108,11 +108,11 @@
             }
         }else{
             if (fBlock) {
-                fBlock(result);
+                fBlock(result,kErrorStr);
             }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock(-20);
+        fBlock(-20,kNoNet);
     }];
 
 }

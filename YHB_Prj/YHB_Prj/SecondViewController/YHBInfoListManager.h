@@ -23,27 +23,27 @@ typedef enum : NSUInteger {
 + (instancetype)sharedManager;
 
 //获取产品&样板信息列表
-- (void)getProductListWithUserID:(NSInteger)userID typeID:(NSInteger)typeID pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock;
+- (void)getProductListWithUserID:(NSInteger)userID typeID:(NSInteger)typeID pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)(NSString *error))fBlock;
 
 //搜索产品&样板信息列表 typeid:0产品，1样板  去掉字段是所有(kAll)
-- (void)searchProductListWithUserID:(NSInteger)userID typeID:(NSInteger)typeID KeyWord:(NSString *)keyWord cateID:(NSString *)cateID PageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock;
+- (void)searchProductListWithUserID:(NSInteger)userID typeID:(NSInteger)typeID KeyWord:(NSString *)keyWord cateID:(NSString *)cateID PageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)(NSString *error))fBlock;
 
 //获取/搜索供应信息列表
-- (void)getSellListWithUserID:(NSInteger)userID pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock;
+- (void)getSellListWithUserID:(NSInteger)userID pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)(NSString *error))fBlock;
 
 //搜索供应信息列表
-- (void)searchSellListWithUserID:(NSInteger)userID KeyWord:(NSString *)keyWord cateID:(NSString *)cateID Vip:(NSInteger)vip pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock;
+- (void)searchSellListWithUserID:(NSInteger)userID KeyWord:(NSString *)keyWord cateID:(NSString *)cateID Vip:(NSInteger)vip pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)(NSString *error))fBlock;
 
 //获取求购信息列表
-- (void)getBuyListWithUserID:(NSInteger)userID pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock;
+- (void)getBuyListWithUserID:(NSInteger)userID pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)(NSString *error))fBlock;
 
 //搜索求购信息列表
-- (void)searchBuyListWithUserID:(NSInteger)userID KeyWord:(NSString *)keyWord cateID:(NSString *)cateID pageID:(NSInteger)pageID Vip:(NSInteger)vip pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock;
+- (void)searchBuyListWithUserID:(NSInteger)userID KeyWord:(NSString *)keyWord cateID:(NSString *)cateID pageID:(NSInteger)pageID Vip:(NSInteger)vip pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)(NSString *error))fBlock;
 
 //搜索商城列表
-- (void)searchCompanyListWithKeyWord:(NSString *)keyWord cateID:(NSString *)cateID Vip:(int)vip pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock;
+- (void)searchCompanyListWithKeyWord:(NSString *)keyWord cateID:(NSString *)cateID Vip:(int)vip pageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)(NSString *error))fBlock;
 
 //获取我的收藏
-- (void)getMyFavoriteWithToken:(NSString *)token Action:(GetPrivateTag)tag PageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)())fBlock;
+- (void)getMyFavoriteWithToken:(NSString *)token Action:(GetPrivateTag)tag PageID:(NSInteger)pageID pageSize:(NSInteger)pageSize Success:(void(^)(NSMutableArray *modelArray,YHBPage *page))sBlock failure:(void(^)(NSString *error))fBlock;
 
 @end

@@ -172,7 +172,7 @@ enum Button_Type
             }
                 break;
             case Button_product:{
-                if ([YHBUser sharedYHBUser].userInfo.groupid == 7) {
+                if ((int)[YHBUser sharedYHBUser].userInfo.groupid == 7) {
                     YHBProductListViewController *vc = [[YHBProductListViewController alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
@@ -183,7 +183,7 @@ enum Button_Type
                 break;
             case Button_lookStore:{
                 //跳入浏览商店
-                if ([YHBUser sharedYHBUser].userInfo.groupid >= 6) {
+                if ((int)[YHBUser sharedYHBUser].userInfo.groupid >= 6) {
                     YHBStoreViewController *vc = [[YHBStoreViewController alloc] initWithShopID:(int)[YHBUser sharedYHBUser].userInfo.userid];
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
@@ -324,7 +324,7 @@ enum Button_Type
         [self.loginItem setTitle:@"注销"];
         YHBUser *user = [YHBUser sharedYHBUser];
         [self loadUserPhoto];
-        [self.userHeadView refreshSelfHeadWithIsLogin:YES name:user.userInfo.truename avator:nil thumb:nil group:user.userInfo.groupid company:user.userInfo.company];
+        [self.userHeadView refreshSelfHeadWithIsLogin:YES name:user.userInfo.truename avator:nil thumb:nil group:(NSInteger)user.userInfo.groupid company:user.userInfo.company];
     }else{
         [self.loginItem setTitle:@"登陆"];
         [self.userHeadView refreshSelfHeadWithIsLogin:NO name:nil avator:nil thumb:nil group:0 company:nil];

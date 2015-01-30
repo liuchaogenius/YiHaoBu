@@ -12,7 +12,7 @@
 #import "YHBAreaModel.h"
 @implementation YHBAddressManager
 
-- (void)getDefaultAddressWithToken:(NSString *)token WithSuccess:(void(^)(YHBAddressModel *model))sBlock failure:(void(^)())fBlock
+- (void)getDefaultAddressWithToken:(NSString *)token WithSuccess:(void(^)(YHBAddressModel *model))sBlock failure:(void(^)(NSString *error))fBlock
 {
     NSString *url = nil;
     kYHBRequestUrl(@"getAddress.php", url);
@@ -27,16 +27,16 @@
             }
         }else{
             if (fBlock) {
-                fBlock();
+                fBlock(((NSString *)successDict[@"error"])?:@"未知错误");
             }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock();
+        fBlock(kNoNet);
     }];
 
 }
 
-- (void)getAddresslistWithToken:(NSString *)token WithSuccess:(void(^)(NSMutableArray *modelList))sBlock failure:(void(^)())fBlock
+- (void)getAddresslistWithToken:(NSString *)token WithSuccess:(void(^)(NSMutableArray *modelList))sBlock failure:(void(^)(NSString *error))fBlock
 {
     NSString *url = nil;
     kYHBRequestUrl(@"getAddressList.php", url);
@@ -56,16 +56,16 @@
             }
         }else{
             if (fBlock) {
-                fBlock();
+                fBlock(((NSString *)successDict[@"error"])?:@"未知错误");
             }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock();
+        fBlock(kNoNet);
     }];
 
 }
 
-- (void)getAreaListWithSuccess:(void(^)(NSMutableArray *areaArray))sBlock failure:(void(^)())fBlock
+- (void)getAreaListWithSuccess:(void(^)(NSMutableArray *areaArray))sBlock failure:(void(^)(NSString *error))fBlock
 {
     NSString *url = nil;
     kYHBRequestUrl(@"getAreaList.php", url);
@@ -83,16 +83,16 @@
             }
         }else{
             if (fBlock) {
-                fBlock();
+                fBlock(((NSString *)successDict[@"error"])?:@"未知错误");
             }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock();
+        fBlock(kNoNet);
     }];
 
 }
 
-- (void)addOrEditAddressWithAddModel:(YHBAddressModel *)model Token:(NSString *)token isNew:(BOOL)isNew WithSuccess:(void(^)())sBlock failure:(void(^)())fBlock
+- (void)addOrEditAddressWithAddModel:(YHBAddressModel *)model Token:(NSString *)token isNew:(BOOL)isNew WithSuccess:(void(^)())sBlock failure:(void(^)(NSString *error))fBlock
 {
     NSString *url = nil;
     kYHBRequestUrl(@"postAddress.php", url);
@@ -114,16 +114,16 @@
             }
         }else{
             if (fBlock) {
-                fBlock();
+                fBlock(((NSString *)successDict[@"error"])?:@"未知错误");
             }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock();
+        fBlock(kNoNet);
     }];
 }
 
 //删除常用地址 delAddress.php
-- (void)deleteAddressWithToken:(NSString *)token AndItemID:(int)itemid WithSuccess:(void(^)())sBlock failure:(void(^)())fBlock
+- (void)deleteAddressWithToken:(NSString *)token AndItemID:(int)itemid WithSuccess:(void(^)())sBlock failure:(void(^)(NSString *error))fBlock
 {
     NSString *url = nil;
     kYHBRequestUrl(@"delAddress.php", url);
@@ -136,11 +136,11 @@
             }
         }else{
             if (fBlock) {
-                fBlock();
+                fBlock(((NSString *)successDict[@"error"])?:@"未知错误");
             }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock();
+        fBlock(kNoNet);
     }];
 
 }

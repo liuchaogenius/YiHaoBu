@@ -45,6 +45,7 @@
 		5B4BABBD1A6A4DED00FEBC65 /* YHBShopsListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4BABBC1A6A4DED00FEBC65 /* YHBShopsListCell.m */; };
 		5B4BABC01A6A89FE00FEBC65 /* YHBSortTagsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4BABBF1A6A89FE00FEBC65 /* YHBSortTagsCell.m */; };
 		5B4BABC31A6AB07200FEBC65 /* YHBTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4BABC21A6AB07200FEBC65 /* YHBTagView.m */; };
+		5B565CA31A7BEB8200033764 /* YHBUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B565CA11A7BEB8200033764 /* YHBUserInfo.m */; };
 		5B5887841A78A301006FB319 /* YHBProductListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5887831A78A301006FB319 /* YHBProductListViewController.m */; };
 		5B5A6DA71A6620750043B246 /* CCTextfieldToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A6DA61A6620750043B246 /* CCTextfieldToolView.m */; };
 		5B5A6DAA1A66B1C40043B246 /* YHBPrivateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A6DA91A66B1C40043B246 /* YHBPrivateManager.m */; };
@@ -87,7 +88,6 @@
 		5BD632A11A5FA37400095DFD /* YHBStoreDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD632A01A5FA37400095DFD /* YHBStoreDetailViewController.m */; };
 		5BD8F96C1A1374A500B3A4F2 /* YHBUserHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD8F96B1A1374A500B3A4F2 /* YHBUserHeadView.m */; };
 		5BD8F96F1A13874D00B3A4F2 /* YHBUserCellsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD8F96E1A13874D00B3A4F2 /* YHBUserCellsView.m */; };
-		5BE051291A2C3EF100740437 /* YHBUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE051271A2C3EF100740437 /* YHBUserInfo.m */; };
 		5BE46AE31A529C50008EF2D3 /* YHBPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE46ADF1A529C50008EF2D3 /* YHBPage.m */; };
 		5BE46AE71A52A00C008EF2D3 /* YHBRslist.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE46AE51A52A00C008EF2D3 /* YHBRslist.m */; };
 		5BE76FF51A6C9D3000E3F62A /* YHBOrderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE76FF41A6C9D3000E3F62A /* YHBOrderManager.m */; };
@@ -548,6 +548,8 @@
 		5B4BABBF1A6A89FE00FEBC65 /* YHBSortTagsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBSortTagsCell.m; sourceTree = "<group>"; };
 		5B4BABC11A6AB07200FEBC65 /* YHBTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBTagView.h; sourceTree = "<group>"; };
 		5B4BABC21A6AB07200FEBC65 /* YHBTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBTagView.m; sourceTree = "<group>"; };
+		5B565CA11A7BEB8200033764 /* YHBUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUserInfo.m; sourceTree = "<group>"; };
+		5B565CA21A7BEB8200033764 /* YHBUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBUserInfo.h; sourceTree = "<group>"; };
 		5B5887821A78A301006FB319 /* YHBProductListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBProductListViewController.h; sourceTree = "<group>"; };
 		5B5887831A78A301006FB319 /* YHBProductListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBProductListViewController.m; sourceTree = "<group>"; };
 		5B5A6DA51A6620750043B246 /* CCTextfieldToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextfieldToolView.h; sourceTree = "<group>"; };
@@ -632,8 +634,6 @@
 		5BD8F96B1A1374A500B3A4F2 /* YHBUserHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUserHeadView.m; sourceTree = "<group>"; };
 		5BD8F96D1A13874D00B3A4F2 /* YHBUserCellsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBUserCellsView.h; sourceTree = "<group>"; };
 		5BD8F96E1A13874D00B3A4F2 /* YHBUserCellsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUserCellsView.m; sourceTree = "<group>"; };
-		5BE051271A2C3EF100740437 /* YHBUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YHBUserInfo.m; path = ../FourthViewController/YHBUserInfo.m; sourceTree = "<group>"; };
-		5BE051281A2C3EF100740437 /* YHBUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YHBUserInfo.h; path = ../FourthViewController/YHBUserInfo.h; sourceTree = "<group>"; };
 		5BE46ADF1A529C50008EF2D3 /* YHBPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBPage.m; sourceTree = "<group>"; };
 		5BE46AE21A529C50008EF2D3 /* YHBPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPage.h; sourceTree = "<group>"; };
 		5BE46AE51A52A00C008EF2D3 /* YHBRslist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBRslist.m; sourceTree = "<group>"; };
@@ -1528,8 +1528,8 @@
 		5B6774F91A55996800457012 /* UserModel */ = {
 			isa = PBXGroup;
 			children = (
-				5BE051281A2C3EF100740437 /* YHBUserInfo.h */,
-				5BE051271A2C3EF100740437 /* YHBUserInfo.m */,
+				5B565CA21A7BEB8200033764 /* YHBUserInfo.h */,
+				5B565CA11A7BEB8200033764 /* YHBUserInfo.m */,
 				5BCE1F5C1A1496550004BE32 /* SynthesizeSingleton.h */,
 				5BCE1F5D1A1496980004BE32 /* YHBUser.h */,
 				5BCE1F5E1A1496980004BE32 /* YHBUser.m */,
@@ -3842,6 +3842,7 @@
 				5B8D07731A6BDEC300AF6341 /* YHBORslist.m in Sources */,
 				AB0D09191A7BA7AB00E6123A /* YHBGetPushData.m in Sources */,
 				5B85F3CD1A6767AA00B91DA4 /* YHBExpress.m in Sources */,
+				5B565CA31A7BEB8200033764 /* YHBUserInfo.m in Sources */,
 				5BFBC23F1A70BBC800FE65E5 /* YHBOConfirmExpress.m in Sources */,
 				5BD8F96C1A1374A500B3A4F2 /* YHBUserHeadView.m in Sources */,
 				ABC646B81A6B8BC8003A8FB1 /* DACircularProgressView.m in Sources */,
@@ -3890,7 +3891,6 @@
 				ABC646B21A6B8BC8003A8FB1 /* MWGridViewController.m in Sources */,
 				FF2A6C081A0F39EC001607AC /* ViewInteraction.m in Sources */,
 				FF2A6C6D1A0F3B7B001607AC /* SDImageCache.m in Sources */,
-				5BE051291A2C3EF100740437 /* YHBUserInfo.m in Sources */,
 				ABC6462A1A6B8B3C003A8FB1 /* MessageModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

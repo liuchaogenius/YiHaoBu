@@ -219,17 +219,17 @@ enum SgmBtn_tag
     __weak YHBStoreViewController *weakself = self;
     [self.infoManger getUserInfoWithToken:Nil orUserId:[NSString stringWithFormat:@"%d",self.shopID] Success:^(NSDictionary *dataDic){
         weakself.shopInfo = [YHBUserInfo modelObjectWithDictionary:dataDic];
-        if (weakself.shopInfo.groupid > 5) {
+        if ((int)weakself.shopInfo.groupid > 5) {
             //刷新页面
-            weakself.titleArray = weakself.shopInfo.groupid == 7 ? @[@"产品信息",@"供应信息",@"样板信息"] : @[@"供应信息"];
+            weakself.titleArray =( (int)weakself.shopInfo.groupid == 7 ? @[@"产品信息",@"供应信息",@"样板信息"] : @[@"供应信息"]);
             [weakself refreshUI];
-            if (weakself.shopInfo.groupid == 6) {
+            if ((int)weakself.shopInfo.groupid == 6) {
                 weakself.sellTableView.left = 0;
                 [weakself.backScrollView addSubview:weakself.sellTableView];
                 [weakself.backScrollView setContentSize:CGSizeMake(kMainScreenWidth, _backScrollView.height)];
                 [weakself getDataWithPageID:1 andInfoListTypr:SgmBtn_sellInfo];
                 [weakself addTableViewTragWithTableView:weakself.sellTableView];
-            }else if (weakself.shopInfo.groupid == 7){
+            }else if ((int)weakself.shopInfo.groupid == 7){
                 [weakself.backScrollView setContentSize:CGSizeMake(kMainScreenWidth*3, _backScrollView.height)];
                 weakself.productTableView.left = 0;
                 [weakself.backScrollView addSubview:weakself.productTableView];
@@ -266,7 +266,7 @@ enum SgmBtn_tag
 
 - (void)refreshUI
 {
-    [self.shopHeadView refreshViewWithIslogin:YES group:self.shopInfo.groupid name:self.shopInfo.truename avator:self.shopInfo.avatar thumb:self.shopInfo.thumb company:self.shopInfo.company friend:self.shopInfo.friend];
+    [self.shopHeadView refreshViewWithIslogin:YES group:(NSInteger)self.shopInfo.groupid name:self.shopInfo.truename avator:self.shopInfo.avatar thumb:self.shopInfo.thumb company:self.shopInfo.company friend:(NSInteger)self.shopInfo.friend];
     [self refreshSgmBtmScrollView];
 }
 
@@ -310,8 +310,8 @@ enum SgmBtn_tag
                 }
                 [self.pageDic setObject:page forKey:[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
                 type == SgmBtn_productInfo ? [self.productTableView reloadData] : [self.templetTableView reloadData];
-            } failure:^{
-                [SVProgressHUD showErrorWithStatus:@"获取信息失败，请检查网络或稍后再试！" cover:YES offsetY:0];
+            } failure:^(NSString *error) {
+                [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
             }];
         }
             break;
@@ -328,8 +328,8 @@ enum SgmBtn_tag
                 }
                 [self.pageDic setObject:page forKey:[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
                 [self.sellTableView reloadData];
-            } failure:^{
-                [SVProgressHUD showErrorWithStatus:@"获取信息失败，请检查网络或稍后再试！" cover:YES offsetY:0];
+            } failure:^(NSString *error) {
+                [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
             }];
         }
             break;
@@ -512,7 +512,7 @@ enum SgmBtn_tag
         sender.selected = !sender.selected;
         [self.privateManager privateOrDisPrivateWithItemID:[NSString stringWithFormat:@"%d",self.shopID] privateType:private_company token:[YHBUser sharedYHBUser].token Success:^{
             
-        } failure:^{
+        } failure:^(NSString *error) {
             sender.selected = !sender.selected;
         }];
     }else{
@@ -533,7 +533,7 @@ enum SgmBtn_tag
 #pragma mark scrollView delegat
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    if (scrollView == self.backScrollView && self.shopInfo.groupid == 7) {
+    if (scrollView == self.backScrollView && (int)self.shopInfo.groupid == 7) {
         NSInteger tag = scrollView.contentOffset.x / kMainScreenWidth + kSelectTagBase;
         UIButton *button = (UIButton *)[self.sgmBtmScrollView viewWithTag:tag];
         //MLOG(@"%@",button.currentTitle);

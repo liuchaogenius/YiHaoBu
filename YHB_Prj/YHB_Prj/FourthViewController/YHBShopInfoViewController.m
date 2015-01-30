@@ -451,8 +451,8 @@ enum TextTag
             [self.addManager getAreaListWithSuccess:^(NSMutableArray *areaArray) {
                 weakself.areaArray = areaArray;
                 [weakself.areaPicker reloadAllComponents];
-            } failure:^{
-                [SVProgressHUD showErrorWithStatus:@"获取地区信息失败，请稍后再试!" cover:YES offsetY:0];
+            } failure:^(NSString *error) {
+                [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
             }];
         }
         [self showAreaPickView];

@@ -177,7 +177,7 @@
         weakself.scrollView.contentSize = CGSizeMake(kMainScreenWidth, self.conStoreView.bottom+20);
         
         [weakself.scrollView addSubview:weakself.conStoreView];
-    } failure:^{
+    } failure:^(NSString *error) {
         [SVProgressHUD dismissWithError:@"网络请求失败，请稍后再试！"];
     }];
 }
@@ -296,8 +296,8 @@
         sender.selected = !sender.selected;
         [self.privateManager privateOrDisPrivateWithItemID:[NSString stringWithFormat:@"%ld",(long)self.productID] privateType:private_mall token:[YHBUser sharedYHBUser].token ? :@"" Success:^{
             
-        } failure:^{
-            [SVProgressHUD showErrorWithStatus:@"收藏失败，请重新尝试" cover:YES offsetY:0];
+        } failure:^(NSString *error) {
+            [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
             sender.selected = !sender.selected;
         }];
     }

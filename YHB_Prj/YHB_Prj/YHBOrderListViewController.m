@@ -88,8 +88,8 @@
         }
         
         [self.tableView reloadData];
-    } failure:^{
-        [SVProgressHUD showErrorWithStatus:@"获取订单列表失败，请稍后再试！" cover:YES offsetY:0];
+    } failure:^(NSString *error) {
+        [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
     }];
 }
 

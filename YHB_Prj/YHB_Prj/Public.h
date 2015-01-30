@@ -166,5 +166,7 @@ NSNumber *iNum = [NSNumber numberWithLongLong:i];\
 }while(0)
 
 #define KColor kIconSelectColor//RGBCOLOR(225, 44, 25)
+#define kNoNet @"你的网络有点问题"
+#define kErrorStr ((NSString *)successDict[@"error"])?:@"未知错误"
 
 #endif

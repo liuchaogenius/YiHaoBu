@@ -26,10 +26,11 @@
             YHBFirstPageIndex *indexModel = [YHBFirstPageIndex modelObjectWithDictionary:dataDic];
             sBlock(indexModel);
         }else{
-            fBlock((int)result,@"获取信息失败，请稍后再试");
+            NSString *error = successDict[@"error"];
+            fBlock((int)result,error);
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock(-20,@"您的网路有些问题，请稍后再试");
+        fBlock(-20,kNoNet);
     }];
 }
 
@@ -46,10 +47,11 @@
             YHBCompanyIndex *indexModel = [YHBCompanyIndex modelObjectWithDictionary:dataDic];
             sBlock(indexModel);
         }else{
-            fBlock((int)result,@"获取信息失败，请稍后再试");
+            NSString *error = successDict[@"error"];
+            fBlock((int)result,error);
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        fBlock(-20,@"您的网路有些问题，请稍后再试");
+        fBlock(-20,kNoNet);
     }];
 }
 

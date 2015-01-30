@@ -125,8 +125,8 @@
         }
         [self.tableView reloadData];
         MLOG(@"%@",self.modelsDic);
-    } failure:^{
-        [SVProgressHUD showErrorWithStatus:@"获取收藏列表失败，请稍后再试！" cover:YES offsetY:0];
+    } failure:^(NSString *error) {
+        [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
     }];
 }
 

@@ -206,13 +206,13 @@
             [weakself.tableView reloadData];
             [weakself reloadHeader];
             [weakself priceCalculate];
-        } failure:^(NSInteger result) {
+        } failure:^(NSInteger result, NSString *error) {
             if (result == -1) {
                 //没有默认地址
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有设置收货地址" message:@"现在就添加收货地址？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"添加", nil];
                 [alertView show];
             }else{
-                [SVProgressHUD showErrorWithStatus:@"读取订单信息失败，请重新尝试！" cover:YES offsetY:0];
+                [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
             }
             
         }];
