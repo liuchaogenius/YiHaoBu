@@ -28,7 +28,10 @@
 
 #else
 #define MLOG(...)
-#define NSLog(...) {}
+#endif
+
+#if !defined(DEBUG) && !defined (SD_VERBOSE)
+#define NSLog(...)
 #endif
 
 #define kViewBackgroundColor RGBCOLOR(240,240,240) // 所有屏幕底色

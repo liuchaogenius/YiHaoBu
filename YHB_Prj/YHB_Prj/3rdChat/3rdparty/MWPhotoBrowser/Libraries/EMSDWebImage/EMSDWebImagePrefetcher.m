@@ -8,9 +8,9 @@
 
 #import "EMSDWebImagePrefetcher.h"
 
-#if !defined(DEBUG) && !defined (SD_VERBOSE)
-#define NSLog(...)
-#endif
+//#if !defined(DEBUG) && !defined (SD_VERBOSE)
+//#define NSLog(...)
+//#endif
 
 @interface EMSDWebImagePrefetcher ()
 
