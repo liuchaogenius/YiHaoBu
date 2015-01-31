@@ -141,7 +141,7 @@
     UILabel *priceLabel = self.priceLabelArray[part];
     priceLabel.text = price.length ? [NSString stringWithFormat:@"￥%@",price] : @"";
     UIImageView *imageView = self.imageViewArray[part];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:title] placeholderImage:nil];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:imgurl] placeholderImage:nil];
 }
 
 - (void)setImage:(NSString *)imgurl title:(NSString *)title time:(NSString *)time hits:(int)hits part:(int)part
@@ -149,7 +149,7 @@
     UILabel *titleLabel = self.titleLabelArray[part];
     titleLabel.text = title;
     UIImageView *imageView = self.imageViewArray[part];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:title] placeholderImage:nil];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:imgurl] placeholderImage:nil];
     UILabel *datelabel = self.dateLabelArray[part];
     datelabel.text = time;
     UILabel *hitsLabel = self.totalViewArray[part];
