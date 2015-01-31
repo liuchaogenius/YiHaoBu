@@ -12,5 +12,5 @@
 
 //- (instancetype)initWithItemId:(int)aItemId andIsMine:(BOOL)aIsMine;
 - (instancetype)initWithItemId:(int)aItemId andIsMine:(BOOL)aIsMine isModal:(BOOL)aIsModal;
-- (instancetype)init;
+- (instancetype)initWithItemId:(int)aItemId itemDict:(NSDictionary *)aDict uploadPhotoArray:(NSArray *)aArray;
 @end

@@ -114,7 +114,7 @@
     titleLabel.layer.borderWidth = 0.5;
     titleLabel.text = @"请输入您要发布的名称";
     titleLabel.userInteractionEnabled = YES;
-    titleLabel.font = kFont14;
+    titleLabel.font = kFont15;
 //    titleLabel.textColor = [UIColor lightGrayColor];
     [editSupplyView addSubview:titleLabel];
     
@@ -171,6 +171,7 @@
     catNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, (interval+labelHeight)*1+interval-5, 177, labelHeight+10)];
     catNameLabel.layer.borderWidth = 0.5;
     catNameLabel.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    catNameLabel.font = kFont15;
     [editSupplyView addSubview:catNameLabel];
     
     UIImageView *plusImgView = [[UIImageView alloc] initWithFrame:CGRectMake(catNameLabel.right, catNameLabel.top, 23, 30)];
@@ -413,42 +414,11 @@
         [self showFlower];
         [self.netManage publishBuyWithItemid:0 title:titleLabel.text catid:catidString today:dayLabel.text content:contentTextView.text truename:nameTextField.text mobile:phoneTextField.text andSuccBlock:^(NSDictionary *aDict) {
             [self dismissFlower];
-            NSString *uploadPhototUrl = nil;
-            kYHBRequestUrl(@"upload.php", uploadPhototUrl);
-            
             int itemid = [[aDict objectForKey:@"itemid"] intValue];
-            if (variousImageView.myPhotoArray.count>1)
-            {
-                for (int i=1; i<variousImageView.myPhotoArray.count; i++)
-                {
-                    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",[NSString stringWithFormat:@"%d", i],@"order",@"album",@"action",[NSString stringWithFormat:@"%d",itemid],@"itemid",[aDict objectForKey:@"moduleid"],@"moduleid", nil];
-                    [NetManager uploadImg:[variousImageView.myPhotoArray objectAtIndex:i] parameters:dic uploadUrl:uploadPhototUrl uploadimgName:@"album" parameEncoding:AFJSONParameterEncoding progressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
-                    } succ:^(NSDictionary *successDict) {
-                        NSString *result = [successDict objectForKey:@"result"];
-                        if ([result intValue] != 1)
-                        {
-                            MLOG(@"%@", [successDict objectForKey:@"error"]);
-                        }
-                        else
-                        {
-                            
-                        }
-                        if (i==variousImageView.myPhotoArray.count-2)
-                        {
-                            YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:itemid andIsMine:YES isModal:YES];
-                            [self.navigationController pushViewController:vc animated:YES];
-                        }
-                        
-                    } failure:^(NSDictionary *failDict, NSError *error) {
-                        
-                    }];
-                }
-            }
-            else
-            {
-                YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:itemid andIsMine:YES isModal:YES];
-                [self.navigationController pushViewController:vc animated:YES];
-            }
+            NSMutableArray *photoArray = variousImageView.myPhotoArray;
+            [photoArray removeObjectAtIndex:0];
+            YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:itemid itemDict:aDict uploadPhotoArray:photoArray];
+            [self.navigationController pushViewController:vc animated:YES];
         } failBlock:^(NSString *aStr) {
             [self dismissFlower];
             [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];

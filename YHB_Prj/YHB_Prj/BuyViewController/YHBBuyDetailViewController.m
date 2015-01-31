@@ -16,6 +16,8 @@
 #import "PushPriceViewController.h"
 #import "YHBPublishBuyViewController.h"
 #import "YHBStoreViewController.h"
+#import "NetManager.h"
+#import "YHBUser.h"
 
 #define kContactViewHeight 60
 @interface YHBBuyDetailViewController ()
@@ -28,6 +30,9 @@
     YHBBuyDetailData *myModel;
     BOOL isMine;
     YHBContactView *contactView;
+    NSArray *uploadPhotoArray;
+    BOOL needUpload;
+    NSDictionary *itemDict;
 }
 @property(nonatomic, strong) YHBBuyDetailManage *manage;
 @end
@@ -43,6 +48,21 @@
     }
     return self;
 }
+
+- (instancetype)initWithItemId:(int)aItemId itemDict:(NSDictionary *)aDict uploadPhotoArray:(NSArray *)aArray
+{
+    if (self = [super init]) {
+        isModal = YES;
+        isMine = YES;
+        itemId = aItemId;
+        uploadPhotoArray = aArray;
+        needUpload = YES;
+        itemDict = aDict;
+    }
+    
+    return self;
+}
+
 
 - (instancetype)init
 {
@@ -106,7 +126,7 @@
     [shareBtn addTarget:self  action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
     [navRightView addSubview:shareBtn];
     
-    if (isMine)
+    if (isMine && needUpload != YES)
     {
         UIButton *editBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
         [editBtn setImage:[UIImage imageNamed:@"editImg"] forState:UIControlStateNormal];
@@ -126,7 +146,14 @@
          {
              myModel = aModel;
              [buyDetailView setDetailWithModel:aModel];
-             [variousImageView setMyWebPhotoArray:aModel.pic];
+             if (needUpload==YES)
+             {
+                 
+             }
+             else
+             {
+                 [variousImageView setMyWebPhotoArray:aModel.pic];
+             }
              if (!isMine) {
                  [contactView setPhoneNumber:aModel.mobile storeName:aModel.truename itemId:itemId isVip:aModel.vip imgUrl:@"1" Title:myModel.title andType:@"buy"];
              }
@@ -137,6 +164,33 @@
              [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
          }];
 //    }
+    
+    if (needUpload && uploadPhotoArray.count>0)
+    {
+        [variousImageView setPhotoArray:uploadPhotoArray];
+        NSString *uploadPhototUrl = nil;
+        kYHBRequestUrl(@"upload.php", uploadPhototUrl);
+        
+        for (int i=0; i<variousImageView.myPhotoArray.count; i++)
+        {
+            NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",[NSString stringWithFormat:@"%d", i],@"order",@"album",@"action",[NSString stringWithFormat:@"%d",itemId],@"itemid",[itemDict objectForKey:@"moduleid"],@"moduleid", nil];
+            [NetManager uploadImg:[variousImageView.myPhotoArray objectAtIndex:i] parameters:dic uploadUrl:uploadPhototUrl uploadimgName:nil parameEncoding:AFJSONParameterEncoding progressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+            } succ:^(NSDictionary *successDict) {
+                MLOG(@"%@", successDict);
+                NSString *result = [successDict objectForKey:@"result"];
+                if ([result intValue] != 1)
+                {
+                    MLOG(@"%@", [successDict objectForKey:@"error"]);
+                }
+                else
+                {
+                    
+                }
+            } failure:^(NSDictionary *failDict, NSError *error) {
+                MLOG(@"%@", [failDict objectForKey:@"error"]);
+            }];
+        }
+    }
 }
 
 #pragma mark 分享

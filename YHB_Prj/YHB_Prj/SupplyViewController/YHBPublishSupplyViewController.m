@@ -115,7 +115,7 @@
     titleLabel.layer.borderWidth = 0.5;
     titleLabel.text = @"请输入您要发布的名称";
     titleLabel.userInteractionEnabled = YES;
-    titleLabel.font = kFont14;
+    titleLabel.font = kFont15;
 //    titleLabel.textColor = [UIColor lightGrayColor];
     [editSupplyView addSubview:titleLabel];
     
@@ -448,42 +448,10 @@
         [self.netManage publishSupplyWithItemid:0 title:titleLabel.text price:priceTextField.text catid:catidString typeid:[NSString stringWithFormat:@"%d", typeId] today:dayLabel.text content:contentTextView.text truename:nameTextField.text mobile:phoneTextField.text andSuccBlock:^(NSDictionary *aDict) {
             [self dismissFlower];
             int itemid = [[aDict objectForKey:@"itemid"] intValue];
-//            [SVProgressHUD showWithStatus:@"正在上传图片" cover:YES offsetY:kMainScreenHeight/2.0];
-            NSString *uploadPhototUrl = nil;
-            kYHBRequestUrl(@"upload.php", uploadPhototUrl);
-            
-            if (variousImageView.myPhotoArray.count>1)
-            {
-                for (int i=1; i<variousImageView.myPhotoArray.count; i++)
-                {
-                    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",[NSString stringWithFormat:@"%d", i],@"order",@"album",@"action",[NSString stringWithFormat:@"%d",itemid],@"itemid",[aDict objectForKey:@"moduleid"],@"moduleid", nil];
-                    [NetManager uploadImg:[variousImageView.myPhotoArray objectAtIndex:i] parameters:dic uploadUrl:uploadPhototUrl uploadimgName:nil parameEncoding:AFJSONParameterEncoding progressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
-                    } succ:^(NSDictionary *successDict) {
-                        NSString *result = [successDict objectForKey:@"result"];
-                        if ([result intValue] != 1)
-                        {
-                            MLOG(@"%@", [successDict objectForKey:@"error"]);
-                        }
-                        else
-                        {
-                        
-                        }
-                        if (i==variousImageView.myPhotoArray.count-2)
-                        {
-                            YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:itemid andIsMine:YES isModal:YES];
-                            [self.navigationController pushViewController:vc animated:YES];
-                        }
-                        
-                    } failure:^(NSDictionary *failDict, NSError *error) {
-                        
-                    }];
-                }
-            }
-            else
-            {
-                YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:itemid andIsMine:YES isModal:YES];
-                [self.navigationController pushViewController:vc animated:YES];
-            }
+            NSMutableArray *photoArray = variousImageView.myPhotoArray;
+            [photoArray removeObjectAtIndex:0];
+            YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:itemid itemDict:aDict uploadPhotoArray:photoArray];
+            [self.navigationController pushViewController:vc animated:YES];
         } failBlock:^(NSString *aStr) {
             [self dismissFlower];
             [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
