@@ -258,7 +258,7 @@
         //设置image
         array[i] = slide.thumb;
     }
-    self.bannerView.isNeedCycle = YES;
+    self.bannerView.isNeedCycle = (imageNum > 1 ? YES : NO);
     [self.bannerView resetUIWithUrlStrArray:[NSArray arrayWithArray:array]];
 }
 

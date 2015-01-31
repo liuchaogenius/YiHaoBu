@@ -71,8 +71,10 @@
     for (NSInteger i = 0; i < (self.isNeedCycle?imageNum+2:imageNum); i++) {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i * kMainScreenWidth, 0, kMainScreenWidth, self.headScrollView.height)];
         imageView.backgroundColor = [UIColor lightGrayColor];
+        [imageView setContentMode:UIViewContentModeScaleAspectFill];
+        imageView.clipsToBounds = YES;
         MLOG(@"%@",urlArray);
-        //[imageView sd_setImageWithURL:[NSURL URLWithString:urlArray[_isNeedCycle ? (i-1+imageNum)%imageNum : i]]];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:urlArray[_isNeedCycle ? (i-1+imageNum)%imageNum : i]]];
         [self.headScrollView addSubview:imageView];
         imageView.tag = i;
     }
@@ -80,6 +82,9 @@
     [self.pageControl setCurrentPage:0];
     if (self.isNeedCycle) {
         self.headScrollView.contentOffset = CGPointMake(kMainScreenWidth, 0);
+    }else{
+        self.headScrollView.bounces = YES;
+        self.headScrollView.contentOffset = CGPointMake(0, 0);
     }
 }
 
