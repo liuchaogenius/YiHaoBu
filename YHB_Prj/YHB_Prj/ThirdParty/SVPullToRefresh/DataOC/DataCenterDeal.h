@@ -10,4 +10,4 @@
 
 using namespace std;
 
-string GetTimestr(int pubdate);
+string GetTimestr(long long pubdate);

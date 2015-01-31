@@ -10,5 +10,5 @@
 
 @interface DataOC : NSObject
 
-+(NSString*)getTimeString:(long)puData;
++(NSString*)getTimeString:(long long)puData;
 @end

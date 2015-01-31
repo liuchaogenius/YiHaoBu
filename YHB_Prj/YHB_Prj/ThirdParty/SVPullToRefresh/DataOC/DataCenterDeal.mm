@@ -10,7 +10,7 @@
 #include <sstream>
 #include <iomanip>
 
-string GetTimestr(int pubdate)
+string GetTimestr(long long pubdate)
 {
 	tm* pubDate = localtime((const time_t*)&pubdate);
 	

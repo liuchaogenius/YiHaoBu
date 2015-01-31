@@ -11,7 +11,7 @@
 @implementation DataOC
 
 
-+(NSString*)getTimeString:(long)puData
++(NSString*)getTimeString:(long long)puData
 {
     return [NSString stringWithUTF8String:GetTimestr(puData).c_str()];
 }
