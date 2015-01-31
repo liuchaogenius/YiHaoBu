@@ -28,7 +28,7 @@
 #define kSelectTagBase 100
 #define kNumberFont 14
 #define kButtonFont 15
-#define kPageSize 20 //分页-每页的数量
+#define kPageSize 30 //分页-每页的数量
 
 enum SgmLabel_tag
 {
@@ -392,8 +392,9 @@ enum SgmBtn_tag
                 cell = [[YHBShopMallCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier1 andType:0];
                 cell.delegate = self;
             }
+            [cell clearCellContentParts];
             for (int i=0; i < 3; i++ ) {
-                if(indexPath.row * 3 + i > count){//空白部分
+                if(indexPath.row * 3 + i >= count){//空白部分
                     [cell setBlankWithPart:i];
                 }else{
                     YHBRslist *list = array[indexPath.row *3 + i];
@@ -407,12 +408,13 @@ enum SgmBtn_tag
         case SgmBtn_sellInfo:{
             static NSString * cellIdentifier2 = @"Cell2";
             YHBShopMallCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier2];
+            [cell clearCellContentParts];
             if (!cell) {
                 cell = [[YHBShopMallCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier2 andType:1];
                 cell.delegate = self;
             }
             for (int i=0; i < 3; i++ ) {
-                if(indexPath.row * 3 + i > count){//空白部分
+                if(indexPath.row * 3 + i >= count){//空白部分
                     [cell setBlankWithPart:i];
                 }else{
                     YHBSupplyModel *list = array[indexPath.row *3 + i];
@@ -513,6 +515,7 @@ enum SgmBtn_tag
         [self.privateManager privateOrDisPrivateWithItemID:[NSString stringWithFormat:@"%d",self.shopID] privateType:private_company token:[YHBUser sharedYHBUser].token Success:^{
             
         } failure:^(NSString *error) {
+            [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
             sender.selected = !sender.selected;
         }];
     }else{

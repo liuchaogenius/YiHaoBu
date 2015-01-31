@@ -448,7 +448,7 @@
 #pragma mark 点击查询店铺详情
 - (void)touchShopDetailCell
 {
-    YHBStoreDetailViewController *vc = [[YHBStoreDetailViewController alloc] init];
+    YHBStoreDetailViewController *vc = [[YHBStoreDetailViewController alloc] initWithItemID:self.productID];
     [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark 点击联系卖家

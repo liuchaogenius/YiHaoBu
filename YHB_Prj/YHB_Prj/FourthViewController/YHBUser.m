@@ -34,7 +34,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
 {
     if (!_localHeadUrl) {
         
-        NSString *path = [self.docPath stringByAppendingPathComponent:@"head.png"];
+        NSString *path = [self.docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"head_%d.png",(self.userInfo ? (int)self.userInfo.userid : 0)]];
         _localHeadUrl = path;
     }
     return _localHeadUrl;
@@ -43,7 +43,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
 - (NSString *)localBannerUrl
 {
     if (!_localBannerUrl) {
-        NSString *path = [self.docPath stringByAppendingPathComponent:@"banner.png"];
+        NSString *path = [self.docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"banner_%d.png",(self.userInfo ? (int)self.userInfo.userid : 0)]];
         _localBannerUrl = path;
     }
     return _localBannerUrl;
@@ -74,7 +74,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
     _isLogin = NO;
     _userInfo = nil;
     _statusIsChanged = NO;
-//    [self loadLocalUserInfo]; //判断沙箱是否有数据，并修改数据
+    [self loadLocalUserInfo]; //判断沙箱是否有数据，并修改数据
     return self;
 }
 

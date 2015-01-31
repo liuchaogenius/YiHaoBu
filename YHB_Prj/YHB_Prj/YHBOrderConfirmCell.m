@@ -172,13 +172,13 @@ typedef enum : NSUInteger
     self.numControl.isNumFloat = isFloat;
     _skuLabel.text = [NSString stringWithFormat:@"分类:%@",sku];
     self.messageTf.text = message?:@"";
-    _logicLabel.text = [NSString stringWithFormat:@"配送方式 ：%@  价格：%@",express,ePrice];
+    _logicLabel.text = express ? [NSString stringWithFormat:@"配送方式 ：%@  价格：%@",express,ePrice] : @"无配送方式";
 }
 
 #pragma mark - Action
 - (void)touchLogicCell
 {
-    if ([self.delegate respondsToSelector:@selector(touchExpressCellWithIndexPath:)]) {
+    if ((![_logicLabel.text isEqualToString:@"无配送方式"]) && [self.delegate respondsToSelector:@selector(touchExpressCellWithIndexPath:)]) {
         [self.delegate touchExpressCellWithIndexPath:self.cellIndexPath];
     }
 }

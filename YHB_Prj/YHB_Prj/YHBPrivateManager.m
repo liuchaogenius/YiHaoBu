@@ -26,8 +26,8 @@
 - (void)privateOrDisPrivateWithItemID:(NSString *)itemID privateType:(NSInteger)privateType token:(NSString *)token Success:(void(^)())sBlock failure:(void(^)(NSString *error))fBlock
 {
     NSString *url = nil;
-    kYHBRequestUrl(@"postFavorite.php", url);
-    NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",itemID,@"itemid",self.privateArray[privateType],@"action",nil];
+    kYHBRequestUrl(privateType == private_company ? @"postFriend.php":@"postFavorite.php", url);
+    NSDictionary *postDic = privateType == private_company ? [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",itemID,@"userid",nil] : [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",itemID,@"itemid",self.privateArray[privateType],@"action",nil];
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
         if (result == 1) {

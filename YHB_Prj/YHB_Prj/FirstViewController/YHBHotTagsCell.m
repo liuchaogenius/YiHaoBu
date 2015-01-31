@@ -8,8 +8,8 @@
 
 #import "YHBHotTagsCell.h"
 #define kHotTagBase 60
-#define kTitleFont 10
-#define kBlankWidth 10
+#define kTitleFont 12
+#define kBlankWidth 8
 #define kTagBtnHeight 20
 
 @implementation YHBHotTagsCell

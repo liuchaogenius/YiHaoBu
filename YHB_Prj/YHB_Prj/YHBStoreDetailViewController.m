@@ -9,6 +9,7 @@
 #import "YHBStoreDetailViewController.h"
 #import "YHBUserInfo.h"
 #import "YHBUserManager.h"
+#import "UIImageView+WebCache.h"
 
 #define kimgHeight 35
 #define kDetailCellHeight 40
@@ -223,6 +224,7 @@
 #pragma mark - 更新UI
 - (void)setUIWithStoreInfo:(YHBUserInfo *)info
 {
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:info.avatar]];
     self.nameLabel.text = info.truename;
     self.companyLabel.text = info.truename;
     self.companyName.text = info.company;

@@ -297,7 +297,7 @@
         NSArray *listArray = ((YHBOConfirmRslist *)self.orderConfirmModel.rslist[indexPath.section]).malllist;
         YHBOConfirmMalllist *model = listArray[indexPath.row];
         YHBOConfirmExpress *express = self.expressSelDic[[self expressKeyWithI:(int)indexPath.section andJ:(int)indexPath.row]];
-        if (!express) {
+        if (!express && model.express.count) {
             express = model.express[0];
         }
         NSString *exPricie = [NSString stringWithFormat:@"%d",(int)[self expressPriceWithExpress:express andNum:[model.number doubleValue]]];
@@ -395,12 +395,12 @@
         for (int j = 0; j < rlist.malllist.count; j++) {
             YHBOConfirmMalllist *mall = rlist.malllist[j];
             YHBOConfirmExpress *express = self.expressSelDic[[self expressKeyWithI:i andJ:j]];
-            if (express == nil) {
+            if (express == nil && mall.express.count) {
                 express = mall.express[0];
                 self.expressSelDic[[self expressKeyWithI:i andJ:j]] = express;
             }
             double number = [mall.number doubleValue];
-            _price += ([mall.price doubleValue] * number + [self expressPriceWithExpress:express andNum:number]);
+            _price += ([mall.price doubleValue] * number + (mall.express.count ? [self expressPriceWithExpress:express andNum:number] : 0));
             MLOG(@"%lf",_price);
         }
     }

@@ -351,12 +351,6 @@ enum TextTag
         [SVProgressHUD showErrorWithStatus:errorString cover:YES offsetY:0];
     }];
     
-    if (_isBannerChanged) {
-        [self uploadImgWithAction:Picker_Banner Image:self.bannerImageView.image];
-    }
-    if (_isUserImageChanged) {
-        [self uploadImgWithAction:Picker_Head Image:self.userImageView.image];
-    }
 }
 
 #pragma mark 点击修改头像
@@ -383,20 +377,33 @@ enum TextTag
     
     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",(type == Picker_Banner ? @"banner":@"avatar"),@"action", nil];
     
+    [SVProgressHUD showWithStatus:@"上传中..." cover:YES offsetY:0];
     [NetManager uploadImg:image parameters:dic uploadUrl:uploadPhototUrl uploadimgName:(type == Picker_Banner ? @"banner":@"avatar") parameEncoding:AFJSONParameterEncoding progressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
         
     } succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
+        if ([successDict[@"result"] integerValue] == 1) {
+            [SVProgressHUD dismissWithSuccess:@"上传成功"];
+            if (type == Picker_Head) {
+                self.userImageView.image = image;
+            }else{
+                self.bannerImageView.image = image;
+            }
+            //本地操作
+            BOOL result = [UIImagePNGRepresentation((type == Picker_Banner ? self.bannerImageView.image:self.userImageView.image)) writeToFile: (type == Picker_Banner ? [YHBUser sharedYHBUser].localBannerUrl:[YHBUser sharedYHBUser].localHeadUrl)    atomically:YES];
+            if (result) {
+                [YHBUser sharedYHBUser].statusIsChanged = YES;
+            }
+        }else{
+            [SVProgressHUD dismissWithError:kErrorStr];
+        }
+        
         
     } failure:^(NSDictionary *failDict, NSError *error) {
-        
+        [SVProgressHUD dismissWithError:kNoNet];
     }];
     
-    //本地操作
-    BOOL result = [UIImagePNGRepresentation((type == Picker_Banner ? self.bannerImageView.image:self.userImageView.image)) writeToFile: (type == Picker_Banner ? [YHBUser sharedYHBUser].localBannerUrl:[YHBUser sharedYHBUser].localHeadUrl)    atomically:YES];
-    if (result) {
-        [YHBUser sharedYHBUser].statusIsChanged = YES;
-    }
+    
 }
 
 
@@ -540,13 +547,9 @@ enum TextTag
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    if (_pickType == Picker_Head) {
-        _isUserImageChanged = YES;
-        self.userImageView.image = newImage;
-    }else{
-        _isBannerChanged = YES;
-        self.bannerImageView.image = newImage;
-    }
+    [self uploadImgWithAction:_pickType Image:newImage];
+
+
     
     //self.photoImg = newImage;
     //self.imgView.image = newImage;
