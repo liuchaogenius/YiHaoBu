@@ -161,29 +161,59 @@
         titleLabel.text = catModel.catname;
         titleLabel.font = kFont18;
         [cell addSubview:titleLabel];
-        float btnWidth = (kMainScreenWidth-50)/4.0;
+        float btnWidth;
         NSArray *array = catModel.subcate;
-        for (int i=0; i<array.count; i++)
+        if (indexPath.section == self.tableViewArray.count-1)
         {
-            UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(10+i%4*(10+btnWidth), 20+space*2+i/4*(btnHeight+space), btnWidth, btnHeight)];
-            btn.tag = (indexPath.section+1)*100+i;
-            btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-            btn.layer.borderWidth = 0.5;
-            btn.layer.cornerRadius = 2.5;
-            YHBCatSubcate *model = [array objectAtIndex:i];
-            [btn setTitle:model.catname forState:UIControlStateNormal];
-            [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-            btn.titleLabel.font = kFont15;
-            [btn addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
-            
-            for (YHBCatSubcate *temModel in chooseArray)
+            btnWidth = (kMainScreenWidth-37.5)/3.0;
+            for (int i=0; i<array.count; i++)
             {
-                if (model.catid == temModel.catid) {
-                    [btn setTitleColor:KColor forState:UIControlStateNormal];
-                    btn.layer.borderColor = [KColor CGColor];
+                UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(10+i%3*(10+btnWidth), 20+space*2+i/3*(btnHeight+space), btnWidth, btnHeight)];
+                btn.tag = (indexPath.section+1)*100+i;
+                btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                btn.layer.borderWidth = 0.5;
+                btn.layer.cornerRadius = 2.5;
+                YHBCatSubcate *model = [array objectAtIndex:i];
+                [btn setTitle:model.catname forState:UIControlStateNormal];
+                [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+                btn.titleLabel.font = kFont13;
+                [btn addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
+                
+                for (YHBCatSubcate *temModel in chooseArray)
+                {
+                    if (model.catid == temModel.catid) {
+                        [btn setTitleColor:KColor forState:UIControlStateNormal];
+                        btn.layer.borderColor = [KColor CGColor];
+                    }
                 }
+                [cell addSubview:btn];
             }
-            [cell addSubview:btn];
+        }
+        else
+        {
+            btnWidth = (kMainScreenWidth-50)/4.0;
+            for (int i=0; i<array.count; i++)
+            {
+                UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(10+i%4*(10+btnWidth), 20+space*2+i/4*(btnHeight+space), btnWidth, btnHeight)];
+                btn.tag = (indexPath.section+1)*100+i;
+                btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                btn.layer.borderWidth = 0.5;
+                btn.layer.cornerRadius = 2.5;
+                YHBCatSubcate *model = [array objectAtIndex:i];
+                [btn setTitle:model.catname forState:UIControlStateNormal];
+                [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+                btn.titleLabel.font = kFont15;
+                [btn addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
+                
+                for (YHBCatSubcate *temModel in chooseArray)
+                {
+                    if (model.catid == temModel.catid) {
+                        [btn setTitleColor:KColor forState:UIControlStateNormal];
+                        btn.layer.borderColor = [KColor CGColor];
+                    }
+                }
+                [cell addSubview:btn];
+            }
         }
     }
     else
