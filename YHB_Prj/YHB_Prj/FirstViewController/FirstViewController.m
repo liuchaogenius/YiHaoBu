@@ -331,21 +331,21 @@
         case button_sell:
         {
             //查看供应
-            if ([self userLoginConfirm]) {
+//            if ([self userLoginConfirm]) {
                 YHBLookSupplyViewController *vc = [[YHBLookSupplyViewController alloc] initWithIsSupply:YES];
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
-            }
+//            }
         }
             break;
         case button_buy:
         {
             //查看采购
-            if ([self userLoginConfirm]) {
+//            if ([self userLoginConfirm]) {
                 YHBLookSupplyViewController *vc = [[YHBLookSupplyViewController alloc] initWithIsSupply:NO];
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
-            }
+//            }
         }
             break;
         default:

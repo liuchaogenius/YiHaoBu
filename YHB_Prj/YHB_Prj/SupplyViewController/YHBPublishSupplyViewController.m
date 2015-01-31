@@ -454,10 +454,10 @@
             
             if (variousImageView.myPhotoArray.count>1)
             {
-                for (int i=0; i<variousImageView.myPhotoArray.count-1; i++)
+                for (int i=1; i<variousImageView.myPhotoArray.count; i++)
                 {
                     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",[NSString stringWithFormat:@"%d", i],@"order",@"album",@"action",[NSString stringWithFormat:@"%d",itemid],@"itemid",[aDict objectForKey:@"moduleid"],@"moduleid", nil];
-                    [NetManager uploadImg:[variousImageView.myPhotoArray objectAtIndex:i] parameters:dic uploadUrl:uploadPhototUrl uploadimgName:@"album" parameEncoding:AFJSONParameterEncoding progressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+                    [NetManager uploadImg:[variousImageView.myPhotoArray objectAtIndex:i] parameters:dic uploadUrl:uploadPhototUrl uploadimgName:nil parameEncoding:AFJSONParameterEncoding progressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
                     } succ:^(NSDictionary *successDict) {
                         NSString *result = [successDict objectForKey:@"result"];
                         if ([result intValue] != 1)
