@@ -195,8 +195,8 @@
     NSData *imageData = UIImageJPEGRepresentation(aImg, 1);
     
     NSMutableURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:aUrl parameters:aParam constructingBodyWithBlock: ^(id <AFMultipartFormData>formData) {
-        
-        [formData appendPartWithFileData:imageData name:@"cardImage" fileName:aImgname mimeType:@"image/jpeg"];
+        NSString *fileName = [NSString stringWithFormat:@"%@.jpg",aImgname];
+        [formData appendPartWithFileData:imageData name:@"cardImage" fileName:fileName mimeType:@"image/jpeg"];
         
     }];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
