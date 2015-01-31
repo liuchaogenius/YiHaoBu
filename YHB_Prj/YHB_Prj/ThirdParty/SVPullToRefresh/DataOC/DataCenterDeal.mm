@@ -29,7 +29,7 @@ string GetTimestr(long long pubdate)
 	int yearOfToday = today->tm_year + 1900;
 	int dayOfToday = today->tm_mday;
 	
-	int times = now - pubdate;
+	long long times = now - pubdate;
 	if (times < 0)
 	{
 		times = -times;
