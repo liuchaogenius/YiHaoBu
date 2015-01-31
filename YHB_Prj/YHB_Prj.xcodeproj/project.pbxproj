@@ -131,6 +131,7 @@
 		AB34037B1A67B80000A38FF6 /* YHBCatSubcate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3403791A67B80000A38FF6 /* YHBCatSubcate.m */; };
 		AB34037E1A67B81F00A38FF6 /* YHBCatManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB34037D1A67B81F00A38FF6 /* YHBCatManage.m */; };
 		AB37699F1A3BEE8B00D8B507 /* TableSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB37699E1A3BEE8B00D8B507 /* TableSectionHeaderView.m */; };
+		AB4A6CD31A7C6FF6007033BE /* YHBUploadImageManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4A6CD21A7C6FF6007033BE /* YHBUploadImageManage.m */; };
 		AB4CE3ED1A7739E000967998 /* EMChatCommandBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CE3EC1A7739E000967998 /* EMChatCommandBubbleView.m */; };
 		AB4CE3F01A774E4A00967998 /* MessageLinkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CE3EF1A774E4A00967998 /* MessageLinkModel.m */; };
 		AB4CE3F61A776AA000967998 /* ChatLinkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CE3F51A776AA000967998 /* ChatLinkTableViewCell.m */; };
@@ -789,6 +790,8 @@
 		AB34037D1A67B81F00A38FF6 /* YHBCatManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBCatManage.m; sourceTree = "<group>"; };
 		AB37699D1A3BEE8B00D8B507 /* TableSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableSectionHeaderView.h; sourceTree = "<group>"; };
 		AB37699E1A3BEE8B00D8B507 /* TableSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableSectionHeaderView.m; sourceTree = "<group>"; };
+		AB4A6CD11A7C6FF6007033BE /* YHBUploadImageManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBUploadImageManage.h; sourceTree = "<group>"; };
+		AB4A6CD21A7C6FF6007033BE /* YHBUploadImageManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUploadImageManage.m; sourceTree = "<group>"; };
 		AB4CE3EB1A7739E000967998 /* EMChatCommandBubbleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMChatCommandBubbleView.h; sourceTree = "<group>"; };
 		AB4CE3EC1A7739E000967998 /* EMChatCommandBubbleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMChatCommandBubbleView.m; sourceTree = "<group>"; };
 		AB4CE3EE1A774E4A00967998 /* MessageLinkModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageLinkModel.h; sourceTree = "<group>"; };
@@ -2144,6 +2147,8 @@
 				AB9C29851A4CFF380084C912 /* YHBMySupplyManage.m */,
 				AB0ED65C1A591C52006EF96F /* YHBPublishSupplyManage.h */,
 				AB0ED65D1A591C52006EF96F /* YHBPublishSupplyManage.m */,
+				AB4A6CD11A7C6FF6007033BE /* YHBUploadImageManage.h */,
+				AB4A6CD21A7C6FF6007033BE /* YHBUploadImageManage.m */,
 			);
 			path = SupplyNetManage;
 			sourceTree = "<group>";
@@ -3830,6 +3835,7 @@
 				ABC646AE1A6B8BC8003A8FB1 /* MBProgressHUD+Add.m in Sources */,
 				ABC646221A6B8B3C003A8FB1 /* EMChatLocationBubbleView.m in Sources */,
 				ABC646CF1A6B8BC8003A8FB1 /* PSTCollectionViewItemKey.m in Sources */,
+				AB4A6CD31A7C6FF6007033BE /* YHBUploadImageManage.m in Sources */,
 				ABE5BBCE1A2AF036000F5505 /* YHBSupplyDetailView.m in Sources */,
 				ABC646B51A6B8BC8003A8FB1 /* MWTapDetectingImageView.m in Sources */,
 				5B0531C91A7538CB0020077D /* YHBComCertificVieController.m in Sources */,

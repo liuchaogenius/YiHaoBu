@@ -17,7 +17,7 @@ int pagesize;
 int pageid;
 int pagetotal;
 
-- (void)getBuyArray:(void(^)(NSMutableArray *aArray))aSuccBlock andFail:(void(^)(void))aFailBlock isVip:(BOOL)aBool
+- (void)getBuyArray:(void(^)(NSMutableArray *aArray))aSuccBlock andFail:(void(^)(NSString *aStr))aFailBlock isVip:(BOOL)aBool
 {
     isVip = aBool;
     pagesize = 20;
@@ -36,24 +36,32 @@ int pagetotal;
     kYHBRequestUrl(@"getBuyList.php", supplyUrl);
     [NetManager requestWith:dict url:supplyUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         //        MLOG(@"%@", successDict);
-        NSDictionary *dataDict = [successDict objectForKey:@"data"];
-        NSDictionary *pageDict = [dataDict objectForKey:@"page"];
-        pagetotal = [[pageDict objectForKey:@"pagetotal"] intValue];
-        NSArray *rslistArray = [dataDict objectForKey:@"rslist"];
-        NSMutableArray *resultArray = [NSMutableArray new];
-        for (int i=0; i<rslistArray.count; i++)
+        NSString *result = [successDict objectForKey:@"result"];
+        if ([result intValue] != 1)
         {
-            NSDictionary *dict = [rslistArray objectAtIndex:i];
-            YHBSupplyModel *model = [YHBSupplyModel modelObjectWithDictionary:dict];
-            [resultArray addObject:model];
+            aFailBlock([successDict objectForKey:@"error"]);
         }
-        aSuccBlock(resultArray);
+        else
+        {
+            NSDictionary *dataDict = [successDict objectForKey:@"data"];
+            NSDictionary *pageDict = [dataDict objectForKey:@"page"];
+            pagetotal = [[pageDict objectForKey:@"pagetotal"] intValue];
+            NSArray *rslistArray = [dataDict objectForKey:@"rslist"];
+            NSMutableArray *resultArray = [NSMutableArray new];
+            for (int i=0; i<rslistArray.count; i++)
+            {
+                NSDictionary *dict = [rslistArray objectAtIndex:i];
+                YHBSupplyModel *model = [YHBSupplyModel modelObjectWithDictionary:dict];
+                [resultArray addObject:model];
+            }
+            aSuccBlock(resultArray);
+        }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        aFailBlock();
+        aFailBlock([failDict objectForKey:@"error"]);
     }];
 }
 
-- (void)getNextBuyArray:(void (^)(NSMutableArray *))aSuccBlock andFail:(void (^)(void))aFailBlock
+- (void)getNextBuyArray:(void (^)(NSMutableArray *))aSuccBlock andFail:(void (^)(NSString *aStr))aFailBlock
 {
     if (pagesize*pageid<pagetotal)
     {
@@ -72,25 +80,33 @@ int pagetotal;
         kYHBRequestUrl(@"getBuyList.php", supplyUrl);
         [NetManager requestWith:dict url:supplyUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
             //        MLOG(@"%@", successDict);
-            NSDictionary *dataDict = [successDict objectForKey:@"data"];
-            NSDictionary *pageDict = [dataDict objectForKey:@"page"];
-            pagetotal = [[pageDict objectForKey:@"pagetotal"] intValue];
-            NSArray *rslistArray = [dataDict objectForKey:@"rslist"];
-            NSMutableArray *resultArray = [NSMutableArray new];
-            for (int i=0; i<rslistArray.count; i++)
+            NSString *result = [successDict objectForKey:@"result"];
+            if ([result intValue] != 1)
             {
-                NSDictionary *dict = [rslistArray objectAtIndex:i];
-                YHBSupplyModel *model = [YHBSupplyModel modelObjectWithDictionary:dict];
-                [resultArray addObject:model];
+                aFailBlock([successDict objectForKey:@"error"]);
             }
-            aSuccBlock(resultArray);
+            else
+            {
+                NSDictionary *dataDict = [successDict objectForKey:@"data"];
+                NSDictionary *pageDict = [dataDict objectForKey:@"page"];
+                pagetotal = [[pageDict objectForKey:@"pagetotal"] intValue];
+                NSArray *rslistArray = [dataDict objectForKey:@"rslist"];
+                NSMutableArray *resultArray = [NSMutableArray new];
+                for (int i=0; i<rslistArray.count; i++)
+                {
+                    NSDictionary *dict = [rslistArray objectAtIndex:i];
+                    YHBSupplyModel *model = [YHBSupplyModel modelObjectWithDictionary:dict];
+                    [resultArray addObject:model];
+                }
+                aSuccBlock(resultArray);
+            }
         } failure:^(NSDictionary *failDict, NSError *error) {
-            aFailBlock();
+            aFailBlock([failDict objectForKey:@"error"]);
         }];
     }
     else
     {
-        aFailBlock();
+        aFailBlock(@"已无更多");
     }
 }
 

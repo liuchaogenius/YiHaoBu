@@ -34,10 +34,10 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 62)];
-    topView.backgroundColor = KColor;
+    topView.backgroundColor = RGBCOLOR(249, 249, 249);
     [self.view addSubview:topView];
     
-    UIButton *leftBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, 44, 44)];
+    UIButton *leftBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 27.5, 16, 24)];
     [leftBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [leftBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [topView addSubview:leftBtn];
@@ -51,6 +51,7 @@
     UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(textField.right+5, 20, 36, 44)];
     [rightBtn addTarget:self action:@selector(touch) forControlEvents:UIControlEventTouchUpInside];
     [rightBtn setTitle:@"确定" forState:UIControlStateNormal];
+    [rightBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [topView addSubview:rightBtn];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, topView.bottom+10, 100, 17)];

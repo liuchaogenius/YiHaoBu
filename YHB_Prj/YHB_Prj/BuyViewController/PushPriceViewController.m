@@ -158,9 +158,9 @@
             [self dismissFlower];
             [SVProgressHUD showSuccessWithStatus:@"报价成功" cover:YES offsetY:kMainScreenWidth/2.0];
             [self.navigationController popViewControllerAnimated:YES];
-        } andFailBlock:^{
+        } andFailBlock:^(NSString *aStr){
             [self dismissFlower];
-            [SVProgressHUD showErrorWithStatus:@"发生错误" cover:YES offsetY:kMainScreenWidth/2.0];
+            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenWidth/2.0];
         }];
     }
     else

@@ -107,9 +107,10 @@
             [self dismissFlower];
             self.tableViewArray = aArray;
             [self.supplyTableView reloadData];
-        } andFail:^{
-            
-        } isVip:aIsVip];
+        } andFail:^(NSString *aStr) {
+            [self dismissFlower];
+            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
+        } isVip:isVip];
     }
     else
     {
@@ -117,8 +118,9 @@
             [self dismissFlower];
             self.tableViewArray = aArray;
             [self.supplyTableView reloadData];
-        } andFail:^{
-            
+        } andFail:^(NSString *aStr){
+            [self dismissFlower];
+            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
         } isVip:isVip];
     }
     
@@ -182,8 +184,9 @@
                 [weakself.supplyTableView.pullToRefreshView stopAnimating];
                 self.tableViewArray = aArray;
                 [self.supplyTableView reloadData];
-            } andFail:^{
+            } andFail:^(NSString *aStr){
                 [weakself.supplyTableView.pullToRefreshView stopAnimating];
+                [self dismissFlower];
             } isVip:isVip];
         }
         else
@@ -192,8 +195,9 @@
                 [weakself.supplyTableView.pullToRefreshView stopAnimating];
                 self.tableViewArray = aArray;
                 [self.supplyTableView reloadData];
-            } andFail:^{
+            } andFail:^(NSString *aStr){
                 [weakself.supplyTableView.pullToRefreshView stopAnimating];
+                [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
             } isVip:isVip];
         }
         
@@ -214,8 +218,9 @@
                     }
                     [self.tableViewArray addObjectsFromArray:aArray];
                     [self.supplyTableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
-                } andFail:^{
+                } andFail:^(NSString *aStr){
                     [weakself.supplyTableView.infiniteScrollingView stopAnimating];
+                    [self dismissFlower];
                 }];
             }
             else
@@ -230,8 +235,9 @@
                     }
                     [self.tableViewArray addObjectsFromArray:aArray];
                     [self.supplyTableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
-                } andFail:^{
+                } andFail:^(NSString *aStr){
                     [weakself.supplyTableView.infiniteScrollingView stopAnimating];
+                    [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
                 }];
             }
         }

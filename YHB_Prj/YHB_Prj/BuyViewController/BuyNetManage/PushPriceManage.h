@@ -10,5 +10,5 @@
 
 @interface PushPriceManage : NSObject
 
-- (void)pushPriceManageWithItemId:(int)aItemId price:(float)aPrice content:(NSString *)aContent typeid:(int)aTypeid succBlock:(void (^)(void))aSuccBlock andFailBlock:(void (^)(void))aFailBlock;
+- (void)pushPriceManageWithItemId:(int)aItemId price:(float)aPrice content:(NSString *)aContent typeid:(int)aTypeid succBlock:(void (^)(void))aSuccBlock andFailBlock:(void (^)(NSString *aStr))aFailBlock;
 @end

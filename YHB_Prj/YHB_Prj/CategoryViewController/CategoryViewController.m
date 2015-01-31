@@ -78,8 +78,9 @@
 //                [chooseArray addObject:subModel];;
 //            }
             [self.tableView reloadData];
-        } andFailBlock:^{
+        } andFailBlock:^(NSString *aStr){
             [self dismissFlower];
+            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
         }];
     }
 }

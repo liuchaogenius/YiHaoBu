@@ -63,8 +63,9 @@
         [self dismissFlower];
         self.tableViewArray = aArray;
         [self.tableView reloadData];
-    } andFail:^{
+    } andFail:^(NSString *aStr){
         [self dismissFlower];
+        [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
     }];
 }
 
@@ -79,8 +80,9 @@
             [weakself.tableView.pullToRefreshView stopAnimating];
             self.tableViewArray = aArray;
             [self.tableView reloadData];
-        } andFail:^{
+        } andFail:^(NSString *aStr){
             [weakself.tableView.pullToRefreshView stopAnimating];
+            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
         }];
     }];
     
@@ -98,9 +100,9 @@
                 }
                 [self.tableViewArray addObjectsFromArray:aArray];
                 [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
-            } andFail:^{
+            } andFail:^(NSString *aStr){
                 [weakself.tableView.infiniteScrollingView stopAnimating];
-                
+                [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
             }];
         }
         else

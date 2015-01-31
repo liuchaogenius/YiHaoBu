@@ -15,6 +15,7 @@
 #import "CategoryViewController.h"
 #import "YHBCatSubcate.h"
 #import "YHBUser.h"
+#import "YHBUploadImageManage.h"
 
 
 #define kButtonTag_Yes 100
@@ -41,6 +42,8 @@
     BOOL isClean;
     
     NSString *catidString;
+    
+    YHBVariousImageView *variousImageView;
 }
 
 @property(nonatomic, strong) UIPickerView *dayPickerView;
@@ -74,7 +77,7 @@
     scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:scrollView];
     
-    YHBVariousImageView *variousImageView = [[YHBVariousImageView alloc] initEditWithFrame:CGRectMake(0, 0, kMainScreenWidth, 120)];
+    variousImageView = [[YHBVariousImageView alloc] initEditWithFrame:CGRectMake(0, 0, kMainScreenWidth, 120)];
     [scrollView addSubview:variousImageView];
     
 #pragma mark 中间View
@@ -111,7 +114,7 @@
     titleLabel.text = @"请输入您要发布的名称";
     titleLabel.userInteractionEnabled = YES;
     titleLabel.font = kFont14;
-    titleLabel.textColor = [UIColor lightGrayColor];
+//    titleLabel.textColor = [UIColor lightGrayColor];
     [editSupplyView addSubview:titleLabel];
     
     UIImageView *rightArrow = [[UIImageView alloc] initWithFrame:CGRectMake(titleLabel.right-titleLabel.left-12, (labelHeight+10-15)/2, 9, 15)];
@@ -127,8 +130,8 @@
     priceTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     priceTextField.returnKeyType = UIReturnKeyDone;
     priceTextField.delegate = self;
-    priceTextField.textColor = [UIColor lightGrayColor];
-    priceTextField.textAlignment = NSTextAlignmentCenter;
+//    priceTextField.textColor = [UIColor lightGrayColor];
+//    priceTextField.textAlignment = NSTextAlignmentCenter;
     priceTextField.layer.borderWidth = 0.5;
     [editSupplyView addSubview:priceTextField];
     
@@ -146,9 +149,9 @@
     
     dayLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80-18, labelHeight+10)];
     dayLabel.font = kFont15;
-    dayLabel.textAlignment = NSTextAlignmentCenter;
+//    dayLabel.textAlignment = NSTextAlignmentCenter;
+//    dayLabel.textColor = [UIColor lightGrayColor];
     dayLabel.userInteractionEnabled = YES;
-    dayLabel.textColor = [UIColor lightGrayColor];
     [dayView addSubview:dayLabel];
     
     UIImageView *downArrow = [[UIImageView alloc] initWithFrame:CGRectMake(dayView.right-dayView.left-18, (labelHeight+10-12)/2+2, 15, 9)];
@@ -364,7 +367,7 @@
         catNameLabel.text = str;
     }];
     [self.navigationController pushViewController:vc animated:YES];
-}
+} 
 
 #pragma mark 点击标题
 - (void)touchTitle
@@ -440,9 +443,11 @@
     if ([self isTextNotNil:titleLabel.text]&&[self isTextNotNil:priceTextField.text]&&[self isTextNotNil:dayLabel.text]&&[self isTextNotNil:contentTextView.text]&&[self isTextNotNil:catNameLabel.text]&&[self isTextNotNil:nameTextField.text]&&[self isTextNotNil:phoneTextField.text])
     {
         [self showFlower];
-        [self.netManage publishSupplyWithItemid:0 title:titleLabel.text price:priceTextField.text catid:catidString typeid:[NSString stringWithFormat:@"%d", typeId] today:dayLabel.text content:contentTextView.text truename:nameTextField.text mobile:phoneTextField.text andSuccBlock:^(int aItemId) {
+        [self.netManage publishSupplyWithItemid:0 title:titleLabel.text price:priceTextField.text catid:catidString typeid:[NSString stringWithFormat:@"%d", typeId] today:dayLabel.text content:contentTextView.text truename:nameTextField.text mobile:phoneTextField.text andSuccBlock:^(NSDictionary *aDict) {
             [self dismissFlower];
-            YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:aItemId andIsMine:YES isModal:YES];
+            int itemid = [[aDict objectForKey:@"itemid"] intValue];
+//            [SVProgressHUD showWithStatus:@"正在上传图片" cover:YES offsetY:kMainScreenHeight/2.0];
+            YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:itemid andIsMine:YES isModal:YES];
             [self.navigationController pushViewController:vc animated:YES];
         } failBlock:^(NSString *aStr) {
             [self dismissFlower];

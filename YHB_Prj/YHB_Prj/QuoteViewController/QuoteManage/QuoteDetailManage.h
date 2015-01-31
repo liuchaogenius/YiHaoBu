@@ -10,6 +10,6 @@
 
 @interface QuoteDetailManage : NSObject
 
-- (void)getQuoteDetailForItemid:(int)aItemid succBlock:(void(^)(NSMutableArray *aArray))aSuccBlock andFail:(void(^)(void))aFailBlock;
-- (void)getNextQuoteArray:(void (^)(NSMutableArray *aArray))aSuccBlock andFail:(void (^)(void))aFailBlock;
+- (void)getQuoteDetailForItemid:(int)aItemid succBlock:(void(^)(NSMutableArray *aArray))aSuccBlock andFail:(void(^)(NSString *aStr))aFailBlock;
+- (void)getNextQuoteArray:(void (^)(NSMutableArray *aArray))aSuccBlock andFail:(void (^)(NSString *aStr))aFailBlock;
 @end

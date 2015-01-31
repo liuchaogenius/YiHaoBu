@@ -10,5 +10,5 @@
 
 @interface YHBCatManage : NSObject
 
-- (void)getDataArraySuccBlock:(void(^)(NSMutableArray *aArray))aSuccBlock andFailBlock:(void(^)(void))aFailBlock;
+- (void)getDataArraySuccBlock:(void(^)(NSMutableArray *aArray))aSuccBlock andFailBlock:(void(^)(NSString *aStr))aFailBlock;
 @end

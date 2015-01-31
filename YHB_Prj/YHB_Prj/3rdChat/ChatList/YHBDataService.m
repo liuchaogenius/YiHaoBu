@@ -8,6 +8,7 @@
 
 #import "YHBDataService.h"
 #import "SynthesizeSingleton.h"
+#import "YHBUser.h"
 @interface YHBDataService ()
 @property (nonatomic,strong) NSString *lastVersion;
 @end
@@ -48,14 +49,18 @@
     [ud synchronize];
     NSMutableArray *buylist = [self getBuylist];
     [buylist addObjectsFromArray:aArray];
-    [ud setObject:buylist forKey:@"buylist"];
+    YHBUser *user = [YHBUser sharedYHBUser];
+    NSString *key = user.isLogin?[NSString stringWithFormat:@"buylist%d",(int)user.userInfo.userid]:@"buylist";
+    [ud setObject:buylist forKey:key];
 }
 
 - (NSMutableArray *)getBuylist
 {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud synchronize];
-    return [ud objectForKey:@"buylist"];
+    YHBUser *user = [YHBUser sharedYHBUser];
+    NSString *key = user.isLogin?[NSString stringWithFormat:@"buylist%d",(int)user.userInfo.userid]:@"buylist";
+    return [ud objectForKey:key];
 }
 
 - (void)saveSysList:(NSMutableArray *)aArray
@@ -64,14 +69,18 @@
     [ud synchronize];
     NSMutableArray *syslist = [self getSyslist];
     [syslist addObjectsFromArray:aArray];
-    [ud setObject:syslist forKey:@"syslist"];
+    YHBUser *user = [YHBUser sharedYHBUser];
+    NSString *key = user.isLogin?[NSString stringWithFormat:@"syslist%d",(int)user.userInfo.userid]:@"syslist";
+    [ud setObject:syslist forKey:key];
 }
 
 - (NSMutableArray *)getSyslist
 {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud synchronize];
-    return [ud objectForKey:@"syslist"];
+    YHBUser *user = [YHBUser sharedYHBUser];
+    NSString *key = user.isLogin?[NSString stringWithFormat:@"syslist%d",(int)user.userInfo.userid]:@"syslist";
+    return [ud objectForKey:key];
 }
 
 - (NSMutableArray *)searchHistoryArr{

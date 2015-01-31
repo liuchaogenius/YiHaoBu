@@ -12,23 +12,31 @@
 
 @implementation YHBCatManage
 
-- (void)getDataArraySuccBlock:(void(^)(NSMutableArray *aArray))aSuccBlock andFailBlock:(void(^)(void))aFailBlock
+- (void)getDataArraySuccBlock:(void(^)(NSMutableArray *aArray))aSuccBlock andFailBlock:(void(^)(NSString *aStr))aFailBlock
 {
     NSString *supplyDetailUrl = nil;
     NSDictionary *dict = [NSDictionary new];
     kYHBRequestUrl(@"getCategory.php", supplyDetailUrl);
     [NetManager requestWith:dict url:supplyDetailUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
 //        MLOG(@"%@", successDict);
-        NSMutableArray *reslutArray = [NSMutableArray new];
-        NSArray *dataArray = [successDict objectForKey:@"data"];
-        for (NSDictionary *dict in dataArray)
+        NSString *result = [successDict objectForKey:@"result"];
+        if ([result intValue] != 1)
         {
-            YHBCatData *model = [YHBCatData modelObjectWithDictionary:dict];
-            [reslutArray addObject:model];
+            aFailBlock([successDict objectForKey:@"error"]);
         }
-        aSuccBlock(reslutArray);
+        else
+        {
+            NSMutableArray *reslutArray = [NSMutableArray new];
+            NSArray *dataArray = [successDict objectForKey:@"data"];
+            for (NSDictionary *dict in dataArray)
+            {
+                YHBCatData *model = [YHBCatData modelObjectWithDictionary:dict];
+                [reslutArray addObject:model];
+            }
+            aSuccBlock(reslutArray);
+        }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        aFailBlock();
+        aFailBlock([failDict objectForKey:@"error"]);
     }];
 
 }

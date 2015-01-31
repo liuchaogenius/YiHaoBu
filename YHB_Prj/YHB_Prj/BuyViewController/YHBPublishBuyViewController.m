@@ -111,7 +111,7 @@
     titleLabel.text = @"请输入您要发布的名称";
     titleLabel.userInteractionEnabled = YES;
     titleLabel.font = kFont14;
-    titleLabel.textColor = [UIColor lightGrayColor];
+//    titleLabel.textColor = [UIColor lightGrayColor];
     [editSupplyView addSubview:titleLabel];
     
     UIImageView *rightArrow = [[UIImageView alloc] initWithFrame:CGRectMake(titleLabel.right-titleLabel.left-12, (labelHeight+10-15)/2, 9, 15)];
@@ -126,9 +126,9 @@
     priceTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     priceTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     priceTextField.returnKeyType = UIReturnKeyDone;
-    priceTextField.textColor = [UIColor lightGrayColor];
+//    priceTextField.textColor = [UIColor lightGrayColor];
+//    priceTextField.textAlignment = NSTextAlignmentCenter;
     priceTextField.delegate = self;
-    priceTextField.textAlignment = NSTextAlignmentCenter;
     priceTextField.layer.borderWidth = 0.5;
     [editSupplyView addSubview:priceTextField];
     
@@ -146,9 +146,9 @@
     
     dayLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80-18, labelHeight+10)];
     dayLabel.font = kFont15;
-    dayLabel.textAlignment = NSTextAlignmentCenter;
+//    dayLabel.textAlignment = NSTextAlignmentCenter;
+//    dayLabel.textColor = [UIColor lightGrayColor];
     dayLabel.userInteractionEnabled = YES;
-    dayLabel.textColor = [UIColor lightGrayColor];
     [dayView addSubview:dayLabel];
     
     UIImageView *downArrow = [[UIImageView alloc] initWithFrame:CGRectMake(dayView.right-dayView.left-18, (labelHeight+10-12)/2+2, 15, 9)];

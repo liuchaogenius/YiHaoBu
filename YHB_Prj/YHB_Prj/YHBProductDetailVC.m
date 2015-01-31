@@ -311,8 +311,8 @@
         NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:self.productID],@"itemid",[NSString stringWithFormat:@"%lf",_number],@"number",[NSNumber numberWithInt:(int)_selSku.colorid],@"skuid", nil];
         [self.shopCartManger changeShopCartWithArray:@[dic] andSuccBlock:^{
             [SVProgressHUD showSuccessWithStatus:@"添加购物车成功！" cover:YES offsetY:0];
-        } failBlock:^{
-            [SVProgressHUD showErrorWithStatus:@"添加鼓舞车失败，请重新尝试！" cover:YES offsetY:0];
+        } failBlock:^(NSString *aStr){
+            [SVProgressHUD showErrorWithStatus:@"添加购物车失败，请重新尝试！" cover:YES offsetY:0];
         }];
     }
 }

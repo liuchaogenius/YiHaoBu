@@ -53,8 +53,9 @@
             self.tableViewArray = aArray;
             [self.tableView reloadData];
             [self dismissFlower];
-        } andFail:^{
+        } andFail:^(NSString *aStr){
             [self dismissFlower];
+            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
         }];
     }
 }
@@ -143,8 +144,9 @@
         self.tableViewArray = aArray;
         [self.tableView reloadData];
         [self dismissFlower];
-    } andFail:^{
+    } andFail:^(NSString *aStr){
         [self dismissFlower];
+        [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
     }];
 }
 #pragma mark 移动至收藏夹
@@ -183,8 +185,8 @@
             [self.netManage changeShopCartWithArray:changeItemArray andSuccBlock:^{
                 changeItemArray = [NSMutableArray new];
                 changeModelArray = [NSMutableArray new];
-            } failBlock:^{
-                
+            } failBlock:^(NSString *aStr){
+                [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
             }];
         }
 //        moveToFavoriteBtn.hidden = YES;
@@ -212,8 +214,9 @@
             [weakself.tableView.pullToRefreshView stopAnimating];
             self.tableViewArray = aArray;
             [self.tableView reloadData];
-        } andFail:^{
+        } andFail:^(NSString *aStr){
             [weakself.tableView.pullToRefreshView stopAnimating];
+            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
         }];
     }];
     
@@ -225,8 +228,9 @@
                 [weakself.tableView.infiniteScrollingView stopAnimating];
                 [self.tableViewArray addObjectsFromArray:aArray];
                 [self.tableView reloadData];
-            } andFail:^{
+            } andFail:^(NSString *aStr){
                 [weakself.tableView.infiniteScrollingView stopAnimating];
+                [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
             }];
         }
         else
@@ -588,8 +592,8 @@
         [self.tableView reloadData];
         [self.netManage deleteShopCartWithArray:itemidArray andSuccBlock:^{
             
-        } failBlock:^{
-            
+        } failBlock:^(NSString *aStr){
+            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
         }];
     }
 }

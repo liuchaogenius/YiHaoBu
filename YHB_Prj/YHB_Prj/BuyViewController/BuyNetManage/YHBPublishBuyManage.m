@@ -8,21 +8,22 @@
 
 #import "YHBPublishBuyManage.h"
 #import "NetManager.h"
+#import "YHBUser.h"
 
-#define Re
 @implementation YHBPublishBuyManage
 
 - (void)publishBuyWithItemid:(int)aItemId title:(NSString *)aTitle catid:(NSString *)aCatId today:(NSString *)aToday content:(NSString *)aContent truename:(NSString *)aName mobile:(NSString *)aMobile andSuccBlock:(void (^)(int aItemId))aSuccBlock failBlock:(void (^)(NSString *aStr))aFailBlock
 {
     NSString *supplyUrl = nil;
     NSDictionary *dict;
+    NSString *token = [YHBUser sharedYHBUser].token;
     if (aItemId)
     {
-        dict = [NSDictionary dictionaryWithObjectsAndKeys:aTitle,@"title",aCatId,@"catid",aToday,@"today",aContent,@"content",aName,@"truename",aMobile,@"mobile",aItemId,@"itemid",nil];
+        dict = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",aTitle,@"title",aCatId,@"catid",aToday,@"today",aContent,@"introduce",aName,@"truename",aMobile,@"mobile",aItemId,@"itemid",nil];
     }
     else
     {
-        dict = [NSDictionary dictionaryWithObjectsAndKeys:aTitle,@"title",aCatId,@"catid",aToday,@"today",aContent,@"content",aName,@"truename",aMobile,@"mobile",nil];
+        dict = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",aTitle,@"title",aCatId,@"catid",aToday,@"today",aContent,@"introduce",aName,@"truename",aMobile,@"mobile",nil];
     }
     kYHBRequestUrl(@"postBuy.php", supplyUrl);
     [NetManager requestWith:dict url:supplyUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {

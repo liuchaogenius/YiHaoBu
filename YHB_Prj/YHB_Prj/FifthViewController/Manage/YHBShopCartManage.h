@@ -10,8 +10,8 @@
 
 @interface YHBShopCartManage : NSObject
 
-- (void)getShopCartArray:(void(^)(NSMutableArray *aArray))aSuccBlock andFail:(void(^)(void))aFailBlock;
-- (void)getNextShopCartArray:(void (^)(NSMutableArray *aArray))aSuccBlock andFail:(void (^)(void))aFailBlock;
-- (void)changeShopCartWithArray:(NSArray *)aArray andSuccBlock:(void(^)(void))aSuccBlock failBlock:(void(^)(void))aFailBlock;
-- (void)deleteShopCartWithArray:(NSArray *)aArray andSuccBlock:(void (^)(void))aSuccBlock failBlock:(void (^)(void))aFailBlock;
+- (void)getShopCartArray:(void (^)(NSMutableArray *))aSuccBlock andFail:(void (^)(NSString *aStr))aFailBlock;
+- (void)getNextShopCartArray:(void (^)(NSMutableArray *aArray))aSuccBlock andFail:(void (^)(NSString *aStr))aFailBlock;
+- (void)changeShopCartWithArray:(NSArray *)aArray andSuccBlock:(void (^)(void))aSuccBlock failBlock:(void (^)(NSString *aStr))aFailBlock;
+- (void)deleteShopCartWithArray:(NSArray *)aArray andSuccBlock:(void (^)(void))aSuccBlock failBlock:(void (^)(NSString *aStr))aFailBlock;
 @end
