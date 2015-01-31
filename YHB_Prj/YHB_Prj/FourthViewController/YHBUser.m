@@ -74,7 +74,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
     _isLogin = NO;
     _userInfo = nil;
     _statusIsChanged = NO;
-    [self loadLocalUserInfo]; //判断沙箱是否有数据，并修改数据
+//    [self loadLocalUserInfo]; //判断沙箱是否有数据，并修改数据
     return self;
 }
 

@@ -367,19 +367,25 @@
         case button_sellWeave:
         {
             //卖步
+            if ([self userLoginConfirm]) {
+
             YHBPublishSupplyViewController *supplyVC = [[YHBPublishSupplyViewController alloc] init];
             [self presentViewController:[[UINavigationController alloc] initWithRootViewController:supplyVC] animated:YES completion:^{
                 
             }];
+            }
         }
             break;
         case button_findWeave:
         {
             //找步
+            if ([self userLoginConfirm]) {
+
             YHBPublishBuyViewController *supplyVC = [[YHBPublishBuyViewController alloc] init];
             [self presentViewController:[[UINavigationController alloc] initWithRootViewController:supplyVC] animated:YES completion:^{
                 
             }];
+            }
         }
             break;
         default:

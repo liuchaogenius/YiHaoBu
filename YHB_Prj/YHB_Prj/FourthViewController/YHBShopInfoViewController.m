@@ -379,13 +379,14 @@ enum TextTag
 - (void)uploadImgWithAction:(Picker_type)type Image:(UIImage *)image
 {
     NSString *uploadPhototUrl = nil;
-    kYHBRequestUrl(@"uploadPhoto.ashx", uploadPhototUrl);
+    kYHBRequestUrl(@"upload.php", uploadPhototUrl);
     
     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",(type == Picker_Banner ? @"banner":@"avatar"),@"action", nil];
     
     [NetManager uploadImg:image parameters:dic uploadUrl:uploadPhototUrl uploadimgName:(type == Picker_Banner ? @"banner":@"avatar") parameEncoding:AFJSONParameterEncoding progressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
         
     } succ:^(NSDictionary *successDict) {
+        MLOG(@"%@", successDict);
         
     } failure:^(NSDictionary *failDict, NSError *error) {
         

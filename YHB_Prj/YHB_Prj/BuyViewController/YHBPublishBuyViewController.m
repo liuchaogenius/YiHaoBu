@@ -15,6 +15,7 @@
 #import "CategoryViewController.h"
 #import "YHBCatSubcate.h"
 #import "YHBUser.h"
+#import "NetManager.h"
 
 #define kButtonTag_Yes 100
 @interface YHBPublishBuyViewController()<UITextFieldDelegate, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
@@ -41,6 +42,9 @@
     BOOL isClean;
     
     NSString *catidString;
+    
+    
+    YHBVariousImageView *variousImageView;
 }
 
 @property(nonatomic, strong) UIPickerView *dayPickerView;
@@ -74,7 +78,7 @@
     scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:scrollView];
     
-    YHBVariousImageView *variousImageView = [[YHBVariousImageView alloc] initEditWithFrame:CGRectMake(0, 0, kMainScreenWidth, 120)];
+    variousImageView = [[YHBVariousImageView alloc] initEditWithFrame:CGRectMake(0, 0, kMainScreenWidth, 120)];
     [scrollView addSubview:variousImageView];
     
 #pragma mark 中间View
@@ -407,10 +411,44 @@
     if ([self isTextNotNil:titleLabel.text]&&[self isTextNotNil:priceTextField.text]&&[self isTextNotNil:dayLabel.text]&&[self isTextNotNil:contentTextView.text]&&[self isTextNotNil:catNameLabel.text]&&[self isTextNotNil:nameTextField.text]&&[self isTextNotNil:phoneTextField.text])
     {
         [self showFlower];
-        [self.netManage publishBuyWithItemid:0 title:titleLabel.text catid:catidString today:dayLabel.text content:contentTextView.text truename:nameTextField.text mobile:phoneTextField.text andSuccBlock:^(int aItemId) {
+        [self.netManage publishBuyWithItemid:0 title:titleLabel.text catid:catidString today:dayLabel.text content:contentTextView.text truename:nameTextField.text mobile:phoneTextField.text andSuccBlock:^(NSDictionary *aDict) {
             [self dismissFlower];
-            YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:aItemId andIsMine:YES isModal:YES];
-            [self.navigationController pushViewController:vc animated:YES];
+            NSString *uploadPhototUrl = nil;
+            kYHBRequestUrl(@"upload.php", uploadPhototUrl);
+            
+            int itemid = [[aDict objectForKey:@"itemid"] intValue];
+            if (variousImageView.myPhotoArray.count>1)
+            {
+                for (int i=0; i<variousImageView.myPhotoArray.count-1; i++)
+                {
+                    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",[NSString stringWithFormat:@"%d", i],@"order",@"album",@"action",[NSString stringWithFormat:@"%d",itemid],@"itemid",[aDict objectForKey:@"moduleid"],@"moduleid", nil];
+                    [NetManager uploadImg:[variousImageView.myPhotoArray objectAtIndex:i] parameters:dic uploadUrl:uploadPhototUrl uploadimgName:@"album" parameEncoding:AFJSONParameterEncoding progressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+                    } succ:^(NSDictionary *successDict) {
+                        NSString *result = [successDict objectForKey:@"result"];
+                        if ([result intValue] != 1)
+                        {
+                            MLOG(@"%@", [successDict objectForKey:@"error"]);
+                        }
+                        else
+                        {
+                            
+                        }
+                        if (i==variousImageView.myPhotoArray.count-2)
+                        {
+                            YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:itemid andIsMine:YES isModal:YES];
+                            [self.navigationController pushViewController:vc animated:YES];
+                        }
+                        
+                    } failure:^(NSDictionary *failDict, NSError *error) {
+                        
+                    }];
+                }
+            }
+            else
+            {
+                YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:itemid andIsMine:YES isModal:YES];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
         } failBlock:^(NSString *aStr) {
             [self dismissFlower];
             [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];

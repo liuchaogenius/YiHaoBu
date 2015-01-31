@@ -16,6 +16,7 @@
 #import "YHBCatSubcate.h"
 #import "YHBUser.h"
 #import "YHBUploadImageManage.h"
+#import "NetManager.h"
 
 
 #define kButtonTag_Yes 100
@@ -44,6 +45,7 @@
     NSString *catidString;
     
     YHBVariousImageView *variousImageView;
+//    YHBUploadImageManage *netManage;
 }
 
 @property(nonatomic, strong) UIPickerView *dayPickerView;
@@ -447,8 +449,41 @@
             [self dismissFlower];
             int itemid = [[aDict objectForKey:@"itemid"] intValue];
 //            [SVProgressHUD showWithStatus:@"正在上传图片" cover:YES offsetY:kMainScreenHeight/2.0];
-            YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:itemid andIsMine:YES isModal:YES];
-            [self.navigationController pushViewController:vc animated:YES];
+            NSString *uploadPhototUrl = nil;
+            kYHBRequestUrl(@"upload.php", uploadPhototUrl);
+            
+            if (variousImageView.myPhotoArray.count>1)
+            {
+                for (int i=0; i<variousImageView.myPhotoArray.count-1; i++)
+                {
+                    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",[NSString stringWithFormat:@"%d", i],@"order",@"album",@"action",[NSString stringWithFormat:@"%d",itemid],@"itemid",[aDict objectForKey:@"moduleid"],@"moduleid", nil];
+                    [NetManager uploadImg:[variousImageView.myPhotoArray objectAtIndex:i] parameters:dic uploadUrl:uploadPhototUrl uploadimgName:@"album" parameEncoding:AFJSONParameterEncoding progressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+                    } succ:^(NSDictionary *successDict) {
+                        NSString *result = [successDict objectForKey:@"result"];
+                        if ([result intValue] != 1)
+                        {
+                            MLOG(@"%@", [successDict objectForKey:@"error"]);
+                        }
+                        else
+                        {
+                        
+                        }
+                        if (i==variousImageView.myPhotoArray.count-2)
+                        {
+                            YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:itemid andIsMine:YES isModal:YES];
+                            [self.navigationController pushViewController:vc animated:YES];
+                        }
+                        
+                    } failure:^(NSDictionary *failDict, NSError *error) {
+                        
+                    }];
+                }
+            }
+            else
+            {
+                YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:itemid andIsMine:YES isModal:YES];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
         } failBlock:^(NSString *aStr) {
             [self dismissFlower];
             [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];

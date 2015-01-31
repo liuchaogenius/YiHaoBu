@@ -12,7 +12,7 @@
 
 @implementation YHBPublishBuyManage
 
-- (void)publishBuyWithItemid:(int)aItemId title:(NSString *)aTitle catid:(NSString *)aCatId today:(NSString *)aToday content:(NSString *)aContent truename:(NSString *)aName mobile:(NSString *)aMobile andSuccBlock:(void (^)(int aItemId))aSuccBlock failBlock:(void (^)(NSString *aStr))aFailBlock
+- (void)publishBuyWithItemid:(int)aItemId title:(NSString *)aTitle catid:(NSString *)aCatId today:(NSString *)aToday content:(NSString *)aContent truename:(NSString *)aName mobile:(NSString *)aMobile andSuccBlock:(void (^)(NSDictionary *aDict))aSuccBlock failBlock:(void (^)(NSString *aStr))aFailBlock
 {
     NSString *supplyUrl = nil;
     NSDictionary *dict;
@@ -36,8 +36,7 @@
         else
         {
             NSDictionary *dict = [successDict objectForKey:@"data"];
-            int itemid = [[dict objectForKey:@"itemid"] intValue];
-            aSuccBlock(itemid);
+            aSuccBlock(dict);
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
         aFailBlock([failDict objectForKey:@"error"]);
