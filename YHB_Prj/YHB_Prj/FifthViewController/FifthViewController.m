@@ -17,6 +17,7 @@
 #import "TableSectionHeaderView.h"
 #import "SVPullToRefresh.h"
 #import "YHBOrderConfirmVC.h"
+#import "YHBUser.h"
 
 #define bottomHeight 60
 @interface FifthViewController ()<UITableViewDataSource, UITableViewDelegate, ShoppingCartCellDelegate, TableViewHeaderViewDelegate>
@@ -44,20 +45,35 @@
 
 @implementation FifthViewController
 
+#pragma mark - 登陆状态校验
+- (BOOL)userLoginConfirm
+{
+    if ([YHBUser sharedYHBUser].isLogin) {
+        return YES;
+    }else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLoginForUserMessage object:[NSNumber numberWithBool:NO]];
+        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessItem) name:kLoginSuccessMessae object:nil];
+        return NO;
+    }
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
-    if (self.tableViewArray.count==0)
-    {
-        [self showFlower];
-        [self.netManage getShopCartArray:^(NSMutableArray *aArray) {
-            self.tableViewArray = aArray;
-            [self.tableView reloadData];
-            [self dismissFlower];
-        } andFail:^(NSString *aStr){
-            [self dismissFlower];
-            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
-        }];
-    }
+//    if ([self userLoginConfirm])
+//    {
+        if (self.tableViewArray.count==0)
+        {
+            [self showFlower];
+            [self.netManage getShopCartArray:^(NSMutableArray *aArray) {
+                self.tableViewArray = aArray;
+                [self.tableView reloadData];
+                [self dismissFlower];
+            } andFail:^(NSString *aStr){
+                [self dismissFlower];
+                [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
+            }];
+        }
+//    }
 }
 
 - (void)viewDidLoad {

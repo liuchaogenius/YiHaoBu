@@ -8,6 +8,7 @@
 
 #import "YHBContactView.h"
 #import "ChatViewController.h"
+#import "YHBUser.h"
 
 typedef enum:NSUInteger{
     btnTypePhone = 12,
@@ -141,20 +142,23 @@ typedef enum:NSUInteger{
     }
     else if(aBtn.tag==btnTypeChat)
     {
-        MLOG(@"在线沟通");
-        EMError *error = nil;
-        BOOL isSuccess = [[EaseMob sharedInstance].chatManager registerNewAccount:@"8001" password:@"111111" error:&error];
-        if (isSuccess && !isSuccess) {
-            NSLog(@"注册成功");
+        if ([self userLoginConfirm])
+        {
+            MLOG(@"在线沟通");
+            EMError *error = nil;
+            BOOL isSuccess = [[EaseMob sharedInstance].chatManager registerNewAccount:@"8001" password:@"111111" error:&error];
+            if (isSuccess && !isSuccess) {
+                NSLog(@"注册成功");
+            }
+            NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginWithUsername:@"8001" password:@"111111" error:&error];
+            if (!error && loginInfo) {
+                NSLog(@"登陆成功");
+            }
+            NSString *userName = @"123";
+            ChatViewController *vc = [[ChatViewController alloc] initWithChatter:userName itemid:itemId ImageUrl:myImgUrl Title:myTitle andType:myType];
+            vc.title = userName;
+            [[self viewController].navigationController pushViewController:vc animated:YES];
         }
-        NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginWithUsername:@"8001" password:@"111111" error:&error];
-        if (!error && loginInfo) {
-            NSLog(@"登陆成功");
-        }
-        NSString *userName = @"123";
-        ChatViewController *vc = [[ChatViewController alloc] initWithChatter:userName itemid:itemId ImageUrl:myImgUrl Title:myTitle andType:myType];
-        vc.title = userName;
-        [[self viewController].navigationController pushViewController:vc animated:YES];
     }
 }
 
@@ -175,6 +179,18 @@ typedef enum:NSUInteger{
     if (buttonIndex==1)
     {
         [[UIApplication sharedApplication]openURL:[NSURL URLWithString:[NSString stringWithFormat:@"sms:%@", phoneNumber]]];
+    }
+}
+
+#pragma mark - 登陆状态校验
+- (BOOL)userLoginConfirm
+{
+    if ([YHBUser sharedYHBUser].isLogin) {
+        return YES;
+    }else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLoginForUserMessage object:[NSNumber numberWithBool:NO]];
+        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessItem) name:kLoginSuccessMessae object:nil];
+        return NO;
     }
 }
 
