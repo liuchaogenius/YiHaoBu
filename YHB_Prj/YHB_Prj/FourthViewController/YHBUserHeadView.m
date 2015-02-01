@@ -134,6 +134,7 @@
 #pragma mark - action
 - (void)refreshSelfHeadWithIsLogin:(BOOL)isLogin name:(NSString *)name avator:(NSString *)avator thumb:(NSString *)thumb group:(NSInteger)group company:(NSString *)company
 {
+    MLOG(@"%@",avator);
     if (isLogin) {
         [self addSubview:self.loginedView];
         if([self.privateButton superview]) [self.privateButton removeFromSuperview];
@@ -152,7 +153,10 @@
         self.selTag.hidden = group >= 6 ? NO : YES;
         self.buyTag.hidden = group >= 5 ? NO : YES;
         self.userName.text = name ? name : @"";
+        
         if(avator) [self.userImageView sd_setImageWithURL:[NSURL URLWithString:avator] placeholderImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"DefualtUser"]]];
+        else
+            self.userImageView.image = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"DefualtUser"]];
         if(thumb) [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:thumb]];
     }else{
         [self addSubview:self.notLoginedView];

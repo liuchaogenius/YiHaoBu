@@ -43,6 +43,10 @@
 
 - (void)setUIWithCateArray:(NSMutableArray *)array
 {
+    [self.contentView removeSubviews];
+    if (!array) {
+        self.height = 0;
+    }
     for (int i = 0; i < array.count; i++) {
         YHBCatSubcate *cate = array[i];
         YHBTagView *view = [self dequeseViewWithIndex:i];

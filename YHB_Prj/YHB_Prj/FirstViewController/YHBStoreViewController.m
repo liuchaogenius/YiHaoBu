@@ -28,7 +28,7 @@
 #define kSelectTagBase 100
 #define kNumberFont 14
 #define kButtonFont 15
-#define kPageSize 30 //分页-每页的数量
+#define kPageSize 21 //分页-每页的数量
 
 enum SgmLabel_tag
 {
@@ -217,8 +217,9 @@ enum SgmBtn_tag
     
     //网络请求
     __weak YHBStoreViewController *weakself = self;
-    [self.infoManger getUserInfoWithToken:Nil orUserId:[NSString stringWithFormat:@"%d",self.shopID] Success:^(NSDictionary *dataDic){
+    [self.infoManger getUserInfoWithToken:nil orUserId:[NSString stringWithFormat:@"%d",self.shopID] Success:^(NSDictionary *dataDic){
         weakself.shopInfo = [YHBUserInfo modelObjectWithDictionary:dataDic];
+        MLOG(@"%@",weakself.shopInfo);
         if ((int)weakself.shopInfo.groupid > 5) {
             //刷新页面
             weakself.titleArray =( (int)weakself.shopInfo.groupid == 7 ? @[@"产品信息",@"供应信息",@"样板信息"] : @[@"供应信息"]);

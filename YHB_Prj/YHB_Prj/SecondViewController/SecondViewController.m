@@ -266,9 +266,10 @@ typedef enum : NSUInteger {
         case Search_buy:
         {
             [self.listManager searchBuyListWithUserID:kAll KeyWord:self.searchTextField.text cateID:[self getCateID] pageID:pageid Vip:(_selectFilType == Filter_all ? kAll:1) pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
-                [self.pageDic setObject:page forKey:[NSString stringWithFormat:@"%lu",(unsigned long)Search_buy * _selectFilType]];
+                [self.pageDic setObject:page forKey:[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]];
+                [SVProgressHUD dismiss];
                 if (pageid == 1) {
-                    [self.modelsDic setObject:modelArray forKey:[NSString stringWithFormat:@"%lu",(unsigned long)Search_buy * _selectFilType]];
+                    [self.modelsDic setObject:modelArray forKey:[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]];
                 }else{
                     NSMutableArray *array = self.modelsDic[[NSString stringWithFormat:@"%lu",(unsigned long)Search_buy * _selectFilType]];
                     [array addObjectsFromArray:modelArray];
@@ -285,11 +286,12 @@ typedef enum : NSUInteger {
         case Search_sell:
         {
             [self.listManager searchSellListWithUserID:kAll KeyWord:self.searchTextField.text cateID:[self getCateID] Vip:(_selectFilType == Filter_all ? kAll:1) pageID:pageid pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
-                self.pageDic[[NSString stringWithFormat:@"%lu",(unsigned long)Search_sell * _selectFilType]] = page;
+                [SVProgressHUD dismiss];
+                self.pageDic[[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]] = page;
                 if (pageid == 1) {
-                    [self.modelsDic setObject:modelArray forKey:[NSString stringWithFormat:@"%lu",(unsigned long)Search_sell * _selectFilType]];
+                    [self.modelsDic setObject:modelArray forKey:[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]];
                 }else{
-                    NSMutableArray *array = self.modelsDic[[NSString stringWithFormat:@"%lu",(unsigned long)Search_sell * _selectFilType]];
+                    NSMutableArray *array = self.modelsDic[[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]];
                     [array addObjectsFromArray:modelArray];
                 }
                 if((int)page.pagetotal <= 0){
@@ -304,11 +306,12 @@ typedef enum : NSUInteger {
         case Search_product:
         {
             [self.listManager searchProductListWithUserID:kAll typeID:(_selectFilType == Filter_all ? kAll:1) KeyWord:self.searchTextField.text cateID:[self getCateID] PageID:pageid pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
-                self.pageDic[[NSString stringWithFormat:@"%lu",(unsigned long)Search_product * _selectFilType]] = page;
+                [SVProgressHUD dismiss];
+                self.pageDic[[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]] = page;
                 if (pageid == 1) {
-                    [self.modelsDic setObject:modelArray forKey:[NSString stringWithFormat:@"%lu",(unsigned long)Search_product * _selectFilType]];
+                    [self.modelsDic setObject:modelArray forKey:[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]];
                 }else{
-                    NSMutableArray *array = self.modelsDic[[NSString stringWithFormat:@"%lu",(unsigned long)Search_product * _selectFilType]];
+                    NSMutableArray *array = self.modelsDic[[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]];
                     [array addObjectsFromArray:modelArray];
                 }
                 if((int)page.pagetotal <= 0){
@@ -323,11 +326,12 @@ typedef enum : NSUInteger {
         case Search_mall:
         {
             [self.listManager searchCompanyListWithKeyWord:self.searchTextField.text cateID:[self getCateID] Vip:(_selectFilType == Filter_all ? kAll:1) pageID:pageid pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
-                self.pageDic[[NSString stringWithFormat:@"%lu",(unsigned long)Search_mall * _selectFilType]] = page;
+                [SVProgressHUD dismiss];
+                self.pageDic[[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]] = page;
                 if (pageid == 1) {
-                    [self.modelsDic setObject:modelArray forKey:[NSString stringWithFormat:@"%lu",(unsigned long)Search_mall * _selectFilType]];
+                    [self.modelsDic setObject:modelArray forKey:[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]];
                 }else{
-                    NSMutableArray *array = self.modelsDic[[NSString stringWithFormat:@"%lu",(unsigned long)Search_mall * _selectFilType]];
+                    NSMutableArray *array = self.modelsDic[[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]];
                     [array addObjectsFromArray:modelArray];
                 }
                 if((int)page.pagetotal <= 0){
@@ -347,6 +351,7 @@ typedef enum : NSUInteger {
 
 - (void)getFirstPageData
 {
+    [SVProgressHUD showWithStatus:@"搜索中..." cover:NO offsetY:0];
     [self getDataWithPageID:1];
 }
 
@@ -370,8 +375,8 @@ typedef enum : NSUInteger {
     }];
     
      [tableView addInfiniteScrollingWithActionHandler:^{
-         YHBPage *page = weakself.pageDic[[NSString stringWithFormat:@"%ld",_selectSearchType*_selectFilType]];
-         NSMutableArray *array = weakself.modelsDic[[NSString stringWithFormat:@"%ld",_selectSearchType*_selectFilType]];
+         YHBPage *page = weakself.pageDic[[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]];
+         NSMutableArray *array = weakself.modelsDic[[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]];
          if (page && (int)page.pageid * kPageSize <= (int)page.pagetotal && array.count >= kPageSize) {
              int16_t delayInSeconds = 2.0;
              dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
@@ -396,7 +401,7 @@ typedef enum : NSUInteger {
     if (section == 0) {
         return self.tagsArray.count/4 + self.tagsArray.count%4 ? 1 : 0;
     }else{
-        NSArray *modelArray = self.modelsDic[[NSString stringWithFormat:@"%lu",_selectSearchType*_selectFilType]];
+        NSArray *modelArray = self.modelsDic[[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]];
         return modelArray.count;
     }
 }
@@ -406,7 +411,7 @@ typedef enum : NSUInteger {
     if (indexPath.section == 0) {
         NSInteger count = self.tagsArray.count;
         CGFloat heught = kBlankWidth+(kBlankWidth+kTagHeight)*(count/4+(count%4?1:0));
-        return heught;
+        return count? heught : 0;
 
     }else
         return kGoodsCellHeight;
@@ -429,7 +434,7 @@ typedef enum : NSUInteger {
         [cell setUIWithCateArray:self.tagsArray];
         return cell;
     }else{
-        NSMutableArray *dataArray = self.modelsDic[[NSString stringWithFormat:@"%lu",_selectSearchType*_selectFilType]];
+        NSMutableArray *dataArray = self.modelsDic[[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]];
         switch (_selectSearchType) {
             case Search_buy:
             {
@@ -492,7 +497,7 @@ typedef enum : NSUInteger {
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 1) {
-        NSMutableArray *modelArray = self.modelsDic[[NSString stringWithFormat:@"%lu",_selectFilType * _selectSearchType]];
+        NSMutableArray *modelArray = self.modelsDic[[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]];
         if (modelArray.count > indexPath.row) {
             YHBRslist *model = modelArray[indexPath.row];
             switch (_selectSearchType) {
@@ -564,8 +569,8 @@ typedef enum : NSUInteger {
             _selectSegBtn.selected = NO;
             _selectSegBtn.backgroundColor = [UIColor whiteColor];
             NSArray *array;
-            if ((array = self.modelsDic[[NSString stringWithFormat:@"%lu",_selectSearchType*_selectFilType]]) != nil) {
-                [self.modelsDic removeObjectForKey:[NSString stringWithFormat:@"%lu",_selectSearchType*_selectFilType]];
+            if ((array = self.modelsDic[[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]]) != nil) {
+                [self.modelsDic removeObjectForKey:[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]];
                 [self.tableView reloadData];
             }
         }
@@ -574,6 +579,14 @@ typedef enum : NSUInteger {
         _selectSegBtn.selected = YES;
         _selectSegBtn.backgroundColor = KColor;
         _selectSearchType = sender.tag;
+        
+        self.searchTextField.text = @"";
+        self.tagsArray = nil;
+        [[CategoryViewController sharedInstancetype] cleanAll];
+        
+        if (_selectFilType == Filter_all) {
+            [self.tableView reloadData];
+        }
         
         UIButton *btn = (UIButton *)[self.filterView viewWithTag:Filter_all];
         [self touchFilterButton:btn];
@@ -593,17 +606,15 @@ typedef enum : NSUInteger {
                 [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
                 MLOG(@"%@",weakself.tagsArray);
             }];
-            //self.navigationController.navigationBar.hidden = NO;
             [self presentViewController:navVc animated:YES completion:nil];
-            //[self.navigationController pushViewController:navVc animated:YES];
         }else{
             _selectFilBtn.selected = NO;
             _selectFilBtn = sender;
             _selectFilBtn.selected = YES;
             _selectFilType = _selectFilBtn.tag;
             NSArray *array;
-            if ((array = self.modelsDic[[NSString stringWithFormat:@"%lu",_selectSearchType * _selectFilType]]) != nil) {
-                [self.modelsDic removeObjectForKey:[NSString stringWithFormat:@"%lu",_selectSearchType * _selectFilType]];
+            if ((array = self.modelsDic[[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]]) != nil) {
+                [self.modelsDic removeObjectForKey:[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]];
                 [self getFirstPageData];
             }
             
@@ -630,6 +641,11 @@ typedef enum : NSUInteger {
     self.tagsArray = [[[CategoryViewController sharedInstancetype] getChooseArray] copy];
     MLOG(@"%@",self.tagsArray);
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (NSString *)keyWithSearchType:(SearchType)search FilterType:(FilterType)filer
+{
+    return [NSString stringWithFormat:@"%lu",search*100+filer];
 }
 
 #pragma mark - uitextfield delegate

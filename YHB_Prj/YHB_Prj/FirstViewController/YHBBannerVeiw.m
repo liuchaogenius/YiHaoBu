@@ -40,11 +40,11 @@
     [self addSubview:headScrollView];
 
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
-    //设置image
-    //imageView.image = [UIImage imageNamed:@"bannerDefault"];
-    [headScrollView addSubview:imageView];
-    imageView.backgroundColor = [UIColor whiteColor];
+//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
+//    //设置image
+//    //imageView.image = [UIImage imageNamed:@"bannerDefault"];
+//    [headScrollView addSubview:imageView];
+//    imageView.backgroundColor = [UIColor whiteColor];
     [headScrollView setPagingEnabled:YES];
     
     UIPageControl *pageControl = [[UIPageControl alloc] init];

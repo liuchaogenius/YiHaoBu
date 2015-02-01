@@ -189,6 +189,7 @@ typedef enum : NSUInteger {
         {
             if (self.isfromOrder && [self.delegate respondsToSelector:@selector(choosedAddressModel:)]) {
                 [self.delegate choosedAddressModel:_selModel];
+                [self.navigationController popViewControllerAnimated:YES];
             }
         }
             break;

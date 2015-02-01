@@ -19,12 +19,13 @@
 #import "YHBOConfirmRslist.h"
 #import "YHBOConfirmExpress.h"
 #import "CCEditTextView.h"
+#import "YHBAddressModel.h"
 #import "YHBAddressEditViewController.h"
 #import "YHBAdressListViewController.h"
 #define kBarHeight 80
 #define kPriceFont 17
 #define kButtonTag_Cancel 202
-@interface YHBOrderConfirmVC ()<UITableViewDataSource,UITableViewDelegate,YHBOrderConfirmCellDelegate,UIAlertViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
+@interface YHBOrderConfirmVC ()<UITableViewDataSource,UITableViewDelegate,YHBOrderConfirmCellDelegate,UIAlertViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource,YHBAddressListDelegate>
 {
     NSString *_priceStr;
     UILabel *_titleLabel;
@@ -367,8 +368,18 @@
     //选择地址
     YHBAdressListViewController *vc = [[YHBAdressListViewController alloc] init];
     vc.isfromOrder = YES;
+    vc.delegate = self;
     [self.navigationController pushViewController:vc animated:YES];
     
+}
+
+- (void)choosedAddressModel:(YHBAddressModel *)model
+{
+    self.orderConfirmModel.addAddress = model.address;
+    self.orderConfirmModel.addItemid = model.itemid;
+    self.orderConfirmModel.addMobile = model.mobile;
+    self.orderConfirmModel.addTruename = model.truename;
+    [self reloadHeader];
 }
 
 - (void)touchExpressCellWithIndexPath:(NSIndexPath *)indexPath
