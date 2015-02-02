@@ -28,6 +28,7 @@
 #import "YHBShopCartManage.h"
 #import "YHBOrderConfirmVC.h"
 #import "YHBProductWebVC.h"
+#import "YHBStoreViewController.h"
 #import "MWPhotoBrowser.h"
 
 #define kBlankHeight 15
@@ -157,8 +158,9 @@
     [self.view addSubview:self.toolBarView];
     
     [self creatSelectColorCell];
-    [self creatProductDetailCell];
+    
     [self creatCommentHead];
+    
     
     self.conStoreView = [[YHBConnectStoreVeiw alloc] init];
     self.conStoreView.delegate = self;
@@ -174,9 +176,12 @@
         
         weakself.conStoreView.frame = CGRectMake(0, _currentY+=kBlankHeight, weakself.conStoreView.width, weakself.conStoreView.height);
         [weakself.conStoreView setUIWithTitle:weakself.productModel.company imageUrl:weakself.productModel.avatar desStar:weakself.productModel.star1 servStar:weakself.productModel.star2];
-        weakself.scrollView.contentSize = CGSizeMake(kMainScreenWidth, self.conStoreView.bottom+20);
         
         [weakself.scrollView addSubview:weakself.conStoreView];
+        
+        _currentY = weakself.conStoreView.bottom;
+        [self creatProductDetailCell];
+        weakself.scrollView.contentSize = CGSizeMake(kMainScreenWidth, _currentY+20);
     } failure:^(NSString *error) {
         [SVProgressHUD dismissWithError:@"网络请求失败，请稍后再试！"];
     }];
@@ -293,13 +298,15 @@
 - (void)touchPrivateBtn : (UIButton *)sender
 {
     if ([self userLoginConfirm]) {
-        sender.selected = !sender.selected;
+        [SVProgressHUD showWithStatus:@"" cover:YES offsetY:0];
         [self.privateManager privateOrDisPrivateWithItemID:[NSString stringWithFormat:@"%ld",(long)self.productID] privateType:private_mall token:[YHBUser sharedYHBUser].token ? :@"" Success:^{
-            
-        } failure:^(NSString *error) {
-            [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
             sender.selected = !sender.selected;
+            [SVProgressHUD dismissWithSuccess:@"关注成功"];
+        } failure:^(NSString *error) {
+            [SVProgressHUD dismissWithError:@"关注失败"];
         }];
+    }else{
+        [SVProgressHUD showErrorWithStatus:@"你还没有登陆" cover:YES offsetY:0];
     }
 }
 
@@ -381,7 +388,7 @@
             
             _visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
             
-            _visualEffectView.frame = CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight-64);
+            _visualEffectView.frame = CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight-64-self.toolBarView.height);
         }
         self.visualEffectView.alpha = 1.0f;
         [self.view addSubview:_visualEffectView];
@@ -391,7 +398,7 @@
         //[[UIApplication sharedApplication].keyWindow addSubview:_selView];
         
         [UIView animateWithDuration:0.6f animations:^{
-            _selView.bottom =_selView.bottom- _selView.height-64;
+            _selView.bottom =_selView.bottom- _selView.height-64-self.toolBarView.height;
         } completion:^(BOOL finished) {
             
         }];
@@ -448,7 +455,8 @@
 #pragma mark 点击查询店铺详情
 - (void)touchShopDetailCell
 {
-    YHBStoreDetailViewController *vc = [[YHBStoreDetailViewController alloc] initWithItemID:self.productID];
+    YHBStoreViewController *vc = [[YHBStoreViewController alloc] initWithShopID:(int)self.productModel.userid];
+//    YHBStoreDetailViewController *vc = [[YHBStoreDetailViewController alloc] initWithItemID:self.productID];
     [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark 点击联系卖家

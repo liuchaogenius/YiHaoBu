@@ -116,7 +116,8 @@ enum TextField_Type
         //whiteBackView.layer.cornerRadius = 4.0;
         [_loginView addSubview:whiteBackView];
         
-        self.phoneNumberTextField = [self customedTextFieldWithFrame:CGRectMake(25, 10+20, whiteBackView.bounds.size.width-50, 35) andPlaceholder:@"用户名/邮箱/手机号" andTag:TextField_phoneNumber andReturnKeyType:(UIReturnKeyNext)];
+        self.phoneNumberTextField = [self customedTextFieldWithFrame:CGRectMake(25, 10+20, whiteBackView.bounds.size.width-50, 35) andPlaceholder:@"输入手机号" andTag:TextField_phoneNumber andReturnKeyType:(UIReturnKeyNext)];
+        self.phoneNumberTextField.keyboardType = UIKeyboardTypeNumberPad;
         [whiteBackView addSubview:self.phoneNumberTextField];
         
         self.passwordTextField = [self customedTextFieldWithFrame:CGRectMake(25, 60+20, whiteBackView.bounds.size.width-50, 35) andPlaceholder:@"密码" andTag:TextField_password andReturnKeyType:UIReturnKeyGo];
@@ -137,7 +138,7 @@ enum TextField_Type
         [_forgetPasswordBtn setTitle:@"忘记密码" forState:UIControlStateNormal];
         [_forgetPasswordBtn addTarget:self action:@selector(touchForgetPswBtn) forControlEvents:UIControlEventTouchUpInside];
         [_forgetPasswordBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        [_forgetPasswordBtn setFrame:CGRectMake(kMainScreenWidth - 20-50, 125+85+20+20, 50, 20)];
+        [_forgetPasswordBtn setFrame:CGRectMake(kMainScreenWidth - 20-60, loginButton.bottom+20, 60, 20)];
         _forgetPasswordBtn.titleLabel.font = kFont12;
         [_loginView addSubview:_forgetPasswordBtn];
         [self.view addSubview:_loginView];
@@ -261,7 +262,7 @@ enum TextField_Type
 
 - (void)clearText
 {
-    _phoneNumberTextField.text = @"";
+    //_phoneNumberTextField.text = @"";
     _passwordTextField.text = @"";
     _rgPasswordTextField.text = @"";
     _rgPhoneNumberTextField.text = @"";

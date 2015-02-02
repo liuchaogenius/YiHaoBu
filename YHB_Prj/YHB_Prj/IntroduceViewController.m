@@ -49,8 +49,9 @@
     if(self.isSysPush)
     {
         [self.navigationController popViewControllerAnimated:YES];
-    }
-    else
+    }else if (self.isSysPresent){
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }else
     {
         [ViewInteraction viewDissmissAnimationToRight:self.navigationController.view isRemove:NO completeBlock:^(BOOL isComplete) {
             

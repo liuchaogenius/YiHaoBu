@@ -10,5 +10,6 @@
 
 @interface IntroduceViewController : BaseViewController
 @property(nonatomic, assign)BOOL isSysPush;
+@property(nonatomic, assign)BOOL isSysPresent;
 - (void)setUrl:(NSString *)aLoadUrl title:(NSString *)aTitle;
 @end

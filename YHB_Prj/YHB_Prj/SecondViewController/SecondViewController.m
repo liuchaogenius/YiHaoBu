@@ -48,7 +48,7 @@ typedef enum : NSUInteger {
     Filter_filt,//筛选
 } FilterType;
 
-@interface SecondViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,YHBSortTagDelegate>
+@interface SecondViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,YHBSortTagDelegate,UISearchBarDelegate,UISearchControllerDelegate>
 {
     UIButton *_selectSegBtn;//选择的segButton
     SearchType _selectSearchType;//选择的搜索类型-采购等
@@ -57,6 +57,9 @@ typedef enum : NSUInteger {
     YHBPage *_currentPage;
     BOOL _isNeedNav;
     UIButton *_secondBtn;
+    
+    UIView *_dimTopView;
+    UIView *_dimBotView;
 }
 
 @property (strong, nonatomic) UIView *segmentView;//顶部选择分类seg
@@ -164,9 +167,10 @@ typedef enum : NSUInteger {
         searchTf.delegate = self;
         [searchTf setReturnKeyType:UIReturnKeySearch];
         _searchTextField = searchTf;
+         
         [_searchView addSubview:searchTf];
         
-        UIButton *searchBtn = [[UIButton alloc] initWithFrame:CGRectMake(searchTf.right, searchTf.top, kSearchBtnWidth, searchTf.height)];
+        UIButton *searchBtn = [[UIButton alloc] initWithFrame:CGRectMake(searchTf.right+2, searchTf.top, kSearchBtnWidth, searchTf.height)];
         [searchBtn setBackgroundColor:[UIColor clearColor]];
         [searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
         searchBtn.titleLabel.font = kFont16;
@@ -246,6 +250,25 @@ typedef enum : NSUInteger {
     [SVProgressHUD dismiss];
     [super viewWillDisappear:animated];
 }
+
+- (void)showDimView
+{
+    if (!_dimTopView) {
+        _dimTopView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBarHidden ? 20 : 64, kMainScreenWidth, kSegViewHeight)];
+        _dimTopView.backgroundColor = [UIColor clearColor];
+        UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchDimView)];
+        [_dimTopView addGestureRecognizer:gr];
+    }
+    if (!_dimBotView) {
+        _dimBotView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBarHidden ?self.searchView.bottom:self.searchView.bottom+64, kMainScreenWidth, kMainScreenHeight-self.searchView.bottom)];
+        _dimBotView.backgroundColor = [UIColor clearColor];
+        UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchDimView)];
+        [_dimBotView addGestureRecognizer:gr];
+    }
+    [[UIApplication sharedApplication].keyWindow addSubview:_dimTopView];
+    [[UIApplication sharedApplication].keyWindow addSubview:_dimBotView];
+}
+
 
 - (NSString *)getCateID
 {
@@ -621,9 +644,29 @@ typedef enum : NSUInteger {
         }
     }
 }
+
+- (void)touchDimView
+{
+    if (_dimBotView.superview) {
+        [_dimBotView removeFromSuperview];
+    }
+    if (_dimTopView.superview) {
+        [_dimTopView removeFromSuperview];
+    }
+    if ([self.searchTextField isFirstResponder]) {
+        [self.searchTextField resignFirstResponder];
+    }
+}
+
 #pragma mark 点击搜索
 - (void)touchSearchButton
 {
+    if (_dimBotView.superview) {
+        [_dimBotView removeFromSuperview];
+    }
+    if (_dimTopView.superview) {
+        [_dimTopView removeFromSuperview];
+    }
     if ([self.searchTextField isFirstResponder]) {
         [self.searchTextField resignFirstResponder];
     }
@@ -649,8 +692,15 @@ typedef enum : NSUInteger {
 }
 
 #pragma mark - uitextfield delegate
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    [self showDimView];
+    return YES;
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    [self touchSearchButton];
     [textField resignFirstResponder];
     return YES;
 }

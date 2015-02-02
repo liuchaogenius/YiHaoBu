@@ -120,6 +120,7 @@
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self setExtraCellLineHidden:self.tableView]; //隐藏多需的cell线
     
+    
     //网络请求
     __weak FirstViewController *weakself = self;
     [self.shopIndexManager getFirstPageIndexWithSuccess:^(YHBFirstPageIndex *model) {
@@ -442,14 +443,13 @@
         YHBSlidelist *slideModel = self.pageIndexMdoel.slidelist[num];
         if (slideModel.linkurl.length > 1) {
             IntroduceViewController *iVC = [[IntroduceViewController alloc] init];
-            [self presentViewController:iVC animated:YES completion:^{
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:iVC];
+            iVC.isSysPresent = YES;
+           
+            [self presentViewController:nav animated:YES completion:^{
                 
             }];
-            /*
-            iVC.isSysPush = YES;
-            iVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:iVC animated:YES];
-             */
+
             [iVC setUrl:slideModel.linkurl title:@""];
         }
     }

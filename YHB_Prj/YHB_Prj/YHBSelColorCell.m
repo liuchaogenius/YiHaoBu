@@ -31,7 +31,7 @@
 {
     if (!_leftBlankView) {
         _leftBlankView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth/3.0, kCellHeight)];
-        _leftBlankView.backgroundColor = kBackColor;
+        _leftBlankView.backgroundColor = [UIColor whiteColor];
     }
     return _leftBlankView;
 }
@@ -41,7 +41,7 @@
 {
     if (!_midBlankView) {
         _midBlankView = [[UIView alloc] initWithFrame:CGRectMake(1*kMainScreenWidth/3.0, 0, kMainScreenWidth/3.0, kCellHeight)];
-        _midBlankView.backgroundColor = kBackColor;
+        _midBlankView.backgroundColor = [UIColor whiteColor];
     }
     return _midBlankView;
 }
@@ -50,7 +50,7 @@
 {
     if (!_rightBlankView) {
         _rightBlankView = [[UIView alloc] initWithFrame:CGRectMake(2*kMainScreenWidth/3.0, 0, kMainScreenWidth/3.0, kCellHeight)];
-        _rightBlankView.backgroundColor = kBackColor;
+        _rightBlankView.backgroundColor = [UIColor whiteColor];
     }
     return _rightBlankView;
 }
@@ -75,7 +75,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.contentView.backgroundColor = kBackColor;
+        self.contentView.backgroundColor = [UIColor whiteColor];
         [self setSelectionStyle:UITableViewCellSelectionStyleNone];
         for (int i =0; i < 3; i++) {
             [self.contentView addSubview:[self customViewWithNum:i]];

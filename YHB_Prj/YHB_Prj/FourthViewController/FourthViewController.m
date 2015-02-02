@@ -98,7 +98,7 @@ enum Button_Type
     
     
 //    [self setRightButton:nil title:[YHBUser sharedYHBUser].isLogin ? @"注销" : @"登陆" target:self action:@selector(touchLoginItem)];
-    NSString *btnTitle = [YHBUser sharedYHBUser].isLogin ? @"注销" : @"登陆";
+    NSString *btnTitle = [YHBUser sharedYHBUser].isLogin ? @"注销" : @"注册";
     UIBarButtonItem *loginItem = [[UIBarButtonItem alloc] initWithTitle:btnTitle style:UIBarButtonItemStylePlain target:self action:@selector(touchLoginItem)];
     loginItem.tintColor = [UIColor blackColor];
     self.navigationItem.rightBarButtonItem = loginItem;
@@ -326,7 +326,7 @@ enum Button_Type
         [self loadUserPhoto];
         [self.userHeadView refreshSelfHeadWithIsLogin:YES name:user.userInfo.truename avator:nil thumb:nil group:(NSInteger)user.userInfo.groupid company:user.userInfo.company];
     }else{
-        [self.loginItem setTitle:@"登陆"];
+        [self.loginItem setTitle:@"注册"];
         [self.userHeadView refreshSelfHeadWithIsLogin:NO name:nil avator:nil thumb:nil group:0 company:nil];
     }
 }

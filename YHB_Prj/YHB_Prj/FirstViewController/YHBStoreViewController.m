@@ -511,13 +511,13 @@ enum SgmBtn_tag
 
 - (void)touchPrivateBtn:(UIButton *)sender
 {
+    [SVProgressHUD showWithStatus:@"" cover:YES offsetY:0];
     if ([YHBUser sharedYHBUser].isLogin) {
-        sender.selected = !sender.selected;
         [self.privateManager privateOrDisPrivateWithItemID:[NSString stringWithFormat:@"%d",self.shopID] privateType:private_company token:[YHBUser sharedYHBUser].token Success:^{
-            
-        } failure:^(NSString *error) {
-            [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
             sender.selected = !sender.selected;
+            [SVProgressHUD dismissWithSuccess:@"关注成功"];
+        } failure:^(NSString *error) {
+            [SVProgressHUD dismissWithError:error];
         }];
     }else{
         [SVProgressHUD showErrorWithStatus:@"你还没有登陆" cover:YES offsetY:0];

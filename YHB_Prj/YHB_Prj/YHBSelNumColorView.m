@@ -85,7 +85,7 @@
 {
     if (!_headView) {
         _headView = [[UIView alloc] initWithFrame:CGRectMake(0, kInfoHeight, kMainScreenWidth, kHeadHeight)];
-        _headView.backgroundColor = kBackColor;
+        _headView.backgroundColor = [UIColor whiteColor];
         _headView.layer.borderColor = [kLineColor CGColor];
         _headView.layer.borderWidth = 0.5;
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, (kHeadHeight-kTitleFont)/2.0, 200, kTitleFont)];
@@ -102,7 +102,12 @@
 {
     if (!_numbFooterView) {
         _numbFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, self.height-kFooterHeight, kMainScreenWidth, kFooterHeight)];
-        _numbFooterView.backgroundColor = kBackColor;
+        _numbFooterView.backgroundColor = [UIColor whiteColor];
+        
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 0.5)];
+        line.backgroundColor = kLineColor;
+        [_numbFooterView addSubview:line];
+        
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, (kFooterHeight-kTitleFont+5)/2.0, 25, kTitleFont)];
         
         label.textColor = [UIColor blackColor];
@@ -149,7 +154,7 @@
     [self creatInfoHeadView];
     [self addSubview:self.headView];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.headView.bottom, kMainScreenWidth, self.height-kInfoHeight-kHeadHeight-kFooterHeight) style:UITableViewStylePlain];
-    self.tableView.backgroundColor = kBackColor;
+    self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.bounces = YES;
