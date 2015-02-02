@@ -59,8 +59,9 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-//    if ([self userLoginConfirm])
-//    {
+    [super viewWillAppear:YES];
+    if ([[YHBUser sharedYHBUser] isLogin])
+    {
         if (self.tableViewArray.count==0)
         {
             [self showFlower];
@@ -73,7 +74,28 @@
                 [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
             }];
         }
-//    }
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLoginForUserMessage object:[NSNumber numberWithBool:YES]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessItem) name:kLoginSuccessMessae object:nil];
+    }
+}
+
+- (void)loginSuccessItem
+{
+    if (self.tableViewArray.count==0)
+    {
+        [self showFlower];
+        [self.netManage getShopCartArray:^(NSMutableArray *aArray) {
+            self.tableViewArray = aArray;
+            [self.tableView reloadData];
+            [self dismissFlower];
+        } andFail:^(NSString *aStr){
+            [self dismissFlower];
+            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
+        }];
+    }
 }
 
 - (void)viewDidLoad {

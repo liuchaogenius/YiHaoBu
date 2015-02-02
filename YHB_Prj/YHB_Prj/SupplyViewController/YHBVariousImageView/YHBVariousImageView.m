@@ -226,7 +226,18 @@
 #warning 增加查看详情是点击图片的代码
     else
     {
-        
+        int index = (int)aBtn.tag-plusTag;
+        if (self.myPhotoArray.count>0)
+        {
+            MWPhoto *photo = nil;
+            self.showPhotoArray = [NSMutableArray arrayWithCapacity:self.myPhotoArray.count];
+            NSInteger imageNum = self.myPhotoArray.count;
+            for (NSInteger i = 0; i < imageNum; i++) {
+                photo = [MWPhoto photoWithImage:[self.myPhotoArray objectAtIndex:i]];
+                self.showPhotoArray[i] = photo;
+            }
+        }
+        [self showPhotoBrownserWithIndex:index];
     }
 }
 
@@ -318,6 +329,52 @@
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
+
+
+#pragma mark - 照片浏览
+- (void)showPhotoBrownserWithIndex:(NSInteger)num
+{
+    BOOL displayActionButton = NO;
+    BOOL displaySelectionButtons = NO;
+    BOOL displayNavArrows = NO;
+    BOOL enableGrid = YES;
+    BOOL startOnGrid = NO;
+    
+    // Create browser
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+    browser.displayActionButton = displayActionButton;//分享按钮,默认是
+    browser.displayNavArrows = displayNavArrows;//左右分页切换,默认否
+    browser.displaySelectionButtons = displaySelectionButtons;//是否显示选择按钮在图片上,默认否
+    browser.alwaysShowControls = displaySelectionButtons;//控制条件控件 是否显示,默认否
+    browser.zoomPhotosToFill = NO;//是否全屏,默认是
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
+    browser.wantsFullScreenLayout = YES;//是否全屏
+#endif
+    browser.enableGrid = enableGrid;//是否允许用网格查看所有图片,默认是
+    browser.startOnGrid = startOnGrid;//是否第一张,默认否
+    browser.enableSwipeToDismiss = YES;
+    [browser showNextPhotoAnimated:YES];
+    [browser showPreviousPhotoAnimated:YES];
+    [browser setCurrentPhotoIndex:num+1];
+    //browser.photoTitles = @[@"000",@"111",@"222",@"333"];//标题
+    
+    //   [self presentViewController:browser animated:YES completion:nil];
+    [[self viewController].navigationController pushViewController:browser animated:NO];
+}
+
+#pragma mark - MWPhotoBrowserDelegate
+
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return self.showPhotoArray.count;
+}
+
+- (id )photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    if (index < self.showPhotoArray.count)
+        return [self.showPhotoArray objectAtIndex:index];
+    return nil;
+}
+
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

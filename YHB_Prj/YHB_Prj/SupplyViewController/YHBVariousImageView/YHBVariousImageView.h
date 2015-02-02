@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MWPhotoBrowser.h"
 
-@interface YHBVariousImageView : UIView<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
+@interface YHBVariousImageView : UIView<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate,MWPhotoBrowserDelegate>
 - (instancetype)initWithFrame:(CGRect)frame;
 - (instancetype)initEditWithFrame:(CGRect)frame;
 - (instancetype)initWithFrame:(CGRect)frame andPhotoArray:(NSArray *)aPhotoArray;
@@ -26,4 +27,5 @@
 @property(nonatomic, strong) UIImage *plusImage;
 @property(nonatomic, assign) int currentPhotoCount;
 @property(nonatomic, strong) UIScrollView *photoScrollView;
+@property(nonatomic, strong) NSMutableArray *showPhotoArray;
 @end

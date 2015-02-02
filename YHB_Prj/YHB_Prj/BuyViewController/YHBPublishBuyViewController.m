@@ -45,6 +45,11 @@
     
     
     YHBVariousImageView *variousImageView;
+    
+    UILabel *titlePlaceHolder;
+    UILabel *dayPlaceHolder;
+    UILabel *catPlaceHolder;
+    UILabel *detailPlaceHolder;
 }
 
 @property(nonatomic, strong) UIPickerView *dayPickerView;
@@ -112,11 +117,16 @@
     titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, interval-5, 200, labelHeight+10)];
     titleLabel.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     titleLabel.layer.borderWidth = 0.5;
-    titleLabel.text = @"请输入您要发布的名称";
     titleLabel.userInteractionEnabled = YES;
     titleLabel.font = kFont15;
 //    titleLabel.textColor = [UIColor lightGrayColor];
     [editSupplyView addSubview:titleLabel];
+    
+    titlePlaceHolder = [[UILabel alloc] initWithFrame:titleLabel.frame];
+    titlePlaceHolder.text = @"请选择或输入品名关键词";
+    titlePlaceHolder.font = kFont15;
+    titlePlaceHolder.textColor = [UIColor lightGrayColor];
+    [editSupplyView addSubview:titlePlaceHolder];
     
     UIImageView *rightArrow = [[UIImageView alloc] initWithFrame:CGRectMake(titleLabel.right-titleLabel.left-12, (labelHeight+10-15)/2, 9, 15)];
     [rightArrow setImage:[UIImage imageNamed:@"rightArrow"]];
@@ -132,6 +142,8 @@
     priceTextField.returnKeyType = UIReturnKeyDone;
 //    priceTextField.textColor = [UIColor lightGrayColor];
 //    priceTextField.textAlignment = NSTextAlignmentCenter;
+    priceTextField.placeholder = @"需求数量";
+    [priceTextField setValue:[UIColor lightGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
     priceTextField.delegate = self;
     priceTextField.layer.borderWidth = 0.5;
     [editSupplyView addSubview:priceTextField];
@@ -142,18 +154,24 @@
     priceLabelNote.text = @"元/米";
     [editSupplyView addSubview:priceLabelNote];
 
-    dayView = [[UIView alloc] initWithFrame:CGRectMake(85, (interval+labelHeight)*3+interval-5, 80, labelHeight+10)];
+    dayView = [[UIView alloc] initWithFrame:CGRectMake(85, (interval+labelHeight)*3+interval-5, 120, labelHeight+10)];
     dayView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     dayView.layer.borderWidth = 0.5;
     dayView.userInteractionEnabled = YES;
     [editSupplyView addSubview:dayView];
     
-    dayLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80-18, labelHeight+10)];
+    dayLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120-18, labelHeight+10)];
     dayLabel.font = kFont15;
 //    dayLabel.textAlignment = NSTextAlignmentCenter;
 //    dayLabel.textColor = [UIColor lightGrayColor];
     dayLabel.userInteractionEnabled = YES;
     [dayView addSubview:dayLabel];
+    
+    dayPlaceHolder = [[UILabel alloc] initWithFrame:dayLabel.frame];
+    dayPlaceHolder.text = @"信息过期时间";
+    dayPlaceHolder.font = kFont15;
+    dayPlaceHolder.textColor = [UIColor lightGrayColor];
+    [dayView addSubview:dayPlaceHolder];
     
     UIImageView *downArrow = [[UIImageView alloc] initWithFrame:CGRectMake(dayView.right-dayView.left-18, (labelHeight+10-12)/2+2, 15, 9)];
     [downArrow setImage:[UIImage imageNamed:@"downArrow"]];
@@ -174,6 +192,12 @@
     catNameLabel.font = kFont15;
     [editSupplyView addSubview:catNameLabel];
     
+    catPlaceHolder = [[UILabel alloc] initWithFrame:catNameLabel.frame];
+    catPlaceHolder.text = @"请选择产品分类";
+    catPlaceHolder.font = kFont15;
+    catPlaceHolder.textColor = [UIColor lightGrayColor];
+    [editSupplyView addSubview:catPlaceHolder];
+    
     UIImageView *plusImgView = [[UIImageView alloc] initWithFrame:CGRectMake(catNameLabel.right, catNameLabel.top, 23, 30)];
     plusImgView.image = [UIImage imageNamed:@"plusImg"];
     plusImgView.userInteractionEnabled = YES;
@@ -191,11 +215,22 @@
     contentTextView.backgroundColor = [UIColor clearColor];
     [editSupplyView addSubview:contentTextView];
     
+    detailPlaceHolder = [[UILabel alloc] initWithFrame:contentTextView.frame];
+    detailPlaceHolder.text = @"请输入您要卖的产品的织法、成分、颜色、厚薄、弹力、手感、宽幅、克重、用途等，尽可能填写您所知道的全部信息。";
+    detailPlaceHolder.numberOfLines = 0;
+    detailPlaceHolder.font = kFont12;
+    detailPlaceHolder.textColor = [UIColor lightGrayColor];
+    [editSupplyView addSubview:detailPlaceHolder];
+    
     if (myModel)
     {
         titleLabel.text = myModel.title;
         catNameLabel.text = myModel.catname;
         contentTextView.text = myModel.content;
+        
+        titlePlaceHolder.hidden = YES;
+        catPlaceHolder.hidden = YES;
+        detailPlaceHolder.hidden = YES;
     }
     
 #pragma mark 下面View
@@ -322,6 +357,7 @@
     if (aBtn.tag == kButtonTag_Yes)
     {
         dayLabel.text = [NSString stringWithFormat:@"%d", pickViewSelected+1];
+        dayPlaceHolder.hidden = YES;
     }
     self.dayPickerView.top = kMainScreenHeight+30;
     self.toolView.top = self.dayPickerView.top-30;
@@ -338,14 +374,23 @@
         [vc cleanAll];
     }    vc.isPushed = YES;
     [vc setBlock:^(NSArray *aArray) {
-        NSString *str = @"";
-        NSString *idStr = @"";
-        for (YHBCatSubcate *subModel in aArray) {
-            str = [str stringByAppendingString:[NSString stringWithFormat:@" %@", subModel.catname]];
-            idStr = [str stringByAppendingString:[NSString stringWithFormat:@",%d", (int)subModel.catid]];
+        if (aArray.count>0)
+        {
+            catPlaceHolder.hidden = YES;
+            NSString *str = @"";
+            NSString *idStr = @"";
+            for (YHBCatSubcate *subModel in aArray) {
+                str = [str stringByAppendingString:[NSString stringWithFormat:@" %@", subModel.catname]];
+                idStr = [str stringByAppendingString:[NSString stringWithFormat:@",%d", (int)subModel.catid]];
+            }
+            catidString = [idStr substringFromIndex:1];
+            catNameLabel.text = str;
         }
-        catidString = [idStr substringFromIndex:1];
-        catNameLabel.text = str;
+        else
+        {
+            catNameLabel.text = @"";
+            catPlaceHolder.hidden = NO;
+        }
     }];
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -363,7 +408,7 @@
         else
         {
             titleLabel.text = title;
-//            titleLabel.textColor = [UIColor blackColor];
+            titlePlaceHolder.hidden = YES;
         }
     }];
     [self.navigationController pushViewController:vc animated:YES];
@@ -521,6 +566,18 @@
         //        [self keyboardDidDisappear];
     }
     return YES;
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    if (textView.text.length>0)
+    {
+        detailPlaceHolder.hidden = YES;
+    }
+    else
+    {
+        detailPlaceHolder.hidden = NO;
+    }
 }
 
 

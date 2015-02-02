@@ -110,9 +110,18 @@
 
 - (void)touch
 {
-    myBlock(textField.text);
-    [self dismissFlower];
-    [self.navigationController popViewControllerAnimated:YES];
+    NSString *text = textField.text;
+
+    if (text==nil || [text isEqualToString:@" "] || [text isEqualToString:@"  "] || [text isEqualToString:@""])
+    {
+        [SVProgressHUD showErrorWithStatus:@"标题不能为空" cover:YES offsetY:kMainScreenHeight/2.0];
+    }
+    else
+    {
+        myBlock(textField.text);
+        [self dismissFlower];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)back

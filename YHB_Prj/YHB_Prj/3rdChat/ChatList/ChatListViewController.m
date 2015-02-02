@@ -24,6 +24,7 @@
 #import "YHBGetPushManage.h"
 #import "SVProgressHUD.h"
 #import "YHBDataService.h"
+#import "YHBGetPushBuylist.h"
 
 @interface ChatListViewController ()<UITableViewDelegate,UITableViewDataSource, UISearchDisplayDelegate,SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
 
@@ -92,7 +93,13 @@
         NSMutableArray *syslist = [self.pushArray objectAtIndex:1];
         if (buylist)
         {
-            [[YHBDataService sharedYHBDataSevice] saveBuyList:buylist];
+            NSMutableArray *newBuyList = [NSMutableArray new];
+            for (YHBGetPushBuylist *model in buylist)
+            {
+                model.isread = @"NO";
+                [newBuyList addObject:model];
+            }
+            [[YHBDataService sharedYHBDataSevice] saveBuyList:newBuyList];
         }
         if (syslist)
         {
@@ -443,12 +450,20 @@
         NSString *chatter = conversation.chatter;
         chatController = [[ChatViewController alloc] initWithChatter:chatter isGroup:conversation.isGroup];
         chatController.title = title;
+        chatController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:chatController animated:YES];
     }
 }
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
-    return YES;
+    if(indexPath.row>1)
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {

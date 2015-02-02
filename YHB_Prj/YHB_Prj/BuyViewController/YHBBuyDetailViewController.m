@@ -108,7 +108,7 @@
         UIButton *watchStoreBtn = [[UIButton alloc] initWithFrame:CGRectMake(pushPriceBtn.right+20, pushPriceBtn.top, kMainScreenWidth/2-20, 40)];
         watchStoreBtn.backgroundColor = KColor;
         [watchStoreBtn addTarget:self action:@selector(watchStoreBtn) forControlEvents:UIControlEventTouchUpInside];
-        [watchStoreBtn setTitle:@"浏览店铺" forState:UIControlStateNormal];
+        [watchStoreBtn setTitle:@"他的采购" forState:UIControlStateNormal];
         watchStoreBtn.layer.cornerRadius = 2.5;
         [watchStoreBtn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
         [scrollView addSubview:watchStoreBtn];
