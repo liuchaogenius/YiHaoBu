@@ -25,6 +25,7 @@ enum TextField_Type
     TextField_password, //密码框-登录
     TextField_rgPhoneNumber,
     TextField_rgPassword,
+    TextField_rgRePassword,
     TextField_checkCode
 };
 
@@ -45,6 +46,7 @@ enum TextField_Type
 //注册界面
 @property (nonatomic, strong) UITextField *rgPhoneNumberTextField;
 @property (nonatomic, strong) UITextField *rgPasswordTextField;
+@property (nonatomic, strong) UITextField *rgRePasswordTextFiled;
 @property (nonatomic, strong) UITextField *checkCodeTextField;
 
 @property (nonatomic, weak) UIButton *LoginButton;//登陆按钮
@@ -152,7 +154,7 @@ enum TextField_Type
         _registerView = [[UIView alloc] initWithFrame:CGRectMake(0, sgmButtonHeight, kMainScreenWidth, kMainScreenHeight-sgmButtonHeight-64)];
         _registerView.backgroundColor = RGBCOLOR(249, 249, 249);
         
-        UIView *whiteBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 215)];
+        UIView *whiteBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 255)];
         whiteBackView.backgroundColor = [UIColor whiteColor];
         whiteBackView.layer.borderColor = [kLineColor CGColor];//[RGBCOLOR(207, 207, 207) CGColor];
         whiteBackView.layer.borderWidth = 1.0f;
@@ -166,9 +168,14 @@ enum TextField_Type
         _checkCodeTextField = [self customedTextFieldWithFrame:CGRectMake(25, 65+20, (whiteBackView.bounds.size.width-50)*1.9/3.0f, 35) andPlaceholder:@"输入验证码" andTag:TextField_checkCode andReturnKeyType:UIReturnKeyNext];
         [whiteBackView addSubview:self.checkCodeTextField];
         
-        _rgPasswordTextField = [self customedTextFieldWithFrame:CGRectMake(25, 115+20, whiteBackView.bounds.size.width-50, 35) andPlaceholder:@"输入密码" andTag:TextField_checkCode andReturnKeyType:UIReturnKeyGo];
+        _rgPasswordTextField = [self customedTextFieldWithFrame:CGRectMake(25, 115+20, whiteBackView.bounds.size.width-50, 35) andPlaceholder:@"输入密码" andTag:TextField_rgPassword andReturnKeyType:UIReturnKeyNext];
         self.rgPasswordTextField.secureTextEntry = YES;
         [whiteBackView addSubview:self.rgPasswordTextField];
+        [self.view addSubview:_registerView];
+        
+        _rgRePasswordTextFiled = [self customedTextFieldWithFrame:CGRectMake(25, _rgPasswordTextField.bottom+15, whiteBackView.bounds.size.width-50, 35) andPlaceholder:@"再次输入密码" andTag:TextField_rgRePassword andReturnKeyType:UIReturnKeyGo];
+        self.rgRePasswordTextFiled.secureTextEntry = YES;
+        [whiteBackView addSubview:self.rgRePasswordTextFiled];
         [self.view addSubview:_registerView];
         
         //验证码button
@@ -189,7 +196,7 @@ enum TextField_Type
         UIButton *registerButton = [UIButton buttonWithType:UIButtonTypeCustom];
         registerButton.backgroundColor = KColor;
         [registerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [registerButton setFrame:CGRectMake(20, 165+45+20, kMainScreenWidth-40.0, 40)];
+        [registerButton setFrame:CGRectMake(20, 165+45+20+40, kMainScreenWidth-40.0, 40)];
         registerButton.layer.cornerRadius = 5.0f;
         [registerButton setTitle:@"注册" forState:UIControlStateNormal];
         [registerButton addTarget:self action:@selector(touchRegisterButton) forControlEvents:UIControlEventTouchUpInside];
@@ -322,15 +329,20 @@ enum TextField_Type
 {
     
     [self resignAllKeybord];
-    if (self.rgPasswordTextField.text.length && self.rgPhoneNumberTextField.text.length && self.checkCodeTextField.text.length) {
-        [SVProgressHUD showWithStatus:@"信息提交中" cover:YES offsetY:kMainScreenHeight/2.0];
-        [[YHBUserManager sharedManager] registerWithPhone:self.rgPhoneNumberTextField.text checkCode:self.checkCodeTextField.text passWord:self.rgPasswordTextField.text withSuccess:^{
-            [SVProgressHUD dismissWithSuccess:@"注册成功!"];
-            self.type = eLoginSucc;
-            [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSuccessMessae object:nil];
-        } failure:^(int result, NSString *errorString) {
-            [SVProgressHUD dismissWithError:errorString];
-        }];
+    if (self.rgPasswordTextField.text.length && self.rgPhoneNumberTextField.text.length && self.checkCodeTextField.text.length && self.rgRePasswordTextFiled.text.length) {
+        if ([self.rgPasswordTextField.text isEqualToString:self.rgRePasswordTextFiled.text]) {
+            [SVProgressHUD showWithStatus:@"信息提交中" cover:YES offsetY:kMainScreenHeight/2.0];
+            [[YHBUserManager sharedManager] registerWithPhone:self.rgPhoneNumberTextField.text checkCode:self.checkCodeTextField.text passWord:self.rgPasswordTextField.text withSuccess:^{
+                [SVProgressHUD dismissWithSuccess:@"注册成功!"];
+                self.type = eLoginSucc;
+                [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSuccessMessae object:nil];
+            } failure:^(int result, NSString *errorString) {
+                [SVProgressHUD dismissWithError:errorString];
+            }];
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"两次密码输入不一致" cover:YES offsetY:kMainScreenHeight/2.0];
+        }
+        
     }else{
         [SVProgressHUD showErrorWithStatus:@"请输入完整" cover:YES offsetY:kMainScreenHeight/2.0];
     }
@@ -400,25 +412,7 @@ enum TextField_Type
 
 - (void)resignAllKeybord
 {
-    if (_loginView) {
-        if ([self.phoneNumberTextField isFirstResponder]) {
-            [self.phoneNumberTextField resignFirstResponder];
-        }
-        if ([self.passwordTextField isFirstResponder]) {
-            [self.passwordTextField resignFirstResponder];
-        }
-    }
-    if (_registerView) {
-        if ([self.rgPhoneNumberTextField isFirstResponder]) {
-            [self.rgPhoneNumberTextField resignFirstResponder];
-        }
-        if ([self.rgPasswordTextField isFirstResponder]) {
-            [self.rgPasswordTextField resignFirstResponder];
-        }
-        if ([self.checkCodeTextField isFirstResponder]) {
-            [self.checkCodeTextField resignFirstResponder];
-        }
-    }
+    [self.view endEditing:YES];
 }
 
 //定制的textField

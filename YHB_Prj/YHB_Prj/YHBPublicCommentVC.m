@@ -210,6 +210,7 @@
     NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token?:@"",@"token",[NSNumber numberWithDouble:self.model.itemid],@"itemid",[NSString stringWithFormat:@"%ld",(long)_star1],@"star1",[NSString stringWithFormat:@"%ld",(long)_star2],@"star2",self.commentTextView.text?:@"",@"comment",nil];
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             [SVProgressHUD showSuccessWithStatus:@"评价成功！" cover:YES offsetY:0];
             if (_handle) {

@@ -8,6 +8,7 @@
 
 #import "YHBPrivateManager.h"
 #import "NetManager.h"
+#import "YHBUser.h"
 
 @interface YHBPrivateManager()
 @property (strong, nonatomic) NSArray *privateArray;
@@ -30,6 +31,7 @@
     NSDictionary *postDic = privateType == private_company ? [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",itemID,@"userid",nil] : [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",itemID,@"itemid",self.privateArray[privateType],@"action",nil];
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             if (sBlock) {
                 sBlock();

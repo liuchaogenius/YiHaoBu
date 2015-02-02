@@ -34,4 +34,5 @@
 //保存文件至沙箱
 - (void)writeUserInfoToFile;
 
+
 @end

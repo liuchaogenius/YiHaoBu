@@ -10,6 +10,7 @@
 #import "YHBAddressModel.h"
 #import "NetManager.h"
 #import "YHBAreaModel.h"
+#import "YHBUser.h"
 @implementation YHBAddressManager
 
 - (void)getDefaultAddressWithToken:(NSString *)token WithSuccess:(void(^)(YHBAddressModel *model))sBlock failure:(void(^)(NSString *error))fBlock
@@ -19,6 +20,7 @@
     NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",nil];
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             NSDictionary *data = successDict[@"data"];
             YHBAddressModel *model = [YHBAddressModel modelObjectWithDictionary:data];
@@ -43,6 +45,7 @@
     NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:(token?:@""),@"token",@1,@"pageid",@30,@"pagesize",nil];
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             NSDictionary *data = successDict[@"data"];
             NSArray *array = data[@"rslist"];
@@ -71,6 +74,7 @@
     kYHBRequestUrl(@"getAreaList.php", url);
     [NetManager requestWith:nil url:url method:@"GET" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             NSArray *data = successDict[@"data"];
             NSMutableArray *areaArray = [NSMutableArray arrayWithCapacity:data.count];
@@ -108,6 +112,7 @@
     
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             if (sBlock) {
                 sBlock();
@@ -130,6 +135,7 @@
     NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:(token?:@""),@"token",[NSNumber numberWithInt:itemid],@"itemid",nil];
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             if (sBlock) {
                 sBlock();

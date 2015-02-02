@@ -9,6 +9,7 @@
 #import "YHBCommentManager.h"
 #import "YHBComment.h"
 #import "NetManager.h"
+#import "YHBUser.h"
 @implementation YHBCommentManager
 
 - (void)getCommentListWithItemID:(NSInteger)itemID token:(NSString *)token Success:(void(^)(NSMutableArray *modelArray))sBlock failure:(void(^)(NSString *error))fBlock
@@ -18,6 +19,7 @@
     NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:itemID],@"itemid",token?:@"",@"token",nil];
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             NSArray *data = successDict[@"data"];
             NSMutableArray *modelArray = [NSMutableArray arrayWithCapacity:data.count];

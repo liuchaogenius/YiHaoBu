@@ -38,6 +38,7 @@
     [NetManager requestWith:postDic url:loginUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@",successDict);
         int result = [successDict[@"result"] intValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             NSDictionary *data = successDict[@"data"];
             [[YHBUser sharedYHBUser] loginUserWithUserToken:data[@"token"]];
@@ -68,6 +69,7 @@
     else if(userId) [postDic setObject:userId forKey:@"userid"];
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result) {
             NSDictionary *dataDic = successDict[@"data"];
          

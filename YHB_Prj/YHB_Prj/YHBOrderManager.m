@@ -11,6 +11,7 @@
 #import "NetManager.h"
 #import "YHBOrderDetail.h"
 #import "YHBOConfirmModel.h"
+#import "YHBUser.h"
 @implementation YHBOrderManager
 
 + (YHBOrderManager *)sharedManager
@@ -30,6 +31,7 @@
     NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:(token.length?token:@""),@"token",[NSNumber numberWithInteger:pageid],@"pageid",[NSNumber numberWithInteger:pageSize],@"pagesize",nil];
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             NSDictionary *data = successDict[@"data"];
             YHBOrderList *listmodel = [YHBOrderList modelObjectWithDictionary:data];
@@ -54,6 +56,7 @@
     NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:token?:@"",@"token",[NSNumber numberWithInteger:itemID],@"itemid",nil];
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             NSDictionary *data = successDict[@"data"];
             YHBOrderDetail *model = [YHBOrderDetail modelObjectWithDictionary:data];
@@ -78,6 +81,7 @@
     NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",[NSNumber numberWithInteger:itemID],@"itemid",action,@"action",nil];
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             if (sBlock) {
                 sBlock();
@@ -100,6 +104,7 @@
     NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",source,@"source",listArray,@"rslist",nil];
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             NSDictionary *data = successDict[@"data"];
             YHBOConfirmModel *model = [YHBOConfirmModel modelObjectWithDictionary:data];

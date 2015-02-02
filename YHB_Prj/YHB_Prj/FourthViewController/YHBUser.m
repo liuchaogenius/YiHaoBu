@@ -10,7 +10,7 @@
 #import "SynthesizeSingleton.h"
 #import "NetManager.h"
 #import "YHBUserManager.h"
-@interface YHBUser()
+@interface YHBUser()<UIAlertViewDelegate>
 @property (strong, nonatomic) NSString *userFilePath; //用户文件路径
 //@property (strong, nonatomic) NSMutableDictionary *userInfoDic;//用户信息字典
 @property (strong, nonatomic) YHBUserManager *userManger;
@@ -142,13 +142,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
     
 }
 
-////加载用户数据 - 通过dic
-//- (void)loadUserInfoWithDictionary:(NSDictionary *)userDic
-//{
-//    //_isLogin = YES;
-//    self.userInfo = [YHBUserInfo modelObjectWithDictionary:userDic];
-//}
-
 //保存用户信息文件至沙箱
 - (void)writeUserInfoToFile
 {
@@ -164,5 +157,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
     //MLOG(@"%@",self.userFilePath);
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLoginForUserMessage object:[NSNumber numberWithBool:NO]];
+    }
+}
 
 @end

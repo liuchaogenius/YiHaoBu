@@ -34,7 +34,7 @@ enum Button_Type
     Button_product,//我的产品
     Button_lookStore//浏览商店
 };
-@interface FourthViewController ()<userCellsDelegate,UserHeadDelegate>
+@interface FourthViewController ()<userCellsDelegate,UserHeadDelegate,UIActionSheetDelegate>
 
 @property (strong, nonatomic) UIBarButtonItem *loginItem;
 @property (strong, nonatomic) YHBUserHeadView *userHeadView;
@@ -209,9 +209,8 @@ enum Button_Type
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessItem) name:kLoginSuccessMessae object:nil];
     }else{
         //注销
-        [[YHBUser sharedYHBUser] logoutUser];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kLogoutMessage object:nil];
-        [self refreshUserHeadView];//刷新
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"确定注销？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [actionSheet showFromTabBar:self.tabBarController.tabBar];
     }
     
 }
@@ -339,6 +338,16 @@ enum Button_Type
         [[NSNotificationCenter defaultCenter] postNotificationName:kLoginForUserMessage object:[NSNumber numberWithBool:NO]];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessItem) name:kLoginSuccessMessae object:nil];
         return NO;
+    }
+}
+
+#pragma mark - actionsheet - 注销
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        [[YHBUser sharedYHBUser] logoutUser];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLogoutMessage object:nil];
+        [self refreshUserHeadView];//刷新
     }
 }
 

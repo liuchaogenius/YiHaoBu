@@ -9,6 +9,7 @@
 #import "YHBProductManager.h"
 #import "YHBProductDetail.h"
 #import "NetManager.h"
+#import "YHBUser.h"
 @implementation YHBProductManager
 
 - (void)getProductDetailInfoWithProductID:(NSInteger)productID token:(NSString *)token Success : (void(^)(YHBProductDetail *model))sBlock failure:(void(^)(NSString *error))fBlock
@@ -18,6 +19,7 @@
     NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:productID],@"itemid",token ?: @"",@"token",nil];
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             NSDictionary *data = successDict[@"data"];
             YHBProductDetail *model = [YHBProductDetail modelObjectWithDictionary:data];

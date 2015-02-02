@@ -74,6 +74,7 @@
     
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             NSDictionary *data = successDict[@"data"];
             YHBPage *page = [YHBPage modelObjectWithDictionary:(NSDictionary *)data[@"page"]];
@@ -132,6 +133,7 @@
     [postDic setObject:[NSNumber numberWithInteger:pageSize] forKey:@"pagesize"];
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             NSDictionary *data = successDict[@"data"];
             YHBPage *page = [YHBPage modelObjectWithDictionary:(NSDictionary *)data[@"page"]];
@@ -189,6 +191,7 @@
     [postDic setObject:[NSNumber numberWithInteger:pageSize] forKey:@"pagesize"];
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             NSDictionary *data = successDict[@"data"];
             YHBPage *page = [YHBPage modelObjectWithDictionary:(NSDictionary *)data[@"page"]];
@@ -234,6 +237,7 @@
     [postDic setObject:[NSNumber numberWithInteger:pageSize] forKey:@"pagesize"];
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             NSDictionary *data = successDict[@"data"];
             YHBPage *page = [YHBPage modelObjectWithDictionary:(NSDictionary *)data[@"page"]];
@@ -276,6 +280,7 @@
 
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             NSDictionary *data = successDict[@"data"];
             YHBPage *page = [YHBPage modelObjectWithDictionary:(NSDictionary *)data[@"page"]];

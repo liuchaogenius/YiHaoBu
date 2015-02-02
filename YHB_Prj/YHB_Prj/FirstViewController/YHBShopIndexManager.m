@@ -10,16 +10,19 @@
 #import "NetManager.h"
 #import "YHBFirstPageIndex.h"
 #import "YHBCompanyIndex.h"
+#import "YHBUser.h"
 
 @implementation YHBShopIndexManager
 
 - (void)getFirstPageIndexWithSuccess:(void(^)(YHBFirstPageIndex *model))sBlock failure:(void(^)(int result,NSString *errorString))fBlock
 {
+    
     NSString *url = nil;
     kYHBRequestUrl(@"getIndex.php", url);
     [NetManager requestWith:nil url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         // NSDictionary *data = successDict[@"data"];
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             NSDictionary *dataDic = successDict[@"data"];
             //NSDictionary *dic = dataDic[@"shoplist"];
@@ -41,6 +44,7 @@
     [NetManager requestWith:nil url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         // NSDictionary *data = successDict[@"data"];
         NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             NSDictionary *dataDic = successDict[@"data"];
             //NSDictionary *dic = dataDic[@"shoplist"];
