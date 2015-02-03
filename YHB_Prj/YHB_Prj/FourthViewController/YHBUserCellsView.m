@@ -31,9 +31,12 @@
             NSDictionary *dic = array[j];
             UIView *cellView = [self customCellWithNum:[dic[@"tag"] intValue] title:dic[@"title"] frame:CGRectMake(0, 0, kMainScreenWidth, KcellHeight)];
             [cellView setFrame:CGRectMake(0, currentY, kMainScreenWidth, KcellHeight)];
-            currentY += (KcellHeight + 1.5);
+            currentY += (KcellHeight);
             [self addSubview:cellView];
-            //[cellView addSubview:[self myLineWithY:KcellHeight-0.3]];
+            if (j != array.count-1) {
+                [cellView addSubview:[self myLineWithY:KcellHeight-0.7]];
+            }
+            
         }
         currentY += kBlankHeight;
     }
@@ -60,7 +63,7 @@
     [button addTarget:self action:@selector(touchCellButton:) forControlEvents:UIControlEventTouchUpInside];
     button.tag = num;
     [cellView addSubview:button];
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, (KcellHeight-20)/2.0, 20, 20)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, (KcellHeight-25)/2.0, 25, 25)];
     //设置图片
     imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"UserCellIcon_%d",num]];
     [cellView addSubview:imageView];
@@ -87,7 +90,7 @@
 
 - (UIView *)myLineWithY:(CGFloat)y
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, y, kMainScreenWidth, 0.5)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(35, y, kMainScreenWidth, 0.7)];
     view.backgroundColor = kLineColor;
     return view;
 }
