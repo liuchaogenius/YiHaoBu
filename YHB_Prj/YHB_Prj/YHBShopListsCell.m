@@ -9,7 +9,8 @@
 #import "YHBShopListsCell.h"
 #import "YHBShoplist.h"
 #import "UIButton+WebCache.h"
-
+#import "UIImageView+WebCache.h"
+#define kImageViewTag 101
 
 @interface YHBShopListsCell()
 @property (assign, nonatomic) CGFloat imageWidth;
@@ -67,8 +68,10 @@
             YHBShoplist *list = shopList[i];
             UIButton *button = [self dequeueReusableButton];
             button.frame = CGRectMake(kslBlankWidth+(i%4)*(_imageWidth+kslBlankWidth), 5+i/4*(kslImgHeight+kslBlankWidth), _imageWidth, kslImgHeight);
-        
-            [button sd_setBackgroundImageWithURL:[NSURL URLWithString:list.avatar] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"DefualtProduct"]];
+            
+            UIImageView *imageView = (UIImageView *)[button viewWithTag:kImageViewTag];
+            
+            [imageView sd_setImageWithURL:[NSURL URLWithString:list.avatar] placeholderImage:[UIImage imageNamed:@"DefualtProduct"]];
             [button addTarget:self action:@selector(touchButton:) forControlEvents:UIControlEventTouchUpInside];
             button.tag = i;
             [self.contentView addSubview:button];
@@ -94,6 +97,12 @@
         button.layer.borderWidth = 0.5;
         button.layer.borderColor = [kLineColor CGColor];
         button.backgroundColor = RGBCOLOR(230, 230, 230);
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, _imageWidth, kslImgHeight)];
+        [imageView setContentMode:UIViewContentModeScaleAspectFill];
+        imageView.clipsToBounds = YES;
+        imageView.tag = kImageViewTag;
+        [button addSubview:imageView];
     }
     [self.usedButtonArray addObject:button];
     return button;

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #define kslBlankWidth 10.0
-#define kslImgHeight 55
+#define kslImgHeight 60
 
 @protocol YHBShopListCellDelegate <NSObject>
 
