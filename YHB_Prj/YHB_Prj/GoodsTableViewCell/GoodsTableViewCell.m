@@ -78,7 +78,7 @@
 {
     if (aModel.thumb)
     {
-        [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aModel.thumb]];
+        [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aModel.thumb] placeholderImage:[UIImage imageNamed:@"DefaultProduct"]];
     }
     
     if (aModel.title)

@@ -36,7 +36,6 @@ NSString *const kRouterEventCommandTapEventName = @"kRouterEventCommandTapEventN
         [self addSubview:self.backView];
         
         self.itemImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 60, 60)];
-        self.itemImageView.backgroundColor = [UIColor lightGrayColor];
         [self.backView addSubview:self.itemImageView];
         
         self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.itemImageView.right+5, (70-40)/2, 90, 40)];
@@ -63,7 +62,7 @@ NSString *const kRouterEventCommandTapEventName = @"kRouterEventCommandTapEventN
     itemTitle = [dict objectForKey:@"itemTitle"];
     
     self.titleLabel.text = itemTitle;
-    [self.itemImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
+    [self.itemImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"DefaultProduct"]];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size

@@ -10,6 +10,6 @@
 
 @interface YHBMySupplyManage : NSObject
 
--(void)getSupplyArray:(void (^)(NSMutableArray *))aSuccBlock andFail:(void (^)(NSString *aStr))aFailBlock isSupply:(BOOL)aBool;
+-(void)getSupplyArray:(void (^)(NSMutableArray *))aSuccBlock andFail:(void (^)(NSString *aStr))aFailBlock isSupply:(BOOL)aBool isFind:(BOOL)aFindBool;
 -(void)getNextSupplyArray:(void (^)(NSMutableArray *aArray))aSuccBlock andFail:(void (^)(NSString *aStr))aFailBlock;
 @end

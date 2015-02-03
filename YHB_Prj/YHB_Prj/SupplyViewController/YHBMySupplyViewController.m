@@ -17,14 +17,20 @@
 #import "YHBPublishBuyViewController.h"
 #import "YHBMySupplyManage.h"
 
+#define topViewHeight 40
+
 @interface YHBMySupplyViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
     BOOL isSupply;
     YHBMySupplyManage *manage;
+    BOOL isFind;
+    UIView *underLine;
 }
 
 @property(nonatomic, strong) UITableView *supplyTableView;
 @property(nonatomic, strong) NSMutableArray *tableViewArray;
+@property(nonatomic, strong) UIButton *selectAllBtn;
+@property(nonatomic, strong) UIButton *selectVipBtn;
 @end
 
 @implementation YHBMySupplyViewController
@@ -39,17 +45,50 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     if (isSupply)
     {
         self.title = @"我的供应";
+        self.supplyTableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     }
     else
     {
         self.title = @"我的采购";
+        isFind=NO;
+#pragma mark 建立topView
+        UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, topViewHeight)];
+        [self.view addSubview:topView];
+        
+        self.selectAllBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth/2, topViewHeight)];
+        [self.selectAllBtn setTitle:@"寻找中" forState:UIControlStateNormal];
+        self.selectAllBtn.titleLabel.font = kFont16;
+        [self.selectAllBtn setTitleColor:KColor forState:UIControlStateNormal];
+        [self.selectAllBtn addTarget:self action:@selector(touchTopViewBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [topView addSubview:self.selectAllBtn];
+        
+        UIView *midLineView = [[UIView alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-0.25, 10, 0.5, topViewHeight-20)];
+        midLineView.backgroundColor = [UIColor lightGrayColor];
+        [topView addSubview:midLineView];
+        
+        self.selectVipBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth/2, 0, kMainScreenWidth/2, topViewHeight)];
+        [self.selectVipBtn setTitle:@"已找到" forState:UIControlStateNormal];
+        self.selectVipBtn.titleLabel.font = kFont16;
+        [self.selectVipBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.selectVipBtn addTarget:self action:@selector(touchTopViewBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [topView addSubview:self.selectVipBtn];
+        
+        UIView *underLineView = [[UIView alloc] initWithFrame:CGRectMake(0, topViewHeight-0.5, kMainScreenWidth, 0.5)];
+        underLineView.backgroundColor = [UIColor lightGrayColor];
+        [topView addSubview:underLineView];
+
+        underLine = [[UIView alloc] initWithFrame:CGRectMake(0, topViewHeight-2, kMainScreenWidth/2.0, 2)];
+        underLine.backgroundColor = KColor;
+        [topView addSubview:underLine];
+        
+        self.supplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, topViewHeight, kMainScreenWidth, kMainScreenHeight-62-topViewHeight)];
     }
     [self setRightButton:nil title:@"添加+" target:self action:@selector(addSupply)];
 #pragma mark 建立tableview
-    self.supplyTableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.supplyTableView.delegate = self;
     self.supplyTableView.dataSource = self;
     self.supplyTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -59,6 +98,11 @@
     [self showFlower];
     
     manage = [[YHBMySupplyManage alloc] init];
+    [self getFirstDataWithIsSupply:isSupply andIsFind:isFind];
+}
+
+- (void)getFirstDataWithIsSupply:(BOOL)aSupplyBool andIsFind:(BOOL)aFindBool
+{
     [manage getSupplyArray:^(NSMutableArray *aArray) {
         [self dismissFlower];
         self.tableViewArray = aArray;
@@ -66,7 +110,35 @@
     } andFail:^(NSString *aStr){
         [self dismissFlower];
         [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
-    } isSupply:isSupply];
+    } isSupply:isSupply isFind:isFind];
+}
+
+- (void)touchTopViewBtn:(UIButton *)aBtn
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.supplyTableView.contentOffset = CGPointMake(0, 0);
+    }];
+    if (isFind)
+    {
+        [self.selectAllBtn setTitleColor:KColor forState:UIControlStateNormal];
+        [self.selectVipBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [UIView animateWithDuration:0.2 animations:^{
+            CGRect frame = CGRectMake(0, topViewHeight-2, kMainScreenWidth/2.0, 2);
+            underLine.frame = frame;
+        }];
+    }
+    else
+    {
+        [self.selectAllBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.selectVipBtn setTitleColor:KColor forState:UIControlStateNormal];
+        [UIView animateWithDuration:0.2 animations:^{
+            CGRect frame = CGRectMake(kMainScreenWidth/2.0, topViewHeight-2, kMainScreenWidth/2.0, 2);
+            underLine.frame = frame;
+        }];
+    }
+    isFind = !isFind;
+    [self showFlower];
+    [self getFirstDataWithIsSupply:isSupply andIsFind:isFind];
 }
 
 #pragma mark 增加上拉下拉
@@ -75,13 +147,13 @@
     __weak YHBMySupplyViewController *weakself = self;
     [weakself.supplyTableView addPullToRefreshWithActionHandler:^{
         [manage getSupplyArray:^(NSMutableArray *aArray) {
-            [weakself.supplyTableView.infiniteScrollingView stopAnimating];
+            [weakself.supplyTableView.pullToRefreshView stopAnimating];
             self.tableViewArray = aArray;
             [self.supplyTableView reloadData];
         } andFail:^(NSString *aStr){
-            [weakself.supplyTableView.infiniteScrollingView stopAnimating];
+            [weakself.supplyTableView.pullToRefreshView stopAnimating];
             [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
-        } isSupply:isSupply];
+        } isSupply:isSupply isFind:isFind];
     }];
     
     
@@ -176,6 +248,12 @@
         YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:model.itemid andIsMine:YES isModal:NO];
         [self.navigationController pushViewController:vc animated:YES];
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self dismissFlower];
+    [super viewWillDisappear:YES];
 }
 
 - (void)didReceiveMemoryWarning {

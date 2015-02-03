@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMessageComposeViewController.h>
 
-@interface YHBContactView : UIView<UIAlertViewDelegate>
+@interface YHBContactView : UIView<UIAlertViewDelegate, MFMessageComposeViewControllerDelegate>
 {
     UILabel *phoneLabel;
     UILabel *storeLabel;

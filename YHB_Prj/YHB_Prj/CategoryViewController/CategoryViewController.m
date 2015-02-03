@@ -90,6 +90,8 @@
     self.view.backgroundColor = RGBCOLOR(236, 236, 236);
     self.title = @"主营类别";
     
+    [self setRightButton:nil title:@"完成" target:self action:@selector(touchYesBtn)];
+    
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.delegate = self;
@@ -136,7 +138,7 @@
 {
     if (self.tableViewArray.count>0)
     {
-        return self.tableViewArray.count+1;
+        return self.tableViewArray.count;
     }
     else
     {

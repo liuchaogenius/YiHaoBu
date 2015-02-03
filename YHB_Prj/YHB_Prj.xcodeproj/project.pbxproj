@@ -147,6 +147,7 @@
 		AB6247F61A6FD904002BA418 /* QuoteRslist.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6247F51A6FD904002BA418 /* QuoteRslist.m */; };
 		AB6247F91A6FDBDF002BA418 /* QuoteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6247F81A6FDBDF002BA418 /* QuoteTableViewCell.m */; };
 		AB65A4EE1A6774E9009475DC /* CategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB65A4ED1A6774E9009475DC /* CategoryViewController.m */; };
+		AB6B48371A80572A001B57FD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB6B48361A80572A001B57FD /* MessageUI.framework */; };
 		AB6B63651A7F0B41003AB4C0 /* YHBGetPushBuylist.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6B63641A7F0B41003AB4C0 /* YHBGetPushBuylist.m */; };
 		AB8533F31A47F7280002CC15 /* YHBShopCartCartlist.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8533F21A47F7280002CC15 /* YHBShopCartCartlist.m */; };
 		AB8533F61A47F7600002CC15 /* YHBShopCartExpress.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8533F51A47F7600002CC15 /* YHBShopCartExpress.m */; };
@@ -822,6 +823,7 @@
 		AB6247F81A6FDBDF002BA418 /* QuoteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuoteTableViewCell.m; sourceTree = "<group>"; };
 		AB65A4EC1A6774E9009475DC /* CategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryViewController.h; sourceTree = "<group>"; };
 		AB65A4ED1A6774E9009475DC /* CategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryViewController.m; sourceTree = "<group>"; };
+		AB6B48361A80572A001B57FD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		AB6B63631A7F0B41003AB4C0 /* YHBGetPushBuylist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBGetPushBuylist.h; sourceTree = "<group>"; };
 		AB6B63641A7F0B41003AB4C0 /* YHBGetPushBuylist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBGetPushBuylist.m; sourceTree = "<group>"; };
 		AB8533F11A47F7280002CC15 /* YHBShopCartCartlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBShopCartCartlist.h; sourceTree = "<group>"; };
@@ -1316,6 +1318,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB6B48371A80572A001B57FD /* MessageUI.framework in Frameworks */,
 				AB1A2F901A6A369D0018942A /* libxml2.dylib in Frameworks */,
 				AB1A2F8E1A6A36810018942A /* libresolv.dylib in Frameworks */,
 				AB1A2F8C1A6A36580018942A /* libiconv.dylib in Frameworks */,
@@ -2054,6 +2057,7 @@
 		AB1A2F911A6A37810018942A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB6B48361A80572A001B57FD /* MessageUI.framework */,
 				AB1A2F8F1A6A369D0018942A /* libxml2.dylib */,
 				AB1A2F8D1A6A36810018942A /* libresolv.dylib */,
 				AB1A2F8B1A6A36580018942A /* libiconv.dylib */,
@@ -3409,7 +3413,7 @@
 				TargetAttributes = {
 					FF2A6BD91A0F3780001607AC = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = JERPD52W3W;
+						DevelopmentTeam = VDPFN6MNDG;
 					};
 					FF2A6BEC1A0F3780001607AC = {
 						CreatedOnToolsVersion = 6.0;

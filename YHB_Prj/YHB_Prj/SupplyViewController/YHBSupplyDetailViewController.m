@@ -120,7 +120,14 @@
         [watchStoreBtn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
         [scrollView addSubview:watchStoreBtn];
         
-        scrollView.contentSize = CGSizeMake(kMainScreenWidth, watchStoreBtn.bottom+20);
+        if (watchStoreBtn.bottom+20>kMainScreenHeight-62-kContactViewHeight+10)
+        {
+            scrollView.contentSize = CGSizeMake(kMainScreenWidth, watchStoreBtn.bottom+20);
+        }
+        else
+        {
+            scrollView.contentSize = CGSizeMake(kMainScreenWidth, kMainScreenHeight-62-kContactViewHeight+10);
+        }
         
         contactView = [[YHBContactView alloc] initWithFrame:CGRectMake(0, scrollView.bottom, kMainScreenWidth, kContactViewHeight)];
         contactView.backgroundColor = [UIColor whiteColor];

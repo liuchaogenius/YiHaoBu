@@ -16,6 +16,7 @@
 #import "YHBCatSubcate.h"
 #import "YHBUser.h"
 #import "NetManager.h"
+#import "YHBVariousView.h"
 
 #define kButtonTag_Yes 100
 @interface YHBPublishBuyViewController()<UITextFieldDelegate, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
@@ -50,6 +51,8 @@
     UILabel *dayPlaceHolder;
     UILabel *catPlaceHolder;
     UILabel *detailPlaceHolder;
+    
+    YHBVariousView *variousView;
 }
 
 @property(nonatomic, strong) UIPickerView *dayPickerView;
@@ -135,7 +138,7 @@
     tapTitleGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchTitle)];
     [titleLabel addGestureRecognizer:tapTitleGesture];
 
-    priceTextField = [[UITextField alloc] initWithFrame:CGRectMake(85, interval*3+labelHeight*2-5, 80, labelHeight+10)];
+    priceTextField = [[UITextField alloc] initWithFrame:CGRectMake(85, interval*3+labelHeight*2-5, 120, labelHeight+10)];
     priceTextField.font = [UIFont systemFontOfSize:15];
     priceTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     priceTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
@@ -148,11 +151,13 @@
     priceTextField.layer.borderWidth = 0.5;
     [editSupplyView addSubview:priceTextField];
     
-    UILabel *priceLabelNote = [[UILabel alloc] initWithFrame:CGRectMake(priceTextField.right+3, priceTextField.top, 120, labelHeight+10)];
-    priceLabelNote.font = [UIFont systemFontOfSize:15];
-    priceLabelNote.textColor = [UIColor lightGrayColor];
-    priceLabelNote.text = @"元/米";
-    [editSupplyView addSubview:priceLabelNote];
+//    UILabel *priceLabelNote = [[UILabel alloc] initWithFrame:CGRectMake(priceTextField.right+3, priceTextField.top, 120, labelHeight+10)];
+//    priceLabelNote.font = [UIFont systemFontOfSize:15];
+//    priceLabelNote.textColor = [UIColor lightGrayColor];
+//    priceLabelNote.text = @"元/米";
+//    [editSupplyView addSubview:priceLabelNote];
+    
+    variousView = [[YHBVariousView alloc] initWithFrame:CGRectMake(priceTextField.right+3, priceTextField.top, 50, labelHeight+10) andItemArray:@[@"米",@"码"] andSelectedItem:0];
 
     dayView = [[UIView alloc] initWithFrame:CGRectMake(85, (interval+labelHeight)*3+interval-5, 120, labelHeight+10)];
     dayView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
@@ -185,6 +190,9 @@
     dayLabelNote.textColor = [UIColor lightGrayColor];
     dayLabelNote.text = @"天,默认最多30天";
     [editSupplyView addSubview:dayLabelNote];
+    
+    [editSupplyView addSubview:variousView];
+
 
     catNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, (interval+labelHeight)*1+interval-5, 177, labelHeight+10)];
     catNameLabel.layer.borderWidth = 0.5;
@@ -457,7 +465,7 @@
     if ([self isTextNotNil:titleLabel.text]&&[self isTextNotNil:priceTextField.text]&&[self isTextNotNil:dayLabel.text]&&[self isTextNotNil:contentTextView.text]&&[self isTextNotNil:catNameLabel.text]&&[self isTextNotNil:nameTextField.text]&&[self isTextNotNil:phoneTextField.text])
     {
         [self showFlower];
-        [self.netManage publishBuyWithItemid:0 title:titleLabel.text catid:catidString today:dayLabel.text content:contentTextView.text truename:nameTextField.text mobile:phoneTextField.text andSuccBlock:^(NSDictionary *aDict) {
+        [self.netManage publishBuyWithItemid:0 title:titleLabel.text catid:catidString today:dayLabel.text content:contentTextView.text truename:nameTextField.text mobile:phoneTextField.text unit:variousView.itemLabel.text andSuccBlock:^(NSDictionary *aDict) {
             [self dismissFlower];
             int itemid = [[aDict objectForKey:@"itemid"] intValue];
             NSMutableArray *photoArray = variousImageView.myPhotoArray;

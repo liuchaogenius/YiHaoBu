@@ -8,6 +8,7 @@
 
 #import "YHBVariousView.h"
 #define RGBCOLOR(r,g,b) [UIColor colorWithRed:r/256.0 green:g/256.0 blue:b/256.0 alpha:1]
+#define kCellHeight 25
 @implementation YHBVariousView
 
 - (void)setAItemArray:(NSArray *)aItemArray andSelectedItem:(int)aSelectedIndex
@@ -18,9 +19,9 @@
     [self.showItemTableView reloadData];
     self.backImg.userInteractionEnabled = YES;
     _trueViewFrame = self.frame;
-    _trueViewFrame.size.height = self.frame.size.height + aItemArray.count*20;
+    _trueViewFrame.size.height = self.frame.size.height + aItemArray.count*kCellHeight;
     
-    _trueFrame = CGRectMake(self.backImg.left, self.backImg.bottom, self.backImg.right-self.backImg.left, _itemArray.count*20);
+    _trueFrame = CGRectMake(self.backImg.left, self.backImg.bottom, self.backImg.right-self.backImg.left, _itemArray.count*kCellHeight);
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -30,15 +31,16 @@
         _selectedItem = 0;
         _hideViewFrame = frame;
         
-        
         UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showOrHideItemTableView)];
         self.backImg = [[UIImageView alloc] initWithFrame:self.bounds];
+        self.backImg.image = [UIImage imageNamed:@"down"];
+
         [self.backImg addGestureRecognizer:tapGestureRecognizer];
-        self.backImg.backgroundColor = RGBCOLOR(20, 140, 20);
         
         _hideFrame = CGRectMake(self.backImg.left, self.backImg.bottom, self.backImg.right-self.backImg.left, 0);
+
         
-        self.itemLabel = [[UILabel alloc] initWithFrame:CGRectMake(2, 2, 40, 16)];
+        self.itemLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width-20, frame.size.height)];
         self.itemLabel.textAlignment = NSTextAlignmentCenter;
         self.itemLabel.font = [UIFont systemFontOfSize:12];
         self.itemLabel.textColor = [UIColor whiteColor];
@@ -68,9 +70,9 @@
         self.itemLabel.text = [_itemArray objectAtIndex:_selectedItem];
         
         _trueViewFrame = self.frame;
-        _trueViewFrame.size.height = frame.size.height + aItemArray.count*20;
+        _trueViewFrame.size.height = frame.size.height + aItemArray.count*kCellHeight;
         
-        _trueFrame = CGRectMake(self.backImg.left, self.backImg.bottom, self.backImg.right-self.backImg.left, _itemArray.count*20);
+        _trueFrame = CGRectMake(self.backImg.left, self.backImg.bottom, self.backImg.right-self.backImg.left, _itemArray.count*kCellHeight);
     }
     return self;
 }
@@ -113,7 +115,7 @@
 #pragma mark dataSource
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 20;
+    return kCellHeight;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -125,18 +127,17 @@
 {
     UITableViewCell *cell = [[UITableViewCell alloc] init];
     cell.backgroundColor = [UIColor whiteColor];
-    cell.opaque = YES;
     cell.alpha = 1;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     UILabel *itemLabel = [[UILabel alloc]
-                          initWithFrame:CGRectMake(0, 0, _trueFrame.size.width, 20)];
+                          initWithFrame:CGRectMake(0, 0, _trueFrame.size.width, kCellHeight)];
     itemLabel.font = [UIFont systemFontOfSize:12];
     itemLabel.text = [_itemArray objectAtIndex:indexPath.row];
     itemLabel.textColor = [UIColor blackColor];
     itemLabel.textAlignment = NSTextAlignmentCenter;
     
-    cell.layer.borderColor = [RGBCOLOR(20, 140, 20) CGColor];
+    cell.layer.borderColor = [KColor CGColor];
     cell.layer.borderWidth = 0.5;
     
     [cell addSubview:itemLabel];

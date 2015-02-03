@@ -8,19 +8,28 @@
 
 #import "AttentionManage.h"
 #import "NetManager.h"
+#import "YHBUser.h"
 
 @implementation AttentionManage
 
-- (void)changeLikeStatusAction:(NSString *)aAction itemid:(int)aId SuccBlock:(void (^)(void))aSuccBlock andFailBlock:(void (^)(void))aFailBlock
+- (void)changeLikeStatusAction:(NSString *)aAction itemid:(int)aId SuccBlock:(void (^)(void))aSuccBlock andFailBlock:(void (^)(NSString *aStr))aFailBlock
 {
     NSString *shopCartUrl = nil;
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:aAction,@"action",aId,"itemid",nil];
+    NSString *token = [YHBUser sharedYHBUser].token;
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:aAction,@"action",aId,"itemid",token,@"token",nil];
     kYHBRequestUrl(@"postFavorite.php", shopCartUrl);
     [NetManager requestWith:dict url:shopCartUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
-//        MLOG(@"%@",successDict);
-        aSuccBlock();
+        NSString *result = [successDict objectForKey:@"result"];
+        if ([result intValue] != 1)
+        {
+            aFailBlock([successDict objectForKey:@"error"]);
+        }
+        else
+        {
+            aSuccBlock();
+        }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        aFailBlock();
+        aFailBlock(@"出现错误");
     }];
 }
 @end

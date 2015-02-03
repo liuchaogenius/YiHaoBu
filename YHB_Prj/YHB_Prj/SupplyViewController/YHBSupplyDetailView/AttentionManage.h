@@ -10,6 +10,6 @@
 //sell:供应 buy:求购 mall:产品 company:店铺
 @interface AttentionManage : NSObject
 
-- (void)changeLikeStatusAction:(NSString *)aAction itemid:(int)aId SuccBlock:(void(^)(void))aSuccBlock andFailBlock:(void(^)(void))aFailBlock;
+- (void)changeLikeStatusAction:(NSString *)aAction itemid:(int)aId SuccBlock:(void (^)(void))aSuccBlock andFailBlock:(void (^)(NSString *aStr))aFailBlock;
 
 @end

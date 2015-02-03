@@ -36,6 +36,7 @@
 #import "YHBSupplyDetailViewController.h"
 #import "MessageLinkModel.h"
 #import "ChatLinkTableViewCell.h"
+#import "YHBUser.h"
 
 #define KPageCount 20
 
@@ -123,7 +124,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor lightGrayColor];
+    self.view.backgroundColor = RGBCOLOR(235, 235, 235);
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
         self.edgesForExtendedLayout =  UIRectEdgeNone;
     }
@@ -167,18 +168,18 @@
 //    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
 //    [self.navigationItem setLeftBarButtonItem:backItem];
     
-    if (_isChatGroup) {
-        UIButton *detailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
-        [detailButton setImage:[UIImage imageNamed:@"group_detail"] forState:UIControlStateNormal];
-        [detailButton addTarget:self action:@selector(showRoomContact:) forControlEvents:UIControlEventTouchUpInside];
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:detailButton];
-    }
-    else{
-        UIButton *clearButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-        [clearButton setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
-        [clearButton addTarget:self action:@selector(removeAllMessages:) forControlEvents:UIControlEventTouchUpInside];
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:clearButton];
-    }
+//    if (_isChatGroup) {
+//        UIButton *detailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
+//        [detailButton setImage:[UIImage imageNamed:@"group_detail"] forState:UIControlStateNormal];
+//        [detailButton addTarget:self action:@selector(showRoomContact:) forControlEvents:UIControlEventTouchUpInside];
+//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:detailButton];
+//    }
+//    else{
+//        UIButton *clearButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+//        [clearButton setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
+//        [clearButton addTarget:self action:@selector(removeAllMessages:) forControlEvents:UIControlEventTouchUpInside];
+//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:clearButton];
+//    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -319,7 +320,7 @@
         _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.backgroundColor = [UIColor lightGrayColor];
+        _tableView.backgroundColor = RGBCOLOR(235, 235, 235);
         _tableView.tableFooterView = [[UIView alloc] init];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
@@ -340,7 +341,7 @@
         
         ChatMoreType type = _isChatGroup == YES ? ChatMoreTypeGroupChat : ChatMoreTypeChat;
         _chatToolBar.moreView = [[DXChatBarMoreView alloc] initWithFrame:CGRectMake(0, (kVerticalPadding * 2 + kInputTextViewMinHeight), _chatToolBar.frame.size.width, 80) typw:type];
-        _chatToolBar.moreView.backgroundColor = [UIColor lightGrayColor];
+        _chatToolBar.moreView.backgroundColor = RGBCOLOR(247, 247, 247);//[UIColor lightGrayColor];
         _chatToolBar.moreView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     }
     
@@ -413,7 +414,7 @@
             UITableViewCell *cell = [[UITableViewCell alloc] init];
             cell.backgroundColor = [UIColor whiteColor];
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
-            [imageView sd_setImageWithURL:[NSURL URLWithString:myImgUrl]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:myImgUrl] placeholderImage:[UIImage imageNamed:@"DefaultProduct"]];
             UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageView.right+10, imageView.top+5, kMainScreenWidth-90, 17)];
             titleLabel.font = kFont15;
             titleLabel.text = myTitle;
@@ -441,6 +442,16 @@
         else
         {
             MessageModel *model = (MessageModel *)obj;
+            if (model.isSender==YES)
+            {
+                NSString *userhead = [YHBUser sharedYHBUser].userInfo.avatar;
+                model.headImageURL = [NSURL URLWithString:userhead];
+                MLOG(@"%@", userhead);
+            }
+            else
+            {
+                
+            }
             if (model.ext)
             {
                 model.type = eMessageBodyType_Command;

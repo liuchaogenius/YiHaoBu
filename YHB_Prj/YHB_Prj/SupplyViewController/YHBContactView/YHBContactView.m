@@ -136,8 +136,15 @@ typedef enum:NSUInteger{
     {
         if (phoneNumber)
         {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"是否发短信给%@", phoneNumber] message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"发送", nil];
-            [alertView show];
+            NSString *body;
+            if ([myType isEqualToString:@"supply"])
+            {
+                body = [NSString stringWithFormat:@"您好，%@，我对您在快布发布的“%@”比较感兴趣，请联系%@", storeLabel.text, myTitle, phoneNumber];
+            }
+            else
+            {
+                body = [NSString stringWithFormat:@"您好，%@，我对您在快布发布的“%@”比较感兴趣，请在线联系或联系%@，我在快布的店铺名为“%@", storeLabel.text, myTitle, phoneNumber, [YHBUser sharedYHBUser].userInfo.company];
+            }
         }
     }
     else if(aBtn.tag==btnTypeChat)
@@ -146,15 +153,15 @@ typedef enum:NSUInteger{
         {
             MLOG(@"在线沟通");
             EMError *error = nil;
-            BOOL isSuccess = [[EaseMob sharedInstance].chatManager registerNewAccount:@"8001" password:@"111111" error:&error];
-            if (isSuccess && !isSuccess) {
-                NSLog(@"注册成功");
-            }
+//            BOOL isSuccess = [[EaseMob sharedInstance].chatManager registerNewAccount:@"8001" password:@"111111" error:&error];
+//            if (isSuccess && !isSuccess) {
+//                NSLog(@"注册成功");
+//            }
             NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginWithUsername:@"8001" password:@"111111" error:&error];
             if (!error && loginInfo) {
                 NSLog(@"登陆成功");
             }
-            NSString *userName = @"123";
+            NSString *userName = storeLabel.text;
             ChatViewController *vc = [[ChatViewController alloc] initWithChatter:userName itemid:itemId ImageUrl:myImgUrl Title:myTitle andType:myType];
             vc.title = userName;
             [[self viewController].navigationController pushViewController:vc animated:YES];
@@ -193,6 +200,56 @@ typedef enum:NSUInteger{
         return NO;
     }
 }
+
+- (void)showMessageView:(NSString *)aMessageBody
+{
+    if( [MFMessageComposeViewController canSendText] )// 判断设备能不能发送短信
+    {
+        MFMessageComposeViewController*picker = [[MFMessageComposeViewController alloc] init];
+        // 设置委托
+        picker.messageComposeDelegate= self;
+        // 默认信息内容
+        picker.body = aMessageBody;
+        // 默认收件人(可多个)
+        picker.recipients = [NSArray arrayWithObject:phoneNumber];
+        [[self viewController] presentViewController:picker animated:YES completion:^{
+            
+        }];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示信息"
+                                                        message:@"该设备不支持短信功能"
+                                                       delegate:self
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"确定", nil];
+        [alert show];
+    }
+}
+
+
+
+#pragma mark -
+#pragma mark MFMessageComposeViewControllerDelegate
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
+    switch (result){
+        case MessageComposeResultCancelled:
+            NSLog(@"取消发送");
+            break;
+        case MessageComposeResultFailed:
+            NSLog(@"发送失败");
+            break;
+        case MessageComposeResultSent:
+            NSLog(@"发送成功");
+            break;
+            
+        default:
+            break;
+    }
+    
+}
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

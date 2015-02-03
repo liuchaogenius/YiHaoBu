@@ -7,6 +7,7 @@
 //
 
 #import "YHBSupplyDetailView.h"
+#import "SVProgressHUD.h"
 #define interval 10
 @implementation YHBSupplyDetailView
 
@@ -129,27 +130,29 @@
 
 - (void)touchLikeBtn
 {
+    [SVProgressHUD show:nil offsetY:100];
     [self.manage changeLikeStatusAction:@"sell" itemid:myModel.itemid SuccBlock:^{
-        
-    } andFailBlock:^{
-        
+        [SVProgressHUD dismiss];
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationDuration:0.5];
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:likeBtn cache:YES];
+        if (isLiked)
+        {
+            starView.image = [UIImage imageNamed:@"starUnLike"];
+            likelabel.text=@"收藏";
+        }
+        else
+        {
+            starView.image = [UIImage imageNamed:@"starLike"];
+            likelabel.text=@"已收藏";
+        }
+        [UIView commitAnimations];
+        isLiked = !isLiked;
+    } andFailBlock:^(NSString *aStr){
+        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:100];
     }];
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.5];
-    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:likeBtn cache:YES];
-    if (isLiked)
-    {
-        starView.image = [UIImage imageNamed:@"starUnLike"];
-        likelabel.text=@"收藏";
-    }
-    else
-    {
-        starView.image = [UIImage imageNamed:@"starLike"];
-        likelabel.text=@"已收藏";
-    }
-    [UIView commitAnimations];
-    isLiked = !isLiked;
 }
 
 - (void)setDetailWithModel:(YHBSupplyDetailModel *)aModel

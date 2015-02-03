@@ -120,6 +120,7 @@
 //右上编辑按钮
     editBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 20)];
     [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
+    [editBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [editBtn addTarget:self action:@selector(edit) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *editButtonItem = [[UIBarButtonItem alloc] initWithCustomView:editBtn];
     self.navigationItem.rightBarButtonItem = editButtonItem;
@@ -628,11 +629,11 @@
         [selectedHeaderViewArray removeAllObjects];
         isAllSelected = NO;
         [self.tableView reloadData];
-        [self.netManage deleteShopCartWithArray:itemidArray andSuccBlock:^{
-            
-        } failBlock:^(NSString *aStr){
-            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
-        }];
+//        [self.netManage deleteShopCartWithArray:itemidArray andSuccBlock:^{
+//            
+//        } failBlock:^(NSString *aStr){
+//            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
+//        }];
     }
 }
 

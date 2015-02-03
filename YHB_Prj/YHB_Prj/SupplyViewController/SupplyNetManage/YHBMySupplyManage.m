@@ -12,35 +12,41 @@
 #import "YHBUser.h"
 
 BOOL isSupply;
+BOOL isFind;
 int pagesize;
 int supplyPageid;
 int buyPageid;
 int supplyPagetotal;
 int buyPagetotal;
+NSString *typeid;
 @implementation YHBMySupplyManage
 
--(void)getSupplyArray:(void (^)(NSMutableArray *))aSuccBlock andFail:(void (^)(NSString *aStr))aFailBlock isSupply:(BOOL)aBool
+-(void)getSupplyArray:(void (^)(NSMutableArray *))aSuccBlock andFail:(void (^)(NSString *aStr))aFailBlock isSupply:(BOOL)aBool isFind:(BOOL)aFindBool
 {
     supplyPageid = 1;
     buyPageid = 1;
     pagesize = 20;
     isSupply = aBool;
+    isFind = aBool;
     NSString *supplyUrl = nil;
     NSDictionary *dict;
+    typeid = isFind?@"1":@"0";
     YHBUser *user = [YHBUser sharedYHBUser];
-    dict = [NSDictionary dictionaryWithObjectsAndKeys:user.token,@"token",@"1",@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",[NSString stringWithFormat:@"%d", (int)user.userInfo.userid],@"userid",nil];
     if (isSupply)
     {
+        dict = [NSDictionary dictionaryWithObjectsAndKeys:user.token,@"token",@"1",@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",[NSString stringWithFormat:@"%d", (int)user.userInfo.userid],@"userid",nil];
         kYHBRequestUrl(@"getSellList.php", supplyUrl);
     }
     else
     {
+        dict = [NSDictionary dictionaryWithObjectsAndKeys:user.token,@"token",@"1",@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",[NSString stringWithFormat:@"%d", (int)user.userInfo.userid],@"userid",typeid,@"typeid",nil];
         kYHBRequestUrl(@"getBuyList.php", supplyUrl);
     }
     [NetManager requestWith:dict url:supplyUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         //        MLOG(@"%@", successDict);
-        NSString *result = [successDict objectForKey:@"result"];
-        if ([result intValue] != 1)
+        int result = [[successDict objectForKey:@"result"] intValue];
+        kResult_11_CheckWithAlert;
+        if (result != 1)
         {
             aFailBlock([successDict objectForKey:@"error"]);
         }
@@ -88,19 +94,22 @@ int buyPagetotal;
         NSString *supplyUrl = nil;
         YHBUser *user = [YHBUser sharedYHBUser];
         NSDictionary *dict;
-        dict = [NSDictionary dictionaryWithObjectsAndKeys:user.token,@"token",[NSString stringWithFormat:@"%d", pageId],@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",[NSString stringWithFormat:@"%d", (int)user.userInfo.userid],@"userid",nil];
+        
         if (isSupply)
         {
+            dict = [NSDictionary dictionaryWithObjectsAndKeys:user.token,@"token",[NSString stringWithFormat:@"%d", pageId],@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",[NSString stringWithFormat:@"%d", (int)user.userInfo.userid],@"userid",nil];
             kYHBRequestUrl(@"getSellList.php", supplyUrl);
         }
         else
         {
+            dict = [NSDictionary dictionaryWithObjectsAndKeys:user.token,@"token",[NSString stringWithFormat:@"%d", pageId],@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",[NSString stringWithFormat:@"%d", (int)user.userInfo.userid],@"userid",typeid,@"typeid",nil];
             kYHBRequestUrl(@"getBuyList.php", supplyUrl);
         }
         [NetManager requestWith:dict url:supplyUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
             //        MLOG(@"%@", successDict);
-            NSString *result = [successDict objectForKey:@"result"];
-            if ([result intValue] != 1)
+            int result = [[successDict objectForKey:@"result"] intValue];
+            kResult_11_CheckWithAlert;
+            if (result != 1)
             {
                 aFailBlock([successDict objectForKey:@"error"]);
             }

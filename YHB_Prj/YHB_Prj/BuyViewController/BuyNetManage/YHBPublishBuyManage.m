@@ -12,24 +12,25 @@
 
 @implementation YHBPublishBuyManage
 
-- (void)publishBuyWithItemid:(int)aItemId title:(NSString *)aTitle catid:(NSString *)aCatId today:(NSString *)aToday content:(NSString *)aContent truename:(NSString *)aName mobile:(NSString *)aMobile andSuccBlock:(void (^)(NSDictionary *aDict))aSuccBlock failBlock:(void (^)(NSString *aStr))aFailBlock
+- (void)publishBuyWithItemid:(int)aItemId title:(NSString *)aTitle catid:(NSString *)aCatId today:(NSString *)aToday content:(NSString *)aContent truename:(NSString *)aName mobile:(NSString *)aMobile unit:(NSString *)aUnit andSuccBlock:(void (^)(NSDictionary *aDict))aSuccBlock failBlock:(void (^)(NSString *aStr))aFailBlock
 {
     NSString *supplyUrl = nil;
     NSDictionary *dict;
     NSString *token = [YHBUser sharedYHBUser].token;
     if (aItemId)
     {
-        dict = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",aTitle,@"title",aCatId,@"catid",aToday,@"today",aContent,@"introduce",aName,@"truename",aMobile,@"mobile",aItemId,@"itemid",nil];
+        dict = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",aTitle,@"title",aCatId,@"catid",aToday,@"today",aContent,@"introduce",aName,@"truename",aMobile,@"mobile",aItemId,@"itemid",aUnit,@"unit",nil];
     }
     else
     {
-        dict = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",aTitle,@"title",aCatId,@"catid",aToday,@"today",aContent,@"introduce",aName,@"truename",aMobile,@"mobile",nil];
+        dict = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",aTitle,@"title",aCatId,@"catid",aToday,@"today",aContent,@"introduce",aName,@"truename",aMobile,@"mobile",aUnit,@"unit",nil];
     }
     kYHBRequestUrl(@"postBuy.php", supplyUrl);
     [NetManager requestWith:dict url:supplyUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
-        NSString *result = [successDict objectForKey:@"result"];
-        if ([result intValue] != 1)
+        int result = [[successDict objectForKey:@"result"] intValue];
+        kResult_11_CheckWithAlert;
+        if (result != 1)
         {
             aFailBlock([successDict objectForKey:@"error"]);
         }

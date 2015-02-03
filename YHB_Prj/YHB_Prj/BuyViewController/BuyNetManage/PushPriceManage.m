@@ -20,8 +20,9 @@
     kYHBRequestUrl(@"postBuyPrice.php", supplyDetailUrl);
     [NetManager requestWith:dict url:supplyDetailUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
 //        MLOG(@"%@", successDict);
-        NSString *result = [successDict objectForKey:@"result"];
-        if ([result intValue] != 1)
+        int result = [[successDict objectForKey:@"result"] intValue];
+        kResult_11_CheckWithAlert;
+        if (result != 1)
         {
             aFailBlock([successDict objectForKey:@"error"]);
         }
