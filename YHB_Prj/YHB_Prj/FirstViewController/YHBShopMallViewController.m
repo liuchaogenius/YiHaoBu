@@ -308,7 +308,7 @@
              iVC.hidesBottomBarWhenPushed = YES;
              [self.navigationController pushViewController:iVC animated:YES];
              */
-            [iVC setUrl:slideModel.linkurl title:@""];
+            [iVC setUrl:slideModel.linkurl title:slideModel.title];
         }
     }
 }

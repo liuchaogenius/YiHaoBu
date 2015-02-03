@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) NSString *thumb;
 @property (nonatomic, strong) NSString *linkurl;
+@property (nonatomic, strong) NSString *title;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;

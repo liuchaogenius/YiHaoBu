@@ -450,7 +450,7 @@
                 
             }];
 
-            [iVC setUrl:slideModel.linkurl title:@""];
+            [iVC setUrl:slideModel.linkurl title:slideModel.title];
         }
     }
 }

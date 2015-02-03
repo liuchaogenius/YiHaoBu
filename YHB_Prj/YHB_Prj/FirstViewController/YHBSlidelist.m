@@ -10,7 +10,7 @@
 
 NSString *const kYHBSlidelistThumb = @"thumb";
 NSString *const kYHBSlidelistLinkurl = @"linkurl";
-
+NSString *const kYHBSlidelistTitle = @"title";
 
 @interface YHBSlidelist ()
 
@@ -22,6 +22,7 @@ NSString *const kYHBSlidelistLinkurl = @"linkurl";
 
 @synthesize thumb = _thumb;
 @synthesize linkurl = _linkurl;
+@synthesize title = _title;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
@@ -38,6 +39,7 @@ NSString *const kYHBSlidelistLinkurl = @"linkurl";
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
             self.thumb = [self objectOrNilForKey:kYHBSlidelistThumb fromDictionary:dict];
             self.linkurl = [self objectOrNilForKey:kYHBSlidelistLinkurl fromDictionary:dict];
+            self.title = [self objectOrNilForKey:kYHBSlidelistTitle fromDictionary:dict];
 
     }
     
@@ -50,6 +52,7 @@ NSString *const kYHBSlidelistLinkurl = @"linkurl";
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];
     [mutableDict setValue:self.thumb forKey:kYHBSlidelistThumb];
     [mutableDict setValue:self.linkurl forKey:kYHBSlidelistLinkurl];
+    [mutableDict setValue:self.title forKey:kYHBSlidelistTitle];
 
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
@@ -75,6 +78,7 @@ NSString *const kYHBSlidelistLinkurl = @"linkurl";
 
     self.thumb = [aDecoder decodeObjectForKey:kYHBSlidelistThumb];
     self.linkurl = [aDecoder decodeObjectForKey:kYHBSlidelistLinkurl];
+    self.title = [aDecoder decodeObjectForKey:kYHBSlidelistTitle];
     return self;
 }
 
@@ -83,6 +87,7 @@ NSString *const kYHBSlidelistLinkurl = @"linkurl";
 
     [aCoder encodeObject:_thumb forKey:kYHBSlidelistThumb];
     [aCoder encodeObject:_linkurl forKey:kYHBSlidelistLinkurl];
+    [aCoder encodeObject:_title forKey:kYHBSlidelistTitle];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -93,6 +98,7 @@ NSString *const kYHBSlidelistLinkurl = @"linkurl";
 
         copy.thumb = [self.thumb copyWithZone:zone];
         copy.linkurl = [self.linkurl copyWithZone:zone];
+        copy.title = [self.title copyWithZone:zone];
     }
     
     return copy;
