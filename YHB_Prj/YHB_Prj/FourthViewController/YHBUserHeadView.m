@@ -154,11 +154,11 @@
         self.buyTag.hidden = group >= 5 ? NO : YES;
         self.userName.text = name ? name : @"";
         
-        if(avator) [self.userImageView sd_setImageWithURL:[NSURL URLWithString:avator] placeholderImage:
+        if(avator)
+            [self.userImageView sd_setImageWithURL:[NSURL URLWithString:avator] placeholderImage:
                     [UIImage imageNamed:@"DefualtUser"]];
-        else
-            self.userImageView.image = [UIImage imageNamed:@"DefualtUser"];
-        if(thumb) [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:thumb] placeholderImage:[UIImage imageNamed:@"userBannerDefault"]];
+        if(thumb)
+            [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:thumb] placeholderImage:[UIImage imageNamed:@"userBannerDefault"]];
     }else{
         [self addSubview:self.notLoginedView];
         [self.loginedView removeFromSuperview];

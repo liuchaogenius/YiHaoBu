@@ -10,6 +10,8 @@
 #import "SynthesizeSingleton.h"
 #import "NetManager.h"
 #import "YHBUserManager.h"
+#import "IChatManagerLogin.h"
+#import "EaseMob.h"
 @interface YHBUser()<UIAlertViewDelegate>
 @property (strong, nonatomic) NSString *userFilePath; //用户文件路径
 //@property (strong, nonatomic) NSMutableDictionary *userInfoDic;//用户信息字典
@@ -108,6 +110,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
         MLOG(@"%@",dataDic);
         weakSelf.userInfo = [YHBUserInfo modelObjectWithDictionary:dataDic];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserInfoGetMessage object:nil];
+        [self LoginEaseMobIfNeeded];
         if (sBlock) sBlock();
     } failure:^{
         if(fBlock) fBlock();
@@ -141,6 +144,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
     _localBannerUrl = nil;
     _localHeadUrl = nil;
     [self writeUserInfoToFile];
+    [[EaseMob sharedInstance].chatManager asyncLogoff];
     
 }
 
@@ -159,10 +163,25 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
     //MLOG(@"%@",self.userFilePath);
 }
 
+#pragma mark - result = -11 时的alertview回调方法
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kLoginForUserMessage object:[NSNumber numberWithBool:NO]];
+    }
+}
+
+#pragma mark - 环信相关
+- (void)LoginEaseMobIfNeeded
+{
+    if (self.userInfo && ![[EaseMob sharedInstance].chatManager isLoggedIn]) {
+        [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:[NSString stringWithFormat:@"%d",(int)self.userInfo.userid] password:self.userInfo.empass completion:^(NSDictionary *loginInfo, EMError *error) {
+            if (!error && loginInfo) {
+                MLOG(@"登陆环信成功");
+            }else{
+                MLOG(@"登陆失败 %@",error);
+            }
+        } onQueue:nil];
     }
 }
 

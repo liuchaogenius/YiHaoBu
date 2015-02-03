@@ -282,9 +282,24 @@ typedef enum : NSUInteger{
 
 #pragma mark - image picker delegte
 
+- (void) imageWasSavedSuccessfully:(UIImage *)paramImage didFinishSavingWithError:(NSError *)paramError contextInfo:(void *)paramContextInfo{
+    if (paramError == nil){
+        NSLog(@"Image was saved successfully.");
+        paramImage = nil;
+    } else {
+        NSLog(@"An error happened while saving the image.");
+        NSLog(@"Error = %@", paramError);
+    }
+}
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [picker dismissViewControllerAnimated:YES completion:^{}];
+    
+    UIImage * oriImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    // 保存图片到相册中
+    SEL selectorToCall = @selector(imageWasSavedSuccessfully:didFinishSavingWithError:contextInfo:);
+    UIImageWriteToSavedPhotosAlbum(oriImage, self,selectorToCall, NULL);
     
     UIImage *image = [info objectForKey:@"UIImagePickerControllerEditedImage"];
     //self.photoImg = [info objectForKey:@"UIImagePickerControllerEditedImage"];

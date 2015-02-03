@@ -557,7 +557,7 @@ enum TextTag
 
     UIImage *image = [info objectForKey:@"UIImagePickerControllerEditedImage"];
     
-    CGRect rect = (_pickType == Picker_Head ? CGRectMake(0,0,100,100) : CGRectMake(0, 0, kMainScreenWidth, kHeadHeight)  );
+    CGRect rect = (_pickType == Picker_Head ? CGRectMake(0,0,128,128) : CGRectMake(0, 0, 1080, 1080));
     UIGraphicsBeginImageContext( rect.size );
     [image drawInRect:rect];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();

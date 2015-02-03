@@ -97,7 +97,6 @@ enum Button_Type
     [self.view addSubview:scrollView];
     
     
-//    [self setRightButton:nil title:[YHBUser sharedYHBUser].isLogin ? @"注销" : @"登陆" target:self action:@selector(touchLoginItem)];
     NSString *btnTitle = [YHBUser sharedYHBUser].isLogin ? @"注销" : @"注册";
     UIBarButtonItem *loginItem = [[UIBarButtonItem alloc] initWithTitle:btnTitle style:UIBarButtonItemStylePlain target:self action:@selector(touchLoginItem)];
     loginItem.tintColor = [UIColor blackColor];
