@@ -25,6 +25,7 @@
 #import "SVProgressHUD.h"
 #import "YHBDataService.h"
 #import "YHBGetPushBuylist.h"
+#import "YHBGetPushSyslist.h"
 
 @interface ChatListViewController ()<UITableViewDelegate,UITableViewDataSource, UISearchDisplayDelegate,SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
 
@@ -344,7 +345,19 @@
         cell.time = @"2014-11-11";
         cell.placeholderImage = [UIImage imageNamed:@"xiaoxi"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.detailMsg = @"您好，您所关注的提花布料有更新";
+        YHBDataService *dataService = [YHBDataService sharedYHBDataSevice];
+        NSArray *syslist = [dataService getSyslist];
+        NSString *detailStr;
+        if (syslist.count>0)
+        {
+            YHBGetPushSyslist *model = [syslist objectAtIndex:0];
+            detailStr = model.title;
+        }
+        else
+        {
+            detailStr = @"无消息";
+        }
+        cell.detailMsg = detailStr;
 
         return cell;
     }
@@ -355,7 +368,19 @@
         cell.time = @"2014-11-11";
         cell.placeholderImage = [UIImage imageNamed:@"dingyue"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.detailMsg = @"您好，您所关注的提花布料有更新";
+        YHBDataService *dataService = [YHBDataService sharedYHBDataSevice];
+        NSArray *buylist = [dataService getBuylist];
+        NSString *detailStr;
+        if (buylist.count>0)
+        {
+            YHBGetPushSyslist *model = [buylist objectAtIndex:0];
+            detailStr = model.title;
+        }
+        else
+        {
+            detailStr = @"无推荐";
+        }
+        cell.detailMsg = detailStr;
         return cell;
     }
     else

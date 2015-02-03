@@ -53,7 +53,12 @@
     {
         buylist = [NSMutableArray new];
     }
-    [buylist addObjectsFromArray:aArray];
+    for (int i=0; i<aArray.count; i++)
+    {
+        YHBGetPushBuylist *model = [aArray objectAtIndex:i];
+        [buylist insertObject:model atIndex:i];
+    }
+    
     
     NSMutableArray *archiveArray = [NSMutableArray arrayWithCapacity:buylist.count];
     for (YHBGetPushBuylist *model in buylist) {
@@ -93,7 +98,11 @@
     if (!syslist) {
         syslist = [NSMutableArray new];
     }
-    [syslist addObjectsFromArray:aArray];
+    for (int i=0; i<aArray.count; i++)
+    {
+        YHBGetPushBuylist *model = [aArray objectAtIndex:i];
+        [syslist insertObject:model atIndex:i];
+    }
     
     NSMutableArray *archiveArray = [NSMutableArray arrayWithCapacity:syslist.count];
     for (YHBGetPushSyslist *model in syslist) {

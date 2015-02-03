@@ -7,6 +7,8 @@
 //
 
 #import "RecommendTableViewCell.h"
+#import "YHBGetPushBuylist.h"
+#import "UIImageView+WebCache.h"
 
 @interface RecommendTableViewCell()
 {
@@ -23,6 +25,7 @@
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])
     {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         imgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 7, 45, 45)];
         [self addSubview:imgView];
 
@@ -34,20 +37,22 @@
         detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(65, 7, kMainScreenWidth-80-65, 45)];
         detailLabel.backgroundColor = [UIColor clearColor];
         detailLabel.font = [UIFont systemFontOfSize:15];
-        detailLabel.textColor = [UIColor lightGrayColor];
         detailLabel.numberOfLines = 2;
         [self addSubview:detailLabel];
         
-        lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 1)];
+        lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 59, kMainScreenWidth, 1)];
         lineView.backgroundColor = RGBACOLOR(207, 210, 213, 0.7);
         [self addSubview:lineView];
     }
     return self;
 }
 
-- (void)setCellWithModel:(NSString *)aModel
+- (void)setCellWithModel:(YHBGetPushBuylist *)aModel
 {
-    
+    [imgView sd_setImageWithURL:[NSURL URLWithString:aModel.thumb] placeholderImage:[UIImage imageNamed:@"DefaultProduct"]];
+    NSString *newString = [aModel.adddate substringWithRange:NSMakeRange(0, 10)];
+    timeLabel.text = newString;
+    detailLabel.text = aModel.title;
 }
 
 +(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

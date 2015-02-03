@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YHBGetPushBuylist.h"
 
 @interface RecommendTableViewCell : UITableViewCell
 
+- (void)setCellWithModel:(YHBGetPushBuylist *)aModel;
 +(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 @end
