@@ -37,6 +37,7 @@
 #import "MessageLinkModel.h"
 #import "ChatLinkTableViewCell.h"
 #import "YHBUser.h"
+#import "YHBProductDetailVC.h"
 
 #define KPageCount 20
 
@@ -630,6 +631,11 @@
         YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:[itemid intValue] andIsMine:NO isModal:NO];
         [self.navigationController pushViewController:vc animated:YES];
     }
+    else if([itemType isEqualToString:@"product"])
+    {
+        YHBProductDetailVC *vc = [[YHBProductDetailVC alloc] initWithProductID:[itemid intValue]];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 //链接被点击
@@ -654,9 +660,10 @@
             YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:[itemidStr intValue] andIsMine:NO isModal:NO];
             [self.navigationController pushViewController:vc animated:YES];
         }
-        else
+        else if([typeStr isEqualToString:@"product"])
         {
-            
+            YHBProductDetailVC *vc = [[YHBProductDetailVC alloc] initWithProductID:[itemidStr intValue]];
+            [self.navigationController pushViewController:vc animated:YES];
         }
     }
 }

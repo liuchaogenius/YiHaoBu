@@ -503,7 +503,10 @@
             [self dismissFlower];
             int itemid = [[aDict objectForKey:@"itemid"] intValue];
             NSMutableArray *photoArray = variousImageView.myPhotoArray;
-            [photoArray removeObjectAtIndex:0];
+            if (variousImageView.currentPhotoCount!=5)
+            {
+                [photoArray removeObjectAtIndex:0];
+            }
             YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:itemid itemDict:aDict uploadPhotoArray:photoArray];
             [self.navigationController pushViewController:vc animated:YES];
         } failBlock:^(NSString *aStr) {

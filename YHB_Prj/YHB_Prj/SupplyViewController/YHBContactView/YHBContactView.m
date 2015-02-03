@@ -164,15 +164,15 @@ typedef enum:NSUInteger{
         if ([self userLoginConfirm])
         {
             MLOG(@"在线沟通");
-            EMError *error = nil;
+//            EMError *error = nil;
 //            BOOL isSuccess = [[EaseMob sharedInstance].chatManager registerNewAccount:@"8001" password:@"111111" error:&error];
 //            if (isSuccess && !isSuccess) {
 //                NSLog(@"注册成功");
 //            }
-            NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginWithUsername:@"8001" password:@"111111" error:&error];
-            if (!error && loginInfo) {
-                NSLog(@"登陆成功");
-            }
+//            NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginWithUsername:@"8001" password:@"111111" error:&error];
+//            if (!error && loginInfo) {
+//                NSLog(@"登陆成功");
+//            }
             NSString *userName = storeLabel.text;
             ChatViewController *vc = [[ChatViewController alloc] initWithChatter:userName userid:userid itemid:itemId ImageUrl:myImgUrl Title:myTitle andType:myType];
             vc.title = userName;

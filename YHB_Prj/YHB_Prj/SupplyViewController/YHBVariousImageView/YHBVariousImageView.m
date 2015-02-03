@@ -157,6 +157,10 @@
             imagePickerController.delegate = self;
             imagePickerController.sourceType = sourceType;
             imagePickerController.mediaTypes =[UIImagePickerController availableMediaTypesForSourceType:imagePickerController.sourceType];
+            if (sourceType == UIImagePickerControllerSourceTypeCamera)
+            {
+                imagePickerController.allowsEditing = YES;
+            }
             
             [[self viewController] presentViewController:imagePickerController animated:YES completion:^{}];
         }
@@ -304,13 +308,20 @@
     
     UIImage *image = [info objectForKey:@"UIImagePickerControllerEditedImage"];
     //self.photoImg = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+//    CGRect rect = CGRectMake(0,0,100,100);
+//    UIGraphicsBeginImageContext( rect.size );
+//    [image drawInRect:rect];
+////    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+    NSMutableArray *array = [NSMutableArray new];
+    [array addObject:image];
+    [self addImageWithImageArray:array];
     
-    CGRect rect = CGRectMake(0,0,100,100);
-    UIGraphicsBeginImageContext( rect.size );
-    [image drawInRect:rect];
-//    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
+    UIImage *oriImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    SEL selectorToCall = @selector(imageWasSavedSuccessfully:didFinishSavingWithError:contextInfo:);
+    UIImageWriteToSavedPhotosAlbum(oriImage, self,selectorToCall, NULL);
+    
 //    self.photoImg = newImage;
 //    self.imgView.image = newImage;
     
@@ -324,6 +335,17 @@
     //    [HttpRequestManager uploadImage:compressedImage httpClient:self.httpClient delegate:self];
     
 }
+
+- (void) imageWasSavedSuccessfully:(UIImage *)paramImage didFinishSavingWithError:(NSError *)paramError contextInfo:(void *)paramContextInfo{
+    if (paramError == nil){
+        NSLog(@"Image was saved successfully.");
+        paramImage = nil;
+    } else {
+        NSLog(@"An error happened while saving the image.");
+        NSLog(@"Error = %@", paramError);
+    }
+}
+
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
@@ -373,6 +395,7 @@
         return [self.showPhotoArray objectAtIndex:index];
     return nil;
 }
+
 
 
 
