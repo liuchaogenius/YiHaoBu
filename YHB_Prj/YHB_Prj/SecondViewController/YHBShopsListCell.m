@@ -129,7 +129,7 @@
 
 - (void)setUIWithImage:(NSString *)urlStr title:(NSString *)title Name:(NSString *)name Star1:(NSString *)star1 Star2:(NSString *)star2 GroupID:(int)groupID
 {
-    [self.shopImageView sd_setImageWithURL:[NSURL URLWithString:urlStr]];
+    [self.shopImageView sd_setImageWithURL:[NSURL URLWithString:urlStr] placeholderImage:[UIImage imageNamed:@"DefualtProduct"]];
     self.nameLabel.text = [NSString stringWithFormat:@"掌柜：%@",name];
     self.titleLabel.text = title;
     self.star1Label.text = [NSString stringWithFormat:@"服务态度：%@",star1];
@@ -142,7 +142,7 @@
 {
     self.star1Label.hidden = YES;
     self.star2Label.hidden = YES;
-    [self.shopImageView sd_setImageWithURL:[NSURL URLWithString:urlStr]];
+    [self.shopImageView sd_setImageWithURL:[NSURL URLWithString:urlStr] placeholderImage:[UIImage imageNamed:@"DefualtProduct"]];
     self.nameLabel.text = [NSString stringWithFormat:@"掌柜：%@",name];
     self.titleLabel.text = title;
     self.mallTag.hidden =  groupID > 6 ? NO : YES ;

@@ -27,7 +27,7 @@
 #import "YHBProductDetailVC.h"
 #import "YHBUser.h"
 #import "YHBOrderListViewController.h"
-#import "YHBSupplyDetailViewController.h"
+#import "YHBBuyDetailViewController.h"
 
 #define kBannerHeight (kMainScreenWidth * 397/1080.0f)
 #define kFuncCellHeight 60
@@ -51,7 +51,7 @@
 {
     if (!_headersArray) {
         _headersArray = [NSMutableArray arrayWithCapacity:3];
-        NSArray *titleArray = @[@"热门标签",@"产品推荐",@"商机推荐"];
+        NSArray *titleArray = @[@"热门标签",@"产品推荐",@"采购推荐"];
         for (int i=0; i < 3; i++) {
             UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 25)];
             view.backgroundColor = [UIColor whiteColor];
@@ -160,7 +160,7 @@
         //产品推荐
         return self.pageIndexMdoel.malllist.count/3 + self.pageIndexMdoel.malllist.count%3 ? 1 : 0;
     }else if(section == 4){
-        //商机推荐
+        //采购推荐
         return self.pageIndexMdoel.selllist.count/3 + self.pageIndexMdoel.selllist.count%3 ? 1 : 0;
     }else return 1;
 }
@@ -264,7 +264,7 @@
             return cell;
         }
             break;
-        case 4: //商机推荐
+        case 4: //采购推荐
         {
             static NSString *businessCell = @"business";
             YHBShopMallCell *cell = [tableView dequeueReusableCellWithIdentifier:businessCell];
@@ -405,7 +405,7 @@
         [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.section == 4){
         YHBSelllist *list = self.pageIndexMdoel.malllist[indexPath.row*3+part];
-        YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:(int)list.itemid andIsMine:NO isModal:NO];
+        YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:(int)list.itemid andIsMine:NO isModal:NO];
         vc.hidesBottomBarWhenPushed  = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }

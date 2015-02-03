@@ -138,6 +138,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
 {
     _isLogin = NO;
     _token = @"";
+    _localBannerUrl = nil;
+    _localHeadUrl = nil;
     [self writeUserInfoToFile];
     
 }

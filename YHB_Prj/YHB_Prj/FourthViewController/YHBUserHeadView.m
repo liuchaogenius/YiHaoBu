@@ -120,7 +120,7 @@
 {
     self = [super initWithFrame:frame];
     self.bannerImageView = [[UIImageView alloc] initWithFrame:self.frame];
-    self.bannerImageView.image = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"userBannerDefault"]];
+    self.bannerImageView.image = [UIImage imageNamed:@"userBannerDefault"];
     //self.backgroundColor = RGBCOLOR(58, 155, 9);
     [self addSubview:self.bannerImageView];
     self.backgroundColor = [UIColor lightGrayColor];
@@ -154,10 +154,11 @@
         self.buyTag.hidden = group >= 5 ? NO : YES;
         self.userName.text = name ? name : @"";
         
-        if(avator) [self.userImageView sd_setImageWithURL:[NSURL URLWithString:avator] placeholderImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"DefualtUser"]]];
+        if(avator) [self.userImageView sd_setImageWithURL:[NSURL URLWithString:avator] placeholderImage:
+                    [UIImage imageNamed:@"DefualtUser"]];
         else
-            self.userImageView.image = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"DefualtUser"]];
-        if(thumb) [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:thumb]];
+            self.userImageView.image = [UIImage imageNamed:@"DefualtUser"];
+        if(thumb) [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:thumb] placeholderImage:[UIImage imageNamed:@"userBannerDefault"]];
     }else{
         [self addSubview:self.notLoginedView];
         [self.loginedView removeFromSuperview];

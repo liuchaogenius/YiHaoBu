@@ -227,6 +227,7 @@ typedef enum : NSUInteger {
 {
     self = [super init];
     _isNeedNav = YES;
+    [self touchSegButton:(UIButton *)[self.segmentView viewWithTag:Search_product]];
     return self;
 }
 

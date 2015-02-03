@@ -68,7 +68,7 @@
             UIButton *button = [self dequeueReusableButton];
             button.frame = CGRectMake(kslBlankWidth+(i%4)*(_imageWidth+kslBlankWidth), 5+i/4*(kslImgHeight+kslBlankWidth), _imageWidth, kslImgHeight);
         
-            [button sd_setBackgroundImageWithURL:[NSURL URLWithString:list.avatar] forState:UIControlStateNormal placeholderImage:nil];
+            [button sd_setBackgroundImageWithURL:[NSURL URLWithString:list.avatar] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"DefualtProduct"]];
             [button addTarget:self action:@selector(touchButton:) forControlEvents:UIControlEventTouchUpInside];
             button.tag = i;
             [self.contentView addSubview:button];

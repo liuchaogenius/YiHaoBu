@@ -40,8 +40,8 @@
     CGFloat _currentY;
     BOOL _isBuy; //yes代表点击了购买 no代表点击了购物车
     
-    double _number;//购买的数量
-    YHBSku *_selSku;//选择的色块
+//    double _number;//购买的数量
+//    YHBSku *_selSku;//选择的色块
     
 }
 @property (assign, nonatomic) NSInteger productID;
@@ -63,11 +63,28 @@
 @property (strong, nonatomic) YHBProductWebVC *webVc;
 @property (strong, nonatomic) NSMutableArray *photos;
 
+@property (strong, nonatomic) YHBSku *selSku;
+@property (assign, nonatomic) double number;
+
 @end
 
 @implementation YHBProductDetailVC
 
 #pragma mark - getter and setter
+
+- (YHBSku *)selSku
+{
+    if (_selView) {
+        return _selView.selSku;
+    }else return _selSku;
+}
+
+- (double)number
+{
+    if (_selView) {
+        return _selView.number;
+    }else return _number;
+}
 
 - (YHBProductWebVC *)webVc
 {
@@ -329,7 +346,7 @@
 {
     _isBuy = YES;
     if ([self infoCheck]) {
-        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:self.productID],@"itemid",[NSString stringWithFormat:@"%lf",_number],@"number",[NSNumber numberWithInt:(int)_selSku.colorid],@"skuid", nil];
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:self.productID],@"itemid",[NSString stringWithFormat:@"%lf",self.number],@"number",[NSNumber numberWithInt:(int)self.selSku.colorid],@"skuid", nil];
         YHBOrderConfirmVC *vc = [[YHBOrderConfirmVC alloc] initWithSource:@"mall" requestArray:@[dic]];
         [self.navigationController pushViewController:vc animated:YES];
     }
@@ -339,7 +356,7 @@
 - (BOOL)infoCheck
 {
     if ([YHBUser sharedYHBUser].isLogin) {
-        if (_selSku) {
+        if (self.selSku) {
             return YES;
         }else{
             [SVProgressHUD showErrorWithStatus:@"你还没有选择色块/型号哦" cover:YES offsetY:0];
@@ -462,6 +479,16 @@
 #pragma mark 点击联系卖家
 - (void)touchConnectStoreBtn
 {
+    if (self.productModel) {
+        NSString *sellerName = self.productModel.truename;//姓名
+        double userID = self.productModel.userid;//用户id
+        double productID = self.productModel.itemid;//产品id
+        NSString *productTitle = self.productModel.title;//产品title
+        NSString *imageUrlStr = ((YHBAlbum *)(self.productModel.album.firstObject)).middle;//图片url str
+#warning 此处添加联系卖家---cc
+        
+    }
+    
     
 }
 

@@ -534,12 +534,28 @@ enum TextTag
 
 #pragma mark - image picker delegte
 
+- (void) imageWasSavedSuccessfully:(UIImage *)paramImage didFinishSavingWithError:(NSError *)paramError contextInfo:(void *)paramContextInfo{
+    if (paramError == nil){
+        NSLog(@"Image was saved successfully.");
+        paramImage = nil;
+    } else {
+        NSLog(@"An error happened while saving the image.");
+        NSLog(@"Error = %@", paramError);
+    }
+}
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [picker dismissViewControllerAnimated:YES completion:^{}];
     
+    UIImage * oriImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+// 保存图片到相册中
+    SEL selectorToCall = @selector(imageWasSavedSuccessfully:didFinishSavingWithError:contextInfo:);
+    UIImageWriteToSavedPhotosAlbum(oriImage, self,selectorToCall, NULL);
+
+
+
     UIImage *image = [info objectForKey:@"UIImagePickerControllerEditedImage"];
-    //self.photoImg = [info objectForKey:@"UIImagePickerControllerEditedImage"];
     
     CGRect rect = (_pickType == Picker_Head ? CGRectMake(0,0,100,100) : CGRectMake(0, 0, kMainScreenWidth, kHeadHeight)  );
     UIGraphicsBeginImageContext( rect.size );
@@ -562,7 +578,6 @@ enum TextTag
     //    UIImage *compressedImage = [UIImage imageWithData:imageData];
     
     //    [HttpRequestManager uploadImage:compressedImage httpClient:self.httpClient delegate:self];
-    
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -719,13 +734,13 @@ enum TextTag
         self.bannerImageView.image = [UIImage imageWithContentsOfFile:user.localBannerUrl];
         
     }else{
-        [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:user.userInfo.thumb] placeholderImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"userBannerDefault"]]];
+        [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:user.userInfo.thumb] placeholderImage:[UIImage imageNamed:@"userBannerDefault"]];
     }
     if ([[NSFileManager defaultManager] fileExistsAtPath:user.localHeadUrl]) {
         self.userImageView.image = [UIImage imageWithContentsOfFile:user.localHeadUrl];
         
     }else{
-        [self.userImageView sd_setImageWithURL:[NSURL URLWithString:user.userInfo.avatar] placeholderImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"DefualtUser"]]];
+        [self.userImageView sd_setImageWithURL:[NSURL URLWithString:user.userInfo.avatar] placeholderImage:[UIImage imageNamed:@"DefualtUser"]];
     }
 }
 

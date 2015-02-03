@@ -247,6 +247,7 @@
         __weak YHBAddressEditViewController *weakself = self;
         [weakself.addManager addOrEditAddressWithAddModel:self.addModel Token:([YHBUser sharedYHBUser].token?:@"") isNew:self.isNew WithSuccess:^{
             [SVProgressHUD showSuccessWithStatus:@"更新收货地址成功！" cover:YES offsetY:0];
+            [self.navigationController popViewControllerAnimated:YES];
             if(_handel) _handel();
         } failure:^(NSString *error) {
             [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];

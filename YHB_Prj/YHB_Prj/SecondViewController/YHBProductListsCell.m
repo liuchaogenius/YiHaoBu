@@ -73,7 +73,7 @@
 
 - (void)setUIWithImage:(NSString *)urlStr Title:(NSString *)title Price: (double)price
 {
-    [self.prodImgeView sd_setImageWithURL:[NSURL URLWithString:urlStr]];
+    [self.prodImgeView sd_setImageWithURL:[NSURL URLWithString:urlStr] placeholderImage:[UIImage imageNamed:@"DefualtProduct"]];
     self.titleLabel.text = title;
     self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",price];
 }

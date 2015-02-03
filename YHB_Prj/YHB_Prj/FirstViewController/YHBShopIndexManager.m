@@ -42,7 +42,6 @@
     NSString *url = nil;
     kYHBRequestUrl(@"getCompanyIndex.php", url);
     [NetManager requestWith:nil url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
-        // NSDictionary *data = successDict[@"data"];
         NSInteger result = [successDict[@"result"] integerValue];
         kResult_11_CheckWithAlert;
         if (result == 1) {

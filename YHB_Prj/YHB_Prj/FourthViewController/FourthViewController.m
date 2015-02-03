@@ -389,7 +389,7 @@ enum Button_Type
         self.userHeadView.bannerImageView.image = [UIImage imageWithContentsOfFile:user.localBannerUrl];
         
     }else{
-        [self.userHeadView.bannerImageView sd_setImageWithURL:[NSURL URLWithString:user.userInfo.thumb] placeholderImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"userBannerDefault"]]];
+        [self.userHeadView.bannerImageView sd_setImageWithURL:[NSURL URLWithString:user.userInfo.thumb] placeholderImage:[UIImage imageNamed:@"userBannerDefault"]];
     }
     if ([[NSFileManager defaultManager] fileExistsAtPath:user.localHeadUrl]) {
         self.userHeadView.userImageView.image = [UIImage imageWithContentsOfFile:user.localHeadUrl];
