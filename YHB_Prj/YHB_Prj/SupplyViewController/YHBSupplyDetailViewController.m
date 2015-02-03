@@ -120,13 +120,13 @@
         [watchStoreBtn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
         [scrollView addSubview:watchStoreBtn];
         
-        if (watchStoreBtn.bottom+20>kMainScreenHeight-62-kContactViewHeight+10)
+        if (watchStoreBtn.bottom+20>kMainScreenHeight-62-kContactViewHeight+1)
         {
             scrollView.contentSize = CGSizeMake(kMainScreenWidth, watchStoreBtn.bottom+20);
         }
         else
         {
-            scrollView.contentSize = CGSizeMake(kMainScreenWidth, kMainScreenHeight-62-kContactViewHeight+10);
+            scrollView.contentSize = CGSizeMake(kMainScreenWidth, kMainScreenHeight-62-kContactViewHeight+1);
         }
         
         contactView = [[YHBContactView alloc] initWithFrame:CGRectMake(0, scrollView.bottom, kMainScreenWidth, kContactViewHeight)];
@@ -169,7 +169,7 @@
              }
              if (!isMine)
              {
-                 [contactView setPhoneNumber:aModel.mobile storeName:aModel.truename itemId:itemId isVip:aModel.vip imgUrl:@"1" Title:myModel.title andType:@"supply"];
+                 [contactView setPhoneNumber:aModel.mobile storeName:aModel.truename itemId:itemId isVip:aModel.vip imgUrl:@"1" Title:myModel.title andType:@"supply" userid:myModel.userid];
              }
              [self dismissFlower];
          } andFailBlock:^(NSString *aStr) {

@@ -9,6 +9,7 @@
 #import "YHBContactView.h"
 #import "ChatViewController.h"
 #import "YHBUser.h"
+#import "SVProgressHUD.h"
 
 typedef enum:NSUInteger{
     btnTypePhone = 12,
@@ -90,7 +91,7 @@ typedef enum:NSUInteger{
     return self;
 }
 
-- (void)setPhoneNumber:(NSString *)aNumber storeName:(NSString *)aName itemId:(int)aItemId
+- (void)setPhoneNumber:(NSString *)aNumber storeName:(NSString *)aName itemId:(int)aItemId userid:(int)aUserid
 {
     phoneLabel.text = aNumber;
     storeLabel.text = aName;
@@ -99,7 +100,7 @@ typedef enum:NSUInteger{
     redLine.hidden = YES;
 }
 
-- (void)setPhoneNumber:(NSString *)aNumber storeName:(NSString *)aName itemId:(int)aItemId isVip:(int)aisVip imgUrl:(NSString *)aImgUrl Title:(NSString *)aTitle andType:(NSString *)aType
+- (void)setPhoneNumber:(NSString *)aNumber storeName:(NSString *)aName itemId:(int)aItemId isVip:(int)aisVip imgUrl:(NSString *)aImgUrl Title:(NSString *)aTitle andType:(NSString *)aType userid:(int)aUserid
 {
     if (aisVip==1)
     {
@@ -117,6 +118,7 @@ typedef enum:NSUInteger{
     myImgUrl = aImgUrl;
     myTitle = aTitle;
     myType = aType;
+    userid = aUserid;
 }
 
 - (void)touchBtn:(UIButton *)aBtn
@@ -139,12 +141,22 @@ typedef enum:NSUInteger{
             NSString *body;
             if ([myType isEqualToString:@"supply"])
             {
-                body = [NSString stringWithFormat:@"您好，%@，我对您在快布发布的“%@”比较感兴趣，请联系%@", storeLabel.text, myTitle, phoneNumber];
+                body = [NSString stringWithFormat:@"您好，%@，我对您在快布发布的“%@”比较感兴趣，请联系%@。", storeLabel.text, myTitle, phoneNumber];
             }
             else
             {
-                body = [NSString stringWithFormat:@"您好，%@，我对您在快布发布的“%@”比较感兴趣，请在线联系或联系%@，我在快布的店铺名为“%@", storeLabel.text, myTitle, phoneNumber, [YHBUser sharedYHBUser].userInfo.company];
+                NSString *company = [YHBUser sharedYHBUser].userInfo.company;
+                if (company)
+                {
+                    body = [NSString stringWithFormat:@"您好，%@，我对您在快布发布的“%@”比较感兴趣，请在线联系或联系%@，我在快布的店铺名为“%@“。", storeLabel.text, myTitle, phoneNumber, company];
+                }
+                else
+                {
+                    body = [NSString stringWithFormat:@"您好，%@，我对您在快布发布的“%@”比较感兴趣，请在线联系或联系%@。", storeLabel.text, myTitle, phoneNumber];
+                }
+                
             }
+            [self showMessageView:body];
         }
     }
     else if(aBtn.tag==btnTypeChat)
@@ -162,7 +174,7 @@ typedef enum:NSUInteger{
                 NSLog(@"登陆成功");
             }
             NSString *userName = storeLabel.text;
-            ChatViewController *vc = [[ChatViewController alloc] initWithChatter:userName itemid:itemId ImageUrl:myImgUrl Title:myTitle andType:myType];
+            ChatViewController *vc = [[ChatViewController alloc] initWithChatter:userName userid:userid itemid:itemId ImageUrl:myImgUrl Title:myTitle andType:myType];
             vc.title = userName;
             [[self viewController].navigationController pushViewController:vc animated:YES];
         }
@@ -233,14 +245,20 @@ typedef enum:NSUInteger{
 #pragma mark MFMessageComposeViewControllerDelegate
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
 {
+    [controller dismissViewControllerAnimated:YES completion:^{
+        
+    }];
     switch (result){
         case MessageComposeResultCancelled:
             NSLog(@"取消发送");
+            [SVProgressHUD showErrorWithStatus:@"取消发送" cover:YES offsetY:kMainScreenHeight/2.0];
             break;
         case MessageComposeResultFailed:
+            [SVProgressHUD showErrorWithStatus:@"发送失败" cover:YES offsetY:kMainScreenHeight/2.0];
             NSLog(@"发送失败");
             break;
         case MessageComposeResultSent:
+            [SVProgressHUD showSuccessWithStatus:@"发送成功" cover:YES offsetY:kMainScreenHeight/2.0];
             NSLog(@"发送成功");
             break;
             

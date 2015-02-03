@@ -289,7 +289,14 @@
          forControlEvents:UIControlEventTouchUpInside];
     [scrollView addSubview:publishBtn];
     
-    scrollView.contentSize = CGSizeMake(kMainScreenWidth, publishBtn.bottom+10);
+    if (publishBtn.bottom+10>kMainScreenHeight-62+1)
+    {
+        scrollView.contentSize = CGSizeMake(kMainScreenWidth, publishBtn.bottom+10);
+    }
+    else
+    {
+        scrollView.contentSize = CGSizeMake(kMainScreenWidth, kMainScreenHeight-62+1);
+    }
 }
 
 #pragma mark getter

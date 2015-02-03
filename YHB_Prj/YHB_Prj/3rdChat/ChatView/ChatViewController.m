@@ -58,6 +58,7 @@
     NSString *myImgUrl;
     NSString *myTitle;
     NSString *myType;
+    int userId;
 }
 
 @property (nonatomic) BOOL isChatGroup;
@@ -99,7 +100,7 @@
     return self;
 }
 
-- (instancetype)initWithChatter:(NSString *)chatter itemid:(int)aItemid ImageUrl:(NSString *)aImgUrl Title:(NSString *)aTitle andType:(NSString *)aType
+- (instancetype)initWithChatter:(NSString *)chatter userid:(int)aUserid itemid:(int)aItemid ImageUrl:(NSString *)aImgUrl Title:(NSString *)aTitle andType:(NSString *)aType
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
@@ -112,6 +113,7 @@
         myItemid = aItemid;
         myTitle = aTitle;
         myType = aType;
+        userId = aUserid;
 //        [self.dataSource addObject:[[MessageLinkModel alloc] init]];
         //根据接收者的username获取当前会话的管理者
         _conversation = [[EaseMob sharedInstance].chatManager conversationForChatter:chatter isGroup:_isChatGroup];
