@@ -14,7 +14,7 @@ NSString *const kYHBGetPushBuylistIsread = @"isread";
 NSString *const kYHBGetPushBuylistItemid = @"itemid";
 NSString *const kYHBGetPushBuylistTitle = @"title";
 NSString *const kYHBGetPushBuylistThumb = @"thumb";
-NSString *const kYHBGetPushBuylistEdittime = @"edittime";
+//NSString *const kYHBGetPushBuylistEdittime = @"edittime";
 
 
 @interface YHBGetPushBuylist ()
@@ -31,7 +31,7 @@ NSString *const kYHBGetPushBuylistEdittime = @"edittime";
 @synthesize itemid = _itemid;
 @synthesize title = _title;
 @synthesize thumb = _thumb;
-@synthesize edittime = _edittime;
+//@synthesize edittime = _edittime;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
@@ -52,7 +52,7 @@ NSString *const kYHBGetPushBuylistEdittime = @"edittime";
             self.itemid = [[self objectOrNilForKey:kYHBGetPushBuylistItemid fromDictionary:dict] doubleValue];
             self.title = [self objectOrNilForKey:kYHBGetPushBuylistTitle fromDictionary:dict];
             self.thumb = [self objectOrNilForKey:kYHBGetPushBuylistThumb fromDictionary:dict];
-            self.edittime = [self objectOrNilForKey:kYHBGetPushBuylistEdittime fromDictionary:dict];
+//            self.edittime = [self objectOrNilForKey:kYHBGetPushBuylistEdittime fromDictionary:dict];
 
     }
     
@@ -69,7 +69,7 @@ NSString *const kYHBGetPushBuylistEdittime = @"edittime";
     [mutableDict setValue:[NSNumber numberWithDouble:self.itemid] forKey:kYHBGetPushBuylistItemid];
     [mutableDict setValue:self.title forKey:kYHBGetPushBuylistTitle];
     [mutableDict setValue:self.thumb forKey:kYHBGetPushBuylistThumb];
-    [mutableDict setValue:self.edittime forKey:kYHBGetPushBuylistEdittime];
+//    [mutableDict setValue:self.edittime forKey:kYHBGetPushBuylistEdittime];
 
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
@@ -99,7 +99,7 @@ NSString *const kYHBGetPushBuylistEdittime = @"edittime";
     self.itemid = [aDecoder decodeDoubleForKey:kYHBGetPushBuylistItemid];
     self.title = [aDecoder decodeObjectForKey:kYHBGetPushBuylistTitle];
     self.thumb = [aDecoder decodeObjectForKey:kYHBGetPushBuylistThumb];
-    self.edittime = [aDecoder decodeObjectForKey:kYHBGetPushBuylistEdittime];
+//    self.edittime = [aDecoder decodeObjectForKey:kYHBGetPushBuylistEdittime];
     return self;
 }
 
@@ -112,7 +112,7 @@ NSString *const kYHBGetPushBuylistEdittime = @"edittime";
     [aCoder encodeDouble:_itemid forKey:kYHBGetPushBuylistItemid];
     [aCoder encodeObject:_title forKey:kYHBGetPushBuylistTitle];
     [aCoder encodeObject:_thumb forKey:kYHBGetPushBuylistThumb];
-    [aCoder encodeObject:_edittime forKey:kYHBGetPushBuylistEdittime];
+//    [aCoder encodeObject:_edittime forKey:kYHBGetPushBuylistEdittime];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -127,7 +127,7 @@ NSString *const kYHBGetPushBuylistEdittime = @"edittime";
         copy.itemid = self.itemid;
         copy.title = [self.title copyWithZone:zone];
         copy.thumb = [self.thumb copyWithZone:zone];
-        copy.edittime = [self.edittime copyWithZone:zone];
+//        copy.edittime = [self.edittime copyWithZone:zone];
     }
     
     return copy;

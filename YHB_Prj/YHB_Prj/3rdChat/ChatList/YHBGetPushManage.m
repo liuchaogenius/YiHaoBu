@@ -39,7 +39,7 @@
     }
     kYHBRequestUrl(@"getPush.php", getPushUrl);
     [NetManager requestWith:dict url:getPushUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
-        MLOG(@"%@", successDict);
+//        MLOG(@"%@", successDict);
         NSString *result = [successDict objectForKey:@"result"];
         if ([result intValue] != 1)
         {

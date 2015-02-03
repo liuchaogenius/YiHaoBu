@@ -9,6 +9,9 @@
 #import "YHBDataService.h"
 #import "SynthesizeSingleton.h"
 #import "YHBUser.h"
+#import "YHBGetPushBuylist.h"
+#import "YHBGetPushSyslist.h"
+
 @interface YHBDataService ()
 @property (nonatomic,strong) NSString *lastVersion;
 @end
@@ -45,13 +48,23 @@
 
 - (void)saveBuyList:(NSMutableArray *)aArray
 {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud synchronize];
     NSMutableArray *buylist = [self getBuylist];
+    if (!buylist)
+    {
+        buylist = [NSMutableArray new];
+    }
     [buylist addObjectsFromArray:aArray];
+    
+    NSMutableArray *archiveArray = [NSMutableArray arrayWithCapacity:buylist.count];
+    for (YHBGetPushBuylist *model in buylist) {
+        NSData *personEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:model];
+        [archiveArray addObject:personEncodedObject];
+    }
+    
+    NSUserDefaults *userData = [NSUserDefaults standardUserDefaults];
     YHBUser *user = [YHBUser sharedYHBUser];
     NSString *key = user.isLogin?[NSString stringWithFormat:@"buylist%d",(int)user.userInfo.userid]:@"buylist";
-    [ud setObject:buylist forKey:key];
+    [userData setObject:archiveArray forKey:key];
 }
 
 - (NSMutableArray *)getBuylist
@@ -60,7 +73,16 @@
     [ud synchronize];
     YHBUser *user = [YHBUser sharedYHBUser];
     NSString *key = user.isLogin?[NSString stringWithFormat:@"buylist%d",(int)user.userInfo.userid]:@"buylist";
-    return [ud objectForKey:key];
+    NSArray *archiveArray = [ud objectForKey:key];
+    
+    NSMutableArray *oriArray = [NSMutableArray arrayWithCapacity:archiveArray.count];
+    for (NSData *data in archiveArray)
+    {
+        YHBGetPushBuylist *model = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        [oriArray addObject:model];
+    }
+    
+    return oriArray;
 }
 
 - (void)saveSysList:(NSMutableArray *)aArray
@@ -68,10 +90,21 @@
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud synchronize];
     NSMutableArray *syslist = [self getSyslist];
+    if (!syslist) {
+        syslist = [NSMutableArray new];
+    }
     [syslist addObjectsFromArray:aArray];
+    
+    NSMutableArray *archiveArray = [NSMutableArray arrayWithCapacity:syslist.count];
+    for (YHBGetPushSyslist *model in syslist) {
+        NSData *personEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:model];
+        [archiveArray addObject:personEncodedObject];
+    }
+    
+    NSUserDefaults *userData = [NSUserDefaults standardUserDefaults];
     YHBUser *user = [YHBUser sharedYHBUser];
     NSString *key = user.isLogin?[NSString stringWithFormat:@"syslist%d",(int)user.userInfo.userid]:@"syslist";
-    [ud setObject:syslist forKey:key];
+    [userData setObject:archiveArray forKey:key];
 }
 
 - (NSMutableArray *)getSyslist
@@ -80,7 +113,16 @@
     [ud synchronize];
     YHBUser *user = [YHBUser sharedYHBUser];
     NSString *key = user.isLogin?[NSString stringWithFormat:@"syslist%d",(int)user.userInfo.userid]:@"syslist";
-    return [ud objectForKey:key];
+    NSArray *archiveArray = [ud objectForKey:key];
+    
+    NSMutableArray *oriArray = [NSMutableArray arrayWithCapacity:archiveArray.count];
+    for (NSData *data in archiveArray)
+    {
+        YHBGetPushSyslist *model = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        [oriArray addObject:model];
+    }
+    
+    return oriArray;
 }
 
 - (NSMutableArray *)searchHistoryArr{

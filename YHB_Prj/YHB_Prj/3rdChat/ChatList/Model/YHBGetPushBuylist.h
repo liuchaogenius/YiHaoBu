@@ -17,7 +17,7 @@
 @property (nonatomic, assign) double itemid;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *thumb;
-@property (nonatomic, strong) NSString *edittime;
+//@property (nonatomic, strong) NSString *edittime;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
