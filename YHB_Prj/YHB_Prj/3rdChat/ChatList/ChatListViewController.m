@@ -342,22 +342,25 @@
     {
         ChatListCell *cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell0"];
         cell.name = @"系统消息";
-        cell.time = @"2014-11-11";
         cell.placeholderImage = [UIImage imageNamed:@"xiaoxi"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         YHBDataService *dataService = [YHBDataService sharedYHBDataSevice];
         NSArray *syslist = [dataService getSyslist];
         NSString *detailStr;
+        NSString *timeStr;
         if (syslist.count>0)
         {
             YHBGetPushSyslist *model = [syslist objectAtIndex:0];
             detailStr = model.title;
+            timeStr = model.adddate;
         }
         else
         {
             detailStr = @"无消息";
+            timeStr = @"";
         }
         cell.detailMsg = detailStr;
+        cell.time = timeStr;
 
         return cell;
     }
@@ -365,22 +368,26 @@
     {
         ChatListCell *cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell1"];
         cell.name = @"商机推荐";
-        cell.time = @"2014-11-11";
         cell.placeholderImage = [UIImage imageNamed:@"dingyue"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         YHBDataService *dataService = [YHBDataService sharedYHBDataSevice];
         NSArray *buylist = [dataService getBuylist];
         NSString *detailStr;
+        NSString *timeStr;
         if (buylist.count>0)
         {
             YHBGetPushSyslist *model = [buylist objectAtIndex:0];
             detailStr = model.title;
+            timeStr = model.adddate;
         }
         else
         {
-            detailStr = @"无推荐";
+            detailStr = @"无消息";
+            timeStr = @"";
         }
         cell.detailMsg = detailStr;
+        cell.time = timeStr;
+        
         return cell;
     }
     else
