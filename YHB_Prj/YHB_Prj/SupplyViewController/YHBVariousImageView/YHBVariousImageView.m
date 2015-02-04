@@ -241,6 +241,17 @@
                 self.showPhotoArray[i] = photo;
             }
         }
+        if (self.webPhotoArray.count>0)
+        {
+            MWPhoto *photo = nil;
+            self.showPhotoArray = [NSMutableArray arrayWithCapacity:self.webPhotoArray.count];
+            NSInteger imageNum = self.webPhotoArray.count;
+            for (NSInteger i = 0; i < imageNum; i++) {
+                YHBSupplyDetailPic *model = [self.webPhotoArray objectAtIndex:i];
+                photo = [MWPhoto photoWithURL:[NSURL URLWithString:model.large]];
+                self.showPhotoArray[i] = photo;
+            }
+        }
         [self showPhotoBrownserWithIndex:index];
     }
 }
