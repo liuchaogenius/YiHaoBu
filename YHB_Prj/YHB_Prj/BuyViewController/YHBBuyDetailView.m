@@ -157,8 +157,15 @@
 - (void)setDetailWithModel:(YHBBuyDetailData *)aModel
 {
     likeBtn.userInteractionEnabled = YES;
-    NSArray *valueArray = @[aModel.typename,aModel.catname];
-    for (int i=0; i<2; i++)
+    NSMutableDictionary *dict = [NSMutableDictionary new];
+    if (aModel.typename)
+    {
+        [dict setValue:aModel.typename forKey:@"typename"];
+    }
+    if (aModel.catname)
+    {
+        [dict setValue:aModel.catname forKey:@"catname"];
+    }    for (int i=0; i<2; i++)
     {
         UILabel *valueLabel = [[UILabel alloc]
                                initWithFrame:CGRectMake(55, bottomLineView.bottom+interval+(18+interval*2)*i, kMainScreenWidth-80, 18)];
@@ -171,7 +178,22 @@
         {
             valueLabel.textColor = [UIColor lightGrayColor];
         }
-        valueLabel.text = [valueArray objectAtIndex:i];
+        if (i==0)
+        {
+            NSString *str = [dict objectForKey:@"typename"];
+            if (str)
+            {
+                valueLabel.text = str;
+            }
+        }
+        else if(i==1)
+        {
+            NSString *str = [dict objectForKey:@"catname"];
+            if (str)
+            {
+                valueLabel.text = str;
+            }
+        }
         [self addSubview:valueLabel];
     }
     detailTextView.text = aModel.content;

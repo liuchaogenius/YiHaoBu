@@ -159,7 +159,19 @@
 {
 //    NSArray *array = [aModel.catname componentsSeparatedByString:@","];
     likeBtn.userInteractionEnabled = YES;
-    NSArray *valueArray = @[aModel.price,aModel.typename,aModel.catname];
+    NSMutableDictionary *dict = [NSMutableDictionary new];
+    if (aModel.price)
+    {
+        [dict setValue:aModel.price forKey:@"price"];
+    }
+    if (aModel.typename)
+    {
+        [dict setValue:aModel.typename forKey:@"typename"];
+    }
+    if (aModel.catname)
+    {
+        [dict setValue:aModel.catname forKey:@"catname"];
+    }
     for (int i=0; i<3; i++)
     {
         UILabel *valueLabel = [[UILabel alloc]
@@ -175,22 +187,37 @@
         }
         if (i==0)
         {
-            NSString *str = [valueArray objectAtIndex:i];
-            float price = [str floatValue];
-            valueLabel.text = [NSString stringWithFormat:@"￥%.2f", price];
-            CGSize size = [valueLabel.text sizeWithFont:kFont15];
-            CGRect temFrame = valueLabel.frame;
-            temFrame.size.width = size.width;
-            valueLabel.frame = temFrame;
-            UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(valueLabel.right+15, valueLabel.top, 40, 18)];
-            unitLabel.textColor = [UIColor lightGrayColor];
-            unitLabel.font = kFont15;
-            unitLabel.text = aModel.unit;
-            [self addSubview:unitLabel];
+            NSString *str = [dict objectForKey:@"price"];
+            if (str)
+            {
+                float price = [str floatValue];
+                valueLabel.text = [NSString stringWithFormat:@"￥%.2f", price];
+                CGSize size = [valueLabel.text sizeWithFont:kFont15];
+                CGRect temFrame = valueLabel.frame;
+                temFrame.size.width = size.width;
+                valueLabel.frame = temFrame;
+                UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(valueLabel.right+15, valueLabel.top, 40, 18)];
+                unitLabel.textColor = [UIColor lightGrayColor];
+                unitLabel.font = kFont15;
+                unitLabel.text = aModel.unit;
+                [self addSubview:unitLabel];
+            }
         }
-        else
+        else if(i==1)
         {
-            valueLabel.text = [valueArray objectAtIndex:i];
+            NSString *str = [dict objectForKey:@"typename"];
+            if (str)
+            {
+                valueLabel.text = str;
+            }
+        }
+        else if(i==2)
+        {
+            NSString *str = [dict objectForKey:@"catname"];
+            if (str)
+            {
+                valueLabel.text = str;
+            }
         }
         [self addSubview:valueLabel];
     }
