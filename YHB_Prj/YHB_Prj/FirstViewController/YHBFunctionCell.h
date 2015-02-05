@@ -10,8 +10,8 @@
 #define fcViewTagBase 10
 enum Button_Tag
 {
-    button_message = fcViewTagBase,
-    button_orders,
+    button_cate = fcViewTagBase,
+    button_groupBuy,
     button_sell,
     button_buy
 };

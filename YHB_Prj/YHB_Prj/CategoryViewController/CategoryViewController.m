@@ -289,6 +289,9 @@
 //        }
         [chooseArray addObject:subModel];
     }
+    if (_isSingleSelect) {
+        [self touchYesBtn];
+    }
 }
 
 - (void)touchYesBtn
@@ -304,6 +307,7 @@
 
 - (void)back
 {
+    _isSingleSelect = NO;
     if (self.isPushed) {
         [self.navigationController popViewControllerAnimated:YES];
     }else{

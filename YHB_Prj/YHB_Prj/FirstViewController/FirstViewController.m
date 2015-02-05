@@ -28,6 +28,8 @@
 #import "YHBUser.h"
 #import "YHBOrderListViewController.h"
 #import "YHBBuyDetailViewController.h"
+#import "CategoryViewController.h"
+#import "YHBCatSubcate.h"
 
 #define kBannerHeight (kMainScreenWidth * 397/1080.0f)
 #define kFuncCellHeight 60
@@ -314,20 +316,29 @@
 - (void)touchedFunctionButtonWithTag:(NSInteger)tag
 {
     switch (tag) {
-        case button_message:
+        case button_cate:
         {
-            //我的消息
-            self.tabBarController.selectedIndex = 2;
+            //类目
+            UINavigationController *navVc = [[UINavigationController alloc] initWithRootViewController:[CategoryViewController sharedInstancetype]];
+            __weak FirstViewController *weakself = self;
+            [CategoryViewController sharedInstancetype].hidesBottomBarWhenPushed = YES;
+            [CategoryViewController sharedInstancetype].isSingleSelect = YES;
+            [[CategoryViewController sharedInstancetype] setBlock:^(NSArray *aArray) {
+                [CategoryViewController sharedInstancetype].isSingleSelect = NO;
+                NSString *hotTag = ((YHBCatSubcate *)([aArray lastObject])).catname;
+                self.tabBarController.selectedIndex = 1;
+                NSDictionary * dic = [NSDictionary dictionaryWithObject:(hotTag?:@"") forKey:kSearchMessage];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kSearchMessage object:nil userInfo:dic];
+                [[CategoryViewController sharedInstancetype] cleanAll];
+            }];
+            [self presentViewController:navVc animated:YES completion:nil];
         }
             break;
-        case button_orders:
+        case button_groupBuy:
         {
-            //我的订单
-            if ([self userLoginConfirm]) {
-                YHBOrderListViewController *vc = [[YHBOrderListViewController alloc] init];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
+            //团购
+#warning 此处添加点击团购图标后续操作
+            
         }
             break;
         case button_sell:

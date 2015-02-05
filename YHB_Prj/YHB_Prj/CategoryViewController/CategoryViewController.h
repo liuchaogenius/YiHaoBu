@@ -12,6 +12,7 @@
 
 + (CategoryViewController *)sharedInstancetype;
 @property (assign, nonatomic) BOOL isPushed;
+@property (assign, nonatomic) BOOL isSingleSelect;
 - (void)setBlock:(void(^)(NSArray *aArray))aBlock;
 - (void)cleanAll;
 - (void)deleteItemWithItemID:(int)aCatid;

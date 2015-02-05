@@ -61,7 +61,7 @@
     button.layer.borderColor = [kLineColor CGColor];
     button.layer.borderWidth = 0.7;
     button.layer.cornerRadius = 2.0f;
-    [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [button setTitleColor:KColor forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:kTitleFont];
     [button addTarget:self action:@selector(touchTagButton:) forControlEvents:UIControlEventTouchUpInside];
     

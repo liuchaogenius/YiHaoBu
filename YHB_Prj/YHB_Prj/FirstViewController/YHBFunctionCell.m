@@ -19,7 +19,7 @@
     if (self ) {
         self.backgroundColor = [UIColor whiteColor];
 
-        NSArray *titleArray = @[@"我的消息",@"我的订单",@"查看供应",@"查看采购"];
+        NSArray *titleArray = @[@"类目",@"团购",@"供应",@"采购"];
         CGFloat blankWidth = (kMainScreenWidth - 4*buttonWidth)/5.0f;
         for (int i = 0; i < 4; i++) {
             UIButton *button = [self customedButtonWithFrame:CGRectMake(blankWidth+i*(blankWidth+buttonWidth), 5, buttonWidth, buttonHeight) andTag:i+fcViewTagBase andImage:[UIImage imageNamed:[NSString stringWithFormat:@"funcImage%d",i]]];
