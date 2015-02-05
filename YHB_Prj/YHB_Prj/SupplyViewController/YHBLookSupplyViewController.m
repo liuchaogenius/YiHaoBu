@@ -22,6 +22,8 @@
 {
     BOOL isVip;
     BOOL isSupply;
+    int typeid;
+    UIView *topView;
 }
 @property(nonatomic, strong) UIButton *selectAllBtn;
 @property(nonatomic, strong) UIButton *selectVipBtn;
@@ -32,6 +34,7 @@
 
 @property(nonatomic, strong) YHBLookSupplyManage *supplyManage;
 @property(nonatomic, strong) YHBLookBuyManage *buyManage;
+
 @end
 
 @implementation YHBLookSupplyViewController
@@ -40,6 +43,15 @@
 {
     if (self = [super init]) {
         isSupply = aIsSupply;
+    }
+    return self;
+}
+
+- (instancetype)initWithIsSupplyYesAndTypeid:(int)aTypeid
+{
+    if (self = [super init]) {
+        isSupply=YES;
+        typeid = aTypeid;
     }
     return self;
 }
@@ -63,30 +75,68 @@
     }
     
 #pragma mark 建立topView
-    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, topViewHeight)];
+    topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, topViewHeight)];
     [self.view addSubview:topView];
+    if (isSupply)
+    {
+        NSArray *titleArray = @[@"全部",@"现货",@"预定",@"促销"];
+        for (int i=0; i<4; i++)
+        {
+            UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth/4*i, 0, kMainScreenWidth/4, topViewHeight)];
+            [btn setTitle:titleArray[i] forState:UIControlStateNormal];
+            btn.titleLabel.font = kFont16;
+            btn.tag = 10+i;
+            if (typeid)
+            {
 
-    self.selectAllBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth/2, topViewHeight)];
-    [self.selectAllBtn setTitle:@"全部" forState:UIControlStateNormal];
-    self.selectAllBtn.titleLabel.font = kFont16;
-    [self.selectAllBtn setTitleColor:KColor forState:UIControlStateNormal];
-    [self.selectAllBtn addTarget:self action:@selector(touchTopViewBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:self.selectAllBtn];
-    
-    UIView *midLineView = [[UIView alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-0.25, 10, 0.5, topViewHeight-20)];
-    midLineView.backgroundColor = [UIColor lightGrayColor];
-    [topView addSubview:midLineView];
-    
-    self.selectVipBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth/2, 0, kMainScreenWidth/2, topViewHeight)];
-    [self.selectVipBtn setTitle:@"仅看VIP" forState:UIControlStateNormal];
-    self.selectVipBtn.titleLabel.font = kFont16;
-    [self.selectVipBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.selectVipBtn addTarget:self action:@selector(touchTopViewBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:self.selectVipBtn];
-    
-    UIView *underLineView = [[UIView alloc] initWithFrame:CGRectMake(0, topViewHeight-0.5, kMainScreenWidth, 0.5)];
-    underLineView.backgroundColor = [UIColor lightGrayColor];
-    [topView addSubview:underLineView];
+            }
+            else
+            {
+                typeid=0;
+            }
+            if (i==typeid)
+            {
+                [btn setTitleColor:KColor forState:UIControlStateNormal];
+            }
+            else
+            {
+                [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            }
+            [btn addTarget:self action:@selector(touchSupplyBtn:) forControlEvents:UIControlEventTouchUpInside];
+            [topView addSubview:btn];
+            
+            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(kMainScreenWidth/4*i-0.25, 10, 0.5, topViewHeight-20)];
+            lineView.backgroundColor = [UIColor lightGrayColor];
+            [topView addSubview:lineView];
+        }
+        UIView *underLineView = [[UIView alloc] initWithFrame:CGRectMake(0, topViewHeight-0.5, kMainScreenWidth, 0.5)];
+        underLineView.backgroundColor = [UIColor lightGrayColor];
+        [topView addSubview:underLineView];
+    }
+    else
+    {
+        self.selectAllBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth/2, topViewHeight)];
+        [self.selectAllBtn setTitle:@"全部" forState:UIControlStateNormal];
+        self.selectAllBtn.titleLabel.font = kFont16;
+        [self.selectAllBtn setTitleColor:KColor forState:UIControlStateNormal];
+        [self.selectAllBtn addTarget:self action:@selector(touchTopViewBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [topView addSubview:self.selectAllBtn];
+        
+        UIView *midLineView = [[UIView alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-0.25, 10, 0.5, topViewHeight-20)];
+        midLineView.backgroundColor = [UIColor lightGrayColor];
+        [topView addSubview:midLineView];
+        
+        self.selectVipBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth/2, 0, kMainScreenWidth/2, topViewHeight)];
+        [self.selectVipBtn setTitle:@"仅看VIP" forState:UIControlStateNormal];
+        self.selectVipBtn.titleLabel.font = kFont16;
+        [self.selectVipBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.selectVipBtn addTarget:self action:@selector(touchTopViewBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [topView addSubview:self.selectVipBtn];
+        
+        UIView *underLineView = [[UIView alloc] initWithFrame:CGRectMake(0, topViewHeight-0.5, kMainScreenWidth, 0.5)];
+        underLineView.backgroundColor = [UIColor lightGrayColor];
+        [topView addSubview:underLineView];
+    }
     
 #pragma mark 建立tableview
     self.supplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, topViewHeight, kMainScreenWidth, kMainScreenHeight-topViewHeight-62)];
@@ -97,10 +147,33 @@
     
     [self addTableViewTrag];
     [self showFlower];
-    [self getDataIsVip:isVip];
+    [self getData];
 }
 
-- (void)getDataIsVip:(BOOL)aIsVip
+- (void)touchSupplyBtn:(UIButton *)aBtn
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.supplyTableView.contentOffset = CGPointMake(0, 0);
+    }];
+    if (aBtn.tag-10==typeid)
+    {
+        
+    }
+    else
+    {
+        for (int i=0; i<4; i++)
+        {
+            UIButton *temBtn = (UIButton *)[topView viewWithTag:10+i];
+            [temBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        }
+        [aBtn setTitleColor:KColor forState:UIControlStateNormal];
+        typeid = (int)aBtn.tag-10;
+    }
+    [self showFlower];
+    [self getData];
+}
+
+- (void)getData
 {
     if (isSupply) {
         [self.supplyManage getSupplyArray:^(NSMutableArray *aArray){
@@ -110,7 +183,7 @@
         } andFail:^(NSString *aStr) {
             [self dismissFlower];
             [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
-        } isVip:isVip];
+        } andtypeid:typeid];
     }
     else
     {
@@ -143,7 +216,7 @@
     }
     isVip = !isVip;
     [self showFlower];
-    [self getDataIsVip:isVip];
+    [self getData];
 }
 
 #pragma mark 菊花
@@ -187,7 +260,7 @@
             } andFail:^(NSString *aStr){
                 [weakself.supplyTableView.pullToRefreshView stopAnimating];
                 [self dismissFlower];
-            } isVip:isVip];
+            } andtypeid:typeid];
         }
         else
         {

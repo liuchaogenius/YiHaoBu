@@ -337,7 +337,9 @@
         case button_groupBuy:
         {
             //团购
-#warning 此处添加点击团购图标后续操作
+            YHBLookSupplyViewController *vc = [[YHBLookSupplyViewController alloc] initWithIsSupplyYesAndTypeid:3];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
             
         }
             break;

@@ -11,27 +11,27 @@
 #import "YHBSupplyModel.h"
 //#import "YHBUser.h"
 
-BOOL isVip;
+int mytypeid;
 int pagesize;
 int pageid;
 int pagetotal;
 @implementation YHBLookSupplyManage
 
-- (void)getSupplyArray:(void(^)(NSMutableArray *aArray))aSuccBlock andFail:(void(^)(NSString *aStr))aFailBlock isVip:(BOOL)aBool
+- (void)getSupplyArray:(void(^)(NSMutableArray *aArray))aSuccBlock andFail:(void(^)(NSString *aStr))aFailBlock andtypeid:(int)aTypeid
 {
-    isVip = aBool;
+    mytypeid = aTypeid;
     pagesize = 20;
     pageid = 1;
 //    YHBUser *user = [YHBUser sharedYHBUser];
     NSString *supplyUrl = nil;
     NSDictionary *dict;
-    if (isVip)
+    if (mytypeid==0)
     {
-        dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", pageid],@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",@"1",@"vip",nil];
+        dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", pageid],@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",nil];
     }
     else
     {
-        dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", pageid],@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",nil];
+        dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", pageid],@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",[NSString stringWithFormat:@"%d", mytypeid-1],@"typeid",nil];
     }
     
     kYHBRequestUrl(@"getSellList.php", supplyUrl);
@@ -70,13 +70,13 @@ int pagetotal;
         NSString *supplyUrl = nil;
 //        YHBUser *user = [YHBUser sharedYHBUser];
         NSDictionary *dict;
-        if (isVip)
+        if (mytypeid==0)
         {
-            dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", pageid],@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",@"1",@"vip",nil];
+            dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", pageid],@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",nil];
         }
         else
         {
-            dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", pageid],@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",nil];
+            dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", pageid],@"pageid",[NSString stringWithFormat:@"%d", pagesize],@"pagesize",[NSString stringWithFormat:@"%d", mytypeid-1],@"typeid",nil];
         }
         kYHBRequestUrl(@"getSellList.php", supplyUrl);
         [NetManager requestWith:dict url:supplyUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {

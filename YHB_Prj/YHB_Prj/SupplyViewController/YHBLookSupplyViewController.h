@@ -12,4 +12,5 @@
 
 
 - (instancetype)initWithIsSupply:(BOOL)aIsSupply;
+- (instancetype)initWithIsSupplyYesAndTypeid:(int)aTypeid;
 @end
