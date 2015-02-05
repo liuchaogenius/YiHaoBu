@@ -248,7 +248,7 @@
             NSInteger imageNum = self.webPhotoArray.count;
             for (NSInteger i = 0; i < imageNum; i++) {
                 YHBSupplyDetailPic *model = [self.webPhotoArray objectAtIndex:i];
-                photo = [MWPhoto photoWithURL:[NSURL URLWithString:model.large]];
+                photo = [MWPhoto photoWithURL:[NSURL URLWithString:model.middle]];
                 self.showPhotoArray[i] = photo;
             }
         }
