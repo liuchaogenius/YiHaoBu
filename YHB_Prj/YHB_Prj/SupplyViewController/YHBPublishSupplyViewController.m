@@ -105,19 +105,26 @@
     bottomLineView.backgroundColor = [UIColor lightGrayColor];
     [editSupplyView addSubview:bottomLineView];
     
-    NSArray *strArray = @[@"名       称 |",@"价       格 |",@"到期时间 |",@"分       类 |",@"供货状态 |",@"详细描述 |"];
+    NSArray *strArray = @[@"名       称 :",@"价       格 :",@"到期时间 :",@"分       类 :",@"供货状态 :",@"详细描述 :"];
     for (int i=0; i<strArray.count; i++)
     {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, interval+(labelHeight+interval)*i, 70, labelHeight)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, interval/2+(labelHeight+interval)*i, 70, labelHeight)];
         label.text = [strArray objectAtIndex:i];
         label.font = [UIFont systemFontOfSize:15];
         //            [contentScrollView addSubview:label];
         [editSupplyView addSubview:label];
+        
+        if (i!=strArray.count-1)
+        {
+            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, label.bottom+10, kMainScreenWidth, 0.5)];
+            lineView.backgroundColor = [UIColor lightGrayColor];
+            [editSupplyView addSubview:lineView];
+        }
     }
     
-    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, interval-5, 200, labelHeight+10)];
-    titleLabel.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-    titleLabel.layer.borderWidth = 0.5;
+    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, interval/2-5, kMainScreenWidth-85-10, labelHeight+10)];
+//    titleLabel.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+//    titleLabel.layer.borderWidth = 0.5;
     titleLabel.userInteractionEnabled = YES;
     titleLabel.font = kFont15;
 //    titleLabel.textColor = [UIColor lightGrayColor];
@@ -136,9 +143,9 @@
     tapTitleGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchTitle)];
     [titleLabel addGestureRecognizer:tapTitleGesture];
     
-    priceTextField = [[UITextField alloc] initWithFrame:CGRectMake(85, interval*2+labelHeight-5, 120, labelHeight+10)];
+    priceTextField = [[UITextField alloc] initWithFrame:CGRectMake(85, interval*1.5+labelHeight-5, kMainScreenWidth-85-50, labelHeight+10)];
     priceTextField.font = [UIFont systemFontOfSize:15];
-    priceTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+//    priceTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     priceTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     priceTextField.returnKeyType = UIReturnKeyDone;
     priceTextField.placeholder = @"请填写价格";
@@ -146,22 +153,23 @@
     priceTextField.delegate = self;
 //    priceTextField.textColor = [UIColor lightGrayColor];
 //    priceTextField.textAlignment = NSTextAlignmentCenter;
-    priceTextField.layer.borderWidth = 0.5;
+//    priceTextField.layer.borderWidth = 0.5;
     [editSupplyView addSubview:priceTextField];
     
-    UILabel *priceLabelNote = [[UILabel alloc] initWithFrame:CGRectMake(priceTextField.right+3, priceTextField.top, 120, labelHeight+10)];
+    UILabel *priceLabelNote = [[UILabel alloc] initWithFrame:CGRectMake(priceTextField.right, priceTextField.top, 40, labelHeight+10)];
     priceLabelNote.font = [UIFont systemFontOfSize:15];
     priceLabelNote.textColor = [UIColor lightGrayColor];
     priceLabelNote.text = @"元/米";
+    priceLabelNote.textAlignment = NSTextAlignmentRight;
     [editSupplyView addSubview:priceLabelNote];
     
-    dayView = [[UIView alloc] initWithFrame:CGRectMake(85, (interval+labelHeight)*2+interval-5, 120, labelHeight+10)];
-    dayView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-    dayView.layer.borderWidth = 0.5;
+    dayView = [[UIView alloc] initWithFrame:CGRectMake(85, (interval+labelHeight)*2+interval/2-5, kMainScreenWidth-85-10, labelHeight+10)];
+//    dayView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+//    dayView.layer.borderWidth = 0.5;
     dayView.userInteractionEnabled = YES;
     [editSupplyView addSubview:dayView];
     
-    dayLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120-18, labelHeight+10)];
+    dayLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth-85-10-40, labelHeight+10)];
     dayLabel.font = kFont15;
 //    dayLabel.textAlignment = NSTextAlignmentCenter;
 //    dayLabel.textColor = [UIColor lightGrayColor];
@@ -174,23 +182,24 @@
     dayPlaceHolder.textColor = [UIColor lightGrayColor];
     [dayView addSubview:dayPlaceHolder];
     
-    UIImageView *downArrow = [[UIImageView alloc] initWithFrame:CGRectMake(dayView.right-dayView.left-18, (labelHeight+10-12)/2+2, 15, 9)];
-    [downArrow setImage:[UIImage imageNamed:@"downArrow"]];
-    [dayView addSubview:downArrow];
-    
     tapDayGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchDay)];
     [dayView addGestureRecognizer:tapDayGesture];
     
-    UILabel *dayLabelNote = [[UILabel alloc] initWithFrame:CGRectMake(dayView.right+3, dayView.top, 120, labelHeight+10)];
+    UILabel *dayLabelNote = [[UILabel alloc] initWithFrame:CGRectMake(dayLabel.right, 0, 20, labelHeight+10)];
     dayLabelNote.font = [UIFont systemFontOfSize:15];
     dayLabelNote.textColor = [UIColor lightGrayColor];
     dayLabelNote.text = @"天";
-    [editSupplyView addSubview:dayLabelNote];
+    [dayView addSubview:dayLabelNote];
     
-    catNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, (interval+labelHeight)*3+interval-5, 177, labelHeight+10)];
-    catNameLabel.layer.borderWidth = 0.5;
+    UIImageView *downArrow = [[UIImageView alloc] initWithFrame:CGRectMake(dayView.right-dayView.left-12, (labelHeight+10-15)/2, 9, 15)];
+    [downArrow setImage:[UIImage imageNamed:@"rightArrow"]];
+    [dayView addSubview:downArrow];
+    
+    catNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, (interval+labelHeight)*3+interval/2-5, kMainScreenWidth-85-10, labelHeight+10)];
+//    catNameLabel.layer.borderWidth = 0.5;
     catNameLabel.font = kFont15;
-    catNameLabel.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+//    catNameLabel.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    catNameLabel.userInteractionEnabled = YES;
     [editSupplyView addSubview:catNameLabel];
     
     catPlaceHolder = [[UILabel alloc] initWithFrame:catNameLabel.frame];
@@ -199,18 +208,18 @@
     catPlaceHolder.textColor = [UIColor lightGrayColor];
     [editSupplyView addSubview:catPlaceHolder];
     
-    UIImageView *plusImgView = [[UIImageView alloc] initWithFrame:CGRectMake(catNameLabel.right, catNameLabel.top, 23, 30)];
-    plusImgView.image = [UIImage imageNamed:@"plusImg"];
-    plusImgView.userInteractionEnabled = YES;
-    [editSupplyView addSubview:plusImgView];
+//    UIImageView *plusImgView = [[UIImageView alloc] initWithFrame:CGRectMake(catNameLabel.right, catNameLabel.top, 23, 30)];
+//    plusImgView.image = [UIImage imageNamed:@"plusImg"];
+//    plusImgView.userInteractionEnabled = YES;
+//    [editSupplyView addSubview:plusImgView];
     
     UITapGestureRecognizer *tapGestureReco = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchCat)];
-    [plusImgView addGestureRecognizer:tapGestureReco];
+    [catNameLabel addGestureRecognizer:tapGestureReco];
     
     NSArray *array = @[@"现货",@"期货",@"促销"];
     for (int i=0; i<3; i++)
     {
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(85+(labelHeight+10+40)*i, (interval+labelHeight)*4+interval-5, labelHeight+6, labelHeight+6)];
+        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(85+(labelHeight+10+40)*i, (interval+labelHeight)*4+interval/2-5, labelHeight+6, labelHeight+6)];
         [btn setImage:[UIImage imageNamed:@"btnNotChoose"] forState:UIControlStateNormal];
         btn.tag=10+i;
         [btn addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -226,9 +235,9 @@
         [editSupplyView addSubview:label];
     }
     
-    contentTextView = [[UITextView alloc] initWithFrame:CGRectMake(85, interval+(interval+labelHeight)*5, 200, 70)];
-    contentTextView.layer.borderWidth = 0.5;
-    contentTextView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    contentTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, interval/2+(interval+labelHeight)*5+labelHeight+3, kMainScreenWidth-20, 70)];
+//    contentTextView.layer.borderWidth = 0.5;
+//    contentTextView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     contentTextView.font = [UIFont systemFontOfSize:15];
     contentTextView.returnKeyType = UIReturnKeyDone;
     contentTextView.delegate = self;
@@ -238,7 +247,7 @@
     detailPlaceHolder = [[UILabel alloc] initWithFrame:contentTextView.frame];
     detailPlaceHolder.text = @"请输入您要卖的产品的织法、成分、颜色、厚薄、弹力、手感、宽幅、克重、用途等，尽可能填写您所知道的全部信息。";
     detailPlaceHolder.numberOfLines = 0;
-    detailPlaceHolder.font = kFont12;
+    detailPlaceHolder.font = kFont15;
     detailPlaceHolder.textColor = [UIColor lightGrayColor];
     [editSupplyView addSubview:detailPlaceHolder];
     
@@ -263,25 +272,29 @@
     personNameLabel.font = kFont15;
     personNameLabel.text = @"联 系 人 : ";
     
+    UIView *alineView = [[UIView alloc] initWithFrame:CGRectMake(0, personNameLabel.bottom+10, kMainScreenWidth, 0.5)];
+    alineView.backgroundColor = [UIColor lightGrayColor];
+    [contactView addSubview:alineView];
+    
     UILabel *phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(personNameLabel.left, personNameLabel.bottom+20, 75, 20)];
     phoneLabel.font = kFont15;
     phoneLabel.text = @"联系电话 : ";
     
     YHBUser *user = [YHBUser sharedYHBUser];
     
-    nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(contentTextView.left, personNameLabel.top-5, 200, labelHeight+10)];
+    nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(85, personNameLabel.top-5, kMainScreenWidth-85-10, labelHeight+10)];
     nameTextField.font = kFont15;
     nameTextField.delegate = self;
-    nameTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-    nameTextField.layer.borderWidth = 0.5;
+//    nameTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+//    nameTextField.layer.borderWidth = 0.5;
     nameTextField.returnKeyType = UIReturnKeyDone;
     nameTextField.text = user.userInfo.truename;
     
-    phoneTextField = [[UITextField alloc] initWithFrame:CGRectMake(contentTextView.left, phoneLabel.top-5, 200, labelHeight+10)];
+    phoneTextField = [[UITextField alloc] initWithFrame:CGRectMake(85, phoneLabel.top-5, kMainScreenWidth-85-10, labelHeight+10)];
     phoneTextField.font = kFont15;
     phoneTextField.delegate = self;
-    phoneTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-    phoneTextField.layer.borderWidth = 0.5;
+//    phoneTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+//    phoneTextField.layer.borderWidth = 0.5;
     phoneTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     phoneTextField.returnKeyType = UIReturnKeyDone;
     phoneTextField.text = user.userInfo.mobile;

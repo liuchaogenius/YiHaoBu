@@ -138,21 +138,22 @@ typedef enum:NSUInteger{
     {
         if (phoneNumber)
         {
+            NSString *myPhoneNumber = [YHBUser sharedYHBUser].userInfo.telephone;
             NSString *body;
             if ([myType isEqualToString:@"supply"])
             {
-                body = [NSString stringWithFormat:@"您好，%@，我对您在快布发布的“%@”比较感兴趣，请联系%@。", storeLabel.text, myTitle, phoneNumber];
+                body = [NSString stringWithFormat:@"您好，%@，我对您在快布发布的“%@”比较感兴趣，请联系%@。", storeLabel.text, myTitle, myPhoneNumber];
             }
             else
             {
                 NSString *company = [YHBUser sharedYHBUser].userInfo.company;
                 if (company)
                 {
-                    body = [NSString stringWithFormat:@"您好，%@，我对您在快布发布的“%@”比较感兴趣，请在线联系或联系%@，我在快布的店铺名为“%@“。", storeLabel.text, myTitle, phoneNumber, company];
+                    body = [NSString stringWithFormat:@"您好，%@，我对您在快布发布的“%@”比较感兴趣，请在线联系或联系%@，我在快布的店铺名为“%@“。", storeLabel.text, myTitle, myPhoneNumber, company];
                 }
                 else
                 {
-                    body = [NSString stringWithFormat:@"您好，%@，我对您在快布发布的“%@”比较感兴趣，请在线联系或联系%@。", storeLabel.text, myTitle, phoneNumber];
+                    body = [NSString stringWithFormat:@"您好，%@，我对您在快布发布的“%@”比较感兴趣，请在线联系或联系%@。", storeLabel.text, myTitle, myPhoneNumber];
                 }
                 
             }

@@ -40,9 +40,9 @@
         _hideFrame = CGRectMake(self.backImg.left, self.backImg.bottom, self.backImg.right-self.backImg.left, 0);
 
         
-        self.itemLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width-20, frame.size.height)];
+        self.itemLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width-10, frame.size.height)];
         self.itemLabel.textAlignment = NSTextAlignmentCenter;
-        self.itemLabel.font = [UIFont systemFontOfSize:12];
+        self.itemLabel.font = [UIFont systemFontOfSize:15];
         self.itemLabel.textColor = [UIColor whiteColor];
         
         self.showItemTableView = [[UITableView alloc] initWithFrame:_hideFrame];
