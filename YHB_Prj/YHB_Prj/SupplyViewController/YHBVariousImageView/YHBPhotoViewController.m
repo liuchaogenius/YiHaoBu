@@ -243,7 +243,7 @@
     }
     else
     {
-        self.title = [NSString stringWithFormat:@"%d Photo Selected", _currentSelectCount];
+        self.title = [NSString stringWithFormat:@"已选中 %d 张照片", _currentSelectCount];
     }
 }
 

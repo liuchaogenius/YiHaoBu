@@ -18,6 +18,7 @@
 #import "YHBStoreViewController.h"
 #import "NetManager.h"
 #import "YHBUser.h"
+#import "YHBBuyDetailPic.h"
 
 #define kContactViewHeight 60
 @interface YHBBuyDetailViewController ()
@@ -33,6 +34,9 @@
     NSArray *uploadPhotoArray;
     BOOL needUpload;
     NSDictionary *itemDict;
+    
+    int uploadIndex;
+    UIActivityIndicatorView *activityView;
 }
 @property(nonatomic, strong) YHBBuyDetailManage *manage;
 @end
@@ -162,42 +166,67 @@
                  [variousImageView setMyWebPhotoArray:aModel.pic];
              }
              if (!isMine) {
-                 [contactView setPhoneNumber:aModel.mobile storeName:aModel.truename itemId:itemId isVip:aModel.vip imgUrl:@"1" Title:myModel.title andType:@"buy" userid:myModel.userid];
+                 NSArray *array = aModel.pic;
+                 NSString *picUrl;
+                 if (array.count>0)
+                 {
+                     YHBBuyDetailPic *picmodel = [array objectAtIndex:0];
+                     picUrl = picmodel.thumb;
+                 }
+                 else
+                 {
+                     picUrl=nil;
+                 }
+                 [contactView setPhoneNumber:aModel.mobile storeName:aModel.truename itemId:itemId isVip:aModel.vip imgUrl:picUrl Title:myModel.title andType:@"buy" userid:myModel.userid];
              }
              [self dismissFlower];
+             if (needUpload && uploadPhotoArray.count>0)
+             {
+                 [variousImageView setPhotoArray:uploadPhotoArray];
+                 uploadIndex = 0;
+                 [self uploadImage];
+                 [SVProgressHUD showWithStatus:@"上传图片中" cover:YES offsetY:kMainScreenHeight/2.0];
+             }
          } andFailBlock:^(NSString *aStr) {
              [self dismissFlower];
 //             [self.navigationController popViewControllerAnimated:YES];
              [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
          }];
 //    }
-    
-    if (needUpload && uploadPhotoArray.count>0)
-    {
-        [variousImageView setPhotoArray:uploadPhotoArray];
-        NSString *uploadPhototUrl = nil;
-        kYHBRequestUrl(@"upload.php", uploadPhototUrl);
-        
-        for (int i=0; i<variousImageView.myPhotoArray.count; i++)
+}
+
+- (void)uploadImage
+{
+    NSString *uploadPhototUrl = nil;
+    kYHBRequestUrl(@"upload.php", uploadPhototUrl);
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",[NSString stringWithFormat:@"%d", uploadIndex],@"order",@"album",@"action",[NSString stringWithFormat:@"%d",itemId],@"itemid",[itemDict objectForKey:@"moduleid"],@"moduleid", nil];
+    UIImage *uploadImage = [variousImageView.myPhotoArray objectAtIndex:uploadIndex];
+    [NetManager uploadImg:uploadImage parameters:dic uploadUrl:uploadPhototUrl uploadimgName:nil parameEncoding:AFJSONParameterEncoding progressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+    } succ:^(NSDictionary *successDict) {
+        MLOG(@"%@", successDict);
+        NSString *result = [successDict objectForKey:@"result"];
+        if ([result intValue] != 1)
         {
-            NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",[NSString stringWithFormat:@"%d", i],@"order",@"album",@"action",[NSString stringWithFormat:@"%d",itemId],@"itemid",[itemDict objectForKey:@"moduleid"],@"moduleid", nil];
-            [NetManager uploadImg:[variousImageView.myPhotoArray objectAtIndex:i] parameters:dic uploadUrl:uploadPhototUrl uploadimgName:nil parameEncoding:AFJSONParameterEncoding progressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
-            } succ:^(NSDictionary *successDict) {
-                MLOG(@"%@", successDict);
-                NSString *result = [successDict objectForKey:@"result"];
-                if ([result intValue] != 1)
-                {
-                    MLOG(@"%@", [successDict objectForKey:@"error"]);
-                }
-                else
-                {
-                    
-                }
-            } failure:^(NSDictionary *failDict, NSError *error) {
-                MLOG(@"%@", [failDict objectForKey:@"error"]);
-            }];
+            MLOG(@"%@", [successDict objectForKey:@"error"]);
         }
-    }
+        else
+        {
+            
+        }
+        uploadIndex++;
+        if (uploadIndex<variousImageView.myPhotoArray.count)
+        {
+            [self uploadImage];
+        }
+        else
+        {
+            [SVProgressHUD dismiss];
+        }
+    } failure:^(NSDictionary *failDict, NSError *error) {
+        [SVProgressHUD dismiss];
+        MLOG(@"%@", [failDict objectForKey:@"error"]);
+    }];
+
 }
 
 #pragma mark 分享

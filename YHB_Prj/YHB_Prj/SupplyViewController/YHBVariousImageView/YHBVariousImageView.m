@@ -252,7 +252,7 @@
                 self.showPhotoArray[i] = photo;
             }
         }
-        [self showPhotoBrownserWithIndex:index];
+        [self showPhotoBrownserWithIndex:index-1];
     }
 }
 
