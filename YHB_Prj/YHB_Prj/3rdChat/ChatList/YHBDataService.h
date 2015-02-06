@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface YHBDataService : NSObject<NSCoding>
+@interface YHBDataService : NSObject//<NSCoding>
 
 
 @property (nonatomic,strong) NSMutableArray *searchHistoryArr;

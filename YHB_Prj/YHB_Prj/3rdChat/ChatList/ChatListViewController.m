@@ -350,9 +350,9 @@
         NSString *timeStr;
         if (syslist.count>0)
         {
-            YHBGetPushSyslist *model = [syslist objectAtIndex:0];
+            YHBGetPushSyslist *model = [syslist lastObject];
             detailStr = model.title;
-            timeStr = model.adddate;
+            timeStr = [model.adddate substringWithRange:NSMakeRange(0, 10)];
         }
         else
         {
@@ -378,7 +378,7 @@
         {
             YHBGetPushSyslist *model = [buylist objectAtIndex:0];
             detailStr = model.title;
-            timeStr = model.adddate;
+            timeStr = [model.adddate substringWithRange:NSMakeRange(0, 10)];
         }
         else
         {
