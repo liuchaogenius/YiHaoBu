@@ -10,8 +10,8 @@
 
 
 NSString *const kYHBShopCartRslistUserid = @"userid";
-NSString *const kYHBShopCartRslistCompany = @"company";
-NSString *const kYHBShopCartRslistTruename = @"truename";
+NSString *const kYHBShopCartRslistCompany = @"sellcom";
+NSString *const kYHBShopCartRslistTruename = @"sellname";
 NSString *const kYHBShopCartRslistCartlist = @"cartlist";
 
 

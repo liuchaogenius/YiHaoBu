@@ -501,9 +501,9 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        EMConversation *converation = [self.dataSource objectAtIndex:indexPath.row];
+        EMConversation *converation = [self.dataSource objectAtIndex:indexPath.row-2];
         [[EaseMob sharedInstance].chatManager removeConversationByChatter:converation.chatter deleteMessages:NO];
-        [self.dataSource removeObjectAtIndex:indexPath.row];
+        [self.dataSource removeObjectAtIndex:indexPath.row-2];
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
