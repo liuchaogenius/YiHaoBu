@@ -30,11 +30,21 @@
 @property (strong, nonatomic) UIView *midBlankView;
 @property (strong, nonatomic) UIView *rightBlankView;
 
+@property (strong, nonatomic) NSMutableArray *blackInfoArray;
+
 @end
 
 @implementation YHBShopMallCell
 
 #pragma mark - getter and setter
+- (NSMutableArray *)blackInfoArray
+{
+    if (!_blackInfoArray) {
+        _blackInfoArray = [NSMutableArray arrayWithCapacity:3];
+    }
+    return _blackInfoArray;
+}
+
 - (NSMutableArray *)totalViewArray
 {
     if (!_totalViewArray) {
@@ -149,6 +159,7 @@
     UILabel *titleLabel = self.titleLabelArray[part];
     titleLabel.text = title;
     UIImageView *imageView = self.imageViewArray[part];
+    MLOG(@"%@",imgurl);
     [imageView sd_setImageWithURL:[NSURL URLWithString:imgurl] placeholderImage:[UIImage imageNamed:@"DefualtProduct"]];
     UILabel *datelabel = self.dateLabelArray[part];
     datelabel.text = time;
@@ -172,9 +183,10 @@
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(num*kCViewWidth, 0, kCViewWidth, kcellHeight)];
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(kSpaceWidth, 10, kImageWidth, kImageHeight)];
+    imageView.image = [UIImage imageNamed:@"DefaultProduct"];
     self.imageViewArray[num] = imageView;
     [view addSubview:imageView];
-    if (isTest) imageView.backgroundColor = [UIColor lightGrayColor];
+
     
     UILabel *titleLable = [[UILabel alloc] initWithFrame:CGRectMake(kSpaceWidth, imageView.bottom+5, kImageWidth, kTitlefont*2+5)];
     titleLable.textAlignment = NSTextAlignmentLeft;
@@ -194,31 +206,36 @@
         self.priceLabelArray[num] = priceLabel;
         if(isTest) priceLabel.text = @"￥200";
     }else{
-        UIImageView *timeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(imageView.left, titleLable.bottom+2, kIconWidth,kIconWidth)];
+        UIView *blackView = [[UIView alloc] initWithFrame:CGRectMake(imageView.left, imageView.bottom-kIconWidth-4, kImageWidth, kIconWidth+4)];
+        blackView.backgroundColor = [UIColor blackColor];
+        blackView.alpha = 0.7;
+        self.blackInfoArray[num] = blackView;
+        [view addSubview:blackView];
+        
+        UIImageView *timeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(imageView.left, blackView.top+2, kIconWidth,kIconWidth)];
         timeIcon.image = [UIImage imageNamed:@"icon_time"];
         [timeIcon setContentMode:UIViewContentModeScaleAspectFit];
         [view addSubview:timeIcon];
         
-        UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(timeIcon.right+2, titleLable.bottom+2, kImageWidth*1.5/3, kDateFont)];
+        UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(timeIcon.right+2, timeIcon.top, kImageWidth*1.5/3, kDateFont)];
         dateLabel.centerY = timeIcon.centerY;
         dateLabel.textAlignment = NSTextAlignmentLeft;
-        dateLabel.textColor = [UIColor lightGrayColor];
+        dateLabel.textColor = [UIColor whiteColor];
         dateLabel.font = [UIFont systemFontOfSize:kDateFont];
         [view addSubview:dateLabel];
         self.dateLabelArray[num] = dateLabel;
-        if(isTest) dateLabel.text = @"10-27";
+
         
-        UILabel *seeLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageView.width*2/3.0f, titleLable.bottom+2, kImageWidth/3, kDateFont)];
+        UILabel *seeLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageView.width*2/3.0f, blackView.top, kImageWidth/3, kDateFont)];
         seeLabel.centerY = timeIcon.centerY;
-        seeLabel.textColor = [UIColor lightGrayColor];
+        seeLabel.textColor = [UIColor whiteColor];
         seeLabel.font = [UIFont systemFontOfSize:kDateFont];
         seeLabel.textAlignment = NSTextAlignmentRight;
         [view addSubview:seeLabel];
         //self.totalViewArray[num] = seeLabel;
         self.totalViewArray[num] = seeLabel;
-        if(isTest) seeLabel.text = @"100";
         
-        UIImageView *seeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(imageView.right-53, titleLable.bottom+2, kIconWidth+30,kIconWidth)];
+        UIImageView *seeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(imageView.right-53, blackView.top, kIconWidth+30,kIconWidth)];
         seeIcon.image = [UIImage imageNamed:@"icon_eye"];
         [seeIcon setContentMode:UIViewContentModeScaleAspectFit];
         seeIcon.centerY = timeIcon.centerY;

@@ -137,6 +137,7 @@
     //测试
     //[self touchShopsBtn];
     
+    
 }
 
 #pragma mark - UITabelViewDelegate and DataSource
@@ -260,6 +261,7 @@
                 //设置cell左中右三部分ui内容
                 if (indexPath.row*3+i < self.pageIndexMdoel.malllist.count) {
                     list = self.pageIndexMdoel.malllist[indexPath.row*3+i];
+                    MLOG(@"thumb:--->%@",list.thumb);
                     [cell setImage:list.thumb title:list.title price:list.price part:i];
                 }else [cell setImage:nil title:@"" price:nil part:i];
             }
