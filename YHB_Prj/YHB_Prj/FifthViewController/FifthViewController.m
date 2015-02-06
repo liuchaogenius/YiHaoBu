@@ -582,7 +582,32 @@
     {
         if (isEdit)
         {
-
+            NSMutableArray *itemidArray = [NSMutableArray new];
+            NSArray *keyArray = [selectedDict allKeys];
+            for (int i=0; i<keyArray.count; i++)
+            {
+                NSString *section = [keyArray objectAtIndex:i];
+                NSArray *temarray = [selectedDict objectForKey:section];
+                NSArray *array = [temarray sortedArrayUsingSelector:@selector(compare:)];
+                for (int j=(int)array.count-1; j>=0; j--)
+                {
+                    NSString *row = [array objectAtIndex:j];
+                    YHBShopCartRslist *model = [self.tableViewArray objectAtIndex:[section intValue]];
+                    YHBShopCartCartlist *cartModel = [model.cartlist objectAtIndex:[row intValue]];
+                    NSString *itemid = [NSString stringWithFormat:@"%d", (int)cartModel.itemid];
+                    [itemidArray addObject:itemid];
+                    [model.cartlist removeObject:cartModel];
+                    if (model.cartlist.count==0)
+                    {
+                        [self.tableViewArray removeObject:model];
+                    }
+                }
+            }
+            [self.netManage deleteShopCartWithArray:itemidArray andSuccBlock:^{
+                
+            } failBlock:^(NSString *aStr){
+                [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
+            }];
         }
         else
         {
@@ -604,36 +629,14 @@
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }
-        NSMutableArray *itemidArray = [NSMutableArray new];
-        NSArray *keyArray = [selectedDict allKeys];
-        for (int i=0; i<keyArray.count; i++)
-        {
-            NSString *section = [keyArray objectAtIndex:i];
-            NSArray *temarray = [selectedDict objectForKey:section];
-            NSArray *array = [temarray sortedArrayUsingSelector:@selector(compare:)];
-            for (int j=(int)array.count-1; j>=0; j--)
-            {
-                NSString *row = [array objectAtIndex:j];
-                YHBShopCartRslist *model = [self.tableViewArray objectAtIndex:[section intValue]];
-                YHBShopCartCartlist *cartModel = [model.cartlist objectAtIndex:[row intValue]];
-                NSString *itemid = [NSString stringWithFormat:@"%d", (int)cartModel.itemid];
-                [itemidArray addObject:itemid];
-                [model.cartlist removeObject:cartModel];
-                if (model.cartlist.count==0)
-                {
-                    [self.tableViewArray removeObject:model];
-                }
-            }
-        }
+        
+
         [selectedDict removeAllObjects];
         [selectedHeaderViewArray removeAllObjects];
         isAllSelected = NO;
+        [self allSelectedNo];
         [self.tableView reloadData];
-//        [self.netManage deleteShopCartWithArray:itemidArray andSuccBlock:^{
-//            
-//        } failBlock:^(NSString *aStr){
-//            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
-//        }];
+        
     }
 }
 
