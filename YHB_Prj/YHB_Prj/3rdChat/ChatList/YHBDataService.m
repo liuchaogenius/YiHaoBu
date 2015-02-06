@@ -55,7 +55,7 @@
     }
     for (int i=0; i<aArray.count; i++)
     {
-        YHBGetPushBuylist *model = [aArray objectAtIndex:aArray.count-i-1];
+        YHBGetPushBuylist *model = [aArray objectAtIndex:i];
         [buylist insertObject:model atIndex:i];
     }
     
@@ -98,8 +98,12 @@
     if (!syslist) {
         syslist = [NSMutableArray new];
     }
-    [syslist addObjectsFromArray:aArray];
-    
+    int syslistCount = (int)syslist.count;
+    for (int i=0; i<aArray.count; i++)
+    {
+        YHBGetPushSyslist *model = [aArray objectAtIndex:aArray.count-i-1];
+        [syslist insertObject:model atIndex:syslistCount+i];
+    }
     NSMutableArray *archiveArray = [NSMutableArray arrayWithCapacity:syslist.count];
     for (YHBGetPushSyslist *model in syslist) {
         NSData *personEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:model];
