@@ -54,7 +54,7 @@ NSString *typeid;
         kYHBRequestUrl(@"getBuyList.php", supplyUrl);
     }
     [NetManager requestWith:dict url:supplyUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
-        //        MLOG(@"%@", successDict);
+//                MLOG(@"%@", successDict);
         int result = [[successDict objectForKey:@"result"] intValue];
         kResult_11_CheckWithAlert;
         if (result != 1)

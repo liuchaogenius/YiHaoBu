@@ -28,6 +28,9 @@ typedef enum{
 @property (nonatomic, strong) UIButton *videoButton;
 @property (nonatomic, strong) UIButton *audioCallButton;
 
+@property(nonatomic, strong) UILabel *photoLabel;
+@property(nonatomic, strong) UILabel *takePicLabel;
+
 - (instancetype)initWithFrame:(CGRect)frame typw:(ChatMoreType)type;
 
 - (void)setupSubviewsForType:(ChatMoreType)type;

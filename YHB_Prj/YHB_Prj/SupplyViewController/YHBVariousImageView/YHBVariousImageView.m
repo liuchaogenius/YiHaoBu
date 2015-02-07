@@ -37,17 +37,28 @@
     int endWidth = 0;
     if (self.webPhotoArray.count>0)
     {
-        for (int i=0; i<self.webPhotoArray.count; i++)
+        if (self.webPhotoArray.count==1 && _currentPhotoCount==0)
         {
-            UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake(width+(width+photoHeight)*i, interval, photoHeight, photoHeight)];
-            YHBSupplyDetailPic *model = [self.webPhotoArray objectAtIndex:i];
-            [photoBtn sd_setImageWithURL:[NSURL URLWithString:model.thumb] forState:UIControlStateNormal];
+            UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake((kMainScreenWidth-photoHeight)/2.0, interval, photoHeight, photoHeight)];
+            [photoBtn setBackgroundImage:[self.webPhotoArray objectAtIndex:0] forState:UIControlStateNormal];
             [photoBtn addTarget:self action:@selector(touchPhoto:) forControlEvents:UIControlEventTouchUpInside];
-            photoBtn.tag = 1000+i;
+            photoBtn.tag = 1000;
             [self.photoScrollView addSubview:photoBtn];
-            endWidth = photoBtn.right+5;
         }
-        self.photoScrollView.contentSize = CGSizeMake(endWidth, 110);
+        else
+        {
+            for (int i=0; i<self.webPhotoArray.count; i++)
+            {
+                UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake(width+(width+photoHeight)*i, interval, photoHeight, photoHeight)];
+                YHBSupplyDetailPic *model = [self.webPhotoArray objectAtIndex:i];
+                [photoBtn sd_setImageWithURL:[NSURL URLWithString:model.thumb] forState:UIControlStateNormal];
+                [photoBtn addTarget:self action:@selector(touchPhoto:) forControlEvents:UIControlEventTouchUpInside];
+                photoBtn.tag = 1000+i;
+                [self.photoScrollView addSubview:photoBtn];
+                endWidth = photoBtn.right+5;
+            }
+            self.photoScrollView.contentSize = CGSizeMake(endWidth, 110);
+        }
     }
     else
     {
@@ -182,16 +193,27 @@
     int endWidth = 0;
     if (self.myPhotoArray.count>0)
     {
-        for (int i=0; i<self.myPhotoArray.count; i++)
+        if (self.myPhotoArray.count==1 && _currentPhotoCount==0)
         {
-            UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake(width+(width+photoHeight)*i, interval, photoHeight, photoHeight)];
-            [photoBtn setBackgroundImage:[self.myPhotoArray objectAtIndex:i] forState:UIControlStateNormal];
+            UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake((kMainScreenWidth-photoHeight)/2.0, interval, photoHeight, photoHeight)];
+            [photoBtn setBackgroundImage:[self.myPhotoArray objectAtIndex:0] forState:UIControlStateNormal];
             [photoBtn addTarget:self action:@selector(touchPhoto:) forControlEvents:UIControlEventTouchUpInside];
-            photoBtn.tag = 1000+i;
+            photoBtn.tag = 1000;
             [self.photoScrollView addSubview:photoBtn];
-            endWidth = photoBtn.right+5;
         }
-        self.photoScrollView.contentSize = CGSizeMake(endWidth, 110);
+        else
+        {
+            for (int i=0; i<self.myPhotoArray.count; i++)
+            {
+                UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake(width+(width+photoHeight)*i, interval, photoHeight, photoHeight)];
+                [photoBtn setBackgroundImage:[self.myPhotoArray objectAtIndex:i] forState:UIControlStateNormal];
+                [photoBtn addTarget:self action:@selector(touchPhoto:) forControlEvents:UIControlEventTouchUpInside];
+                photoBtn.tag = 1000+i;
+                [self.photoScrollView addSubview:photoBtn];
+                endWidth = photoBtn.right+5;
+            }
+            self.photoScrollView.contentSize = CGSizeMake(endWidth, 110);
+        }
     }
     else
     {
