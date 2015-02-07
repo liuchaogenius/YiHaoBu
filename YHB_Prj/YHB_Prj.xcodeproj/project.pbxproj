@@ -126,6 +126,7 @@
 		AB1AFD861A708E60005247C4 /* PriceDetailContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1AFD851A708E60005247C4 /* PriceDetailContactView.m */; };
 		AB1DD1431A7A618800F85B40 /* YHBMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1DD1421A7A618800F85B40 /* YHBMessageViewController.m */; };
 		AB1DD1461A7A61AD00F85B40 /* YHBRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1DD1451A7A61AD00F85B40 /* YHBRecommendViewController.m */; };
+		AB2660F41A864E4C007D529A /* JubaoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2660F31A864E4C007D529A /* JubaoViewController.m */; };
 		AB2860FF1A38216800EB654C /* YHBShoppingCartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2860FD1A38216800EB654C /* YHBShoppingCartTableViewCell.m */; };
 		AB2861041A382BEF00EB654C /* TableSectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2861031A382BEF00EB654C /* TableSectionFooterView.m */; };
 		AB28610B1A38309000EB654C /* YHBShopCartRslist.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2861091A38309000EB654C /* YHBShopCartRslist.m */; };
@@ -781,6 +782,8 @@
 		AB1DD1421A7A618800F85B40 /* YHBMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBMessageViewController.m; sourceTree = "<group>"; };
 		AB1DD1441A7A61AD00F85B40 /* YHBRecommendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBRecommendViewController.h; sourceTree = "<group>"; };
 		AB1DD1451A7A61AD00F85B40 /* YHBRecommendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBRecommendViewController.m; sourceTree = "<group>"; };
+		AB2660F21A864E4C007D529A /* JubaoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JubaoViewController.h; sourceTree = "<group>"; };
+		AB2660F31A864E4C007D529A /* JubaoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JubaoViewController.m; sourceTree = "<group>"; };
 		AB2860FC1A38216800EB654C /* YHBShoppingCartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBShoppingCartTableViewCell.h; sourceTree = "<group>"; };
 		AB2860FD1A38216800EB654C /* YHBShoppingCartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBShoppingCartTableViewCell.m; sourceTree = "<group>"; };
 		AB2861021A382BEF00EB654C /* TableSectionFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableSectionFooterView.h; sourceTree = "<group>"; };
@@ -2960,6 +2963,8 @@
 				AB59D9571A332F84002B76E1 /* YHBLookSupplyViewController.m */,
 				AB5062F41A4CFBFA0006EA94 /* YHBMySupplyViewController.h */,
 				AB5062F51A4CFBFA0006EA94 /* YHBMySupplyViewController.m */,
+				AB2660F21A864E4C007D529A /* JubaoViewController.h */,
+				AB2660F31A864E4C007D529A /* JubaoViewController.m */,
 			);
 			path = SupplyViewController;
 			sourceTree = "<group>";
@@ -3808,6 +3813,7 @@
 				FF2A6C2D1A0F3B50001607AC /* AFNetworkActivityIndicatorManager.m in Sources */,
 				ABC646C21A6B8BC8003A8FB1 /* UIButton+EMWebCache.m in Sources */,
 				FF2A6C781A0F3B7B001607AC /* UIImageView+HighlightedWebCache.m in Sources */,
+				AB2660F41A864E4C007D529A /* JubaoViewController.m in Sources */,
 				ABD75E571A33EB3100198FBC /* YHBSupplyDetailModel.m in Sources */,
 				FF2A6C2A1A0F3B50001607AC /* AFHTTPRequestOperation.m in Sources */,
 				5B6774FD1A559A6500457012 /* YHBProductDetailVC.m in Sources */,
@@ -3957,7 +3963,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+                CODE_SIGN_IDENTITY = "iPhone Developer: Le Shu (J97ECALLU9)";
+                "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Le Shu (J97ECALLU9)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3998,7 +4005,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+                CODE_SIGN_IDENTITY = "iPhone Developer: Le Shu (J97ECALLU9)";
+                "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Le Shu (J97ECALLU9)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

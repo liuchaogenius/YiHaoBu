@@ -599,6 +599,7 @@
         {
             price = [textField.text floatValue];
             [textField resignFirstResponder];
+            [self keyboardDidDisappear];
         }
         else
         {
@@ -617,6 +618,7 @@
         else
         {
             [nameTextField resignFirstResponder];
+            [self keyboardDidDisappear];
         }
     }
     
@@ -625,6 +627,7 @@
         if ([self isPureInt:phoneTextField.text] && phoneTextField.text.length==11)
         {
             [textField resignFirstResponder];
+            [self keyboardDidDisappear];
         }
         else
         {
@@ -655,7 +658,7 @@
     {
         content = textView.text;
         [textView resignFirstResponder];
-        //        [self keyboardDidDisappear];
+                [self keyboardDidDisappear];
     }
     return YES;
 }

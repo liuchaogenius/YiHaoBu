@@ -20,6 +20,7 @@
 #import "YHBUser.h"
 #import "YHBBuyDetailPic.h"
 #import "YHBMySupplyViewController.h"
+#import "JubaoViewController.h"
 
 #define kContactViewHeight 60
 @interface YHBBuyDetailViewController ()
@@ -145,6 +146,13 @@
         [editBtn addTarget:self action:@selector(edit) forControlEvents:UIControlEventTouchUpInside];
         [navRightView addSubview:editBtn];
     }
+    else
+    {
+        UIButton *jubaoBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 24)];
+        [jubaoBtn setImage:[UIImage imageNamed:@"jubao"] forState:UIControlStateNormal];
+        [jubaoBtn addTarget:self action:@selector(touchjubao) forControlEvents:UIControlEventTouchUpInside];
+        [navRightView addSubview:jubaoBtn];
+    }
     
     UIBarButtonItem *navRightBarItem = [[UIBarButtonItem alloc] initWithCustomView:navRightView];
     self.navigationItem.rightBarButtonItem = navRightBarItem;
@@ -243,6 +251,13 @@
     [self presentViewController:[[UINavigationController alloc] initWithRootViewController:vc] animated:YES completion:^{
         [self.navigationController popViewControllerAnimated:YES];
     }];
+}
+
+#pragma mark 举报
+- (void)touchjubao
+{
+    JubaoViewController *vc = [[JubaoViewController alloc] initWithItemid:myModel.itemid];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark 浏览商城

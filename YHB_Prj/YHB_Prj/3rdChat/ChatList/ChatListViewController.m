@@ -55,7 +55,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = RGBCOLOR(239, 239, 239);
+
 //    [self.view addSubview:self.searchBar];
     [self settitleLabel:@"消息"];
     [self.view addSubview:self.tableView];
@@ -155,7 +156,7 @@
 {
     if (_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        _tableView.backgroundColor = [UIColor whiteColor];
+        _tableView.backgroundColor = RGBCOLOR(239, 239, 239);
         _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         _tableView.delegate = self;
         _tableView.dataSource = self;

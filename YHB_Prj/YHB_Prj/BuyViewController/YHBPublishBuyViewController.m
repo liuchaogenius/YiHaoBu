@@ -92,7 +92,7 @@
 #pragma mark 中间View
     float labelHeight = 20;//label高度
     float interval = 20;//label之间间隔
-    float editViewHeight = 270;//中间view高度
+    float editViewHeight = 305;//中间view高度
     typeId=0;
     
     UIView *editSupplyView = [[UIView alloc] initWithFrame:CGRectMake(0, variousImageView.bottom, kMainScreenWidth, editViewHeight)];
@@ -107,10 +107,21 @@
     bottomLineView.backgroundColor = [UIColor lightGrayColor];
     [editSupplyView addSubview:bottomLineView];
     
+    UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, kMainScreenWidth, 15)];
+    topLabel.font = kFont12;
+    topLabel.textAlignment = NSTextAlignmentCenter;
+    topLabel.textColor = [UIColor lightGrayColor];
+    topLabel.text = @"请上传清晰可辨的布料或成品照片";
+    [editSupplyView addSubview:topLabel];
+    
+    UIView *aLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 35, kMainScreenWidth, 0.5)];
+    aLineView.backgroundColor = [UIColor lightGrayColor];
+    [editSupplyView addSubview:aLineView];
+    
     NSArray *strArray = @[@"名       称 :",@"分       类 :",@"数       量 :",@"求购周期 :",@"面料详情 :"];
     for (int i=0; i<strArray.count; i++)
     {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, interval/2+(labelHeight+interval)*i, 70, labelHeight)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 35+interval/2+(labelHeight+interval)*i, 70, labelHeight)];
         label.text = [strArray objectAtIndex:i];
         label.font = [UIFont systemFontOfSize:15];
         //            [contentScrollView addSubview:label];
@@ -124,7 +135,7 @@
         }
     }
     
-    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, interval/2-5, kMainScreenWidth-85-10, labelHeight+10)];
+    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, 35+interval/2-5, kMainScreenWidth-85-10, labelHeight+10)];
 //    titleLabel.layer.borderColor = [[UIColor lightGrayColor] CGColor];
 //    titleLabel.layer.borderWidth = 0.5;
     titleLabel.userInteractionEnabled = YES;
@@ -138,14 +149,14 @@
     titlePlaceHolder.textColor = [UIColor lightGrayColor];
     [editSupplyView addSubview:titlePlaceHolder];
     
-    UIImageView *rightArrow = [[UIImageView alloc] initWithFrame:CGRectMake(titleLabel.right-titleLabel.left-12, (labelHeight+10-15)/2, 9, 15)];
+    UIImageView *rightArrow = [[UIImageView alloc] initWithFrame:CGRectMake(titleLabel.right-titleLabel.left-12, 35+(labelHeight+10-15)/2, 9, 15)];
     [rightArrow setImage:[UIImage imageNamed:@"rightArrow"]];
     [titleLabel addSubview:rightArrow];
     
     tapTitleGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchTitle)];
     [titleLabel addGestureRecognizer:tapTitleGesture];
 
-    priceTextField = [[UITextField alloc] initWithFrame:CGRectMake(85, interval*2.5+labelHeight*2-5, kMainScreenWidth-60-85, labelHeight+10)];
+    priceTextField = [[UITextField alloc] initWithFrame:CGRectMake(85, 35+interval*2.5+labelHeight*2-5, kMainScreenWidth-60-85, labelHeight+10)];
     priceTextField.font = [UIFont systemFontOfSize:15];
 //    priceTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     priceTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
@@ -170,7 +181,7 @@
     variousView.layer.cornerRadius = 10;
     variousView.clipsToBounds = YES;
 
-    dayView = [[UIView alloc] initWithFrame:CGRectMake(85, (interval+labelHeight)*3+interval/2-5, kMainScreenWidth-85-10, labelHeight+10)];
+    dayView = [[UIView alloc] initWithFrame:CGRectMake(85, 35+(interval+labelHeight)*3+interval/2-5, kMainScreenWidth-85-10, labelHeight+10)];
 //    dayView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
 //    dayView.layer.borderWidth = 0.5;
     dayView.userInteractionEnabled = YES;
@@ -206,7 +217,7 @@
     [editSupplyView addSubview:variousView];
 
 
-    catNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, (interval+labelHeight)*1+interval/2-5, kMainScreenWidth-85-10, labelHeight+10)];
+    catNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, 35+(interval+labelHeight)*1+interval/2-5, kMainScreenWidth-85-10, labelHeight+10)];
 //    catNameLabel.layer.borderWidth = 0.5;
 //    catNameLabel.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     catNameLabel.font = kFont15;
@@ -228,7 +239,7 @@
 //    [plusImgView addGestureRecognizer:tapGestureReco];
     [catNameLabel addGestureRecognizer:tapGestureReco];
 
-    contentTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, interval/2+(interval+labelHeight)*4+labelHeight+3, kMainScreenWidth-20, 70)];
+    contentTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, 35+interval/2+(interval+labelHeight)*4+labelHeight+3, kMainScreenWidth-20, 70)];
 //    contentTextView.layer.borderWidth = 0.5;
 //    contentTextView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     contentTextView.font = [UIFont systemFontOfSize:15];
@@ -543,6 +554,7 @@
         {
             price = [textField.text floatValue];
             [textField resignFirstResponder];
+            [self keyboardDidDisappear];
         }
         else
         {
@@ -561,6 +573,7 @@
         else
         {
             [nameTextField resignFirstResponder];
+            [self keyboardDidDisappear];
         }
     }
     
@@ -569,6 +582,7 @@
         if ([self isPureInt:phoneTextField.text] && phoneTextField.text.length==11)
         {
             [textField resignFirstResponder];
+            [self keyboardDidDisappear];
         }
         else
         {
@@ -599,7 +613,7 @@
     {
         content = textView.text;
         [textView resignFirstResponder];
-        //        [self keyboardDidDisappear];
+                [self keyboardDidDisappear];
     }
     return YES;
 }
