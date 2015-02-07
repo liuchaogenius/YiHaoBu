@@ -88,6 +88,10 @@
                 [weakself.tableView.infiniteScrollingView stopAnimating];
             }
         }
+        else
+        {
+            [weakself.tableView.infiniteScrollingView stopAnimating];
+        }
 
     }];
 }

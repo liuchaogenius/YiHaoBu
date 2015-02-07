@@ -25,6 +25,8 @@
     YHBMySupplyManage *manage;
     BOOL isFind;
     UIView *underLine;
+    
+    int userId;
 }
 
 @property(nonatomic, strong) UITableView *supplyTableView;
@@ -43,6 +45,15 @@
     return self;
 }
 
+- (instancetype)initWithUserid:(int)aUserid
+{
+    if (self = [super init]) {
+        isSupply = NO;
+        userId = aUserid;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -53,7 +64,14 @@
     }
     else
     {
-        self.title = @"我的采购";
+        if (userId>0)
+        {
+            self.title = @"他的采购";
+        }
+        else
+        {
+            self.title = @"我的采购";
+        }
         isFind=NO;
 #pragma mark 建立topView
         UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, topViewHeight)];
@@ -87,7 +105,15 @@
         
         self.supplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, topViewHeight, kMainScreenWidth, kMainScreenHeight-62-topViewHeight)];
     }
-    [self setRightButton:nil title:@"添加+" target:self action:@selector(addSupply)];
+    
+    if (userId>0)
+    {
+        
+    }
+    else
+    {
+        [self setRightButton:nil title:@"添加+" target:self action:@selector(addSupply)];
+    }
 #pragma mark 建立tableview
     self.supplyTableView.delegate = self;
     self.supplyTableView.dataSource = self;
@@ -110,7 +136,7 @@
     } andFail:^(NSString *aStr){
         [self dismissFlower];
         [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
-    } isSupply:isSupply isFind:isFind];
+    } isSupply:isSupply isFind:isFind userid:userId];
 }
 
 - (void)touchTopViewBtn:(UIButton *)aBtn
@@ -153,7 +179,7 @@
         } andFail:^(NSString *aStr){
             [weakself.supplyTableView.pullToRefreshView stopAnimating];
             [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
-        } isSupply:isSupply isFind:isFind];
+        } isSupply:isSupply isFind:isFind userid:userId];
     }];
     
     
@@ -245,7 +271,8 @@
     }
     else
     {
-        YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:model.itemid andIsMine:YES isModal:NO];
+        BOOL isMine = userId>0?NO:YES;
+        YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:model.itemid andIsMine:isMine isModal:NO];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

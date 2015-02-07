@@ -19,6 +19,7 @@
 #import "NetManager.h"
 #import "YHBUser.h"
 #import "YHBBuyDetailPic.h"
+#import "YHBMySupplyViewController.h"
 
 #define kContactViewHeight 60
 @interface YHBBuyDetailViewController ()
@@ -253,7 +254,7 @@
 
 - (void)watchStoreBtn
 {
-    YHBStoreViewController *vc = [[YHBStoreViewController alloc] initWithShopID:(int)myModel.userid];
+    YHBMySupplyViewController *vc = [[YHBMySupplyViewController alloc] initWithUserid:(int)myModel.userid];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

@@ -11,4 +11,6 @@
 @interface YHBMySupplyViewController : BaseViewController
 
 - (instancetype)initWithIsSupply:(BOOL)aIsSupply;
+
+- (instancetype)initWithUserid:(int)aUserid;
 @end

@@ -449,7 +449,7 @@
             {
                 NSString *userhead = [YHBUser sharedYHBUser].userInfo.avatar;
                 model.headImageURL = [NSURL URLWithString:userhead];
-                MLOG(@"%@", userhead);
+//                MLOG(@"%@", userhead);
             }
             else
             {
@@ -700,7 +700,7 @@
             [[[EaseMob sharedInstance] deviceManager] enableProximitySensor];
             [[EaseMob sharedInstance].chatManager asyncPlayAudio:model.chatVoice completion:^(EMError *error) {
                 [weakSelf.messageReadManager stopMessageAudioModel];
-                
+                MLOG(@"%@", error);
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [weakSelf.tableView reloadData];
                     
