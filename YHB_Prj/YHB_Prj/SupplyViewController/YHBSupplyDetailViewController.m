@@ -34,6 +34,7 @@
     NSDictionary *itemDict;
     
     int uploadIndex;
+    BOOL isWeb;
 }
 @property(nonatomic, strong) YHBSupplyDetailManage *netManage;
 @end
@@ -60,7 +61,7 @@
     return self;
 }
 
-- (instancetype)initWithItemId:(int)aItemId itemDict:(NSDictionary *)aDict uploadPhotoArray:(NSArray *)aArray
+- (instancetype)initWithItemId:(int)aItemId itemDict:(NSDictionary *)aDict uploadPhotoArray:(NSArray *)aArray isWebArray:(BOOL)aBool
 {
     if (self = [super init]) {
         isModal = YES;
@@ -69,6 +70,7 @@
         uploadPhotoArray = aArray;
         needUpload = YES;
         itemDict = aDict;
+        isWeb = aBool;
     }
     
     return self;
@@ -168,7 +170,7 @@
              }
              else
              {
-                 [variousImageView setMyWebPhotoArray:aModel.pic];
+                 [variousImageView setMyWebPhotoArray:aModel.pic canEdit:NO];
              }
              if (!isMine)
              {
@@ -232,10 +234,27 @@
 
 - (void)uploadImage
 {
+    if (uploadIndex<uploadPhotoArray.count)
+    {
+        id obj = [uploadPhotoArray objectAtIndex:uploadIndex];
+        if (![obj isKindOfClass:[UIImage class]])
+        {
+            uploadIndex++;
+            [self uploadImage];
+        }
+        else
+        {
+            [self upload];
+        }
+    }
+}
+
+- (void)upload
+{
     NSString *uploadPhototUrl = nil;
     kYHBRequestUrl(@"upload.php", uploadPhototUrl);
     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",[NSString stringWithFormat:@"%d", uploadIndex],@"order",@"album",@"action",[NSString stringWithFormat:@"%d",itemId],@"itemid",[itemDict objectForKey:@"moduleid"],@"moduleid", nil];
-    UIImage *uploadImage = [variousImageView.myPhotoArray objectAtIndex:uploadIndex];
+    UIImage *uploadImage = (UIImage *)[uploadPhotoArray objectAtIndex:uploadIndex];
     [NetManager uploadImg:uploadImage parameters:dic uploadUrl:uploadPhototUrl uploadimgName:nil parameEncoding:AFJSONParameterEncoding progressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
     } succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
@@ -249,9 +268,9 @@
             
         }
         uploadIndex++;
-        if (uploadIndex<variousImageView.myPhotoArray.count)
+        if (uploadIndex<uploadPhotoArray.count)
         {
-            [self uploadImage];
+            [self upload];
         }
         else
         {
@@ -260,7 +279,7 @@
     } failure:^(NSDictionary *failDict, NSError *error) {
         MLOG(@"%@", [failDict objectForKey:@"error"]);
     }];
-    
+
 }
 
 

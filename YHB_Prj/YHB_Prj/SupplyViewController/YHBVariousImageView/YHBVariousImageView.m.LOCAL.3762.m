@@ -24,15 +24,10 @@
     [self reloadPhotoScrollView];
 }
 
-- (void)setMyWebPhotoArray:(NSArray *)aPhotoArray canEdit:(BOOL)aBool;
+- (void)setMyWebPhotoArray:(NSArray *)aPhotoArray
 {
-    self.webEdit = aBool;
-    _currentPhotoCount = (int)aPhotoArray.count;
-    self.webPhotoArray = [aPhotoArray mutableCopy];
-    if (aBool==YES&&_currentPhotoCount!=5)
-    {
-        [self.webPhotoArray insertObject:self.plusImage atIndex:0];
-    }
+    self.webPhotoArray = aPhotoArray;
+    _currentPhotoCount = (int)self.webPhotoArray.count;
     [self reloadWebPhotoScrollView];
 }
 
@@ -56,16 +51,8 @@
             for (int i=0; i<self.webPhotoArray.count; i++)
             {
                 UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake(width+(width+photoHeight)*i, interval, photoHeight, photoHeight)];
-                id obj = [self.webPhotoArray objectAtIndex:i];
-                if ([obj isKindOfClass:[UIImage class]])
-                {
-                    [photoBtn setBackgroundImage:[self.webPhotoArray objectAtIndex:i] forState:UIControlStateNormal];
-                }
-                else
-                {
-                    YHBSupplyDetailPic *model = [self.webPhotoArray objectAtIndex:i];
-                    [photoBtn sd_setImageWithURL:[NSURL URLWithString:model.thumb] forState:UIControlStateNormal];
-                }
+                YHBSupplyDetailPic *model = [self.webPhotoArray objectAtIndex:i];
+                [photoBtn sd_setImageWithURL:[NSURL URLWithString:model.thumb] forState:UIControlStateNormal];
                 [photoBtn addTarget:self action:@selector(touchPhoto:) forControlEvents:UIControlEventTouchUpInside];
                 photoBtn.tag = 1000+i;
                 [self.photoScrollView addSubview:photoBtn];
@@ -263,6 +250,7 @@
             _deleteBtnIndex = aBtn.tag-plusTag;
         }
     }
+#warning 增加查看详情是点击图片的代码
     else
     {
         int index = (int)aBtn.tag-plusTag;
@@ -296,17 +284,16 @@
     if (_isAllowEdit==NO) {
         _isAllowEdit=YES;
         if (_currentPhotoCount<5) {
-//            [self.webPhotoArray insertObject:self.plusImage atIndex:0];
-            [self.webPhotoArray addObject:self.plusImage];
-            [self reloadWebPhotoScrollView];
+            [self.myPhotoArray insertObject:self.plusImage atIndex:0];
+            [self reloadPhotoScrollView];
         }
     }
     else
     {
         _isAllowEdit=NO;
         if (_currentPhotoCount!=5) {
-            [self.webPhotoArray removeObjectAtIndex:0];
-            [self reloadWebPhotoScrollView];
+            [self.myPhotoArray removeObjectAtIndex:0];
+            [self reloadPhotoScrollView];
         }
     }
 }
@@ -316,49 +303,24 @@
 {
     if (buttonIndex==1)
     {
-        if (self.webEdit==YES)
+        [self.myPhotoArray removeObjectAtIndex:_deleteBtnIndex];
+        if (_currentPhotoCount==5)
         {
-            [self.webPhotoArray removeObjectAtIndex:_deleteBtnIndex];
-            if (_currentPhotoCount==5)
-            {
-                [self.webPhotoArray insertObject:self.plusImage atIndex:0];
-            }
-            [self reloadWebPhotoScrollView];
-            _currentPhotoCount--;
+            [self.myPhotoArray insertObject:self.plusImage atIndex:0];
         }
-        else
-        {
-            [self.myPhotoArray removeObjectAtIndex:_deleteBtnIndex];
-            if (_currentPhotoCount==5)
-            {
-                [self.myPhotoArray insertObject:self.plusImage atIndex:0];
-            }
-            [self reloadPhotoScrollView];
-            _currentPhotoCount--;
-        }
+        [self reloadPhotoScrollView];
+        _currentPhotoCount--;
     }
 }
 
 - (void)addImageWithImageArray:(NSArray *)aPhotoArray
 {
-    if (self.webEdit==YES)
-    {
-        [self.webPhotoArray addObjectsFromArray:aPhotoArray];
-        _currentPhotoCount += aPhotoArray.count;
-        if (_currentPhotoCount==5) {
-            [self.webPhotoArray removeObjectAtIndex:0];
-        }
-        [self reloadWebPhotoScrollView];
+    [self.myPhotoArray addObjectsFromArray:aPhotoArray];
+    _currentPhotoCount += aPhotoArray.count;
+    if (_currentPhotoCount==5) {
+        [self.myPhotoArray removeObjectAtIndex:0];
     }
-    else
-    {
-        [self.myPhotoArray addObjectsFromArray:aPhotoArray];
-        _currentPhotoCount += aPhotoArray.count;
-        if (_currentPhotoCount==5) {
-            [self.myPhotoArray removeObjectAtIndex:0];
-        }
-        [self reloadPhotoScrollView];
-    }
+    [self reloadPhotoScrollView];
 }
 
 - (UIViewController *)viewController

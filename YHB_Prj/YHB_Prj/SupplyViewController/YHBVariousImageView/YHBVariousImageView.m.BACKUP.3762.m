@@ -26,6 +26,10 @@
 
 - (void)setMyWebPhotoArray:(NSArray *)aPhotoArray canEdit:(BOOL)aBool;
 {
+<<<<<<< Updated upstream
+    self.webPhotoArray = aPhotoArray;
+    _currentPhotoCount = (int)self.webPhotoArray.count;
+=======
     self.webEdit = aBool;
     _currentPhotoCount = (int)aPhotoArray.count;
     self.webPhotoArray = [aPhotoArray mutableCopy];
@@ -33,6 +37,7 @@
     {
         [self.webPhotoArray insertObject:self.plusImage atIndex:0];
     }
+>>>>>>> Stashed changes
     [self reloadWebPhotoScrollView];
 }
 
@@ -45,8 +50,22 @@
     {
         if (self.webPhotoArray.count==1 && _currentPhotoCount==0)
         {
+<<<<<<< Updated upstream
             UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake((kMainScreenWidth-photoHeight)/2.0, interval, photoHeight, photoHeight)];
             [photoBtn setBackgroundImage:[self.webPhotoArray objectAtIndex:0] forState:UIControlStateNormal];
+=======
+            UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake(width+(width+photoHeight)*i, interval, photoHeight, photoHeight)];
+            id obj = [self.webPhotoArray objectAtIndex:i];
+            if ([obj isKindOfClass:[UIImage class]])
+            {
+                [photoBtn setBackgroundImage:[self.webPhotoArray objectAtIndex:i] forState:UIControlStateNormal];
+            }
+            else
+            {
+                YHBSupplyDetailPic *model = [self.webPhotoArray objectAtIndex:i];
+                [photoBtn sd_setImageWithURL:[NSURL URLWithString:model.thumb] forState:UIControlStateNormal];
+            }
+>>>>>>> Stashed changes
             [photoBtn addTarget:self action:@selector(touchPhoto:) forControlEvents:UIControlEventTouchUpInside];
             photoBtn.tag = 1000;
             [self.photoScrollView addSubview:photoBtn];
@@ -56,16 +75,8 @@
             for (int i=0; i<self.webPhotoArray.count; i++)
             {
                 UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake(width+(width+photoHeight)*i, interval, photoHeight, photoHeight)];
-                id obj = [self.webPhotoArray objectAtIndex:i];
-                if ([obj isKindOfClass:[UIImage class]])
-                {
-                    [photoBtn setBackgroundImage:[self.webPhotoArray objectAtIndex:i] forState:UIControlStateNormal];
-                }
-                else
-                {
-                    YHBSupplyDetailPic *model = [self.webPhotoArray objectAtIndex:i];
-                    [photoBtn sd_setImageWithURL:[NSURL URLWithString:model.thumb] forState:UIControlStateNormal];
-                }
+                YHBSupplyDetailPic *model = [self.webPhotoArray objectAtIndex:i];
+                [photoBtn sd_setImageWithURL:[NSURL URLWithString:model.thumb] forState:UIControlStateNormal];
                 [photoBtn addTarget:self action:@selector(touchPhoto:) forControlEvents:UIControlEventTouchUpInside];
                 photoBtn.tag = 1000+i;
                 [self.photoScrollView addSubview:photoBtn];

@@ -411,12 +411,12 @@
         {
             catPlaceHolder.hidden = YES;
             NSString *str = @"";
-            NSString *idStr = @"";
+            catidString = @"";
             for (YHBCatSubcate *subModel in aArray) {
                 str = [str stringByAppendingString:[NSString stringWithFormat:@" %@", subModel.catname]];
-                idStr = [str stringByAppendingString:[NSString stringWithFormat:@",%d", (int)subModel.catid]];
+                catidString = [catidString stringByAppendingString:[NSString stringWithFormat:@",%d", (int)subModel.catid]];
             }
-            catidString = [idStr substringFromIndex:1];
+            catidString = [catidString substringFromIndex:1];
             catNameLabel.text = str;
         }
         else

@@ -24,15 +24,9 @@
     [self reloadPhotoScrollView];
 }
 
-- (void)setMyWebPhotoArray:(NSArray *)aPhotoArray canEdit:(BOOL)aBool;
+- (void)setMyWebPhotoArray:(NSArray *)aPhotoArray
 {
-    self.webEdit = aBool;
-    _currentPhotoCount = (int)aPhotoArray.count;
-    self.webPhotoArray = [aPhotoArray mutableCopy];
-    if (aBool==YES&&_currentPhotoCount!=5)
-    {
-        [self.webPhotoArray insertObject:self.plusImage atIndex:0];
-    }
+    self.webPhotoArray = aPhotoArray;
     [self reloadWebPhotoScrollView];
 }
 
@@ -43,36 +37,17 @@
     int endWidth = 0;
     if (self.webPhotoArray.count>0)
     {
-        if (self.webPhotoArray.count==1 && _currentPhotoCount==0)
+        for (int i=0; i<self.webPhotoArray.count; i++)
         {
-            UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake((kMainScreenWidth-photoHeight)/2.0, interval, photoHeight, photoHeight)];
-            [photoBtn setBackgroundImage:[self.webPhotoArray objectAtIndex:0] forState:UIControlStateNormal];
+            UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake(width+(width+photoHeight)*i, interval, photoHeight, photoHeight)];
+            YHBSupplyDetailPic *model = [self.webPhotoArray objectAtIndex:i];
+            [photoBtn sd_setImageWithURL:[NSURL URLWithString:model.thumb] forState:UIControlStateNormal];
             [photoBtn addTarget:self action:@selector(touchPhoto:) forControlEvents:UIControlEventTouchUpInside];
-            photoBtn.tag = 1000;
+            photoBtn.tag = 1000+i;
             [self.photoScrollView addSubview:photoBtn];
+            endWidth = photoBtn.right+5;
         }
-        else
-        {
-            for (int i=0; i<self.webPhotoArray.count; i++)
-            {
-                UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake(width+(width+photoHeight)*i, interval, photoHeight, photoHeight)];
-                id obj = [self.webPhotoArray objectAtIndex:i];
-                if ([obj isKindOfClass:[UIImage class]])
-                {
-                    [photoBtn setBackgroundImage:[self.webPhotoArray objectAtIndex:i] forState:UIControlStateNormal];
-                }
-                else
-                {
-                    YHBSupplyDetailPic *model = [self.webPhotoArray objectAtIndex:i];
-                    [photoBtn sd_setImageWithURL:[NSURL URLWithString:model.thumb] forState:UIControlStateNormal];
-                }
-                [photoBtn addTarget:self action:@selector(touchPhoto:) forControlEvents:UIControlEventTouchUpInside];
-                photoBtn.tag = 1000+i;
-                [self.photoScrollView addSubview:photoBtn];
-                endWidth = photoBtn.right+5;
-            }
-            self.photoScrollView.contentSize = CGSizeMake(endWidth, 110);
-        }
+        self.photoScrollView.contentSize = CGSizeMake(endWidth, 110);
     }
     else
     {
@@ -207,27 +182,16 @@
     int endWidth = 0;
     if (self.myPhotoArray.count>0)
     {
-        if (self.myPhotoArray.count==1 && _currentPhotoCount==0)
+        for (int i=0; i<self.myPhotoArray.count; i++)
         {
-            UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake((kMainScreenWidth-photoHeight)/2.0, interval, photoHeight, photoHeight)];
-            [photoBtn setBackgroundImage:[self.myPhotoArray objectAtIndex:0] forState:UIControlStateNormal];
+            UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake(width+(width+photoHeight)*i, interval, photoHeight, photoHeight)];
+            [photoBtn setBackgroundImage:[self.myPhotoArray objectAtIndex:i] forState:UIControlStateNormal];
             [photoBtn addTarget:self action:@selector(touchPhoto:) forControlEvents:UIControlEventTouchUpInside];
-            photoBtn.tag = 1000;
+            photoBtn.tag = 1000+i;
             [self.photoScrollView addSubview:photoBtn];
+            endWidth = photoBtn.right+5;
         }
-        else
-        {
-            for (int i=0; i<self.myPhotoArray.count; i++)
-            {
-                UIButton *photoBtn = [[UIButton alloc] initWithFrame:CGRectMake(width+(width+photoHeight)*i, interval, photoHeight, photoHeight)];
-                [photoBtn setBackgroundImage:[self.myPhotoArray objectAtIndex:i] forState:UIControlStateNormal];
-                [photoBtn addTarget:self action:@selector(touchPhoto:) forControlEvents:UIControlEventTouchUpInside];
-                photoBtn.tag = 1000+i;
-                [self.photoScrollView addSubview:photoBtn];
-                endWidth = photoBtn.right+5;
-            }
-            self.photoScrollView.contentSize = CGSizeMake(endWidth, 110);
-        }
+        self.photoScrollView.contentSize = CGSizeMake(endWidth, 110);
     }
     else
     {
@@ -263,6 +227,7 @@
             _deleteBtnIndex = aBtn.tag-plusTag;
         }
     }
+#warning 增加查看详情是点击图片的代码
     else
     {
         int index = (int)aBtn.tag-plusTag;
@@ -296,17 +261,16 @@
     if (_isAllowEdit==NO) {
         _isAllowEdit=YES;
         if (_currentPhotoCount<5) {
-//            [self.webPhotoArray insertObject:self.plusImage atIndex:0];
-            [self.webPhotoArray addObject:self.plusImage];
-            [self reloadWebPhotoScrollView];
+            [self.myPhotoArray insertObject:self.plusImage atIndex:0];
+            [self reloadPhotoScrollView];
         }
     }
     else
     {
         _isAllowEdit=NO;
         if (_currentPhotoCount!=5) {
-            [self.webPhotoArray removeObjectAtIndex:0];
-            [self reloadWebPhotoScrollView];
+            [self.myPhotoArray removeObjectAtIndex:0];
+            [self reloadPhotoScrollView];
         }
     }
 }
@@ -316,49 +280,24 @@
 {
     if (buttonIndex==1)
     {
-        if (self.webEdit==YES)
+        [self.myPhotoArray removeObjectAtIndex:_deleteBtnIndex];
+        if (_currentPhotoCount==5)
         {
-            [self.webPhotoArray removeObjectAtIndex:_deleteBtnIndex];
-            if (_currentPhotoCount==5)
-            {
-                [self.webPhotoArray insertObject:self.plusImage atIndex:0];
-            }
-            [self reloadWebPhotoScrollView];
-            _currentPhotoCount--;
+            [self.myPhotoArray insertObject:self.plusImage atIndex:0];
         }
-        else
-        {
-            [self.myPhotoArray removeObjectAtIndex:_deleteBtnIndex];
-            if (_currentPhotoCount==5)
-            {
-                [self.myPhotoArray insertObject:self.plusImage atIndex:0];
-            }
-            [self reloadPhotoScrollView];
-            _currentPhotoCount--;
-        }
+        [self reloadPhotoScrollView];
+        _currentPhotoCount--;
     }
 }
 
 - (void)addImageWithImageArray:(NSArray *)aPhotoArray
 {
-    if (self.webEdit==YES)
-    {
-        [self.webPhotoArray addObjectsFromArray:aPhotoArray];
-        _currentPhotoCount += aPhotoArray.count;
-        if (_currentPhotoCount==5) {
-            [self.webPhotoArray removeObjectAtIndex:0];
-        }
-        [self reloadWebPhotoScrollView];
+    [self.myPhotoArray addObjectsFromArray:aPhotoArray];
+    _currentPhotoCount += aPhotoArray.count;
+    if (_currentPhotoCount==5) {
+        [self.myPhotoArray removeObjectAtIndex:0];
     }
-    else
-    {
-        [self.myPhotoArray addObjectsFromArray:aPhotoArray];
-        _currentPhotoCount += aPhotoArray.count;
-        if (_currentPhotoCount==5) {
-            [self.myPhotoArray removeObjectAtIndex:0];
-        }
-        [self reloadPhotoScrollView];
-    }
+    [self reloadPhotoScrollView];
 }
 
 - (UIViewController *)viewController

@@ -17,6 +17,7 @@
 #import "YHBUser.h"
 #import "YHBUploadImageManage.h"
 #import "NetManager.h"
+#import "YHBSupplyDetailPic.h"
 
 
 #define kButtonTag_Yes 100
@@ -51,6 +52,8 @@
     UILabel *dayPlaceHolder;
     UILabel *catPlaceHolder;
     UILabel *detailPlaceHolder;
+    
+    BOOL webEdit;
 }
 
 @property(nonatomic, strong) UIPickerView *dayPickerView;
@@ -64,6 +67,7 @@
 {
     if (self = [super init]) {
         myModel = aModel;
+        webEdit = YES;
     }
     return self;
 }
@@ -256,7 +260,21 @@
         titleLabel.text = myModel.title;
         priceTextField.text = myModel.price;
         catNameLabel.text = myModel.catname;
+        catidString=nil;
+        catidString=myModel.catid;
         contentTextView.text = myModel.content;
+        if (myModel.pic.count>0)
+        {
+            [variousImageView setMyWebPhotoArray:myModel.pic canEdit:YES];
+            
+        }
+        else
+        {
+//            [variousImageView changeEdit];
+            variousImageView.webEdit = YES;
+            variousImageView.currentPhotoCount = 0;
+            [variousImageView.webPhotoArray addObject:[UIImage imageNamed:@"QSPlusBtn"]];
+        }
         
         titlePlaceHolder.hidden = YES;
         catPlaceHolder.hidden = YES;
@@ -419,12 +437,12 @@
         {
             catPlaceHolder.hidden = YES;
             NSString *str = @"";
-            NSString *idStr = @"";
+            catidString = @"";
             for (YHBCatSubcate *subModel in aArray) {
                 str = [str stringByAppendingString:[NSString stringWithFormat:@" %@", subModel.catname]];
-                idStr = [str stringByAppendingString:[NSString stringWithFormat:@",%d", (int)subModel.catid]];
+                catidString = [catidString stringByAppendingString:[NSString stringWithFormat:@",%d", (int)subModel.catid]];
             }
-            catidString = [idStr substringFromIndex:1];
+            catidString = [catidString substringFromIndex:1];
             catNameLabel.text = str;
         }
         else
@@ -512,15 +530,42 @@
     if ([self isTextNotNil:titleLabel.text]&&[self isTextNotNil:priceTextField.text]&&[self isTextNotNil:dayLabel.text]&&[self isTextNotNil:contentTextView.text]&&[self isTextNotNil:catNameLabel.text]&&[self isTextNotNil:nameTextField.text]&&[self isTextNotNil:phoneTextField.text])
     {
         [self showFlower];
-        [self.netManage publishSupplyWithItemid:0 title:titleLabel.text price:priceTextField.text catid:catidString typeid:[NSString stringWithFormat:@"%d", typeId] today:dayLabel.text content:contentTextView.text truename:nameTextField.text mobile:phoneTextField.text andSuccBlock:^(NSDictionary *aDict) {
-            [self dismissFlower];
-            int itemid = [[aDict objectForKey:@"itemid"] intValue];
-            NSMutableArray *photoArray = variousImageView.myPhotoArray;
+        int publishItemid = myModel?myModel.itemid:0;
+        NSMutableArray *photoArray = variousImageView.myPhotoArray;
+        NSMutableArray *havePhotoArray = [NSMutableArray new];
+        if (webEdit)
+        {
+            photoArray = variousImageView.webPhotoArray;
             if (variousImageView.currentPhotoCount!=5)
             {
                 [photoArray removeObjectAtIndex:0];
             }
-            YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:itemid itemDict:aDict uploadPhotoArray:photoArray];
+            for (int i=0; i<photoArray.count; i++)
+            {
+                id obj = [photoArray objectAtIndex:i];
+                if (![obj isKindOfClass:[UIImage class]])
+                {
+                    YHBSupplyDetailPic *model = [photoArray objectAtIndex:i];
+                    [havePhotoArray addObject:model.thumb];
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            photoArray = variousImageView.myPhotoArray;
+            if (variousImageView.currentPhotoCount!=5)
+            {
+                [photoArray removeObjectAtIndex:0];
+            }
+        }
+        [self.netManage publishSupplyWithItemid:publishItemid title:titleLabel.text price:priceTextField.text catid:catidString typeid:[NSString stringWithFormat:@"%d", typeId] today:dayLabel.text content:contentTextView.text truename:nameTextField.text mobile:phoneTextField.text photoArray:havePhotoArray andSuccBlock:^(NSDictionary *aDict) {
+            [self dismissFlower];
+            int itemid = [[aDict objectForKey:@"itemid"] intValue];
+            YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:itemid itemDict:aDict uploadPhotoArray:photoArray isWebArray:webEdit];
             [self.navigationController pushViewController:vc animated:YES];
         } failBlock:^(NSString *aStr) {
             [self dismissFlower];

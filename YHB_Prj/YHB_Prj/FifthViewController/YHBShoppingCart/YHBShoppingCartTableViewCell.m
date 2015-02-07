@@ -118,9 +118,9 @@
     [changeView setCountLabel:[newString floatValue]];
     titleLabel.text = aModel.title;
     priceLabel.text = [NSString stringWithFormat:@"￥%@",aModel.price];
-    if (aModel.catname)
+    if (aModel.skuname.length>0)
     {
-        catLabel.text = [NSString stringWithFormat:@"类别 : %@", aModel.catname];
+        catLabel.text = [NSString stringWithFormat:@"规格 : %@", aModel.skuname];
     }
     else
     {

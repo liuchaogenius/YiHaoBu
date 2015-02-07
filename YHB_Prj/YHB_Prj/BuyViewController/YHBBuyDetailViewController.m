@@ -164,7 +164,7 @@
              }
              else
              {
-                 [variousImageView setMyWebPhotoArray:aModel.pic];
+                 [variousImageView setMyWebPhotoArray:aModel.pic canEdit:NO];
              }
              if (!isMine) {
                  NSArray *array = aModel.pic;
