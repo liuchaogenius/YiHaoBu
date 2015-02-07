@@ -259,7 +259,7 @@
 - (void)calulatePrice
 {
     self.totalPrice = [self.productModel.price doubleValue] * self.number;
-    self.priceLabel.text = self.isNumFloat ? [NSString stringWithFormat:@"%.1f",self.totalPrice] : [NSString stringWithFormat:@"%d",(int)self.totalPrice];
+    self.priceLabel.text = self.isNumFloat ? [NSString stringWithFormat:@"%.2f",self.totalPrice] : [NSString stringWithFormat:@"%d",(int)self.totalPrice];
 }
 
 #pragma mark - cell Delegate

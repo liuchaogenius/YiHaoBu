@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#define kHotTagCellHeight 60
+#define kHotTagCellHeight 65
 @protocol YHBHotTagsDelegate <NSObject>
 
 - (void)touchHotTagsWithTag:(NSInteger)tag;

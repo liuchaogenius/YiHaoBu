@@ -119,7 +119,52 @@
     } failure:^(NSDictionary *failDict, NSError *error) {
         fBlock(-20,kNoNet);
     }];
+}
 
+- (void)getOrderTotalPriceWithPostDic:(NSDictionary *)postDic Success:(void(^)(NSString *totalPriceStr))sBlock failure:(void(^)(NSString *error))fBlock
+{
+    NSString *url = nil;
+    kYHBRequestUrl(@"postOrder.php", url);
+    [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
+        NSInteger result = [successDict[@"result"] integerValue];
+        if (result == 1) {
+            NSDictionary *data = successDict[@"data"];
+            NSString *price = data[@"price"];
+            if (sBlock) {
+                sBlock(price);
+            }
+        }else{
+            if (fBlock) {
+                fBlock(kErrorStr);
+            }
+        }
+    } failure:^(NSDictionary *failDict, NSError *error) {
+        fBlock(kNoNet);
+    }];
+
+}
+
+//提交订单， info：支付宝相关字段
+- (void)postOrderWithPostDic:(NSDictionary *)postDic Success:(void(^)(NSString *info))sBlock failure:(void(^)(NSString *error))fBlock
+{
+    NSString *url = nil;
+    kYHBRequestUrl(@"postOrder.php", url);
+    [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
+        NSInteger result = [successDict[@"result"] integerValue];
+        if (result == 1) {
+            NSDictionary *data = successDict[@"data"];
+            NSString *info = data[@"info"];
+            if (sBlock) {
+                sBlock(info);
+            }
+        }else{
+            if (fBlock) {
+                fBlock(kErrorStr);
+            }
+        }
+    } failure:^(NSDictionary *failDict, NSError *error) {
+        fBlock(kNoNet);
+    }];
 }
 
 @end

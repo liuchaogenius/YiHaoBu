@@ -344,18 +344,34 @@
 - (void)touchPayBtn
 {
     MLOG(@"pay");
-    /*
+    
     NSMutableArray *rslit = [NSMutableArray arrayWithCapacity:5];
     for (int i = 0; i <self.orderConfirmModel.rslist.count; i++) {
         YHBOConfirmRslist *rlist = self.orderConfirmModel.rslist[i];
         for (int j = 0; j < rlist.malllist.count; j++) {
             YHBOConfirmMalllist *mall = rlist.malllist[j];
             YHBOConfirmExpress *express = self.expressSelDic[[self expressKeyWithI:i andJ:j]];
-            NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithDouble:mall.itemid],@"itemid",mall.number,@"number",[NSString stringWithFormat:@"%d",(int)mall.skuid],@"", nil]
-
+            NSInteger expressId = (NSInteger)express.internalBaseClassIdentifier;
+            
+            double expressPrice =  [self expressPriceWithExpress:express andNum:[mall.number doubleValue]];
+            NSString *note = ((NSString *)self.messagesDic[[self expressKeyWithI:i andJ:j]] ? : @"");
+            NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithDouble:mall.itemid],@"itemid",mall.number?:@"",@"number",[NSString stringWithFormat:@"%d",(int)mall.skuid],@"skuid",express? [NSNumber numberWithInteger:expressId] : @"",@"expressid",(express.name?:@""),@"fee_name",express ? [NSString stringWithFormat:@"%.2lf",expressPrice] : @"",@"fee",note,@"note", nil];
+            
+            [rslit addObject:dic];
         }
     }
-     */
+    
+    NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",_sourse?:@"",@"source",[NSNumber numberWithInt:(int)self.orderConfirmModel.addItemid],@"add_itemid",rslit?:@"",@"rslist", nil];
+    [self.orderManager postOrderWithPostDic:postDic Success:^(NSString *info) {
+        //info 拼接好的支付宝字段
+#warning 此处添加支付
+        MLOG(@"info:%@",info);
+        
+        
+    } failure:^(NSString *error) {
+        [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
+    }];
+    
 }
 
 - (void)touchSelBtn
@@ -415,7 +431,7 @@
             MLOG(@"%lf",_price);
         }
     }
-    _priceStr = [NSString stringWithFormat:@"￥%.1lf",_price];
+    _priceStr = [NSString stringWithFormat:@"￥%.2lf",_price];
     [self resetPriceLabel];
 }
 //运费计算

@@ -461,6 +461,8 @@
     if (self.productModel.content.length) {
         [self.navigationController pushViewController:self.webVc animated:YES];
         [self.webVc sethtmlStr:self.productModel.content];
+    }else{
+        [SVProgressHUD showErrorWithStatus:@"没有产品详情" cover:YES offsetY:0];
     }
 }
 

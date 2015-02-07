@@ -127,6 +127,8 @@ enum TextTag
         
         _bannerImageView = [[UIImageView alloc] initWithFrame:_headBackView.frame];
         _bannerImageView.backgroundColor = [UIColor lightGrayColor];
+        [_bannerImageView setContentMode:UIViewContentModeScaleAspectFill];
+        _bannerImageView.clipsToBounds = YES;
         [_headBackView addSubview:_bannerImageView];
         
         UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];

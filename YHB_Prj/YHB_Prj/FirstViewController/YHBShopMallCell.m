@@ -160,7 +160,10 @@
     titleLabel.text = title;
     UIImageView *imageView = self.imageViewArray[part];
     MLOG(@"%@",imgurl);
-    [imageView sd_setImageWithURL:[NSURL URLWithString:imgurl] placeholderImage:[UIImage imageNamed:@"DefualtProduct"]];
+    if (imgurl.length) {
+        [imageView sd_setImageWithURL:[NSURL URLWithString:imgurl] placeholderImage:[UIImage imageNamed:@"DefualtProduct"]];
+    }
+    
     UILabel *datelabel = self.dateLabelArray[part];
     datelabel.text = time;
     UILabel *hitsLabel = self.totalViewArray[part];

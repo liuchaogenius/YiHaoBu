@@ -54,8 +54,8 @@
             UILabel *label = self.labelsArray[i];
             label.hidden = NO;
             label.text = ((NSString *)array[i]);
-        }else{
-            ((UILabel *)array[i]).hidden = YES;
+        }else if(i < self.labelsArray.count){
+            ((UILabel *)self.labelsArray[i]).hidden = YES;
         }
     }
 }

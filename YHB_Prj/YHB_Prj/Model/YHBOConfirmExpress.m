@@ -1,16 +1,17 @@
 //
 //  YHBOConfirmExpress.m
 //
-//  Created by   on 15/1/22
+//  Created by   on 15/2/7
 //  Copyright (c) 2015 __MyCompanyName__. All rights reserved.
 //
 
 #import "YHBOConfirmExpress.h"
 
 
+NSString *const kYHBOConfirmExpressId = @"id";
 NSString *const kYHBOConfirmExpressName = @"name";
-NSString *const kYHBOConfirmExpressStart = @"start";
 NSString *const kYHBOConfirmExpressStep = @"step";
+NSString *const kYHBOConfirmExpressStart = @"start";
 
 
 @interface YHBOConfirmExpress ()
@@ -21,9 +22,10 @@ NSString *const kYHBOConfirmExpressStep = @"step";
 
 @implementation YHBOConfirmExpress
 
+@synthesize internalBaseClassIdentifier = _internalBaseClassIdentifier;
 @synthesize name = _name;
-@synthesize start = _start;
 @synthesize step = _step;
+@synthesize start = _start;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
@@ -38,9 +40,10 @@ NSString *const kYHBOConfirmExpressStep = @"step";
     // This check serves to make sure that a non-NSDictionary object
     // passed into the model class doesn't break the parsing.
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
+            self.internalBaseClassIdentifier = [[self objectOrNilForKey:kYHBOConfirmExpressId fromDictionary:dict] doubleValue];
             self.name = [self objectOrNilForKey:kYHBOConfirmExpressName fromDictionary:dict];
-            self.start = [self objectOrNilForKey:kYHBOConfirmExpressStart fromDictionary:dict];
             self.step = [self objectOrNilForKey:kYHBOConfirmExpressStep fromDictionary:dict];
+            self.start = [self objectOrNilForKey:kYHBOConfirmExpressStart fromDictionary:dict];
 
     }
     
@@ -51,9 +54,10 @@ NSString *const kYHBOConfirmExpressStep = @"step";
 - (NSDictionary *)dictionaryRepresentation
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];
+    [mutableDict setValue:[NSNumber numberWithDouble:self.internalBaseClassIdentifier] forKey:kYHBOConfirmExpressId];
     [mutableDict setValue:self.name forKey:kYHBOConfirmExpressName];
-    [mutableDict setValue:self.start forKey:kYHBOConfirmExpressStart];
     [mutableDict setValue:self.step forKey:kYHBOConfirmExpressStep];
+    [mutableDict setValue:self.start forKey:kYHBOConfirmExpressStart];
 
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
@@ -77,18 +81,20 @@ NSString *const kYHBOConfirmExpressStep = @"step";
 {
     self = [super init];
 
+    self.internalBaseClassIdentifier = [aDecoder decodeDoubleForKey:kYHBOConfirmExpressId];
     self.name = [aDecoder decodeObjectForKey:kYHBOConfirmExpressName];
-    self.start = [aDecoder decodeObjectForKey:kYHBOConfirmExpressStart];
     self.step = [aDecoder decodeObjectForKey:kYHBOConfirmExpressStep];
+    self.start = [aDecoder decodeObjectForKey:kYHBOConfirmExpressStart];
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
 
+    [aCoder encodeDouble:_internalBaseClassIdentifier forKey:kYHBOConfirmExpressId];
     [aCoder encodeObject:_name forKey:kYHBOConfirmExpressName];
-    [aCoder encodeObject:_start forKey:kYHBOConfirmExpressStart];
     [aCoder encodeObject:_step forKey:kYHBOConfirmExpressStep];
+    [aCoder encodeObject:_start forKey:kYHBOConfirmExpressStart];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -97,9 +103,10 @@ NSString *const kYHBOConfirmExpressStep = @"step";
     
     if (copy) {
 
+        copy.internalBaseClassIdentifier = self.internalBaseClassIdentifier;
         copy.name = [self.name copyWithZone:zone];
-        copy.start = [self.start copyWithZone:zone];
         copy.step = [self.step copyWithZone:zone];
+        copy.start = [self.start copyWithZone:zone];
     }
     
     return copy;

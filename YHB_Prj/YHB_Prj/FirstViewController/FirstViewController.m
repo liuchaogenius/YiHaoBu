@@ -32,7 +32,7 @@
 #import "YHBCatSubcate.h"
 
 #define kBannerHeight (kMainScreenWidth * 397/1080.0f)
-#define kFuncCellHeight 60
+#define kFuncCellHeight 80
 #define kFooterHeigt 14
 #define kFuncBlockCellHeight (439*kMainScreenWidth/2.0/540.0f)
 @interface FirstViewController ()<YHBBannerDelegate,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,YHBFunctionCellDelegate,YHBFuncBlockCellDelegate,YHBHotTagsDelegate,ShopMallCellDelegate>
@@ -327,9 +327,9 @@
             [CategoryViewController sharedInstancetype].isSingleSelect = YES;
             [[CategoryViewController sharedInstancetype] setBlock:^(NSArray *aArray) {
                 [CategoryViewController sharedInstancetype].isSingleSelect = NO;
-                NSString *hotTag = ((YHBCatSubcate *)([aArray lastObject])).catname;
+                YHBCatSubcate *cate = (YHBCatSubcate *)[aArray lastObject];
                 self.tabBarController.selectedIndex = 1;
-                NSDictionary * dic = [NSDictionary dictionaryWithObject:(hotTag?:@"") forKey:kSearchMessage];
+                NSDictionary * dic = [NSDictionary dictionaryWithObject:(cate?:@"") forKey:kSearchMessage];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kSearchMessage object:nil userInfo:dic];
                 [[CategoryViewController sharedInstancetype] cleanAll];
             }];

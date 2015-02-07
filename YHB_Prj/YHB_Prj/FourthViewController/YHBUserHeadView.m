@@ -121,6 +121,8 @@
     self = [super initWithFrame:frame];
     self.bannerImageView = [[UIImageView alloc] initWithFrame:self.frame];
     self.bannerImageView.image = [UIImage imageNamed:@"userBannerDefault"];
+    [self.bannerImageView setContentMode:UIViewContentModeScaleAspectFill];
+    self.bannerImageView.clipsToBounds = YES;
     //self.backgroundColor = RGBCOLOR(58, 155, 9);
     [self addSubview:self.bannerImageView];
     self.backgroundColor = [UIColor lightGrayColor];
@@ -161,6 +163,7 @@
             [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:thumb] placeholderImage:[UIImage imageNamed:@"userBannerDefault"]];
     }else{
         [self addSubview:self.notLoginedView];
+        self.bannerImageView.image = [UIImage imageNamed:@"userBannerDefault"];
         [self.loginedView removeFromSuperview];
     }
 }

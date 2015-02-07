@@ -13,6 +13,13 @@
 @interface YHBOrderManager : NSObject
 
 + (YHBOrderManager *)sharedManager;
+
+//获取总价
+- (void)getOrderTotalPriceWithPostDic:(NSDictionary *)postDic Success:(void(^)(NSString *totalPriceStr))sBlock failure:(void(^)(NSString *error))fBlock;
+
+//提交订单， info：支付宝相关字段
+- (void)postOrderWithPostDic:(NSDictionary *)postDic Success:(void(^)(NSString *info))sBlock failure:(void(^)(NSString *error))fBlock;
+
 //获取订单列表
 - (void)getOrderListWithToken:(NSString *)token PageID:(NSInteger)pageid PageSize:(NSInteger)pageSize Success:(void(^)(YHBOrderList *listModel))sBlock failure:(void(^)(NSString *error))fBlock;
 

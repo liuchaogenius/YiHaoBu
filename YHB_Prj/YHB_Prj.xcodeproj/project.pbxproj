@@ -12,6 +12,9 @@
 		5B0531C91A7538CB0020077D /* YHBComCertificVieController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0531C81A7538CB0020077D /* YHBComCertificVieController.m */; };
 		5B0531CC1A76379F0020077D /* YHBOConfirmModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0531CB1A76379F0020077D /* YHBOConfirmModel.m */; };
 		5B0531D11A76903D0020077D /* YHBPublicCommentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0531D01A76903D0020077D /* YHBPublicCommentVC.m */; };
+		5B05ACC11A85F8E00060D75B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B05ACC01A85F8E00060D75B /* SystemConfiguration.framework */; };
+		5B05ACC31A85F90C0060D75B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B05ACC21A85F90C0060D75B /* QuartzCore.framework */; };
+		5B05ACF41A8603F50060D75B /* YHBOConfirmExpress.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B05ACF21A8603F50060D75B /* YHBOConfirmExpress.m */; };
 		5B0A34B81A45862A0071A357 /* YHBFuncBlockCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0A34B71A45862A0071A357 /* YHBFuncBlockCell.m */; };
 		5B0A34BB1A458E180071A357 /* YHBHotTagsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0A34BA1A458E180071A357 /* YHBHotTagsCell.m */; };
 		5B13A4D61A57EC4B00713C5E /* YHBProductManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B13A4D51A57EC4B00713C5E /* YHBProductManager.m */; };
@@ -94,7 +97,6 @@
 		5BE76FF81A6CA04100E3F62A /* YHBOrderShopInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE76FF71A6CA04100E3F62A /* YHBOrderShopInfoView.m */; };
 		5BE847ED1A72243C00DC1254 /* YHBAdressListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE847EC1A72243C00DC1254 /* YHBAdressListViewController.m */; };
 		5BE847F11A7224A600DC1254 /* YHBAddressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE847F01A7224A600DC1254 /* YHBAddressManager.m */; };
-		5BFBC23F1A70BBC800FE65E5 /* YHBOConfirmExpress.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFBC2371A70BBC800FE65E5 /* YHBOConfirmExpress.m */; };
 		5BFBC2401A70BBC800FE65E5 /* YHBOConfirmMalllist.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFBC2381A70BBC800FE65E5 /* YHBOConfirmMalllist.m */; };
 		5BFBC2411A70BBC800FE65E5 /* YHBOConfirmRslist.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFBC2391A70BBC800FE65E5 /* YHBOConfirmRslist.m */; };
 		5BFBC2451A7124A000FE65E5 /* YHBPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFBC2441A7124A000FE65E5 /* YHBPayCell.m */; };
@@ -484,6 +486,10 @@
 		5B0531CB1A76379F0020077D /* YHBOConfirmModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOConfirmModel.m; sourceTree = "<group>"; };
 		5B0531CF1A76903D0020077D /* YHBPublicCommentVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPublicCommentVC.h; sourceTree = "<group>"; };
 		5B0531D01A76903D0020077D /* YHBPublicCommentVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBPublicCommentVC.m; sourceTree = "<group>"; };
+		5B05ACC01A85F8E00060D75B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		5B05ACC21A85F90C0060D75B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		5B05ACF21A8603F50060D75B /* YHBOConfirmExpress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOConfirmExpress.m; sourceTree = "<group>"; };
+		5B05ACF31A8603F50060D75B /* YHBOConfirmExpress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOConfirmExpress.h; sourceTree = "<group>"; };
 		5B0A34B61A45862A0071A357 /* YHBFuncBlockCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBFuncBlockCell.h; sourceTree = "<group>"; };
 		5B0A34B71A45862A0071A357 /* YHBFuncBlockCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBFuncBlockCell.m; sourceTree = "<group>"; };
 		5B0A34B91A458E180071A357 /* YHBHotTagsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBHotTagsCell.h; sourceTree = "<group>"; };
@@ -648,10 +654,8 @@
 		5BE847EC1A72243C00DC1254 /* YHBAdressListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBAdressListViewController.m; sourceTree = "<group>"; };
 		5BE847EF1A7224A600DC1254 /* YHBAddressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBAddressManager.h; sourceTree = "<group>"; };
 		5BE847F01A7224A600DC1254 /* YHBAddressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBAddressManager.m; sourceTree = "<group>"; };
-		5BFBC2371A70BBC800FE65E5 /* YHBOConfirmExpress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOConfirmExpress.m; sourceTree = "<group>"; };
 		5BFBC2381A70BBC800FE65E5 /* YHBOConfirmMalllist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOConfirmMalllist.m; sourceTree = "<group>"; };
 		5BFBC2391A70BBC800FE65E5 /* YHBOConfirmRslist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOConfirmRslist.m; sourceTree = "<group>"; };
-		5BFBC23A1A70BBC800FE65E5 /* YHBOConfirmExpress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOConfirmExpress.h; sourceTree = "<group>"; };
 		5BFBC23B1A70BBC800FE65E5 /* YHBOConfirmMalllist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOConfirmMalllist.h; sourceTree = "<group>"; };
 		5BFBC23C1A70BBC800FE65E5 /* YHBOConfirmRslist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOConfirmRslist.h; sourceTree = "<group>"; };
 		5BFBC2431A7124A000FE65E5 /* YHBPayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YHBPayCell.h; path = YHB_Prj/YHBPayCell.h; sourceTree = SOURCE_ROOT; };
@@ -1318,6 +1322,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B05ACC31A85F90C0060D75B /* QuartzCore.framework in Frameworks */,
+				5B05ACC11A85F8E00060D75B /* SystemConfiguration.framework in Frameworks */,
 				AB6B48371A80572A001B57FD /* MessageUI.framework in Frameworks */,
 				AB1A2F901A6A369D0018942A /* libxml2.dylib in Frameworks */,
 				AB1A2F8E1A6A36810018942A /* libresolv.dylib in Frameworks */,
@@ -1723,11 +1729,11 @@
 		5BCBB0941A70B9F600BF5E5C /* OrderConfirmModel */ = {
 			isa = PBXGroup;
 			children = (
-				5BFBC2371A70BBC800FE65E5 /* YHBOConfirmExpress.m */,
+				5B05ACF31A8603F50060D75B /* YHBOConfirmExpress.h */,
+				5B05ACF21A8603F50060D75B /* YHBOConfirmExpress.m */,
 				5BFBC2381A70BBC800FE65E5 /* YHBOConfirmMalllist.m */,
 				5BFBC23C1A70BBC800FE65E5 /* YHBOConfirmRslist.h */,
 				5BFBC2391A70BBC800FE65E5 /* YHBOConfirmRslist.m */,
-				5BFBC23A1A70BBC800FE65E5 /* YHBOConfirmExpress.h */,
 				5BFBC23B1A70BBC800FE65E5 /* YHBOConfirmMalllist.h */,
 			);
 			name = OrderConfirmModel;
@@ -2057,6 +2063,8 @@
 		AB1A2F911A6A37810018942A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5B05ACC21A85F90C0060D75B /* QuartzCore.framework */,
+				5B05ACC01A85F8E00060D75B /* SystemConfiguration.framework */,
 				AB6B48361A80572A001B57FD /* MessageUI.framework */,
 				AB1A2F8F1A6A369D0018942A /* libxml2.dylib */,
 				AB1A2F8D1A6A36810018942A /* libresolv.dylib */,
@@ -3811,6 +3819,7 @@
 				5B13A4DF1A58200F00713C5E /* YHBCommentCellView.m in Sources */,
 				AB28610B1A38309000EB654C /* YHBShopCartRslist.m in Sources */,
 				5BCBB0901A6FF39900BF5E5C /* YHBOrderConfirmCell.m in Sources */,
+				5B05ACF41A8603F50060D75B /* YHBOConfirmExpress.m in Sources */,
 				5B13A4D91A57FBE800713C5E /* YHBPdtInfoView.m in Sources */,
 				ABC646B31A6B8BC8003A8FB1 /* MWPhoto.m in Sources */,
 				5B23F4491A442A8D00F39D8E /* YHBSlidelist.m in Sources */,
@@ -3854,7 +3863,6 @@
 				AB0D09191A7BA7AB00E6123A /* YHBGetPushData.m in Sources */,
 				5B85F3CD1A6767AA00B91DA4 /* YHBExpress.m in Sources */,
 				5B565CA31A7BEB8200033764 /* YHBUserInfo.m in Sources */,
-				5BFBC23F1A70BBC800FE65E5 /* YHBOConfirmExpress.m in Sources */,
 				5BD8F96C1A1374A500B3A4F2 /* YHBUserHeadView.m in Sources */,
 				ABC646B81A6B8BC8003A8FB1 /* DACircularProgressView.m in Sources */,
 				ABC646281A6B8B3C003A8FB1 /* EMChatViewCell.m in Sources */,
@@ -3941,8 +3949,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-                CODE_SIGN_IDENTITY = "iPhone Developer: Le Shu (J97ECALLU9)";
-                "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Le Shu (J97ECALLU9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Le Shu (J97ECALLU9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Le Shu (J97ECALLU9)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3983,8 +3991,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-                CODE_SIGN_IDENTITY = "iPhone Developer: Le Shu (J97ECALLU9)";
-                "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Le Shu (J97ECALLU9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Le Shu (J97ECALLU9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Le Shu (J97ECALLU9)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4018,6 +4026,7 @@
 					"$(PROJECT_DIR)/YHB_Prj/EaseMobSDK/lib",
 					"$(PROJECT_DIR)/YHB_Prj/3rdChat/3rdparty",
 					"$(PROJECT_DIR)/YHB_Prj/3rdChat/3rdparty/UMeng",
+					"$(PROJECT_DIR)/YHB_Prj/ThirdParty/alipay_sdk/alipay",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4041,6 +4050,7 @@
 					"$(PROJECT_DIR)/YHB_Prj/EaseMobSDK/lib",
 					"$(PROJECT_DIR)/YHB_Prj/3rdChat/3rdparty",
 					"$(PROJECT_DIR)/YHB_Prj/3rdChat/3rdparty/UMeng",
+					"$(PROJECT_DIR)/YHB_Prj/ThirdParty/alipay_sdk/alipay",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
