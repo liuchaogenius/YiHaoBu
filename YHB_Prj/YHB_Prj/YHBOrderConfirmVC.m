@@ -22,6 +22,9 @@
 #import "YHBAddressModel.h"
 #import "YHBAddressEditViewController.h"
 #import "YHBAdressListViewController.h"
+#import <AlipaySDK/AlipaySDK.h>
+#import "JSONKit.h"
+//#import "AlixPayResult.h"
 #define kBarHeight 80
 #define kPriceFont 17
 #define kButtonTag_Cancel 202
@@ -53,6 +56,7 @@
 @property (strong, nonatomic) UIPickerView *expressPicker;
 
 @property (nonatomic,strong) UIImageView *alipayLogoImgview;
+@property (strong, nonatomic) NSMutableDictionary *postDic;
 
 
 @end
@@ -162,6 +166,7 @@
         _payPathArr = @[@"      支付宝支付"];
         _price = 0;
         self.title = @"确认订单";
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aliPayresult:) name:kAlipayOrderResultMessage object:nil];
     }
     return self;
 }
@@ -344,33 +349,67 @@
 - (void)touchPayBtn
 {
     MLOG(@"pay");
-    
-    NSMutableArray *rslit = [NSMutableArray arrayWithCapacity:5];
-    for (int i = 0; i <self.orderConfirmModel.rslist.count; i++) {
-        YHBOConfirmRslist *rlist = self.orderConfirmModel.rslist[i];
-        for (int j = 0; j < rlist.malllist.count; j++) {
-            YHBOConfirmMalllist *mall = rlist.malllist[j];
-            YHBOConfirmExpress *express = self.expressSelDic[[self expressKeyWithI:i andJ:j]];
-            NSInteger expressId = (NSInteger)express.internalBaseClassIdentifier;
+    if (self.postDic) {
+        [SVProgressHUD showWithStatus:@"下单中..." cover:YES offsetY:0];
+        [self.orderManager postOrderWithPostDic:self.postDic Success:^(NSString *info) {
+            //info 拼接好的支付宝字段
+            [SVProgressHUD dismissWithSuccess:@"下单成功"];
+            MLOG(@"info:%@",info);
+#warning 此处添加支付
+            if (info) {
+                static NSString *strSchem = @"com.yibu.kuaibu";
+                [[AlipaySDK defaultService] payOrder:info fromScheme:strSchem callback:^(NSDictionary *resultDic) {
+                    MLOG(@"%@",resultDic);
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kAlipayOrderResultMessage object:resultDic];
+                }];
+            }
+        } failure:^(NSString *error) {
             
-            double expressPrice =  [self expressPriceWithExpress:express andNum:[mall.number doubleValue]];
-            NSString *note = ((NSString *)self.messagesDic[[self expressKeyWithI:i andJ:j]] ? : @"");
-            NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithDouble:mall.itemid],@"itemid",mall.number?:@"",@"number",[NSString stringWithFormat:@"%d",(int)mall.skuid],@"skuid",express? [NSNumber numberWithInteger:expressId] : @"",@"expressid",(express.name?:@""),@"fee_name",express ? [NSString stringWithFormat:@"%.2lf",expressPrice] : @"",@"fee",note,@"note", nil];
-            
-            [rslit addObject:dic];
-        }
+            [SVProgressHUD dismissWithError:error];
+        }];
     }
     
-    NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",_sourse?:@"",@"source",[NSNumber numberWithInt:(int)self.orderConfirmModel.addItemid],@"add_itemid",rslit?:@"",@"rslist", nil];
-    [self.orderManager postOrderWithPostDic:postDic Success:^(NSString *info) {
-        //info 拼接好的支付宝字段
-#warning 此处添加支付
-        MLOG(@"info:%@",info);
-        
-        
-    } failure:^(NSString *error) {
-        [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
-    }];
+    
+}
+
+
+- (void)aliPayresult:(NSNotification *)aNotification
+{
+    MLOG(@"%@",aNotification);
+    
+    NSDictionary *resultDic = [aNotification object];
+    
+    if(resultDic && resultDic.count)
+    {
+        MLOG(@"notificationDict = %@",resultDic);
+        int resultStatus = [[resultDic objectForKey:@"ResultStatus"] intValue];
+        NSString *resultDesc = [resultDic objectForKey:@"result"];
+        if(resultStatus == 9000)///支付成功
+        {
+            //已支付 灰色-按钮 不可用  已支付。。---
+            [SVProgressHUD showSuccessWithStatus:@"支付成功" cover:YES offsetY:kMainScreenHeight/2.0];
+//            commitButton.enabled = NO;
+//            [commitButton setBackgroundColor:[UIColor lightGrayColor]];
+//            [commitButton setTitle:@"已支付" forState:UIControlStateNormal];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kPaySuccess object:self];
+            
+            
+        }
+        else if(resultStatus == 8000)///正在处理也当支付成功
+        {
+            [SVProgressHUD showSuccessWithStatus:@"支付成功" cover:YES offsetY:kMainScreenHeight/2.0];
+//            commitButton.enabled = NO;
+//            [commitButton setBackgroundColor:[UIColor lightGrayColor]];
+//            [commitButton setTitle:@"已支付" forState:UIControlStateNormal];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kPaySuccess object:self];
+            
+        }
+        else///支付失败
+        {
+            [SVProgressHUD showErrorWithStatus:@"支付失败，请重新尝试" cover:YES offsetY:kMainScreenHeight/2.0];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kPayFail object:self];
+        }
+    }
     
 }
 
@@ -395,7 +434,10 @@
     self.orderConfirmModel.addItemid = model.itemid;
     self.orderConfirmModel.addMobile = model.mobile;
     self.orderConfirmModel.addTruename = model.truename;
+    
+    
     [self reloadHeader];
+    
 }
 
 - (void)touchExpressCellWithIndexPath:(NSIndexPath *)indexPath
@@ -417,6 +459,17 @@
 - (void)priceCalculate
 {
     _price = 0;
+
+    if (!_postDic) {
+        _postDic = [NSMutableDictionary dictionaryWithCapacity:4];
+        [_postDic setObject:([YHBUser sharedYHBUser].token?:@"") forKey:@"token"];
+        
+    }
+    [_postDic setObject:[NSNumber numberWithInt:(int)self.orderConfirmModel.addItemid] forKey:@"add_itemid"];
+    
+    NSMutableArray *listArray = [NSMutableArray arrayWithCapacity:7];
+    [listArray removeAllObjects];
+    
     for (int i = 0; i <self.orderConfirmModel.rslist.count; i++) {
         YHBOConfirmRslist *rlist = self.orderConfirmModel.rslist[i];
         for (int j = 0; j < rlist.malllist.count; j++) {
@@ -426,13 +479,32 @@
                 express = mall.express[0];
                 self.expressSelDic[[self expressKeyWithI:i andJ:j]] = express;
             }
+            NSInteger expressId = (NSInteger)express.internalBaseClassIdentifier;
+            
+            double expressPrice =  [self expressPriceWithExpress:express andNum:[mall.number doubleValue]];
+            NSString *note = ((NSString *)self.messagesDic[[self expressKeyWithI:i andJ:j]] ? : @"");
+            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithDouble:mall.itemid],@"itemid",mall.number?:@"",@"number",[NSString stringWithFormat:@"%d",(int)mall.skuid],@"skuid",express? [NSNumber numberWithInteger:expressId] : @"",@"expressid",(express.name?:@""),@"fee_name",express ? [NSString stringWithFormat:@"%.2lf",expressPrice] : @"",@"fee",note,@"note", nil];
+            
+            [listArray addObject:dic];
+            
             double number = [mall.number doubleValue];
             _price += ([mall.price doubleValue] * number + (mall.express.count ? [self expressPriceWithExpress:express andNum:number] : 0));
             MLOG(@"%lf",_price);
         }
     }
+    [_postDic setObject:listArray forKey:@"rslist"];
+    
     _priceStr = [NSString stringWithFormat:@"￥%.2lf",_price];
     [self resetPriceLabel];
+    NSMutableDictionary *postDic = [NSMutableDictionary dictionaryWithDictionary:self.postDic];
+    [postDic setObject:@"money" forKey:@"action"];
+    [self.orderManager getOrderTotalPriceWithPostDic:postDic Success:^(NSString *totalPriceStr) {
+        _price = [totalPriceStr doubleValue];
+        [self resetPriceLabel];
+    } failure:^(NSString *error) {
+        [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
+    }];
+    
 }
 //运费计算
 - (double)expressPriceWithExpress:(YHBOConfirmExpress *)express andNum:(double)number
@@ -465,8 +537,16 @@
 {
     __weak YHBOrderConfirmVC *weakself = self;
     [[CCEditTextView sharedView] showEditTextViewWithTitle:@"买家留言" textfieldText:textField.text comfirmBlock:^(NSString *text) {
-        weakself.messagesDic[[weakself expressKeyWithI:(int)indexPath.section andJ:(int)indexPath.row]] = text;
-        textField.text = text;
+        if (text.length > 0) {
+            weakself.messagesDic[[weakself expressKeyWithI:(int)indexPath.section andJ:(int)indexPath.row]] = text;
+            textField.text = text;
+            
+            NSMutableArray *array = weakself.postDic[@"rslist"];
+            NSMutableDictionary *dic = array[indexPath.row + indexPath.section];
+            dic[@"note"] = text;
+        }
+        
+        
     } cancelBlock:^{
         
     }];
@@ -638,7 +718,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHid:) name:UIKeyboardDidHideNotification object:nil];
 }
 
-
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAlipayOrderResultMessage object:nil];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

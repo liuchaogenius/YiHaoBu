@@ -18,4 +18,9 @@
 #define kUserInfoGetMessage @"useiInfoGet"//成功加载用户信息
 #define kSearchMessage @"search"//搜索通知
 #define kSearchCateMessage @"searchCate"//搜索cate
+
+#define kPaySuccess @"paySuccess"
+#define kPayFail @"payFail"
+#define kAlipayOrderResultMessage @"payorderResult"
+
 #endif

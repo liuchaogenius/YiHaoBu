@@ -125,11 +125,13 @@
 {
     NSString *url = nil;
     kYHBRequestUrl(@"postOrder.php", url);
-    [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
+    static NSString *opKey = @"price";
+    [NetManager cancelOperation:opKey];
+    [NetManager requestWith:postDic url:url method:@"POST" operationKey:opKey parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
         if (result == 1) {
             NSDictionary *data = successDict[@"data"];
-            NSString *price = data[@"price"];
+            NSString *price = data[@"money"];
             if (sBlock) {
                 sBlock(price);
             }

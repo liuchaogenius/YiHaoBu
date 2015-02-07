@@ -91,6 +91,8 @@
 		5BD632A11A5FA37400095DFD /* YHBStoreDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD632A01A5FA37400095DFD /* YHBStoreDetailViewController.m */; };
 		5BD8F96C1A1374A500B3A4F2 /* YHBUserHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD8F96B1A1374A500B3A4F2 /* YHBUserHeadView.m */; };
 		5BD8F96F1A13874D00B3A4F2 /* YHBUserCellsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD8F96E1A13874D00B3A4F2 /* YHBUserCellsView.m */; };
+		5BDACA801A8630F50042C251 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5BDACA7E1A8630F50042C251 /* AlipaySDK.bundle */; };
+		5BDACA811A8630F50042C251 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BDACA7F1A8630F50042C251 /* AlipaySDK.framework */; };
 		5BE46AE31A529C50008EF2D3 /* YHBPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE46ADF1A529C50008EF2D3 /* YHBPage.m */; };
 		5BE46AE71A52A00C008EF2D3 /* YHBRslist.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE46AE51A52A00C008EF2D3 /* YHBRslist.m */; };
 		5BE76FF51A6C9D3000E3F62A /* YHBOrderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE76FF41A6C9D3000E3F62A /* YHBOrderManager.m */; };
@@ -642,6 +644,8 @@
 		5BD8F96B1A1374A500B3A4F2 /* YHBUserHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUserHeadView.m; sourceTree = "<group>"; };
 		5BD8F96D1A13874D00B3A4F2 /* YHBUserCellsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBUserCellsView.h; sourceTree = "<group>"; };
 		5BD8F96E1A13874D00B3A4F2 /* YHBUserCellsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUserCellsView.m; sourceTree = "<group>"; };
+		5BDACA7E1A8630F50042C251 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
+		5BDACA7F1A8630F50042C251 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		5BE46ADF1A529C50008EF2D3 /* YHBPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBPage.m; sourceTree = "<group>"; };
 		5BE46AE21A529C50008EF2D3 /* YHBPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPage.h; sourceTree = "<group>"; };
 		5BE46AE51A52A00C008EF2D3 /* YHBRslist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBRslist.m; sourceTree = "<group>"; };
@@ -1323,6 +1327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B05ACC31A85F90C0060D75B /* QuartzCore.framework in Frameworks */,
+				5BDACA811A8630F50042C251 /* AlipaySDK.framework in Frameworks */,
 				5B05ACC11A85F8E00060D75B /* SystemConfiguration.framework in Frameworks */,
 				AB6B48371A80572A001B57FD /* MessageUI.framework in Frameworks */,
 				AB1A2F901A6A369D0018942A /* libxml2.dylib in Frameworks */,
@@ -3094,6 +3099,8 @@
 		FF2A6C041A0F39E3001607AC /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				5BDACA7E1A8630F50042C251 /* AlipaySDK.bundle */,
+				5BDACA7F1A8630F50042C251 /* AlipaySDK.framework */,
 				FF2A6C8A1A0F3B9F001607AC /* ThreadSafeDict */,
 				FF2A6C7B1A0F3B8A001607AC /* SVPullToRefresh */,
 				FF2A6C491A0F3B7B001607AC /* SDWebImage */,
@@ -3421,7 +3428,7 @@
 				TargetAttributes = {
 					FF2A6BD91A0F3780001607AC = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = VDPFN6MNDG;
+						DevelopmentTeam = JERPD52W3W;
 					};
 					FF2A6BEC1A0F3780001607AC = {
 						CreatedOnToolsVersion = 6.0;
@@ -3606,6 +3613,7 @@
 				ABC6461E1A6B8B3C003A8FB1 /* messageToolbarBg@2x.png in Resources */,
 				AB8F91B91A6E31E400B884F3 /* chat_location_detail_disclosureHL.png in Resources */,
 				AB8F919E1A6E31E400B884F3 /* VoiceSearchFeedback015.png in Resources */,
+				5BDACA801A8630F50042C251 /* AlipaySDK.bundle in Resources */,
 				ABC645E21A6B8B3C003A8FB1 /* call_out_h@2x.png in Resources */,
 				AB8F918D1A6E31E400B884F3 /* VoiceSearchFeedback006@2x.png in Resources */,
 				ABC645E01A6B8B3C003A8FB1 /* call_out@2x.png in Resources */,
@@ -3949,8 +3957,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Le Shu (J97ECALLU9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Le Shu (J97ECALLU9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3991,8 +3998,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Le Shu (J97ECALLU9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Le Shu (J97ECALLU9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4017,6 +4023,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YHB_Prj/ThirdParty",
+				);
 				GCC_PREFIX_HEADER = "YHB_Prj/YHB-Prefix.pch";
 				INFOPLIST_FILE = YHB_Prj/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -4027,10 +4037,13 @@
 					"$(PROJECT_DIR)/YHB_Prj/3rdChat/3rdparty",
 					"$(PROJECT_DIR)/YHB_Prj/3rdChat/3rdparty/UMeng",
 					"$(PROJECT_DIR)/YHB_Prj/ThirdParty/alipay_sdk/alipay",
+					"$(PROJECT_DIR)/YHB_Prj/ThirdParty/alipay",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -4041,6 +4054,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YHB_Prj/ThirdParty",
+				);
 				GCC_PREFIX_HEADER = "YHB_Prj/YHB-Prefix.pch";
 				INFOPLIST_FILE = YHB_Prj/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -4051,10 +4068,12 @@
 					"$(PROJECT_DIR)/YHB_Prj/3rdChat/3rdparty",
 					"$(PROJECT_DIR)/YHB_Prj/3rdChat/3rdparty/UMeng",
 					"$(PROJECT_DIR)/YHB_Prj/ThirdParty/alipay_sdk/alipay",
+					"$(PROJECT_DIR)/YHB_Prj/ThirdParty/alipay",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};

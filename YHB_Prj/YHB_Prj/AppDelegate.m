@@ -10,6 +10,7 @@
 #import "RootTabBarController.h"
 #import "EaseMob.h"
 #import "YHBUser.h"
+#import <AlipaySDK/AlipaySDK.h>
  
 @interface AppDelegate ()
 
@@ -78,6 +79,20 @@
     }];
     [[EaseMob sharedInstance] applicationDidEnterBackground:application];
 
+}
+
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    if ([url.host isEqualToString:@"safepay"]) {
+        
+        [[AlipaySDK defaultService] processAuth_V2Result:url
+                                         standbyCallback:^(NSDictionary *resultDic) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kAlipayOrderResultMessage object:resultDic];
+        }];
+        
+    }
+    
+    return YES;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
