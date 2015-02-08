@@ -15,6 +15,7 @@
     UILabel *phoneLabel;
     UILabel *storeLabel;
     UIView *firstView;
+    UIButton *firstView1;
     UIButton *secondView;
     UIButton *thirdView;
     UIButton *fourthView;
@@ -25,8 +26,9 @@
     NSString *myTitle;
     NSString *myType;
     int userid;
+    BOOL isSupply;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame;
+- (instancetype)initWithFrame:(CGRect)frame isSupply:(BOOL)aBool;
 - (void)setPhoneNumber:(NSString *)aNumber storeName:(NSString *)aName itemId:(int)aItemId isVip:(int)aisVip imgUrl:(NSString *)aImgUrl Title:(NSString *)aTitle andType:(NSString *)aType userid:(int)aUserid;
 @end

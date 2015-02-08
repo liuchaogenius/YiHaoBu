@@ -128,7 +128,7 @@
             scrollView.contentSize = CGSizeMake(kMainScreenWidth, kMainScreenHeight-62-kContactViewHeight+1);
         }
         
-        contactView = [[YHBContactView alloc] initWithFrame:CGRectMake(0, scrollView.bottom, kMainScreenWidth, kContactViewHeight)];
+        contactView = [[YHBContactView alloc] initWithFrame:CGRectMake(0, scrollView.bottom, kMainScreenWidth, kContactViewHeight) isSupply:NO];
         contactView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:contactView];
     }

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "YHBShopCartCartlist.h"
-#import "ChangeCountView.h"
+#import "YHBNumControl.h"
 @class YHBShoppingCartTableViewCell;
 @protocol ShoppingCartCellDelegate <NSObject>
 
@@ -18,14 +18,14 @@
 @end
 
 
-@interface YHBShoppingCartTableViewCell : UITableViewCell
+@interface YHBShoppingCartTableViewCell : UITableViewCell<YHBNumControlDelegate>
 {
     UIImageView *shopImgView;
     UILabel *priceLabel;
     UILabel *countLabel;
     UILabel *titleLabel;
     UILabel *catLabel;
-    ChangeCountView *changeView;
+    YHBNumControl *changeView;
     YHBShopCartCartlist *myModel;
 }
 

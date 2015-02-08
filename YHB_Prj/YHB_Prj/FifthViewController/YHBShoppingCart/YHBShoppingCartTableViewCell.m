@@ -8,7 +8,6 @@
 
 #import "YHBShoppingCartTableViewCell.h"
 #import "UIImageView+WebCache.h"
-#import "ChangeCountView.h"
 #define cellHeight 80
 @implementation YHBShoppingCartTableViewCell
 
@@ -41,7 +40,7 @@
 //        catLabel.text = @"类别 : 纯色亚麻布";
         [self addSubview:catLabel];
         
-        priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(line, catLabel.top-23, 75, 18)];
+        priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(line, catLabel.top-27, 75, 18)];
         priceLabel.font = kFont15;
         priceLabel.textAlignment = NSTextAlignmentCenter;
         //        priceLabel.text = @"￥260.00";
@@ -54,13 +53,18 @@
         //        countLabel.text = @"×1";
         [self addSubview:countLabel];
         
-        changeView = [[ChangeCountView alloc] initWithFrame:CGRectMake(line, catLabel.top, 65, 20) andChangeBlock:^(float aCount) {
-//            countLabel.text = [NSString stringWithFormat:@"×%.1f", aCount];
-            BOOL isStay = (aCount==[myModel.number floatValue]);
-            [self.delegate changeCountWithItemId:[NSString stringWithFormat:@"%d", (int)myModel.itemid]
-                                        andCount:aCount WithSection:self.section row:self.row isStay:isStay];
-        }];
-        [self addSubview:changeView];
+        UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(kMainScreenWidth-105, cellHeight-25-10, 95, 25)];
+        [self addSubview:backView];
+        
+        changeView = [[YHBNumControl alloc] init];//WithFrame:CGRectMake(kMainScreenWidth-105, cellHeight-25-10, 95, 25)];
+        changeView.delegate = self;
+//        [[YHBNumControl alloc] initWithFrame:CGRectMake(line, catLabel.top, 65, 20) andChangeBlock:^(float aCount) {
+////            countLabel.text = [NSString stringWithFormat:@"×%.1f", aCount];
+//            BOOL isStay = (aCount==[myModel.number floatValue]);
+//            [self.delegate changeCountWithItemId:[NSString stringWithFormat:@"%d", (int)myModel.itemid]
+//                                        andCount:aCount WithSection:self.section row:self.row isStay:isStay];
+//        }];
+        [backView addSubview:changeView];
         
         UIView *bottomline = [[UIView alloc] initWithFrame:CGRectMake(0, cellHeight-0.3, kMainScreenWidth, 0.3)];
         bottomline.backgroundColor = [UIColor lightGrayColor];
@@ -113,9 +117,10 @@
 {
     myModel = aModel;
     [shopImgView sd_setImageWithURL:[NSURL URLWithString:aModel.thumb]];
-    countLabel.text = [NSString stringWithFormat:@"×%@", aModel.number];
-    NSString * newString = [countLabel.text substringWithRange:NSMakeRange(1, [countLabel.text length] - 1)];
-    [changeView setCountLabel:[newString floatValue]];
+    countLabel.text = [NSString stringWithFormat:@"×%.1f", [aModel.number floatValue]];
+    NSString *newString = [countLabel.text substringWithRange:NSMakeRange(1, [countLabel.text length] - 1)];
+    changeView.number = [newString floatValue];
+    changeView.isNumFloat = NO;
     titleLabel.text = aModel.title;
     priceLabel.text = [NSString stringWithFormat:@"￥%@",aModel.price];
     if (aModel.skuname.length>0)
@@ -126,6 +131,22 @@
     {
         catLabel.text = @"";
     }
+}
+
+- (void)numberControlValueDidChanged
+{
+    float count = changeView.number;
+    countLabel.text = [NSString stringWithFormat:@"×%.1f", count];
+    BOOL isStay = (count==[myModel.number floatValue]);
+    [self.delegate changeCountWithItemId:[NSString stringWithFormat:@"%d", (int)myModel.itemid]
+                                andCount:count WithSection:self.section row:self.row isStay:isStay];
+}
+
+- (BOOL)isPureFloat:(NSString*)string
+{
+    NSScanner* scan = [NSScanner scannerWithString:string];
+    float val;
+    return[scan scanFloat:&val] && [scan isAtEnd];
 }
 
 - (void)awakeFromNib {

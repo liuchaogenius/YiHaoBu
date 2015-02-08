@@ -10,83 +10,173 @@
 #import "ChatViewController.h"
 #import "YHBUser.h"
 #import "SVProgressHUD.h"
+#import "YHBStoreViewController.h"
 
 typedef enum:NSUInteger{
     btnTypePhone = 12,
     btnTypeText = 13,
-    btnTypeChat = 14
+    btnTypeChat = 14,
+    btnTypeShop
 }btnType;
 @implementation YHBContactView
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame isSupply:(BOOL)aBool
 {
     if (self = [super initWithFrame:frame]) {
-        self.backgroundColor = [UIColor whiteColor];
-        CGFloat viewHeight = frame.size.height;
-        
-        redLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 3)];
-        redLine.backgroundColor = KColor;
-        [self addSubview:redLine];
-        
-        firstView = [[UIView alloc] initWithFrame:CGRectMake(15, 0, 94, viewHeight)];
-        [self addSubview:firstView];
-        
-        phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, redLine.bottom+10, 94, 18)];
-        phoneLabel.font = kFont15;
-        phoneLabel.textAlignment = NSTextAlignmentCenter;
-//        phoneLabel.text = @"12345678910";
-        [firstView addSubview:phoneLabel];
-        
-        storeLabel = [[UILabel alloc] initWithFrame:CGRectMake(phoneLabel.left, phoneLabel.bottom+6, 94, 18)];
-        storeLabel.font = kFont15;
-        storeLabel.textAlignment = NSTextAlignmentCenter;
-//        storeLabel.text = @"某某店铺";
-        [firstView addSubview:storeLabel];
-//        CGSize size = [@"在线" sizeWithFont:kFont15];
-        
-        CGFloat interval = (kMainScreenWidth-firstView.right-15-60-30*2)/3.0;
-        
-        secondView = [[UIButton alloc] initWithFrame:CGRectMake(firstView.right+interval, 0, 30, viewHeight)];
-        secondView.tag=btnTypePhone;
-        [secondView addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:secondView];
-        
-        UIImageView *imgView2 = [[UIImageView alloc] initWithFrame:CGRectMake(3, 10, 24, 24)];
-        imgView2.image = [UIImage imageNamed:@"phoneImg"];
-        [secondView addSubview:imgView2];
-        
-        UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(0, imgView2.bottom+3, 30, 18)];
-        label2.font = kFont15;
-        label2.text = @"电话";
-        [secondView addSubview:label2];
-        
-        thirdView = [[UIButton alloc] initWithFrame:CGRectMake(secondView.right+interval, 0, 30, viewHeight)];
-        thirdView.tag=btnTypeText;
-        [thirdView addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:thirdView];
-        
-        UIImageView *imgView3 = [[UIImageView alloc] initWithFrame:CGRectMake(3, 10, 24, 24)];
-        imgView3.image = [UIImage imageNamed:@"textImg"];
-        [thirdView addSubview:imgView3];
-        
-        UILabel *label3 = [[UILabel alloc] initWithFrame:CGRectMake(0, imgView3.bottom+3, 30, 18)];
-        label3.font = kFont15;
-        label3.text = @"短信";
-        [thirdView addSubview:label3];
-        
-        fourthView = [[UIButton alloc] initWithFrame:CGRectMake(thirdView.right+interval, 0, 60, viewHeight)];
-        fourthView.tag=btnTypeChat;
-        [fourthView addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:fourthView];
-        
-        UIImageView *imgView4 = [[UIImageView alloc] initWithFrame:CGRectMake(15, 10, 30, 23)];
-        imgView4.image = [UIImage imageNamed:@"chatImg"];
-        [fourthView addSubview:imgView4];
-        
-        UILabel *label4 = [[UILabel alloc] initWithFrame:CGRectMake(0, imgView4.bottom+4, 60, 18)];
-        label4.font = kFont15;
-        label4.text = @"在线沟通";
-        [fourthView addSubview:label4];
+        isSupply = aBool;
+        if (aBool==YES)
+        {
+            self.backgroundColor = [UIColor whiteColor];
+            CGFloat viewHeight = frame.size.height;
+            
+            redLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 3)];
+            redLine.backgroundColor = KColor;
+            [self addSubview:redLine];
+            
+    //        firstView = [[UIView alloc] initWithFrame:CGRectMake(15, 0, 94, viewHeight)];
+    //        [self addSubview:firstView];
+    //        
+    //        phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, redLine.bottom+10, 94, 18)];
+    //        phoneLabel.font = kFont15;
+    //        phoneLabel.textAlignment = NSTextAlignmentCenter;
+    ////        phoneLabel.text = @"12345678910";
+    //        [firstView addSubview:phoneLabel];
+    //        
+    //        storeLabel = [[UILabel alloc] initWithFrame:CGRectMake(phoneLabel.left, phoneLabel.bottom+6, 94, 18)];
+    //        storeLabel.font = kFont15;
+    //        storeLabel.textAlignment = NSTextAlignmentCenter;
+    ////        storeLabel.text = @"某某店铺";
+    //        [firstView addSubview:storeLabel];
+    ////        CGSize size = [@"在线" sizeWithFont:kFont15];
+            
+            CGFloat interval = (kMainScreenWidth-60*4)/5.0;
+            
+            secondView = [[UIButton alloc] initWithFrame:CGRectMake(interval, 0, 60, viewHeight)];
+            secondView.tag=btnTypePhone;
+            [secondView addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:secondView];
+            
+            UIImageView *imgView2 = [[UIImageView alloc] initWithFrame:CGRectMake(18, 10, 24, 24)];
+            imgView2.image = [UIImage imageNamed:@"phoneImg"];
+            [secondView addSubview:imgView2];
+            
+            UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(0, imgView2.bottom+3, 60, 18)];
+            label2.font = kFont15;
+            label2.text = @"拨打电话";
+            [secondView addSubview:label2];
+            
+            thirdView = [[UIButton alloc] initWithFrame:CGRectMake(secondView.right+interval, 0, 60, viewHeight)];
+            thirdView.tag=btnTypeText;
+            [thirdView addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:thirdView];
+            
+            UIImageView *imgView3 = [[UIImageView alloc] initWithFrame:CGRectMake(18, 10, 24, 24)];
+            imgView3.image = [UIImage imageNamed:@"textImg"];
+            [thirdView addSubview:imgView3];
+            
+            UILabel *label3 = [[UILabel alloc] initWithFrame:CGRectMake(0, imgView3.bottom+3, 60, 18)];
+            label3.font = kFont15;
+            label3.text = @"发送短信";
+            [thirdView addSubview:label3];
+            
+            fourthView = [[UIButton alloc] initWithFrame:CGRectMake(thirdView.right+interval, 0, 60, viewHeight)];
+            fourthView.tag=btnTypeChat;
+            [fourthView addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:fourthView];
+            
+            UIImageView *imgView4 = [[UIImageView alloc] initWithFrame:CGRectMake(15, 10, 30, 23)];
+            imgView4.image = [UIImage imageNamed:@"chatImg"];
+            [fourthView addSubview:imgView4];
+            
+            UILabel *label4 = [[UILabel alloc] initWithFrame:CGRectMake(0, imgView4.bottom+4, 60, 18)];
+            label4.font = kFont15;
+            label4.text = @"在线沟通";
+            [fourthView addSubview:label4];
+            
+            firstView1 = [[UIButton alloc] initWithFrame:CGRectMake(fourthView.right+interval, 0, 60, viewHeight)];
+            firstView1.tag=btnTypeShop;
+            [firstView1 addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:firstView1];
+            
+            UIImageView *imgView11 = [[UIImageView alloc] initWithFrame:CGRectMake((60-24)/2, 10, 25, 23)];
+            imgView11.image = [UIImage imageNamed:@"scanshop"];
+            [firstView1 addSubview:imgView11];
+            
+            UILabel *label11 = [[UILabel alloc] initWithFrame:CGRectMake(0, imgView3.bottom+3, 60, 18)];
+            label11.font = kFont15;
+            label11.text = @"浏览商城";
+            [firstView1 addSubview:label11];
+        }
+        else
+        {
+            self.backgroundColor = [UIColor whiteColor];
+            CGFloat viewHeight = frame.size.height;
+            
+            redLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 3)];
+            redLine.backgroundColor = KColor;
+            [self addSubview:redLine];
+            
+            firstView = [[UIView alloc] initWithFrame:CGRectMake(15, 0, 94, viewHeight)];
+            [self addSubview:firstView];
+            
+            phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, redLine.bottom+10, 94, 18)];
+            phoneLabel.font = kFont15;
+            phoneLabel.textAlignment = NSTextAlignmentCenter;
+            //        phoneLabel.text = @"12345678910";
+            [firstView addSubview:phoneLabel];
+            
+            storeLabel = [[UILabel alloc] initWithFrame:CGRectMake(phoneLabel.left, phoneLabel.bottom+6, 94, 18)];
+            storeLabel.font = kFont15;
+            storeLabel.textAlignment = NSTextAlignmentCenter;
+            //        storeLabel.text = @"某某店铺";
+            [firstView addSubview:storeLabel];
+            //        CGSize size = [@"在线" sizeWithFont:kFont15];
+            
+            CGFloat interval = (kMainScreenWidth-firstView.right-15-60*3)/3.0;
+            
+            secondView = [[UIButton alloc] initWithFrame:CGRectMake(firstView.right+interval, 0, 60, viewHeight)];
+            secondView.tag=btnTypePhone;
+            [secondView addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:secondView];
+            
+            UIImageView *imgView2 = [[UIImageView alloc] initWithFrame:CGRectMake(18, 10, 24, 24)];
+            imgView2.image = [UIImage imageNamed:@"phoneImg"];
+            [secondView addSubview:imgView2];
+            
+            UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(0, imgView2.bottom+3, 60, 18)];
+            label2.font = kFont15;
+            label2.text = @"拨打电话";
+            [secondView addSubview:label2];
+            
+            thirdView = [[UIButton alloc] initWithFrame:CGRectMake(secondView.right+interval, 0, 60, viewHeight)];
+            thirdView.tag=btnTypeText;
+            [thirdView addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:thirdView];
+            
+            UIImageView *imgView3 = [[UIImageView alloc] initWithFrame:CGRectMake(18, 10, 24, 24)];
+            imgView3.image = [UIImage imageNamed:@"textImg"];
+            [thirdView addSubview:imgView3];
+            
+            UILabel *label3 = [[UILabel alloc] initWithFrame:CGRectMake(0, imgView3.bottom+3, 60, 18)];
+            label3.font = kFont15;
+            label3.text = @"发送短信";
+            [thirdView addSubview:label3];
+            
+            fourthView = [[UIButton alloc] initWithFrame:CGRectMake(thirdView.right+interval, 0, 60, viewHeight)];
+            fourthView.tag=btnTypeChat;
+            [fourthView addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:fourthView];
+            
+            UIImageView *imgView4 = [[UIImageView alloc] initWithFrame:CGRectMake(15, 10, 30, 23)];
+            imgView4.image = [UIImage imageNamed:@"chatImg"];
+            [fourthView addSubview:imgView4];
+            
+            UILabel *label4 = [[UILabel alloc] initWithFrame:CGRectMake(0, imgView4.bottom+4, 60, 18)];
+            label4.font = kFont15;
+            label4.text = @"在线沟通";
+            [fourthView addSubview:label4];
+        }
+
     }
     return self;
 }
@@ -107,9 +197,20 @@ typedef enum:NSUInteger{
         UIImageView *vipImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
         vipImgView.image = [UIImage imageNamed:@"vipLeftImg"];
         [self addSubview:vipImgView];
-        firstView.right += 20;
-        secondView.right += 10;
-        thirdView.right += 5;
+        
+        if (isSupply)
+        {
+            secondView.right += 15;
+            thirdView.right += 10;
+            fourthView.right += 5;
+        }
+        else
+        {
+            firstView.right += 15;
+            secondView.right += 10;
+            thirdView.right += 7;
+            fourthView.right+=5;
+        }
     }
     phoneLabel.text = aNumber;
     storeLabel.text = aName;
@@ -179,6 +280,11 @@ typedef enum:NSUInteger{
             vc.title = userName;
             [[self viewController].navigationController pushViewController:vc animated:YES];
         }
+    }
+    else if(aBtn.tag==btnTypeShop)
+    {
+        YHBStoreViewController *vc = [[YHBStoreViewController alloc] initWithShopID:userid];
+        [[self viewController].navigationController pushViewController:vc animated:YES];
     }
 }
 

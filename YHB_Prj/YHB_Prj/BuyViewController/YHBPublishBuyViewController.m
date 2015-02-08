@@ -175,7 +175,7 @@
 //    priceLabelNote.text = @"元/米";
 //    [editSupplyView addSubview:priceLabelNote];
     
-    variousView = [[YHBVariousView alloc] initWithFrame:CGRectMake(priceTextField.right, priceTextField.top+5, 50, labelHeight) andItemArray:@[@"米",@"码"] andSelectedItem:0];
+    variousView = [[YHBVariousView alloc] initWithFrame:CGRectMake(priceTextField.right, priceTextField.top+5, 50, labelHeight) andItemArray:@[@"米",@"码",@"本"] andSelectedItem:0];
     variousView.layer.borderColor = [KColor CGColor];
     variousView.layer.borderWidth=0.5;
     variousView.layer.cornerRadius = 10;
@@ -498,7 +498,7 @@
 #pragma mark 发布
 - (void)TouchPublish
 {
-    if ([self isTextNotNil:titleLabel.text]&&[self isTextNotNil:priceTextField.text]&&[self isTextNotNil:dayLabel.text]&&[self isTextNotNil:contentTextView.text]&&[self isTextNotNil:catNameLabel.text]&&[self isTextNotNil:nameTextField.text]&&[self isTextNotNil:phoneTextField.text])
+    if ([self isTextNotNil:titleLabel.text]&&[self isTextNotNil:priceTextField.text]&&[self isTextNotNil:dayLabel.text]&&[self isTextNotNil:contentTextView.text]&&[self isTextNotNil:catNameLabel.text]&&[self isTextNotNil:nameTextField.text]&&[self isTextNotNil:phoneTextField.text]&&variousImageView.currentPhotoCount>0)
     {
         [self showFlower];
         [self.netManage publishBuyWithItemid:0 title:titleLabel.text catid:catidString today:dayLabel.text content:contentTextView.text truename:nameTextField.text mobile:phoneTextField.text unit:variousView.itemLabel.text andSuccBlock:^(NSDictionary *aDict) {

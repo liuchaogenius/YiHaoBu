@@ -124,7 +124,7 @@
         [watchStoreBtn setTitle:@"浏览商城" forState:UIControlStateNormal];
         watchStoreBtn.layer.cornerRadius = 2.5;
         [watchStoreBtn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
-        [scrollView addSubview:watchStoreBtn];
+//        [scrollView addSubview:watchStoreBtn];
         
         if (watchStoreBtn.bottom+20>kMainScreenHeight-62-kContactViewHeight+1)
         {
@@ -135,7 +135,7 @@
             scrollView.contentSize = CGSizeMake(kMainScreenWidth, kMainScreenHeight-62-kContactViewHeight+1);
         }
         
-        contactView = [[YHBContactView alloc] initWithFrame:CGRectMake(0, scrollView.bottom, kMainScreenWidth, kContactViewHeight)];
+        contactView = [[YHBContactView alloc] initWithFrame:CGRectMake(0, scrollView.bottom, kMainScreenWidth, kContactViewHeight) isSupply:YES];
         contactView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:contactView];
     }
