@@ -18,6 +18,7 @@
 {
     YHBCatManage *manage;
     NSMutableArray *chooseArray;
+    UIButton *yesButton;
 }
 
 @property(nonatomic, strong) UITableView *tableView;
@@ -83,6 +84,7 @@
             [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
         }];
     }
+    self.rightButton.hidden = _isSingleSelect ? YES : NO;
 }
 
 - (void)viewDidLoad {
@@ -228,6 +230,7 @@
         [btn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
         [btn addTarget:self action:@selector(touchYesBtn) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:btn];
+        yesButton = btn;
     }
     return cell;
 }

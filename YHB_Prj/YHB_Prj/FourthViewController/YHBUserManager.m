@@ -43,14 +43,10 @@
             NSDictionary *data = successDict[@"data"];
             [[YHBUser sharedYHBUser] loginUserWithUserToken:data[@"token"]];
             sBlock();
-        }else if (result == 0){
-            NSString *str = successDict[@"error"];
-            MLOG(@"%@",str);
-            fBlock(0,@"发生了未知错误，请稍后重试");
-        }else if (result == -1){
-            fBlock(result,@"登录失败，用户不存在");
-        }else if(result == -3){
-            fBlock(result,@"登陆失败，手机号码错误");
+        }else{
+            if (fBlock) {
+                fBlock(result,kErrorStr);
+            }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
         MLOG(@"%@",error.localizedDescription);
@@ -93,12 +89,10 @@
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
        // NSDictionary *data = successDict[@"data"];
         NSInteger result = [successDict[@"result"] integerValue];
-        if (result == 0) {
-            fBlock(result,@"修改失败，请重新尝试");
-        }else if(result == 1){
+        if(result == 1){
             sBlock(); //成功
-        }else if(result == -2){
-            fBlock(result,@"验证码错误");
+        }else {
+            fBlock(result,kErrorStr);
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
         fBlock(-3,@"网络错误，请检查网络");
@@ -135,17 +129,11 @@
     
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         int result = [successDict[@"result"] intValue];
-        if ( result == -1) {
-            fBlock(result,@"60秒内只能发送一次验证码，请稍后重试");
-        }else if (result == -2){
-            fBlock(result,@"短信验证码发送失败，请稍后重试");
-        }else if (result == -3){
-            fBlock(result,@"手机号码有误,请换一个手机号码");
-        }else if (result == 1){
+        if (result == 1){
             //成功
             sBlock();
         }else{
-            fBlock(result,@"验证码发送失败，请稍后重试");
+            fBlock(result,kErrorStr);
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
         fBlock(-4,@"请求失败，请检查网络，稍后重试");
@@ -168,16 +156,10 @@
             if (sBlock) {
                 sBlock();
             }
-        }else if(result == -1){
-            fBlock(result,@"该手机已被注册");
-        }else if(result == -2){
-            fBlock(result,@"验证码错误，请重新填写");
-        }else if (result == -3){
-            fBlock(result,@"手机号码错误,注册失败");
-        }else if (result == -4){
-            fBlock(result, @"注册已关闭");
         }else{
-            fBlock(result,@"发生错误,注册失败");
+            if (fBlock) {
+                fBlock(result,kErrorStr);
+            }
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
         fBlock(-5,@"网络错误");

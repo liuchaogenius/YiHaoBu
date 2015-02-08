@@ -329,8 +329,8 @@
                 [CategoryViewController sharedInstancetype].isSingleSelect = NO;
                 YHBCatSubcate *cate = (YHBCatSubcate *)[aArray lastObject];
                 self.tabBarController.selectedIndex = 1;
-                NSDictionary * dic = [NSDictionary dictionaryWithObject:(cate?:@"") forKey:kSearchMessage];
-                [[NSNotificationCenter defaultCenter] postNotificationName:kSearchMessage object:nil userInfo:dic];
+                NSDictionary * dic = [NSDictionary dictionaryWithObject:cate forKey:kSearchCateMessage];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kSearchCateMessage object:nil userInfo:dic];
                 [[CategoryViewController sharedInstancetype] cleanAll];
             }];
             [self presentViewController:navVc animated:YES completion:nil];

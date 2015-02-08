@@ -80,11 +80,11 @@
     chatListVC = [[ChatListViewController alloc] init];
     chatListNav = [[UINavigationController alloc] initWithRootViewController:chatListVC];
     
-    fourthVC = [[FourthViewController alloc] init];
-    fourthNav = [[UINavigationController alloc] initWithRootViewController:fourthVC];
-    
     fifthVC = [[FifthViewController alloc] init];
-    fifthNav = [[UINavigationController alloc] initWithRootViewController:fifthVC];
+    fourthNav = [[UINavigationController alloc] initWithRootViewController:fifthVC];
+    
+    fourthVC = [[FourthViewController alloc] init];
+    fifthNav = [[UINavigationController alloc] initWithRootViewController:fourthVC];
     self.viewControllers = @[firstNav,secondNav,chatListNav,fourthNav,fifthNav];
 }
 

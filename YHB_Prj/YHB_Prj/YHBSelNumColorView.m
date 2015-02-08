@@ -137,7 +137,7 @@
         self.productModel = model;
         self.number = 1.0;
         self.isNumFloat = NO;
-        if ([self.productModel.unit1 isEqualToString:@"米"]) {
+        if ([self.productModel.typeid isEqualToString:@"0"]) {
             self.isNumFloat = YES;
         }
         _selectSkuIndex = -1;
@@ -198,8 +198,10 @@
     [self.infoView addSubview:self.tipLabel];
     
     UIButton *quitButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    quitButton.frame = CGRectMake(kMainScreenWidth-30, 10, 20, 26);
-    [quitButton setBackgroundImage:[UIImage imageNamed:@"quit"] forState:UIControlStateNormal];
+    quitButton.frame = CGRectMake(kMainScreenWidth-50, 10, 40, 30);
+    //[quitButton setBackgroundImage:[UIImage imageNamed:@"quit"] forState:UIControlStateNormal];
+    [quitButton setTitle:@"完成" forState:UIControlStateNormal];
+    [quitButton setTitleColor:KColor forState:UIControlStateNormal];
     [quitButton setContentMode:UIViewContentModeScaleAspectFit];
     [quitButton addTarget:self action:@selector(touchQuitButton) forControlEvents:UIControlEventTouchUpInside];
     [self.infoView addSubview:quitButton];

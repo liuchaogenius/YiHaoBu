@@ -209,6 +209,8 @@ typedef enum : NSUInteger {
     self = [super init];
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldSearch:) name:kSearchMessage object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldSearchCate:) name:kSearchCateMessage object:nil];
+        [self touchSegButton:(UIButton *)[self.segmentView viewWithTag:Search_sell]];
     }
     return self;
 }
@@ -218,6 +220,7 @@ typedef enum : NSUInteger {
     if (!_isNeedNav) {
         self.tabBarController.tabBarController.tabBar.hidden = NO;
         self.navigationController.navigationBarHidden = YES;
+        
     }
     
     [super viewWillAppear:YES];
@@ -584,6 +587,25 @@ typedef enum : NSUInteger {
             [self touchSearchButton];
         }
     }
+}
+
+- (void)shouldSearchCate : (NSNotification *)notf
+{
+    YHBCatSubcate *cate = notf.userInfo[kSearchCateMessage];
+    [self.tagsArray removeAllObjects];
+    [self.tagsArray addObject:cate];
+    
+    UIButton *btn = (UIButton *)[self.segmentView viewWithTag:Search_product];
+    if (btn && self.searchView) {
+        if (btn == _selectSegBtn) {
+            [self.tableView reloadData];
+        }
+        [self touchSegButton:btn];
+        self.searchTextField.text = @"";
+        
+        [self touchSearchButton];
+    }
+    
 }
 
 - (void)touchSegButton : (UIButton *)sender

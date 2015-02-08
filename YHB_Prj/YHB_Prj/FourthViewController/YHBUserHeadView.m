@@ -48,6 +48,8 @@
         
         _userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 40, kImageWith, kImageWith)];
         _userImageView.backgroundColor = [UIColor whiteColor];
+        _userImageView.layer.borderWidth = 1.0;
+        _userImageView.layer.borderColor = [kLineColor CGColor];
         _userImageView.layer.cornerRadius = 2.0;
         [_loginedView addSubview:_userImageView];
         

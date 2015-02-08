@@ -63,6 +63,7 @@ enum TextTag
 @property (strong ,nonatomic) UIView *headBackView;
 @property (strong, nonatomic) UIButton *confirmButton;
 @property (strong, nonatomic) UIView *userHeadCell;
+@property (strong, nonatomic) UIView *toolBarView;
 
 @property (strong, nonatomic) NSMutableArray *textFieldArray; 
 @property (weak, nonatomic) UITextView *mProductTextView;//主营产品
@@ -241,12 +242,24 @@ enum TextTag
         _confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _confirmButton.backgroundColor = KColor;
         [_confirmButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_confirmButton setFrame:CGRectMake(20, self.cellsView.bottom+30, kMainScreenWidth-40.0, 40)];
+        [_confirmButton setFrame:CGRectMake(20, (50-40)/2.0, kMainScreenWidth-40.0, 40)];
         _confirmButton.layer.cornerRadius = 5.0f;
         [_confirmButton setTitle:@"确认修改" forState:UIControlStateNormal];
         [_confirmButton addTarget:self action:@selector(touchConfirmButton) forControlEvents:UIControlEventTouchUpInside];
     }
     return _confirmButton;
+}
+
+- (UIView *)toolBarView
+{
+    if (!_toolBarView) {
+        _toolBarView = [[UIView alloc] initWithFrame:CGRectMake(0, kMainScreenHeight-64-50, kMainScreenWidth, 50)];
+        _toolBarView.backgroundColor = [UIColor whiteColor];
+        _toolBarView.layer.borderColor = [kLineColor CGColor];
+        _toolBarView.layer.borderWidth = 1.0;
+        [_toolBarView addSubview:self.confirmButton];
+    }
+    return _toolBarView;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -261,12 +274,14 @@ enum TextTag
     _isUserImageChanged = NO;
     _selCity = 0 ;
     _selProvince = 0;
+    self.view.backgroundColor = kViewBackgroundColor;
     
     [self settitleLabel:@"店铺详情"];
     _tipTitleArray = @[@"编辑姓名",@"编辑名称",@"编辑联系电话",@"编辑我的关注",@"编辑地区",@"编辑地址"];
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - 49)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - 44-49-20)];
     self.scrollView.backgroundColor = kViewBackgroundColor;
     [self.view addSubview:self.scrollView];
+    [self.view addSubview:self.toolBarView];
     
     _textFieldArray = [NSMutableArray arrayWithCapacity:3];
     
@@ -274,9 +289,9 @@ enum TextTag
     [self.scrollView addSubview:self.headBackView];
     [self.scrollView addSubview:self.userHeadCell];
     [self.scrollView addSubview:self.cellsView];
-    [self.scrollView addSubview:self.confirmButton];
+    //[self.scrollView addSubview:self.confirmButton];
     
-    [self.scrollView setContentSize:CGSizeMake(kMainScreenWidth, self.confirmButton.bottom+20)];
+    [self.scrollView setContentSize:CGSizeMake(kMainScreenWidth, self.cellsView.bottom+20)];
 
     [self setData];
     [self loadUserPhoto];

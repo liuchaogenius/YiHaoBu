@@ -9,8 +9,8 @@
 #import "YHBNumControl.h"
 #import "CCTextfieldToolView.h"
 
-#define kbtnHeight 25
-#define kTitleFont 12
+#define kbtnHeight 30
+#define kTitleFont 14
 
 @interface YHBNumControl()<UITextFieldDelegate>
 {
@@ -58,7 +58,7 @@
     [decButton setTitle:@"-" forState:UIControlStateNormal];
     [decButton addTarget:self action:@selector(decNum) forControlEvents:UIControlEventTouchUpInside];
     [decButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    decButton.titleLabel.font = kFont14;
+    decButton.titleLabel.font = kFont16;
     [self addSubview:decButton];
     
     UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -68,7 +68,7 @@
     addButton.layer.borderColor = [kLineColor CGColor];
     [addButton addTarget:self action:@selector(addNum) forControlEvents:UIControlEventTouchUpInside];
     [addButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    addButton.titleLabel.font = kFont14;
+    addButton.titleLabel.font = kFont16;
     [self addSubview:addButton];
     
     _numberTextfield = [[UITextField alloc] initWithFrame:CGRectMake(kbtnHeight, 0, 45, kbtnHeight)];
@@ -90,11 +90,11 @@
 //减
 - (void)decNum
 {
-    if (self.isNumFloat && self.number > 0.11) {
-        self.number -= 0.1;
+    if (self.isNumFloat && self.number >= 1.999) {
+        self.number -= 1;
         MLOG(@"%lf",self.number);
         self.numberTextfield.text = [NSString stringWithFormat:@"%.1f",self.number];
-    }else if((int)self.number >= 1){
+    }else if((int)self.number >= 2){
         self.number -= 1;
         self.numberTextfield.text = [NSString stringWithFormat:@"%d",(int)self.number];
     }
@@ -107,7 +107,7 @@
 - (void)addNum
 {
     if (self.isNumFloat) {
-        self.number += 0.1;
+        self.number += 1;
         self.numberTextfield.text = [NSString stringWithFormat:@"%.1f",self.number];
     }else{
         self.number += 1;

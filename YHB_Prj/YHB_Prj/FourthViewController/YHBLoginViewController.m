@@ -136,7 +136,8 @@ enum TextField_Type
         _LoginButton = loginButton;
         [_loginView addSubview:loginButton];
         
-        _forgetPasswordBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIButton *forgetButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _forgetPasswordBtn = forgetButton;
         [_forgetPasswordBtn setTitle:@"忘记密码" forState:UIControlStateNormal];
         [_forgetPasswordBtn addTarget:self action:@selector(touchForgetPswBtn) forControlEvents:UIControlEventTouchUpInside];
         [_forgetPasswordBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
@@ -218,6 +219,8 @@ enum TextField_Type
     [self.view addSubview:self.loginView];
     [self.view addSubview:self.selectedLine];
     [self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(backItem)];
+    
+    self.phoneNumberTextField.text = [self getRecentUserPhoneNum];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -291,6 +294,7 @@ enum TextField_Type
             [SVProgressHUD dismissWithSuccess:@"登陆成功！"];
             weakself.type = eLoginSucc;
             [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSuccessMessae object:nil];
+            [weakself saveUserPhone:[weakself.phoneNumberTextField.text copy]];
         } failure:^(int result, NSString *errorStr) {
             [SVProgressHUD dismissWithError:errorStr];
             //self.type = eLoginFail;
@@ -336,6 +340,7 @@ enum TextField_Type
                 [SVProgressHUD dismissWithSuccess:@"注册成功!"];
                 self.type = eLoginSucc;
                 [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSuccessMessae object:nil];
+                [self saveUserPhone:[self.rgPhoneNumberTextField.text copy]];
             } failure:^(int result, NSString *errorString) {
                 [SVProgressHUD dismissWithError:errorString];
             }];
@@ -434,6 +439,19 @@ enum TextField_Type
     [textField setClearButtonMode:UITextFieldViewModeWhileEditing];
     [textField setReturnKeyType:returnKeyType];
     return textField;
+}
+
+- (void)saveUserPhone:(NSString *)phoneNum
+{
+    if (phoneNum) {
+        [[NSUserDefaults standardUserDefaults] setObject:phoneNum forKey:@"phoneNum"];
+    }
+}
+
+- (NSString *)getRecentUserPhoneNum
+{
+    NSString *phone = [[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNum"] copy];
+    return phone ? :@"";
 }
 
 /*
