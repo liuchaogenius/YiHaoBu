@@ -218,6 +218,9 @@ enum TextTag
         textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         [cellView addSubview:textField];
         self.textFieldArray[i] = textField;
+        
+        [cellView addSubview:[self getArrowImageViewWithFrame:CGRectMake(kMainScreenWidth-10-15, (cellView.height-15)/2.0, 10, 15)]];
+        
     }else{
         UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(titleLabel.left, titleLabel.bottom+5, kMainScreenWidth-titleLabel.left*2, cellView.height-titleLabel.bottom-10)];
         textView.backgroundColor = [UIColor whiteColor];

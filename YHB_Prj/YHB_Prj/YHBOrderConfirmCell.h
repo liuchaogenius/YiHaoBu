@@ -24,6 +24,8 @@
 
 - (void)setUIWithTitle:(NSString *)title sku:(NSString *)sku price:(NSString *)price number:(NSString *)number isFloat:(BOOL)isFloat message:(NSString *)message Express:(NSString *)express exPrice:(NSString *)ePrice;
 
+//- (void)reSetNumber:(NSString *)number;
+
 - (void)keyboardWillShowWithHeight:(CGFloat)height;
 
 @end

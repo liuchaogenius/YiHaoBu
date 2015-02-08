@@ -300,7 +300,7 @@ enum SgmBtn_tag
         case SgmBtn_productInfo: //产品信息
         case SgmBtn_templetInfo://样板信息
         {
-            [self.listManger getProductListWithUserID:self.shopID typeID:0 pageID:(type==SgmBtn_productInfo?0:1) pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
+            [self.listManger getProductListWithUserID:self.shopID typeID:(type==SgmBtn_productInfo?0:1) pageID:pageID pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
                 if (pageID == 1) {
                     [self.rslistDic setObject:modelArray forKey:[NSString stringWithFormat:@"%ld",type-kSelectTagBase]];
                 }else{

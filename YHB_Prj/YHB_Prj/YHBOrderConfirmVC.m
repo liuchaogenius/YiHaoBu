@@ -24,6 +24,8 @@
 #import "YHBAdressListViewController.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import "JSONKit.h"
+#import "YHBPaySuccessVC.h"
+#import "YHBOrderDetailViewController.h"
 //#import "AlixPayResult.h"
 #define kBarHeight 80
 #define kPriceFont 17
@@ -47,17 +49,18 @@
 @property (strong, nonatomic) UILabel *priceLabel;
 
 
-@property (strong, nonatomic) NSString *sourse;
+@property (strong, nonatomic) NSString *sourse;//来源 购物车 产品页
 @property (strong, nonatomic) NSArray *requestArray;
-@property (strong, nonatomic) NSMutableDictionary *expressSelDic;
-@property (strong, nonatomic) NSMutableDictionary *messagesDic;
+@property (strong, nonatomic) NSMutableDictionary *expressSelDic;//快递选择结果s字典
+@property (strong, nonatomic) NSMutableDictionary *messagesDic;//留言s字典
 @property (strong, nonatomic) UIView *clearView;
 @property (strong, nonatomic) UIButton *tool;
 @property (strong, nonatomic) UIPickerView *expressPicker;
 
 @property (nonatomic,strong) UIImageView *alipayLogoImgview;
-@property (strong, nonatomic) NSMutableDictionary *postDic;
+@property (strong, nonatomic) NSMutableDictionary *postDic; //请求提交字典
 
+@property (strong, nonatomic) NSArray *orderIDArray;//订单id数组
 
 @end
 
@@ -307,7 +310,7 @@
             express = model.express[0];
         }
         NSString *exPricie = [NSString stringWithFormat:@"%d",(int)[self expressPriceWithExpress:express andNum:[model.number doubleValue]]];
-        [cell setUIWithTitle:model.title sku:model.skuname price:model.price number:model.number isFloat:[model.unit1 isEqualToString:@"米"] message:self.messagesDic[[self expressKeyWithI:(int)indexPath.section andJ:(int)indexPath.row]] Express:express.name exPrice:exPricie];
+        [cell setUIWithTitle:model.title sku:model.skuname price:model.price number:model.number isFloat:!(int)model.typeid message:self.messagesDic[[self expressKeyWithI:(int)indexPath.section andJ:(int)indexPath.row]] Express:express.name exPrice:exPricie];
         
         return cell;
     }else{
@@ -351,9 +354,11 @@
     MLOG(@"pay");
     if (self.postDic) {
         [SVProgressHUD showWithStatus:@"下单中..." cover:YES offsetY:0];
-        [self.orderManager postOrderWithPostDic:self.postDic Success:^(NSString *info) {
+        self.orderIDArray = nil;
+        [self.orderManager postOrderWithPostDic:self.postDic Success:^(NSString *info,NSArray *itemArray) {
             //info 拼接好的支付宝字段
             [SVProgressHUD dismissWithSuccess:@"下单成功"];
+            self.orderIDArray = [itemArray copy];
             MLOG(@"info:%@",info);
 #warning 此处添加支付
             if (info) {
@@ -375,39 +380,49 @@
 
 - (void)aliPayresult:(NSNotification *)aNotification
 {
-    MLOG(@"%@",aNotification);
+    MLOG(@"resultDic :  %@",aNotification);
     
     NSDictionary *resultDic = [aNotification object];
     
     if(resultDic && resultDic.count)
     {
         MLOG(@"notificationDict = %@",resultDic);
-        int resultStatus = [[resultDic objectForKey:@"ResultStatus"] intValue];
+        int resultStatus = [[resultDic objectForKey:@"resultStatus"] intValue];
         NSString *resultDesc = [resultDic objectForKey:@"result"];
         if(resultStatus == 9000)///支付成功
         {
             //已支付 灰色-按钮 不可用  已支付。。---
-            [SVProgressHUD showSuccessWithStatus:@"支付成功" cover:YES offsetY:kMainScreenHeight/2.0];
+            //[SVProgressHUD showSuccessWithStatus:@"支付成功" cover:YES offsetY:kMainScreenHeight/2.0];
 //            commitButton.enabled = NO;
 //            [commitButton setBackgroundColor:[UIColor lightGrayColor]];
 //            [commitButton setTitle:@"已支付" forState:UIControlStateNormal];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kPaySuccess object:self];
-            
+            //[[NSNotificationCenter defaultCenter] postNotificationName:kPaySuccess object:self];
+            YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] init];
+            [self.navigationController pushViewController:sVc animated:YES];
             
         }
         else if(resultStatus == 8000)///正在处理也当支付成功
         {
-            [SVProgressHUD showSuccessWithStatus:@"支付成功" cover:YES offsetY:kMainScreenHeight/2.0];
+            //[SVProgressHUD showSuccessWithStatus:@"支付成功" cover:YES offsetY:kMainScreenHeight/2.0];
 //            commitButton.enabled = NO;
 //            [commitButton setBackgroundColor:[UIColor lightGrayColor]];
 //            [commitButton setTitle:@"已支付" forState:UIControlStateNormal];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kPaySuccess object:self];
+            //[[NSNotificationCenter defaultCenter] postNotificationName:kPaySuccess object:self];
+            YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] init];
+            [self.navigationController pushViewController:sVc animated:YES];
             
         }
         else///支付失败
         {
-            [SVProgressHUD showErrorWithStatus:@"支付失败，请重新尝试" cover:YES offsetY:kMainScreenHeight/2.0];
+            [SVProgressHUD showErrorWithStatus:@"支付失败，请在订单页面重新支付" cover:YES offsetY:kMainScreenHeight/2.0];
             [[NSNotificationCenter defaultCenter] postNotificationName:kPayFail object:self];
+            
+            if (self.orderIDArray) {
+                NSInteger orderID = [self.orderIDArray.firstObject integerValue];
+                YHBOrderDetailViewController *vc = [[YHBOrderDetailViewController alloc] initWithItemId:orderID];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
         }
     }
     
@@ -437,7 +452,6 @@
     
     
     [self reloadHeader];
-    
 }
 
 - (void)touchExpressCellWithIndexPath:(NSIndexPath *)indexPath
@@ -524,6 +538,7 @@
     if (_titleLabel) {
         _titleLabel.right = _priceLabel.left;
     }
+    
 }
 ////将index转化为留言dic 与 快递dic的key
 //- (NSString *)keyWithSection:(NSInteger)aSection Row:(NSInteger)aRow

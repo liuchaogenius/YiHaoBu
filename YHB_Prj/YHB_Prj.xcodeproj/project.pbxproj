@@ -17,6 +17,10 @@
 		5B05ACF41A8603F50060D75B /* YHBOConfirmExpress.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B05ACF21A8603F50060D75B /* YHBOConfirmExpress.m */; };
 		5B0A34B81A45862A0071A357 /* YHBFuncBlockCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0A34B71A45862A0071A357 /* YHBFuncBlockCell.m */; };
 		5B0A34BB1A458E180071A357 /* YHBHotTagsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0A34BA1A458E180071A357 /* YHBHotTagsCell.m */; };
+		5B10A81B1A8718AF0018E2D6 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5B10A8191A8718AF0018E2D6 /* AlipaySDK.bundle */; };
+		5B10A81C1A8718AF0018E2D6 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B10A81A1A8718AF0018E2D6 /* AlipaySDK.framework */; };
+		5B10A8201A873BB50018E2D6 /* YHBPaySuccessVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B10A81F1A873BB50018E2D6 /* YHBPaySuccessVC.m */; };
+		5B10A8231A8752750018E2D6 /* YHBOrderDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B10A8211A8752750018E2D6 /* YHBOrderDetail.m */; };
 		5B13A4D61A57EC4B00713C5E /* YHBProductManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B13A4D51A57EC4B00713C5E /* YHBProductManager.m */; };
 		5B13A4D91A57FBE800713C5E /* YHBPdtInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B13A4D81A57FBE800713C5E /* YHBPdtInfoView.m */; };
 		5B13A4DC1A58128900713C5E /* YHBBuytoolBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B13A4DB1A58128900713C5E /* YHBBuytoolBarView.m */; };
@@ -77,7 +81,6 @@
 		5BC5211C1A4C000F00B78E52 /* YHBInfoListManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC5211B1A4C000F00B78E52 /* YHBInfoListManager.m */; };
 		5BCBB0721A6E372200BF5E5C /* YHBOrderSecondView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBB0711A6E372200BF5E5C /* YHBOrderSecondView.m */; };
 		5BCBB0751A6E399400BF5E5C /* YHBOrderDetailInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBB0741A6E399400BF5E5C /* YHBOrderDetailInfoView.m */; };
-		5BCBB0781A6EAB1400BF5E5C /* YHBOrderDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBB0761A6EAB1400BF5E5C /* YHBOrderDetail.m */; };
 		5BCBB07C1A6FDA5D00BF5E5C /* YHBOrderConfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBB07B1A6FDA5D00BF5E5C /* YHBOrderConfirmVC.m */; };
 		5BCBB07F1A6FDAB000BF5E5C /* YHBOrderAddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBB07E1A6FDAB000BF5E5C /* YHBOrderAddressView.m */; };
 		5BCBB0841A6FDBCD00BF5E5C /* YHBAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBB0821A6FDBCD00BF5E5C /* YHBAddressModel.m */; };
@@ -91,8 +94,6 @@
 		5BD632A11A5FA37400095DFD /* YHBStoreDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD632A01A5FA37400095DFD /* YHBStoreDetailViewController.m */; };
 		5BD8F96C1A1374A500B3A4F2 /* YHBUserHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD8F96B1A1374A500B3A4F2 /* YHBUserHeadView.m */; };
 		5BD8F96F1A13874D00B3A4F2 /* YHBUserCellsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD8F96E1A13874D00B3A4F2 /* YHBUserCellsView.m */; };
-		5BDACA801A8630F50042C251 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5BDACA7E1A8630F50042C251 /* AlipaySDK.bundle */; };
-		5BDACA811A8630F50042C251 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BDACA7F1A8630F50042C251 /* AlipaySDK.framework */; };
 		5BE46AE31A529C50008EF2D3 /* YHBPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE46ADF1A529C50008EF2D3 /* YHBPage.m */; };
 		5BE46AE71A52A00C008EF2D3 /* YHBRslist.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE46AE51A52A00C008EF2D3 /* YHBRslist.m */; };
 		5BE76FF51A6C9D3000E3F62A /* YHBOrderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE76FF41A6C9D3000E3F62A /* YHBOrderManager.m */; };
@@ -497,6 +498,12 @@
 		5B0A34B71A45862A0071A357 /* YHBFuncBlockCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBFuncBlockCell.m; sourceTree = "<group>"; };
 		5B0A34B91A458E180071A357 /* YHBHotTagsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBHotTagsCell.h; sourceTree = "<group>"; };
 		5B0A34BA1A458E180071A357 /* YHBHotTagsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBHotTagsCell.m; sourceTree = "<group>"; };
+		5B10A8191A8718AF0018E2D6 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
+		5B10A81A1A8718AF0018E2D6 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		5B10A81E1A873BB50018E2D6 /* YHBPaySuccessVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPaySuccessVC.h; sourceTree = "<group>"; };
+		5B10A81F1A873BB50018E2D6 /* YHBPaySuccessVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBPaySuccessVC.m; sourceTree = "<group>"; };
+		5B10A8211A8752750018E2D6 /* YHBOrderDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderDetail.m; sourceTree = "<group>"; };
+		5B10A8221A8752750018E2D6 /* YHBOrderDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderDetail.h; sourceTree = "<group>"; };
 		5B13A4D41A57EC4B00713C5E /* YHBProductManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBProductManager.h; sourceTree = "<group>"; };
 		5B13A4D51A57EC4B00713C5E /* YHBProductManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBProductManager.m; sourceTree = "<group>"; };
 		5B13A4D71A57FBE800713C5E /* YHBPdtInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPdtInfoView.h; sourceTree = "<group>"; };
@@ -616,8 +623,6 @@
 		5BCBB0711A6E372200BF5E5C /* YHBOrderSecondView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderSecondView.m; sourceTree = "<group>"; };
 		5BCBB0731A6E399400BF5E5C /* YHBOrderDetailInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderDetailInfoView.h; sourceTree = "<group>"; };
 		5BCBB0741A6E399400BF5E5C /* YHBOrderDetailInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderDetailInfoView.m; sourceTree = "<group>"; };
-		5BCBB0761A6EAB1400BF5E5C /* YHBOrderDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderDetail.m; sourceTree = "<group>"; };
-		5BCBB0771A6EAB1400BF5E5C /* YHBOrderDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderDetail.h; sourceTree = "<group>"; };
 		5BCBB07A1A6FDA5D00BF5E5C /* YHBOrderConfirmVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YHBOrderConfirmVC.h; path = YHB_Prj/YHBOrderConfirmVC.h; sourceTree = SOURCE_ROOT; };
 		5BCBB07B1A6FDA5D00BF5E5C /* YHBOrderConfirmVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YHBOrderConfirmVC.m; path = YHB_Prj/YHBOrderConfirmVC.m; sourceTree = SOURCE_ROOT; };
 		5BCBB07D1A6FDAB000BF5E5C /* YHBOrderAddressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderAddressView.h; sourceTree = "<group>"; };
@@ -645,8 +650,6 @@
 		5BD8F96B1A1374A500B3A4F2 /* YHBUserHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUserHeadView.m; sourceTree = "<group>"; };
 		5BD8F96D1A13874D00B3A4F2 /* YHBUserCellsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBUserCellsView.h; sourceTree = "<group>"; };
 		5BD8F96E1A13874D00B3A4F2 /* YHBUserCellsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUserCellsView.m; sourceTree = "<group>"; };
-		5BDACA7E1A8630F50042C251 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
-		5BDACA7F1A8630F50042C251 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		5BE46ADF1A529C50008EF2D3 /* YHBPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBPage.m; sourceTree = "<group>"; };
 		5BE46AE21A529C50008EF2D3 /* YHBPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPage.h; sourceTree = "<group>"; };
 		5BE46AE51A52A00C008EF2D3 /* YHBRslist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBRslist.m; sourceTree = "<group>"; };
@@ -1330,7 +1333,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B05ACC31A85F90C0060D75B /* QuartzCore.framework in Frameworks */,
-				5BDACA811A8630F50042C251 /* AlipaySDK.framework in Frameworks */,
+				5B10A81C1A8718AF0018E2D6 /* AlipaySDK.framework in Frameworks */,
 				5B05ACC11A85F8E00060D75B /* SystemConfiguration.framework in Frameworks */,
 				AB6B48371A80572A001B57FD /* MessageUI.framework in Frameworks */,
 				AB1A2F901A6A369D0018942A /* libxml2.dylib in Frameworks */,
@@ -1376,6 +1379,15 @@
 				5B0531D01A76903D0020077D /* YHBPublicCommentVC.m */,
 			);
 			name = YHBPublishCommentVC;
+			sourceTree = "<group>";
+		};
+		5B10A81D1A873B810018E2D6 /* PaySuccessViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5B10A81E1A873BB50018E2D6 /* YHBPaySuccessVC.h */,
+				5B10A81F1A873BB50018E2D6 /* YHBPaySuccessVC.m */,
+			);
+			name = PaySuccessViewController;
 			sourceTree = "<group>";
 		};
 		5B13A4D21A57EBFA00713C5E /* View */ = {
@@ -1590,8 +1602,8 @@
 		5B7C40991A6CEE3600FB2DF5 /* OrderDetailModel */ = {
 			isa = PBXGroup;
 			children = (
-				5BCBB0771A6EAB1400BF5E5C /* YHBOrderDetail.h */,
-				5BCBB0761A6EAB1400BF5E5C /* YHBOrderDetail.m */,
+				5B10A8211A8752750018E2D6 /* YHBOrderDetail.m */,
+				5B10A8221A8752750018E2D6 /* YHBOrderDetail.h */,
 			);
 			name = OrderDetailModel;
 			sourceTree = "<group>";
@@ -3104,8 +3116,8 @@
 		FF2A6C041A0F39E3001607AC /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
-				5BDACA7E1A8630F50042C251 /* AlipaySDK.bundle */,
-				5BDACA7F1A8630F50042C251 /* AlipaySDK.framework */,
+				5B10A8191A8718AF0018E2D6 /* AlipaySDK.bundle */,
+				5B10A81A1A8718AF0018E2D6 /* AlipaySDK.framework */,
 				FF2A6C8A1A0F3B9F001607AC /* ThreadSafeDict */,
 				FF2A6C7B1A0F3B8A001607AC /* SVPullToRefresh */,
 				FF2A6C491A0F3B7B001607AC /* SDWebImage */,
@@ -3293,6 +3305,7 @@
 		FF2A6C8B1A0F3C58001607AC /* UIParty */ = {
 			isa = PBXGroup;
 			children = (
+				5B10A81D1A873B810018E2D6 /* PaySuccessViewController */,
 				5B5887811A78A2DD006FB319 /* ProductListViewController */,
 				5B0531CD1A768F9C0020077D /* YHBPublishCommentVC */,
 				5B0531C31A752ECB0020077D /* CertificViewController */,
@@ -3618,7 +3631,7 @@
 				ABC6461E1A6B8B3C003A8FB1 /* messageToolbarBg@2x.png in Resources */,
 				AB8F91B91A6E31E400B884F3 /* chat_location_detail_disclosureHL.png in Resources */,
 				AB8F919E1A6E31E400B884F3 /* VoiceSearchFeedback015.png in Resources */,
-				5BDACA801A8630F50042C251 /* AlipaySDK.bundle in Resources */,
+				5B10A81B1A8718AF0018E2D6 /* AlipaySDK.bundle in Resources */,
 				ABC645E21A6B8B3C003A8FB1 /* call_out_h@2x.png in Resources */,
 				AB8F918D1A6E31E400B884F3 /* VoiceSearchFeedback006@2x.png in Resources */,
 				ABC645E01A6B8B3C003A8FB1 /* call_out@2x.png in Resources */,
@@ -3644,7 +3657,6 @@
 				AB9FD9A01A4696F3003EBE40 /* YHBBuyDetailManage.m in Sources */,
 				5B0A34B81A45862A0071A357 /* YHBFuncBlockCell.m in Sources */,
 				FF2A6C751A0F3B7B001607AC /* UIImage+GIF.m in Sources */,
-				5BCBB0781A6EAB1400BF5E5C /* YHBOrderDetail.m in Sources */,
 				AB59D9531A33224E002B76E1 /* GoodsTableViewCell.m in Sources */,
 				5B5887841A78A301006FB319 /* YHBProductListViewController.m in Sources */,
 				5B0531901A74B8620020077D /* YHBProductWebVC.m in Sources */,
@@ -3758,6 +3770,7 @@
 				5B13A4E21A5951A800713C5E /* YHBConnectStoreVeiw.m in Sources */,
 				5B8D077E1A6BF5B100AF6341 /* YHBOrderListCell.m in Sources */,
 				FF2A6CA51A0F40B0001607AC /* ThreadSafeMutableDictionary.m in Sources */,
+				5B10A8201A873BB50018E2D6 /* YHBPaySuccessVC.m in Sources */,
 				ABC646D31A6B8BC8003A8FB1 /* PSTGridLayoutItem.m in Sources */,
 				5B85F3CC1A6767AA00B91DA4 /* YHBSku.m in Sources */,
 				FF2A6C0C1A0F3A01001607AC /* UIImage+ImageEffects.m in Sources */,
@@ -3808,6 +3821,7 @@
 				ABC646C51A6B8BC8003A8FB1 /* UIImage+EMWebP.m in Sources */,
 				5BBCB6CA1A36E51500E50BF5 /* YHBMyPrivateViewController.m in Sources */,
 				ABC646C31A6B8BC8003A8FB1 /* UIImage+EMGIF.m in Sources */,
+				5B10A8231A8752750018E2D6 /* YHBOrderDetail.m in Sources */,
 				AB6247F91A6FDBDF002BA418 /* QuoteTableViewCell.m in Sources */,
 				5B23F4461A442A8D00F39D8E /* YHBSelllist.m in Sources */,
 				FF2A6C2D1A0F3B50001607AC /* AFNetworkActivityIndicatorManager.m in Sources */,
@@ -3963,8 +3977,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-                CODE_SIGN_IDENTITY = "iPhone Developer: Le Shu (J97ECALLU9)";
-                "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Le Shu (J97ECALLU9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -4005,8 +4018,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-                CODE_SIGN_IDENTITY = "iPhone Developer: Le Shu (J97ECALLU9)";
-                "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Le Shu (J97ECALLU9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

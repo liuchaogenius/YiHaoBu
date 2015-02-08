@@ -1,7 +1,7 @@
 //
 //  YHBOrderDetail.m
 //
-//  Created by   on 15/1/20
+//  Created by   on 15/2/8
 //  Copyright (c) 2015 __MyCompanyName__. All rights reserved.
 //
 
@@ -16,6 +16,7 @@ NSString *const kYHBOrderDetailAddtime = @"addtime";
 NSString *const kYHBOrderDetailReceivetime = @"receivetime";
 NSString *const kYHBOrderDetailSendDays = @"send_days";
 NSString *const kYHBOrderDetailSendtime = @"sendtime";
+NSString *const kYHBOrderDetailSellname = @"sellname";
 NSString *const kYHBOrderDetailItemid = @"itemid";
 NSString *const kYHBOrderDetailOrderid = @"orderid";
 NSString *const kYHBOrderDetailFeeName = @"fee_name";
@@ -25,7 +26,6 @@ NSString *const kYHBOrderDetailSendUrl = @"send_url";
 NSString *const kYHBOrderDetailNumber = @"number";
 NSString *const kYHBOrderDetailPaydate = @"paydate";
 NSString *const kYHBOrderDetailSenddate = @"senddate";
-NSString *const kYHBOrderDetailSeller = @"sellname";
 NSString *const kYHBOrderDetailSendTime = @"send_time";
 NSString *const kYHBOrderDetailBuyerName = @"buyer_name";
 NSString *const kYHBOrderDetailTradeNo = @"trade_no";
@@ -64,6 +64,7 @@ NSString *const kYHBOrderDetailAmount = @"amount";
 @synthesize receivetime = _receivetime;
 @synthesize sendDays = _sendDays;
 @synthesize sendtime = _sendtime;
+@synthesize sellname = _sellname;
 @synthesize itemid = _itemid;
 @synthesize orderid = _orderid;
 @synthesize feeName = _feeName;
@@ -73,7 +74,6 @@ NSString *const kYHBOrderDetailAmount = @"amount";
 @synthesize number = _number;
 @synthesize paydate = _paydate;
 @synthesize senddate = _senddate;
-@synthesize seller = _seller;
 @synthesize sendTime = _sendTime;
 @synthesize buyerName = _buyerName;
 @synthesize tradeNo = _tradeNo;
@@ -148,6 +148,7 @@ NSString *const kYHBOrderDetailAmount = @"amount";
     return nil;
 }
 
+
 - (instancetype)initWithDictionary:(NSDictionary *)dict
 {
     self = [super init];
@@ -163,6 +164,7 @@ NSString *const kYHBOrderDetailAmount = @"amount";
             self.receivetime = [self objectOrNilForKey:kYHBOrderDetailReceivetime fromDictionary:dict];
             self.sendDays = [self objectOrNilForKey:kYHBOrderDetailSendDays fromDictionary:dict];
             self.sendtime = [self objectOrNilForKey:kYHBOrderDetailSendtime fromDictionary:dict];
+            self.sellname = [self objectOrNilForKey:kYHBOrderDetailSellname fromDictionary:dict];
             self.itemid = [[self objectOrNilForKey:kYHBOrderDetailItemid fromDictionary:dict] doubleValue];
             self.orderid = [self objectOrNilForKey:kYHBOrderDetailOrderid fromDictionary:dict];
             self.feeName = [self objectOrNilForKey:kYHBOrderDetailFeeName fromDictionary:dict];
@@ -172,7 +174,6 @@ NSString *const kYHBOrderDetailAmount = @"amount";
             self.number = [self objectOrNilForKey:kYHBOrderDetailNumber fromDictionary:dict];
             self.paydate = [self objectOrNilForKey:kYHBOrderDetailPaydate fromDictionary:dict];
             self.senddate = [self objectOrNilForKey:kYHBOrderDetailSenddate fromDictionary:dict];
-            self.seller = [self objectOrNilForKey:kYHBOrderDetailSeller fromDictionary:dict];
             self.sendTime = [self objectOrNilForKey:kYHBOrderDetailSendTime fromDictionary:dict];
             self.buyerName = [self objectOrNilForKey:kYHBOrderDetailBuyerName fromDictionary:dict];
             self.tradeNo = [self objectOrNilForKey:kYHBOrderDetailTradeNo fromDictionary:dict];
@@ -221,6 +222,7 @@ NSString *const kYHBOrderDetailAmount = @"amount";
     [mutableDict setValue:self.receivetime forKey:kYHBOrderDetailReceivetime];
     [mutableDict setValue:self.sendDays forKey:kYHBOrderDetailSendDays];
     [mutableDict setValue:self.sendtime forKey:kYHBOrderDetailSendtime];
+    [mutableDict setValue:self.sellname forKey:kYHBOrderDetailSellname];
     [mutableDict setValue:[NSNumber numberWithDouble:self.itemid] forKey:kYHBOrderDetailItemid];
     [mutableDict setValue:self.orderid forKey:kYHBOrderDetailOrderid];
     [mutableDict setValue:self.feeName forKey:kYHBOrderDetailFeeName];
@@ -230,7 +232,6 @@ NSString *const kYHBOrderDetailAmount = @"amount";
     [mutableDict setValue:self.number forKey:kYHBOrderDetailNumber];
     [mutableDict setValue:self.paydate forKey:kYHBOrderDetailPaydate];
     [mutableDict setValue:self.senddate forKey:kYHBOrderDetailSenddate];
-    [mutableDict setValue:self.seller forKey:kYHBOrderDetailSeller];
     [mutableDict setValue:self.sendTime forKey:kYHBOrderDetailSendTime];
     [mutableDict setValue:self.buyerName forKey:kYHBOrderDetailBuyerName];
     [mutableDict setValue:self.tradeNo forKey:kYHBOrderDetailTradeNo];
@@ -282,6 +283,7 @@ NSString *const kYHBOrderDetailAmount = @"amount";
     self.receivetime = [aDecoder decodeObjectForKey:kYHBOrderDetailReceivetime];
     self.sendDays = [aDecoder decodeObjectForKey:kYHBOrderDetailSendDays];
     self.sendtime = [aDecoder decodeObjectForKey:kYHBOrderDetailSendtime];
+    self.sellname = [aDecoder decodeObjectForKey:kYHBOrderDetailSellname];
     self.itemid = [aDecoder decodeDoubleForKey:kYHBOrderDetailItemid];
     self.orderid = [aDecoder decodeObjectForKey:kYHBOrderDetailOrderid];
     self.feeName = [aDecoder decodeObjectForKey:kYHBOrderDetailFeeName];
@@ -291,7 +293,6 @@ NSString *const kYHBOrderDetailAmount = @"amount";
     self.number = [aDecoder decodeObjectForKey:kYHBOrderDetailNumber];
     self.paydate = [aDecoder decodeObjectForKey:kYHBOrderDetailPaydate];
     self.senddate = [aDecoder decodeObjectForKey:kYHBOrderDetailSenddate];
-    self.seller = [aDecoder decodeObjectForKey:kYHBOrderDetailSeller];
     self.sendTime = [aDecoder decodeObjectForKey:kYHBOrderDetailSendTime];
     self.buyerName = [aDecoder decodeObjectForKey:kYHBOrderDetailBuyerName];
     self.tradeNo = [aDecoder decodeObjectForKey:kYHBOrderDetailTradeNo];
@@ -326,6 +327,7 @@ NSString *const kYHBOrderDetailAmount = @"amount";
     [aCoder encodeObject:_receivetime forKey:kYHBOrderDetailReceivetime];
     [aCoder encodeObject:_sendDays forKey:kYHBOrderDetailSendDays];
     [aCoder encodeObject:_sendtime forKey:kYHBOrderDetailSendtime];
+    [aCoder encodeObject:_sellname forKey:kYHBOrderDetailSellname];
     [aCoder encodeDouble:_itemid forKey:kYHBOrderDetailItemid];
     [aCoder encodeObject:_orderid forKey:kYHBOrderDetailOrderid];
     [aCoder encodeObject:_feeName forKey:kYHBOrderDetailFeeName];
@@ -335,7 +337,6 @@ NSString *const kYHBOrderDetailAmount = @"amount";
     [aCoder encodeObject:_number forKey:kYHBOrderDetailNumber];
     [aCoder encodeObject:_paydate forKey:kYHBOrderDetailPaydate];
     [aCoder encodeObject:_senddate forKey:kYHBOrderDetailSenddate];
-    [aCoder encodeObject:_seller forKey:kYHBOrderDetailSeller];
     [aCoder encodeObject:_sendTime forKey:kYHBOrderDetailSendTime];
     [aCoder encodeObject:_buyerName forKey:kYHBOrderDetailBuyerName];
     [aCoder encodeObject:_tradeNo forKey:kYHBOrderDetailTradeNo];
@@ -372,6 +373,7 @@ NSString *const kYHBOrderDetailAmount = @"amount";
         copy.receivetime = [self.receivetime copyWithZone:zone];
         copy.sendDays = [self.sendDays copyWithZone:zone];
         copy.sendtime = [self.sendtime copyWithZone:zone];
+        copy.sellname = [self.sellname copyWithZone:zone];
         copy.itemid = self.itemid;
         copy.orderid = [self.orderid copyWithZone:zone];
         copy.feeName = [self.feeName copyWithZone:zone];
@@ -381,7 +383,6 @@ NSString *const kYHBOrderDetailAmount = @"amount";
         copy.number = [self.number copyWithZone:zone];
         copy.paydate = [self.paydate copyWithZone:zone];
         copy.senddate = [self.senddate copyWithZone:zone];
-        copy.seller = [self.seller copyWithZone:zone];
         copy.sendTime = [self.sendTime copyWithZone:zone];
         copy.buyerName = [self.buyerName copyWithZone:zone];
         copy.tradeNo = [self.tradeNo copyWithZone:zone];

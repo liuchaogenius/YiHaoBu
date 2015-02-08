@@ -1,7 +1,7 @@
 //
 //  YHBOrderDetail.h
 //
-//  Created by   on 15/1/20
+//  Created by   on 15/2/8
 //  Copyright (c) 2015 __MyCompanyName__. All rights reserved.
 //
 
@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSString *receivetime;
 @property (nonatomic, strong) NSString *sendDays;
 @property (nonatomic, strong) NSString *sendtime;
+@property (nonatomic, strong) NSString *sellname;
 @property (nonatomic, assign) double itemid;
 @property (nonatomic, strong) NSString *orderid;
 @property (nonatomic, strong) NSString *feeName;
@@ -28,7 +29,6 @@
 @property (nonatomic, strong) NSString *number;
 @property (nonatomic, strong) NSString *paydate;
 @property (nonatomic, strong) NSString *senddate;
-@property (nonatomic, strong) NSString *seller;
 @property (nonatomic, strong) NSString *sendTime;
 @property (nonatomic, strong) NSString *buyerName;
 @property (nonatomic, strong) NSString *tradeNo;

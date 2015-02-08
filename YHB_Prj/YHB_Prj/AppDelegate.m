@@ -84,12 +84,12 @@
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     if ([url.host isEqualToString:@"safepay"]) {
-        
-        [[AlipaySDK defaultService] processAuth_V2Result:url
-                                         standbyCallback:^(NSDictionary *resultDic) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kAlipayOrderResultMessage object:resultDic];
-        }];
-        
+        [[AlipaySDK defaultService]
+         processOrderWithPaymentResult:url
+         standbyCallback:^(NSDictionary *resultDic) {
+             NSLog(@"result = %@", resultDic);
+             [[NSNotificationCenter defaultCenter] postNotificationName:kAlipayOrderResultMessage object:resultDic];
+         }];
     }
     
     return YES;

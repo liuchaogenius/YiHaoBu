@@ -37,7 +37,7 @@
         [icon setContentMode:UIViewContentModeScaleAspectFit];
         [_orderStausView addSubview:icon];
         
-        _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, icon.top, 150, kTitleFont)];
+        _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, icon.top, 250, kTitleFont)];
         _statusLabel.backgroundColor = [UIColor clearColor];
         _statusLabel.textColor = [UIColor whiteColor];
         _statusLabel.font = [UIFont systemFontOfSize:kTitleFont];

@@ -15,7 +15,7 @@
 @property (nonatomic, assign) double sellid;
 @property (nonatomic, strong) NSArray *malllist;
 @property (nonatomic, strong) NSString *sellcom;
-@property (nonatomic, assign) double itemid;
+//@property (nonatomic, assign) double itemid;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;

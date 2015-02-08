@@ -166,13 +166,18 @@ typedef enum : NSUInteger
 - (void)setUIWithTitle:(NSString *)title sku:(NSString *)sku price:(NSString *)price number:(NSString *)number isFloat:(BOOL)isFloat message:(NSString *)message Express:(NSString *)express exPrice:(NSString *)ePrice;
 {
     _productTitle.text = title;
-    _priceLabel.text = [NSString stringWithFormat:@"￥%@",price];;
-    _numberLabel.text = [NSString stringWithFormat:@"x%@",number];;
+    _priceLabel.text = [NSString stringWithFormat:@"￥%@",price];
+    _numberLabel.text = [NSString stringWithFormat:@"x%@",number];
     self.numControl.number = [number doubleValue];
     self.numControl.isNumFloat = isFloat;
     _skuLabel.text = [NSString stringWithFormat:@"分类:%@",sku];
     self.messageTf.text = message?:@"";
     _logicLabel.text = express ? [NSString stringWithFormat:@"配送方式 ：%@  价格：%@",express,ePrice] : @"无配送方式";
+}
+
+- (void)reSetNumber:(NSString *)number
+{
+    _numberLabel.text = [NSString stringWithFormat:@"x%@",number];
 }
 
 #pragma mark - Action
@@ -185,6 +190,7 @@ typedef enum : NSUInteger
 
 - (void)numberControlValueDidChanged
 {
+    [self reSetNumber:self.numControl.numberTextfield.text];
     if ([self.delegate respondsToSelector:@selector(numberChangedWithValue:IndexPath:)]) {
         [self.delegate numberChangedWithValue:self.numControl.numberTextfield.text IndexPath:self.cellIndexPath];
     }

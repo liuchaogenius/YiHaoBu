@@ -94,7 +94,29 @@
     } failure:^(NSDictionary *failDict, NSError *error) {
         fBlock(kNoNet);
     }];
-
+}
+- (void)getPayInfoWithToken:(NSString *)token ItemID: (NSInteger)itemID Success: (void(^)(NSString *info))sBlock failure: (void(^)(NSString *error))fBlock
+{
+    NSString *url = nil;
+    kYHBRequestUrl(@"postOrderStatus.php", url);
+    NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",[NSNumber numberWithInteger:itemID],@"itemid",@"pay",@"action",nil];
+    [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
+        NSInteger result = [successDict[@"result"] integerValue];
+        kResult_11_CheckWithAlert;
+        NSDictionary *data = successDict[@"data"];
+        NSString *info = data[@"info"];
+        if (result == 1) {
+            if (sBlock) {
+                sBlock(info);
+            }
+        }else{
+            if (fBlock) {
+                fBlock(kErrorStr);
+            }
+        }
+    } failure:^(NSDictionary *failDict, NSError *error) {
+        fBlock(kNoNet);
+    }];
 }
 
 - (void)getOrderConfirmWithToken:(NSString *)token source:(NSString *)source ListArray:(NSArray *)listArray Success:(void (^)(YHBOConfirmModel *model))sBlock failure:(void (^)(NSInteger result,NSString *error))fBlock
@@ -147,8 +169,9 @@
 }
 
 //提交订单， info：支付宝相关字段
-- (void)postOrderWithPostDic:(NSDictionary *)postDic Success:(void(^)(NSString *info))sBlock failure:(void(^)(NSString *error))fBlock
+- (void)postOrderWithPostDic:(NSDictionary *)postDic Success:(void(^)(NSString *info,NSArray *itemArray))sBlock failure:(void(^)(NSString *error))fBlock
 {
+    
     NSString *url = nil;
     kYHBRequestUrl(@"postOrder.php", url);
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
@@ -156,8 +179,9 @@
         if (result == 1) {
             NSDictionary *data = successDict[@"data"];
             NSString *info = data[@"info"];
+            NSArray *itemids = data[@"itemids"];
             if (sBlock) {
-                sBlock(info);
+                sBlock(info,itemids);
             }
         }else{
             if (fBlock) {

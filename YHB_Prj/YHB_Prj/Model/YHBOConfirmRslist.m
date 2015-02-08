@@ -9,11 +9,11 @@
 #import "YHBOConfirmMalllist.h"
 
 
-NSString *const kYHBOConfirmRslistSeller = @"seller";
-NSString *const kYHBOConfirmRslistSellid = @"sellid";
+NSString *const kYHBOConfirmRslistSeller = @"truename";
+NSString *const kYHBOConfirmRslistSellid = @"userid";
 NSString *const kYHBOConfirmRslistMalllist = @"malllist";
-NSString *const kYHBOConfirmRslistSellcom = @"sellcom";
-NSString *const kYHBOConfirmRslistItemid = @"itemid";
+NSString *const kYHBOConfirmRslistSellcom = @"company";
+//NSString *const kYHBOConfirmRslistItemid = @"itemid";
 
 
 @interface YHBOConfirmRslist ()
@@ -28,7 +28,7 @@ NSString *const kYHBOConfirmRslistItemid = @"itemid";
 @synthesize sellid = _sellid;
 @synthesize malllist = _malllist;
 @synthesize sellcom = _sellcom;
-@synthesize itemid = _itemid;
+//@synthesize itemid = _itemid;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
@@ -45,21 +45,21 @@ NSString *const kYHBOConfirmRslistItemid = @"itemid";
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
             self.seller = [self objectOrNilForKey:kYHBOConfirmRslistSeller fromDictionary:dict];
             self.sellid = [[self objectOrNilForKey:kYHBOConfirmRslistSellid fromDictionary:dict] doubleValue];
-    NSObject *receivedYHBOConfirmMalllist = [dict objectForKey:kYHBOConfirmRslistMalllist];
-    NSMutableArray *parsedYHBOConfirmMalllist = [NSMutableArray array];
-    if ([receivedYHBOConfirmMalllist isKindOfClass:[NSArray class]]) {
-        for (NSDictionary *item in (NSArray *)receivedYHBOConfirmMalllist) {
-            if ([item isKindOfClass:[NSDictionary class]]) {
-                [parsedYHBOConfirmMalllist addObject:[YHBOConfirmMalllist modelObjectWithDictionary:item]];
+            NSObject *receivedYHBOConfirmMalllist = [dict objectForKey:kYHBOConfirmRslistMalllist];
+            NSMutableArray *parsedYHBOConfirmMalllist = [NSMutableArray array];
+            if ([receivedYHBOConfirmMalllist isKindOfClass:[NSArray class]]) {
+                for (NSDictionary *item in (NSArray *)receivedYHBOConfirmMalllist) {
+                    if ([item isKindOfClass:[NSDictionary class]]) {
+                        [parsedYHBOConfirmMalllist addObject:[YHBOConfirmMalllist modelObjectWithDictionary:item]];
+                    }
+               }
+            } else if ([receivedYHBOConfirmMalllist isKindOfClass:[NSDictionary class]]) {
+               [parsedYHBOConfirmMalllist addObject:[YHBOConfirmMalllist modelObjectWithDictionary:(NSDictionary *)receivedYHBOConfirmMalllist]];
             }
-       }
-    } else if ([receivedYHBOConfirmMalllist isKindOfClass:[NSDictionary class]]) {
-       [parsedYHBOConfirmMalllist addObject:[YHBOConfirmMalllist modelObjectWithDictionary:(NSDictionary *)receivedYHBOConfirmMalllist]];
-    }
 
-    self.malllist = [NSArray arrayWithArray:parsedYHBOConfirmMalllist];
+            self.malllist = [NSArray arrayWithArray:parsedYHBOConfirmMalllist];
             self.sellcom = [self objectOrNilForKey:kYHBOConfirmRslistSellcom fromDictionary:dict];
-            self.itemid = [[self objectOrNilForKey:kYHBOConfirmRslistItemid fromDictionary:dict] doubleValue];
+    //self.itemid = [[self objectOrNilForKey:kYHBOConfirmRslistItemid fromDictionary:dict] doubleValue];
 
     }
     
@@ -84,7 +84,7 @@ NSString *const kYHBOConfirmRslistItemid = @"itemid";
     }
     [mutableDict setValue:[NSArray arrayWithArray:tempArrayForMalllist] forKey:kYHBOConfirmRslistMalllist];
     [mutableDict setValue:self.sellcom forKey:kYHBOConfirmRslistSellcom];
-    [mutableDict setValue:[NSNumber numberWithDouble:self.itemid] forKey:kYHBOConfirmRslistItemid];
+    //[mutableDict setValue:[NSNumber numberWithDouble:self.itemid] forKey:kYHBOConfirmRslistItemid];
 
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
@@ -112,7 +112,7 @@ NSString *const kYHBOConfirmRslistItemid = @"itemid";
     self.sellid = [aDecoder decodeDoubleForKey:kYHBOConfirmRslistSellid];
     self.malllist = [aDecoder decodeObjectForKey:kYHBOConfirmRslistMalllist];
     self.sellcom = [aDecoder decodeObjectForKey:kYHBOConfirmRslistSellcom];
-    self.itemid = [aDecoder decodeDoubleForKey:kYHBOConfirmRslistItemid];
+   // self.itemid = [aDecoder decodeDoubleForKey:kYHBOConfirmRslistItemid];
     return self;
 }
 
@@ -123,7 +123,7 @@ NSString *const kYHBOConfirmRslistItemid = @"itemid";
     [aCoder encodeDouble:_sellid forKey:kYHBOConfirmRslistSellid];
     [aCoder encodeObject:_malllist forKey:kYHBOConfirmRslistMalllist];
     [aCoder encodeObject:_sellcom forKey:kYHBOConfirmRslistSellcom];
-    [aCoder encodeDouble:_itemid forKey:kYHBOConfirmRslistItemid];
+    //[aCoder encodeDouble:_itemid forKey:kYHBOConfirmRslistItemid];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -136,7 +136,7 @@ NSString *const kYHBOConfirmRslistItemid = @"itemid";
         copy.sellid = self.sellid;
         copy.malllist = [self.malllist copyWithZone:zone];
         copy.sellcom = [self.sellcom copyWithZone:zone];
-        copy.itemid = self.itemid;
+        //copy.itemid = self.itemid;
     }
     
     return copy;

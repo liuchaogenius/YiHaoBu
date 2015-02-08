@@ -16,6 +16,8 @@
 #import "YHBOrderSecondView.h"
 #import "YHBOrderDetailInfoView.h"
 #import "YHBPublicCommentVC.h"
+#import <AlipaySDK/AlipaySDK.h>
+#import "YHBPaySuccessVC.h"
 
 #define KAbtnWidth 70
 #define kAbtnHeight 25
@@ -61,6 +63,7 @@ typedef enum : NSInteger {
 {
     self = [super init];
     self.itemID = itemID;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aliPayresult:) name:kAlipayOrderResultMessage object:nil];
     return self;
 }
 
@@ -149,6 +152,9 @@ typedef enum : NSInteger {
             [self.view addSubview:self.actionView];
             self.scrollView.height -= self.actionView.height;
         }
+    }else if ([self.actionView superview]){
+        self.scrollView.height += self.actionView.height;
+        [self.actionView removeFromSuperview];
     }
 }
 
@@ -178,6 +184,19 @@ typedef enum : NSInteger {
             }];
         }];
         [self.navigationController pushViewController:vc animated:YES];
+    }else if ([sender.titleLabel.text isEqualToString:@"付款"]) {
+        [self.orderManager getPayInfoWithToken:[YHBUser sharedYHBUser].token ItemID:self.itemID Success:^(NSString *info) {
+            if (info) {
+                static NSString *strSchem = @"com.yibu.kuaibu";
+                [[AlipaySDK defaultService] payOrder:info fromScheme:strSchem callback:^(NSDictionary *resultDic) {
+                    MLOG(@"%@",resultDic);
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kAlipayOrderResultMessage object:resultDic];
+                }];
+            }
+
+        } failure:^(NSString *error) {
+            [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
+        }];
     }else{
         NSString *action = self.orderModel.naction[sender.tag];
         [SVProgressHUD showWithStatus:@"操作中..." cover:YES offsetY:0];
@@ -197,6 +216,39 @@ typedef enum : NSInteger {
     }
 }
 
+#pragma mark - 支付结果处理
+- (void)aliPayresult:(NSNotification *)aNotification
+{
+    MLOG(@"resultDic :  %@",aNotification);
+    
+    NSDictionary *resultDic = [aNotification object];
+    
+    if(resultDic && resultDic.count)
+    {
+        MLOG(@"notificationDict = %@",resultDic);
+        int resultStatus = [[resultDic objectForKey:@"resultStatus"] intValue];
+        NSString *resultDesc = [resultDic objectForKey:@"result"];
+        if(resultStatus == 9000)///支付成功
+        {
+            YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] init];
+            [self.navigationController pushViewController:sVc animated:YES];
+            
+        }
+        else if(resultStatus == 8000)///正在处理也当支付成功
+        {
+            YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] init];
+            [self.navigationController pushViewController:sVc animated:YES];
+            
+        }
+        else///支付失败
+        {
+            [SVProgressHUD showErrorWithStatus:@"支付失败，请在订单页面重新支付" cover:YES offsetY:kMainScreenHeight/2.0];
+           // [[NSNotificationCenter defaultCenter] postNotificationName:kPayFail object:self];
+        }
+    }
+    
+}
+
 #pragma mark 点击交流
 - (void)touchCommunicateBtnWithTag:(NSInteger)tag
 {
@@ -209,6 +261,7 @@ typedef enum : NSInteger {
         case Com_message:
         {
             //短信
+            //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"sms://%@",self.orderModel.se]];
         }
             break;
         case Com_phone:
