@@ -333,14 +333,6 @@
         self.majorProductTV.font = [UIFont systemFontOfSize:kTitleFont];
     }
     [self.secondSectionView addSubview:self.majorProductTV];
-    
-    if (isTest) {
-        self.nameLabel.text = @"XXXX";
-        self.companyLabel.text = @"xxxx公司";
-        self.phoneLabel.text = @"12312312";
-        self.addressLabel.text = @"我的地址asdfadsfasdf";
-        self.majorProductTV.text = @"ajsdflksadjflkjasdjflasjdfljsadlfjklajsldfjkla老卡机法拉克两地分居氨基酸的放开粮食局";
-    }
 }
 
 - (UIView *)getLineWithY:(CGFloat)y

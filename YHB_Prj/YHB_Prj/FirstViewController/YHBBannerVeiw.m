@@ -65,6 +65,7 @@
 {
     NSInteger imageNum = urlArray.count;
     self.imageNum = imageNum;
+    self.headScrollView.pagingEnabled = YES;
     [self.headScrollView removeSubviews];
     [self.headScrollView setContentSize:CGSizeMake((self.isNeedCycle?imageNum+2:imageNum) * kMainScreenWidth, self.headScrollView.height)];
     
@@ -77,6 +78,9 @@
         [imageView sd_setImageWithURL:[NSURL URLWithString:urlArray[_isNeedCycle ? (i-1+imageNum)%imageNum : i]]];
         [self.headScrollView addSubview:imageView];
         imageView.tag = i;
+    }
+    if (urlArray.count == 1 && !_isNeedCycle) {
+        self.headScrollView.contentSize = CGSizeMake(kMainScreenWidth+1, self.headScrollView.height);
     }
     [self.pageControl setNumberOfPages:imageNum];
     [self.pageControl setCurrentPage:0];

@@ -24,6 +24,7 @@
 #import "YHBSupplyDetailViewController.h"
 #import "YHBBuyDetailViewController.h"
 #import "SecondViewController.h"
+#import "YHBSearchInputVC.h"
 
 #define ksegBtnWidth (kMainScreenWidth/4.0)
 #define kFilBtnWidth (kMainScreenWidth/3.0)
@@ -35,12 +36,12 @@
 #define kGoodsCellHeight 80
 #define kPageSize 30
 
-typedef enum : NSUInteger {
-    Search_buy = 0, //采购
-    Search_sell,//供应
-    Search_mall,//店铺
-    Search_product//产品
-} SearchType;
+//typedef enum : NSUInteger {
+//    Search_buy = 0, //采购
+//    Search_sell,//供应
+//    Search_mall,//店铺
+//    Search_product//产品
+//} SearchType;
 
 typedef enum : NSUInteger {
     Filter_all = kFilTagBase,//全部
@@ -191,7 +192,7 @@ typedef enum : NSUInteger {
         //_segmentView.layer.borderWidth = 1.0;
         NSArray *titleArray = @[@"采购",@"供应",@"店铺",@"产品"];
         for (int i=0; i<titleArray.count; i++) {
-            UIButton *button = [self customSegmentButtonWithTitle:titleArray[i] andTag:i Frame:CGRectMake(i*ksegBtnWidth, 0, ksegBtnWidth, _segmentView.height)];
+            UIButton *button = [self customSegmentButtonWithTitle:titleArray[i] andTag:i+kSegBase Frame:CGRectMake(i*ksegBtnWidth, 0, ksegBtnWidth, _segmentView.height)];
             [_segmentView addSubview:button];
             if (i == 0) {
                 button.selected = YES;
@@ -221,7 +222,8 @@ typedef enum : NSUInteger {
         self.tabBarController.tabBarController.tabBar.hidden = NO;
         self.navigationController.navigationBarHidden = YES;
         
-    }
+    }else
+        self.navigationController.navigationBarHidden = NO;
     
     [super viewWillAppear:YES];
 }
@@ -717,8 +719,20 @@ typedef enum : NSUInteger {
 #pragma mark - uitextfield delegate
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    [self showDimView];
-    return YES;
+//    [self showDimView];
+//    return YES;
+    __weak SecondViewController *weakself = self;
+    YHBSearchInputVC *vc = [[YHBSearchInputVC alloc] initWithSearchType:_selectSearchType SearchHandle:^(SearchType sType, NSString *searchText) {
+        UIButton *btn = (UIButton *)[weakself.segmentView viewWithTag:sType];
+        [weakself touchSegButton:btn];
+        weakself.searchTextField.text = searchText;
+        [weakself touchSearchButton];
+    } cancelHandle:^{
+        
+    }];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:NO];
+    return NO;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

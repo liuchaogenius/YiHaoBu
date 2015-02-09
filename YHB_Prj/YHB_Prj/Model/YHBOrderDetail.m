@@ -1,7 +1,7 @@
 //
 //  YHBOrderDetail.m
 //
-//  Created by   on 15/2/8
+//  Created by   on 15/2/9
 //  Copyright (c) 2015 __MyCompanyName__. All rights reserved.
 //
 
@@ -20,6 +20,7 @@ NSString *const kYHBOrderDetailSellname = @"sellname";
 NSString *const kYHBOrderDetailItemid = @"itemid";
 NSString *const kYHBOrderDetailOrderid = @"orderid";
 NSString *const kYHBOrderDetailFeeName = @"fee_name";
+NSString *const kYHBOrderDetailSellmob = @"sellmob";
 NSString *const kYHBOrderDetailThumb = @"thumb";
 NSString *const kYHBOrderDetailRefundReason = @"refund_reason";
 NSString *const kYHBOrderDetailSendUrl = @"send_url";
@@ -68,6 +69,7 @@ NSString *const kYHBOrderDetailAmount = @"amount";
 @synthesize itemid = _itemid;
 @synthesize orderid = _orderid;
 @synthesize feeName = _feeName;
+@synthesize sellmob = _sellmob;
 @synthesize thumb = _thumb;
 @synthesize refundReason = _refundReason;
 @synthesize sendUrl = _sendUrl;
@@ -168,6 +170,7 @@ NSString *const kYHBOrderDetailAmount = @"amount";
             self.itemid = [[self objectOrNilForKey:kYHBOrderDetailItemid fromDictionary:dict] doubleValue];
             self.orderid = [self objectOrNilForKey:kYHBOrderDetailOrderid fromDictionary:dict];
             self.feeName = [self objectOrNilForKey:kYHBOrderDetailFeeName fromDictionary:dict];
+            self.sellmob = [self objectOrNilForKey:kYHBOrderDetailSellmob fromDictionary:dict];
             self.thumb = [self objectOrNilForKey:kYHBOrderDetailThumb fromDictionary:dict];
             self.refundReason = [self objectOrNilForKey:kYHBOrderDetailRefundReason fromDictionary:dict];
             self.sendUrl = [self objectOrNilForKey:kYHBOrderDetailSendUrl fromDictionary:dict];
@@ -226,6 +229,7 @@ NSString *const kYHBOrderDetailAmount = @"amount";
     [mutableDict setValue:[NSNumber numberWithDouble:self.itemid] forKey:kYHBOrderDetailItemid];
     [mutableDict setValue:self.orderid forKey:kYHBOrderDetailOrderid];
     [mutableDict setValue:self.feeName forKey:kYHBOrderDetailFeeName];
+    [mutableDict setValue:self.sellmob forKey:kYHBOrderDetailSellmob];
     [mutableDict setValue:self.thumb forKey:kYHBOrderDetailThumb];
     [mutableDict setValue:self.refundReason forKey:kYHBOrderDetailRefundReason];
     [mutableDict setValue:self.sendUrl forKey:kYHBOrderDetailSendUrl];
@@ -287,6 +291,7 @@ NSString *const kYHBOrderDetailAmount = @"amount";
     self.itemid = [aDecoder decodeDoubleForKey:kYHBOrderDetailItemid];
     self.orderid = [aDecoder decodeObjectForKey:kYHBOrderDetailOrderid];
     self.feeName = [aDecoder decodeObjectForKey:kYHBOrderDetailFeeName];
+    self.sellmob = [aDecoder decodeObjectForKey:kYHBOrderDetailSellmob];
     self.thumb = [aDecoder decodeObjectForKey:kYHBOrderDetailThumb];
     self.refundReason = [aDecoder decodeObjectForKey:kYHBOrderDetailRefundReason];
     self.sendUrl = [aDecoder decodeObjectForKey:kYHBOrderDetailSendUrl];
@@ -331,6 +336,7 @@ NSString *const kYHBOrderDetailAmount = @"amount";
     [aCoder encodeDouble:_itemid forKey:kYHBOrderDetailItemid];
     [aCoder encodeObject:_orderid forKey:kYHBOrderDetailOrderid];
     [aCoder encodeObject:_feeName forKey:kYHBOrderDetailFeeName];
+    [aCoder encodeObject:_sellmob forKey:kYHBOrderDetailSellmob];
     [aCoder encodeObject:_thumb forKey:kYHBOrderDetailThumb];
     [aCoder encodeObject:_refundReason forKey:kYHBOrderDetailRefundReason];
     [aCoder encodeObject:_sendUrl forKey:kYHBOrderDetailSendUrl];
@@ -377,6 +383,7 @@ NSString *const kYHBOrderDetailAmount = @"amount";
         copy.itemid = self.itemid;
         copy.orderid = [self.orderid copyWithZone:zone];
         copy.feeName = [self.feeName copyWithZone:zone];
+        copy.sellmob = [self.sellmob copyWithZone:zone];
         copy.thumb = [self.thumb copyWithZone:zone];
         copy.refundReason = [self.refundReason copyWithZone:zone];
         copy.sendUrl = [self.sendUrl copyWithZone:zone];

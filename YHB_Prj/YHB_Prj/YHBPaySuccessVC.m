@@ -10,9 +10,20 @@
 
 @interface YHBPaySuccessVC ()
 
+@property (strong, nonatomic) NSString *info;
+
 @end
 
 @implementation YHBPaySuccessVC
+
+- (instancetype)initWithAppendInfo:(NSString *)info
+{
+    self = [super init];
+    if (self) {
+        self.info = info;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,6 +35,14 @@
     resultLabel.textColor = [UIColor lightGrayColor];
     
     [self.view addSubview:resultLabel];
+    
+    if (self.info.length) {
+        UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 80, 260, 60)];
+        infoLabel.numberOfLines = 2;
+        infoLabel.text = self.info;
+        infoLabel.textColor = [UIColor lightGrayColor];
+        [self.view addSubview:infoLabel];
+    }
     
     [self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(touchBack)];
 }

@@ -20,7 +20,7 @@
 #import "YHBCity.h"
 #import "YHBCatData.h"
 #define kHeadHeight 135
-#define kImageWith 40
+#define kImageWith 50
 #define kTitleFont 15
 #define kBlackHeight 15
 #define isTest 1

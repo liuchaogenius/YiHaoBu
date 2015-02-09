@@ -10,4 +10,6 @@
 
 @interface YHBPaySuccessVC : BaseViewController
 
+- (instancetype)initWithAppendInfo:(NSString *)info;
+
 @end

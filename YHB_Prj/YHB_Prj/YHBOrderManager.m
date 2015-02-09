@@ -95,7 +95,7 @@
         fBlock(kNoNet);
     }];
 }
-- (void)getPayInfoWithToken:(NSString *)token ItemID: (NSInteger)itemID Success: (void(^)(NSString *info))sBlock failure: (void(^)(NSString *error))fBlock
+- (void)getPayInfoWithToken:(NSString *)token ItemID: (NSInteger)itemID Success: (void(^)(NSString *info,NSString *ordermoney,NSString *overmoney,NSString *realmoney))sBlock failure: (void(^)(NSString *error))fBlock
 {
     NSString *url = nil;
     kYHBRequestUrl(@"postOrderStatus.php", url);
@@ -106,8 +106,11 @@
         NSDictionary *data = successDict[@"data"];
         NSString *info = data[@"info"];
         if (result == 1) {
+            NSString *orderm = data[@"ordermoney"];
+            NSString *overm = data[@"overmoney"];
+            NSString *realm = data[@"realmoney"];
             if (sBlock) {
-                sBlock(info);
+                sBlock(info,orderm,overm,realm);
             }
         }else{
             if (fBlock) {
@@ -169,7 +172,7 @@
 }
 
 //提交订单， info：支付宝相关字段
-- (void)postOrderWithPostDic:(NSDictionary *)postDic Success:(void(^)(NSString *info,NSArray *itemArray))sBlock failure:(void(^)(NSString *error))fBlock
+- (void)postOrderWithPostDic:(NSDictionary *)postDic Success:(void(^)(NSString *info,NSArray *itemArray,NSString *ordermoney,NSString *overmoney,NSString *realmoney))sBlock failure:(void(^)(NSString *error))fBlock
 {
     
     NSString *url = nil;
@@ -180,8 +183,11 @@
             NSDictionary *data = successDict[@"data"];
             NSString *info = data[@"info"];
             NSArray *itemids = data[@"itemids"];
+            NSString *orderm = data[@"ordermoney"];
+            NSString *overm = data[@"overmoney"];
+            NSString *realm = data[@"realmoney"];
             if (sBlock) {
-                sBlock(info,itemids);
+                sBlock(info,itemids,orderm,overm,realm);
             }
         }else{
             if (fBlock) {

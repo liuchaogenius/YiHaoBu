@@ -1,7 +1,7 @@
 //
 //  YHBOrderDetail.h
 //
-//  Created by   on 15/2/8
+//  Created by   on 15/2/9
 //  Copyright (c) 2015 __MyCompanyName__. All rights reserved.
 //
 
@@ -23,6 +23,7 @@
 @property (nonatomic, assign) double itemid;
 @property (nonatomic, strong) NSString *orderid;
 @property (nonatomic, strong) NSString *feeName;
+@property (nonatomic, strong) NSString *sellmob;
 @property (nonatomic, strong) NSString *thumb;
 @property (nonatomic, strong) NSString *refundReason;
 @property (nonatomic, strong) NSString *sendUrl;
@@ -53,6 +54,8 @@
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 - (NSDictionary *)dictionaryRepresentation;
+
 - (NSMutableArray *)getDetailTextArray;
 - (NSString *)getTitleOfNextStepForIndex:(int)index;
+
 @end

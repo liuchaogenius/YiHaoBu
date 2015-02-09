@@ -30,7 +30,7 @@
 #define kBarHeight 80
 #define kPriceFont 17
 #define kButtonTag_Cancel 202
-@interface YHBOrderConfirmVC ()<UITableViewDataSource,UITableViewDelegate,YHBOrderConfirmCellDelegate,UIAlertViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource,YHBAddressListDelegate>
+@interface YHBOrderConfirmVC ()<UITableViewDataSource,UITableViewDelegate,YHBOrderConfirmCellDelegate,UIAlertViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource,YHBAddressListDelegate,UIAlertViewDelegate>
 {
     NSString *_priceStr;
     UILabel *_titleLabel;
@@ -39,6 +39,7 @@
     UIButton *_cancelBtn;
     NSIndexPath *_selIndexPath;
     YHBOConfirmExpress *_selExpress;
+    NSString *_payMoneyInfo;//需支付价格信息
 }
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) YHBOrderAddressView *addressView;
@@ -355,13 +356,18 @@
     if (self.postDic) {
         [SVProgressHUD showWithStatus:@"下单中..." cover:YES offsetY:0];
         self.orderIDArray = nil;
-        [self.orderManager postOrderWithPostDic:self.postDic Success:^(NSString *info,NSArray *itemArray) {
+        [self.orderManager postOrderWithPostDic:self.postDic Success:^(NSString *info, NSArray *itemArray, NSString *ordermoney, NSString *overmoney, NSString *realmoney) {
             //info 拼接好的支付宝字段
             [SVProgressHUD dismissWithSuccess:@"下单成功"];
             self.orderIDArray = [itemArray copy];
-            MLOG(@"info:%@",info);
-#warning 此处添加支付
-            if (info) {
+            _payMoneyInfo = [NSString stringWithFormat:@"订单总金额:%@ 余额支付:%@ 实际支付金额:%@",ordermoney,overmoney,realmoney];
+            //MLOG(@"info:%@",info);
+            if ([realmoney isEqualToString:@"0.00"]) {
+                //余额支付
+                YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] initWithAppendInfo:_payMoneyInfo];
+                [self.navigationController pushViewController:sVc animated:YES];
+            }else if (info) {
+                //支付宝支付
                 static NSString *strSchem = @"com.yibu.kuaibu";
                 [[AlipaySDK defaultService] payOrder:info fromScheme:strSchem callback:^(NSDictionary *resultDic) {
                     MLOG(@"%@",resultDic);
@@ -373,7 +379,6 @@
             [SVProgressHUD dismissWithError:error];
         }];
     }
-    
     
 }
 
@@ -391,24 +396,13 @@
         NSString *resultDesc = [resultDic objectForKey:@"result"];
         if(resultStatus == 9000)///支付成功
         {
-            //已支付 灰色-按钮 不可用  已支付。。---
-            //[SVProgressHUD showSuccessWithStatus:@"支付成功" cover:YES offsetY:kMainScreenHeight/2.0];
-//            commitButton.enabled = NO;
-//            [commitButton setBackgroundColor:[UIColor lightGrayColor]];
-//            [commitButton setTitle:@"已支付" forState:UIControlStateNormal];
-            //[[NSNotificationCenter defaultCenter] postNotificationName:kPaySuccess object:self];
-            YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] init];
+            YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] initWithAppendInfo:_payMoneyInfo];
             [self.navigationController pushViewController:sVc animated:YES];
             
         }
         else if(resultStatus == 8000)///正在处理也当支付成功
         {
-            //[SVProgressHUD showSuccessWithStatus:@"支付成功" cover:YES offsetY:kMainScreenHeight/2.0];
-//            commitButton.enabled = NO;
-//            [commitButton setBackgroundColor:[UIColor lightGrayColor]];
-//            [commitButton setTitle:@"已支付" forState:UIControlStateNormal];
-            //[[NSNotificationCenter defaultCenter] postNotificationName:kPaySuccess object:self];
-            YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] init];
+            YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] initWithAppendInfo:_payMoneyInfo];
             [self.navigationController pushViewController:sVc animated:YES];
             
         }
@@ -420,6 +414,7 @@
             if (self.orderIDArray) {
                 NSInteger orderID = [self.orderIDArray.firstObject integerValue];
                 YHBOrderDetailViewController *vc = [[YHBOrderDetailViewController alloc] initWithItemId:orderID];
+                vc.isPopToRoot = YES;
                 [self.navigationController pushViewController:vc animated:YES];
             }
             
@@ -570,15 +565,21 @@
 #pragma mark - alertView delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1) {
-        __weak YHBOrderConfirmVC *weakself = self;
-        YHBAddressEditViewController *vc = [[YHBAddressEditViewController alloc] initWithAddressModel:nil isNew:YES SuccessHandle:^{
-            [weakself getDataAndSetUI];
-        }];
-        [self.navigationController pushViewController:vc animated:YES];
+    if (alertView.tag == 1000) {
+        //支付
+        
     }else{
-        [self.navigationController popViewControllerAnimated:YES];
+        if (buttonIndex == 1) {
+            __weak YHBOrderConfirmVC *weakself = self;
+            YHBAddressEditViewController *vc = [[YHBAddressEditViewController alloc] initWithAddressModel:nil isNew:YES SuccessHandle:^{
+                [weakself getDataAndSetUI];
+            }];
+            [self.navigationController pushViewController:vc animated:YES];
+        }else{
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
+    
 }
 
 

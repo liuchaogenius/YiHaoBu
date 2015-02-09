@@ -28,6 +28,10 @@ typedef enum : NSInteger {
 } Communicate_Type;
 
 @interface YHBOrderDetailViewController ()<YHBOrderFSDelegate,YHBOrderSecondViewDelegate>
+{
+    NSString *_payMoneyInfo;
+    TouchPayHandle _touchPayHandle;
+}
 @property (assign, nonatomic) NSInteger itemID;
 @property (strong, nonatomic) YHBOrderManager *orderManager;
 @property (strong, nonatomic) YHBOrderDetail *orderModel;
@@ -50,6 +54,12 @@ typedef enum : NSInteger {
     return _scrollView;
 }
 
+- (void)setDidTouchedPayButtonHandle:(TouchPayHandle)handle
+{
+    if (handle) {
+        _touchPayHandle = handle;
+    }
+}
 
 -  (YHBOrderManager *)orderManager
 {
@@ -63,6 +73,7 @@ typedef enum : NSInteger {
 {
     self = [super init];
     self.itemID = itemID;
+    _isPopToRoot = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aliPayresult:) name:kAlipayOrderResultMessage object:nil];
     return self;
 }
@@ -70,6 +81,9 @@ typedef enum : NSInteger {
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"订单详情";
+    
+    [self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(touchBack)];
+    
     self.view.backgroundColor = kViewBackgroundColor;
     [self.view addSubview:self.scrollView];
     self.firstSection = [[YHBOrderFirstSectionView alloc] init];
@@ -185,15 +199,22 @@ typedef enum : NSInteger {
         }];
         [self.navigationController pushViewController:vc animated:YES];
     }else if ([sender.titleLabel.text isEqualToString:@"付款"]) {
-        [self.orderManager getPayInfoWithToken:[YHBUser sharedYHBUser].token ItemID:self.itemID Success:^(NSString *info) {
-            if (info) {
+        if (_touchPayHandle) _touchPayHandle();
+        //支付
+        [self.orderManager getPayInfoWithToken:[YHBUser sharedYHBUser].token ItemID:self.itemID Success:^(NSString *info, NSString *ordermoney, NSString *overmoney, NSString *realmoney) {
+            _payMoneyInfo = [NSString stringWithFormat:@"订单总金额:%@ 余额支付:%@ 实际支付金额:%@",ordermoney,overmoney,realmoney];
+            //MLOG(@"info:%@",info);
+            if ([realmoney isEqualToString:@"0.00"]) {
+                //余额支付
+                YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] initWithAppendInfo:_payMoneyInfo];
+                [self.navigationController pushViewController:sVc animated:YES];
+            }else if (info) {
                 static NSString *strSchem = @"com.yibu.kuaibu";
                 [[AlipaySDK defaultService] payOrder:info fromScheme:strSchem callback:^(NSDictionary *resultDic) {
                     MLOG(@"%@",resultDic);
                     [[NSNotificationCenter defaultCenter] postNotificationName:kAlipayOrderResultMessage object:resultDic];
                 }];
             }
-
         } failure:^(NSString *error) {
             [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
         }];
@@ -230,13 +251,13 @@ typedef enum : NSInteger {
         NSString *resultDesc = [resultDic objectForKey:@"result"];
         if(resultStatus == 9000)///支付成功
         {
-            YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] init];
+            YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] initWithAppendInfo:_payMoneyInfo];
             [self.navigationController pushViewController:sVc animated:YES];
             
         }
-        else if(resultStatus == 8000)///正在处理也当支付成功
+        else if(resultStatus == 8000)///正在处理
         {
-            YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] init];
+            YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] initWithAppendInfo:_payMoneyInfo];
             [self.navigationController pushViewController:sVc animated:YES];
             
         }
@@ -256,22 +277,33 @@ typedef enum : NSInteger {
         case Com_chat:
         {
             //在线聊天
+            NSString *sellerName = self.orderModel.sellname;//姓名
+            double userID = self.orderModel.sellid;//用户id
+            //缺少头像
+#warning 待添加聊天 - cc
+
         }
             break;
         case Com_message:
         {
             //短信
-            //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"sms://%@",self.orderModel.se]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"sms://%@",self.orderModel.sellmob]]];
         }
             break;
         case Com_phone:
         {
             //电话
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"sms://%@",self.orderModel.sellmob]]];
         }
             break;
         default:
             break;
     }
+}
+
+- (void)touchBack
+{
+    self.isPopToRoot ? [self.navigationController popToRootViewControllerAnimated:YES] : [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
