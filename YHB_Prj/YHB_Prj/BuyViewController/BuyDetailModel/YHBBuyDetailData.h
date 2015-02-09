@@ -25,6 +25,7 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *editdate;
 @property (nonatomic, strong) NSArray *pic;
+@property (nonatomic, assign) int today;
 @property (nonatomic, strong) NSString *content;
 @property (nonatomic, assign) double itemid;
 @property (nonatomic, assign) double hits;

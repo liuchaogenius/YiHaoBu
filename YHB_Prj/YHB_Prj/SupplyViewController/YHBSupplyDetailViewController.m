@@ -58,6 +58,7 @@
         isModal=aIsModal;
         itemId = aItemId;
         isMine = aIsMine;
+        needUpload = NO;
     }
     return self;
 }
@@ -171,6 +172,12 @@
         [self.netManage getSupllyDetailWithItemid:itemId SuccessBlock:^(YHBSupplyDetailModel *aModel)
          {
              myModel = aModel;
+             int userid = [YHBUser sharedYHBUser].userInfo.userid;
+             if (userid && userid==myModel.userid && !needUpload)
+             {
+                 isMine = YES;
+                 contactView.hidden = YES;
+             }
              [supplyDetailView setDetailWithModel:aModel];
              if (needUpload==YES)
              {

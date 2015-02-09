@@ -263,6 +263,7 @@
         catidString=nil;
         catidString=myModel.catid;
         contentTextView.text = myModel.content;
+        dayLabel.text = [NSString stringWithFormat:@"%d", myModel.today];
         if (myModel.pic.count>0)
         {
             [variousImageView setMyWebPhotoArray:myModel.pic canEdit:YES];
@@ -276,6 +277,7 @@
             [variousImageView.webPhotoArray addObject:[UIImage imageNamed:@"QSPlusBtn"]];
         }
         
+        dayPlaceHolder.hidden = YES;
         titlePlaceHolder.hidden = YES;
         catPlaceHolder.hidden = YES;
         detailPlaceHolder.hidden = YES;

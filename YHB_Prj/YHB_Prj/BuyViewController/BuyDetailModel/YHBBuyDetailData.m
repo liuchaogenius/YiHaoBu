@@ -27,6 +27,7 @@ NSString *const kYHBBuyDetailDataContent = @"introduce";
 NSString *const kYHBBuyDetailDataItemid = @"itemid";
 NSString *const kYHBBuyDetailDataHits = @"hits";
 NSString *const kYHBBuyDetailDataTypeid = @"typeid";
+NSString *const kYHBBuyDetailDataToday = @"today";
 
 
 @interface YHBBuyDetailData ()
@@ -55,6 +56,7 @@ NSString *const kYHBBuyDetailDataTypeid = @"typeid";
 @synthesize itemid = _itemid;
 @synthesize hits = _hits;
 @synthesize typeid = _typeid;
+@synthesize today = _today;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
@@ -69,6 +71,7 @@ NSString *const kYHBBuyDetailDataTypeid = @"typeid";
     // This check serves to make sure that a non-NSDictionary object
     // passed into the model class doesn't break the parsing.
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
+        self.today = [[self objectOrNilForKey:kYHBBuyDetailDataToday fromDictionary:dict] intValue];
             self.favorite = [[self objectOrNilForKey:kYHBBuyDetailDataFavorite fromDictionary:dict] doubleValue];
             self.catid = [self objectOrNilForKey:kYHBBuyDetailDataCatid fromDictionary:dict];
             self.typename = [self objectOrNilForKey:kYHBBuyDetailDataTypename fromDictionary:dict];
@@ -122,6 +125,7 @@ NSString *const kYHBBuyDetailDataTypeid = @"typeid";
     [mutableDict setValue:self.mobile forKey:kYHBBuyDetailDataMobile];
     [mutableDict setValue:self.title forKey:kYHBBuyDetailDataTitle];
     [mutableDict setValue:self.editdate forKey:kYHBBuyDetailDataEditdate];
+    [mutableDict setValue:[NSNumber numberWithInt:self.today] forKey:kYHBBuyDetailDataToday];
     NSMutableArray *tempArrayForPic = [NSMutableArray array];
     for (NSObject *subArrayObject in self.pic) {
         if([subArrayObject respondsToSelector:@selector(dictionaryRepresentation)]) {

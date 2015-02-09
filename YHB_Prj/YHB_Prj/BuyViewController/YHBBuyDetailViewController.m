@@ -51,6 +51,7 @@
         isModal = aIsModal;
         itemId = aItemId;
         isMine = aIsMine;
+        needUpload = NO;
     }
     return self;
 }
@@ -165,6 +166,12 @@
         [self.manage getBuyDetailWithItemid:itemId SuccessBlock:^(YHBBuyDetailData *aModel)
          {
              myModel = aModel;
+             int userid = [YHBUser sharedYHBUser].userInfo.userid;
+             if (userid && userid==myModel.userid && !needUpload)
+             {
+                 isMine = YES;
+                 contactView.hidden = YES;
+             }
              [buyDetailView setDetailWithModel:aModel];
              if (needUpload==YES)
              {

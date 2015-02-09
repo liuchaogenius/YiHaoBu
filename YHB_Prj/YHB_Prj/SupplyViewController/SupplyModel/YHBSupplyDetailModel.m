@@ -29,6 +29,8 @@ NSString *const kYHBSupplyDetailModelPrice = @"price";
 NSString *const kYHBSupplyDetailModelEdittime = @"edittime";
 NSString *const kYHBSupplyDetailModelTypeid = @"typeid";
 NSString *const kYHBSupplyDetailModelContent = @"introduce";
+NSString *const kYHBSupplyDetailModelToday = @"today";
+
 
 
 @interface YHBSupplyDetailModel ()
@@ -59,6 +61,7 @@ NSString *const kYHBSupplyDetailModelContent = @"introduce";
 @synthesize edittime = _edittime;
 @synthesize typeid = _typeid;
 @synthesize content = _content;
+@synthesize today = _today;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
@@ -73,6 +76,7 @@ NSString *const kYHBSupplyDetailModelContent = @"introduce";
     // This check serves to make sure that a non-NSDictionary object
     // passed into the model class doesn't break the parsing.
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
+        self.today = [[self objectOrNilForKey:kYHBSupplyDetailModelToday fromDictionary:dict] intValue];
             self.catname = [self objectOrNilForKey:kYHBSupplyDetailModelCatname fromDictionary:dict];
             self.userid = [[self objectOrNilForKey:kYHBSupplyDetailModelUserid fromDictionary:dict] intValue];
             self.title = [self objectOrNilForKey:kYHBSupplyDetailModelTitle fromDictionary:dict];
@@ -115,6 +119,7 @@ NSString *const kYHBSupplyDetailModelContent = @"introduce";
 - (NSDictionary *)dictionaryRepresentation
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];
+    [mutableDict setValue:[NSNumber numberWithInt:self.today] forKey:kYHBSupplyDetailModelToday];
     [mutableDict setValue:self.catname forKey:kYHBSupplyDetailModelCatname];
     [mutableDict setValue:[NSNumber numberWithDouble:self.userid] forKey:kYHBSupplyDetailModelUserid];
     [mutableDict setValue:self.title forKey:kYHBSupplyDetailModelTitle];

@@ -31,6 +31,7 @@
 @property (nonatomic, strong) NSString *edittime;
 @property (nonatomic, strong) NSString *typeid;
 @property (nonatomic, strong) NSString *content;
+@property (nonatomic, assign) int today;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;

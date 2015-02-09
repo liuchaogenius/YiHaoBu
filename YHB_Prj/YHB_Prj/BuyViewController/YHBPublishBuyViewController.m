@@ -260,7 +260,9 @@
         titleLabel.text = myModel.title;
         catNameLabel.text = myModel.catname;
         contentTextView.text = myModel.content;
+        dayLabel.text = [NSString stringWithFormat:@"%d", myModel.today];
         
+        dayPlaceHolder.hidden = YES;
         titlePlaceHolder.hidden = YES;
         catPlaceHolder.hidden = YES;
         detailPlaceHolder.hidden = YES;

@@ -54,7 +54,9 @@
     NSArray *array = @[@"欺诈",@"色情",@"无效信息",@"恶意营销",@"隐私信息收集"];
     for (int i=0; i<5; i++)
     {
-        UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, cellHeight*i+lineView.bottom, kMainScreenWidth, cellHeight)];
+        UIButton *backView = [[UIButton alloc] initWithFrame:CGRectMake(0, cellHeight*i+lineView.bottom, kMainScreenWidth, cellHeight)];
+        backView.tag = 100+i;
+        [backView addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
         backView.backgroundColor = [UIColor whiteColor];
         [scrollView addSubview:backView];
         
@@ -64,10 +66,11 @@
         
         UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(10, (cellHeight-18)/2.0, 18, 18)];
         btn.layer.cornerRadius = 9.0;
-        [btn addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
+        btn.tag = 1000+i;
+//        [btn addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
         btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
         btn.layer.borderWidth = 0.5;
-        btn.tag = 100+i;
+//        btn.tag = 100+i;
         [backView addSubview:btn];
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(btn.right+10, btn.top, 200, 18)];
@@ -131,10 +134,12 @@
 {
     for (int i=0; i<6; i++)
     {
-        UIButton *btn = (UIButton *)[self.view viewWithTag:100+i];
+        UIButton *btn = (UIButton *)[self.view viewWithTag:1000+i];
         [btn removeSubviews];
     }
-    [aBtn addSubview:self.redView];
+    int index = (int)aBtn.tag-100;
+    UIButton *btn = (UIButton *)[self.view viewWithTag:1000+index];
+    [btn addSubview:self.redView];
     selectIndex = (int)aBtn.tag;
 }
 
