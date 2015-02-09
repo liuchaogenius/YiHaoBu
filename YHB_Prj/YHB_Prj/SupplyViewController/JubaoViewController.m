@@ -7,6 +7,8 @@
 //
 
 #import "JubaoViewController.h"
+#import "jubaoManage.h"
+#import "SVProgressHUD.h"
 
 #define cellHeight 38
 @interface JubaoViewController ()<UITextViewDelegate>
@@ -17,16 +19,27 @@
     UILabel *detailPlaceHolder;
     UIScrollView *scrollView;
     UIButton *publishBtn;
+    jubaoManage *manage;
+    BOOL ischoose;
+    int moduleid;
 }
 @property(nonatomic, strong) UIView *redView;
 @end
 
 @implementation JubaoViewController
 
-- (instancetype)initWithItemid:(int)aItemid
+- (instancetype)initWithItemid:(int)aItemid isSupply:(BOOL)aBool
 {
     if (self = [super init]) {
         itemid = aItemid;
+        if (aBool==YES)
+        {
+            moduleid=5;
+        }
+        else
+        {
+            moduleid=6;
+        }
     }
     return self;
 }
@@ -110,11 +123,28 @@
     CGFloat endHeight = publishBtn.bottom+20;
     CGFloat contentHeight = endHeight>kMainScreenHeight-61?endHeight:kMainScreenHeight-61;
     scrollView.contentSize = CGSizeMake(kMainScreenWidth, contentHeight);
+    
+    manage = [[jubaoManage alloc] init];
+    ischoose = NO;
 }
 
 - (void)touchPublish
 {
-    MLOG(@"发送");
+    if (ischoose==YES)
+    {
+        [SVProgressHUD show:YES offsetY:kMainScreenHeight/2.0];
+        [manage jubaoModuleid:moduleid itemid:itemid typeid:selectIndex-100+1 andintroduce:_textView.text succBlock:^{
+            [SVProgressHUD dismiss];
+            [SVProgressHUD showSuccessWithStatus:@"举报成功" cover:YES offsetY:kMainScreenHeight/2.0];
+        } failBlock:^(NSString *aStr) {
+            [SVProgressHUD dismiss];
+            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
+        }];
+    }
+    else
+    {
+        [SVProgressHUD showErrorWithStatus:@"请选择举报类型" cover:YES offsetY:kMainScreenHeight/2.0];
+    }
 }
 
 - (UIView *)redView
@@ -141,6 +171,9 @@
     UIButton *btn = (UIButton *)[self.view viewWithTag:1000+index];
     [btn addSubview:self.redView];
     selectIndex = (int)aBtn.tag;
+    if (ischoose==NO) {
+        ischoose=YES;
+    }
 }
 
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text

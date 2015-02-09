@@ -74,41 +74,7 @@
         likelabel.text=@"收藏";
         [likeBtn addSubview:likelabel];
         
-        NSArray *itemArray = @[@"状态 : ",@"工艺 : ",@"面料详情 : "];
-        CGFloat endY = 0.0;
-        for (int i=0; i<3; i++)
-        {
-            float itemWidth = 43;
-            if (i==2) {
-                itemWidth=75;
-            }
-            UILabel *itemLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, bottomLineView.bottom+interval+(18+interval*2)*i, itemWidth, 18)];
-            itemLabel.text = [itemArray objectAtIndex:i];
-            if (i==0)
-            {
-                itemLabel.textColor = [UIColor redColor];
-            }
-            itemLabel.font = kFont15;
-            itemLabel.backgroundColor = [UIColor clearColor];
-            [self addSubview:itemLabel];
-            if (i!=2)
-            {
-                UIView *lineView = [[UIView alloc]
-                                    initWithFrame:CGRectMake(0, itemLabel.bottom+interval-0.5, kMainScreenWidth, 0.5)];
-                lineView.backgroundColor = [UIColor lightGrayColor];
-                [self addSubview:lineView];
-            }
-            endY = itemLabel.bottom;
-        }
         
-        detailTextView = [[UITextView alloc]
-                          initWithFrame:CGRectMake(5, endY, kMainScreenWidth-2*5, 60)];
-        detailTextView.backgroundColor = [UIColor clearColor];
-        detailTextView.textColor = [UIColor lightGrayColor];
-        detailTextView.font = kFont15;
-        detailTextView.text = @"无描述";
-        [detailTextView setEditable:NO];
-        [self addSubview:detailTextView];
         //        contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(interval, endY+interval, kMainScreenWidth-20, 18)];
         //        contentLabel.textColor = [UIColor lightGrayColor];
         //        contentLabel.text = @"无描述";
@@ -128,7 +94,7 @@
 
 - (void)touchLikeBtn
 {
-    [SVProgressHUD show:nil offsetY:100];
+    [SVProgressHUD show:YES offsetY:100];
     [self.manage changeLikeStatusAction:@"sell" itemid:myModel.itemid SuccBlock:^{
         [SVProgressHUD dismiss];
         [UIView beginAnimations:nil context:nil];
@@ -157,6 +123,7 @@
 - (void)setDetailWithModel:(YHBBuyDetailData *)aModel
 {
     likeBtn.userInteractionEnabled = YES;
+    BOOL isHaveAmount = YES;
     NSMutableDictionary *dict = [NSMutableDictionary new];
     if (aModel.typename)
     {
@@ -165,10 +132,66 @@
     if (aModel.catname)
     {
         [dict setValue:aModel.catname forKey:@"catname"];
-    }    for (int i=0; i<2; i++)
+    }
+    if (aModel.amount>0)
     {
+        [dict setValue:aModel.amount forKey:@"amount"];
+        isHaveAmount = YES;
+    }
+    else
+    {
+        isHaveAmount = NO;
+    }
+    if (aModel.today)
+    {
+        [dict setValue:aModel.today forKey:@"today"];
+    }
+    
+    NSArray *itemArray = @[@"状态 : ",@"工艺 : ",@"采购数量 : ",@"采购周期 : ",@"面料详情 : "];
+    if (isHaveAmount==NO)
+    {
+        itemArray = @[@"状态 : ",@"工艺 : ",@"采购周期 : ",@"面料详情 : "];
+    }
+    CGFloat endY = 0.0;
+    for (int i=0; i<itemArray.count; i++)
+    {
+        float itemWidth = 43;
+        if (i>1) {
+            itemWidth=75;
+        }
+        UILabel *itemLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, bottomLineView.bottom+interval+(18+interval*2)*i, itemWidth, 18)];
+        itemLabel.text = [itemArray objectAtIndex:i];
+        if (i==0)
+        {
+            itemLabel.textColor = [UIColor redColor];
+        }
+        itemLabel.font = kFont15;
+        itemLabel.backgroundColor = [UIColor clearColor];
+        [self addSubview:itemLabel];
+        if (i!=itemArray.count-1)
+        {
+            UIView *lineView = [[UIView alloc]
+                                initWithFrame:CGRectMake(0, itemLabel.bottom+interval-0.5, kMainScreenWidth, 0.5)];
+            lineView.backgroundColor = [UIColor lightGrayColor];
+            [self addSubview:lineView];
+        }
+        endY = itemLabel.bottom;
+    }
+    
+    detailTextView = [[UITextView alloc]
+                      initWithFrame:CGRectMake(5, endY, kMainScreenWidth-2*5, 60)];
+    detailTextView.backgroundColor = [UIColor clearColor];
+    detailTextView.textColor = [UIColor lightGrayColor];
+    detailTextView.font = kFont15;
+    detailTextView.text = @"无描述";
+    [detailTextView setEditable:NO];
+    [self addSubview:detailTextView];
+    
+    for (int i=0; i<itemArray.count-1; i++)
+    {
+        int originX = i>1?87:55;
         UILabel *valueLabel = [[UILabel alloc]
-                               initWithFrame:CGRectMake(55, bottomLineView.bottom+interval+(18+interval*2)*i, kMainScreenWidth-80, 18)];
+                               initWithFrame:CGRectMake(originX, bottomLineView.bottom+interval+(18+interval*2)*i, kMainScreenWidth-80, 18)];
         valueLabel.font = kFont15;
         if (i<1)
         {
@@ -192,6 +215,36 @@
             if (str)
             {
                 valueLabel.text = str;
+            }
+        }
+        if (isHaveAmount==YES)
+        {
+            if (i==2)
+            {
+                NSString *str = [dict objectForKey:@"amount"];
+                if (str)
+                {
+                    valueLabel.text = [NSString stringWithFormat:@"%@%@", str, aModel.unit];
+                }
+            }
+            else if (i==3)
+            {
+                NSString *str = [dict objectForKey:@"today"];
+                if (str)
+                {
+                    valueLabel.text = [NSString stringWithFormat:@"%@天",str];
+                }
+            }
+        }
+        else
+        {
+            if (i==2)
+            {
+                NSString *str = [dict objectForKey:@"today"];
+                if (str)
+                {
+                    valueLabel.text = [NSString stringWithFormat:@"%@天",str];
+                }
             }
         }
         [self addSubview:valueLabel];

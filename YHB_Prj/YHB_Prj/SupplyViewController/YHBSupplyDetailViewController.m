@@ -320,7 +320,7 @@
 #pragma mark 举报
 - (void)touchjubao
 {
-    JubaoViewController *vc = [[JubaoViewController alloc] initWithItemid:myModel.itemid];
+    JubaoViewController *vc = [[JubaoViewController alloc] initWithItemid:myModel.itemid isSupply:YES];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

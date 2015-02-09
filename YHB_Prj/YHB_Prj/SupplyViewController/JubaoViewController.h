@@ -10,5 +10,5 @@
 
 @interface JubaoViewController : BaseViewController
 
-- (instancetype)initWithItemid:(int)aItemid;
+- (instancetype)initWithItemid:(int)aItemid isSupply:(BOOL)aBool;
 @end

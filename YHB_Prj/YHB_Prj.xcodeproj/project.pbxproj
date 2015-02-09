@@ -256,6 +256,7 @@
 		AB8F91D91A6E321300B884F3 /* chatListCellHead@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AB8F91D71A6E321300B884F3 /* chatListCellHead@2x.png */; };
 		AB98E1891A8882BD002B50B1 /* YHBBuyDetailAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = AB98E1861A8882BD002B50B1 /* YHBBuyDetailAlbum.m */; };
 		AB98E18A1A8882BD002B50B1 /* YHBBuyDetailData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB98E1881A8882BD002B50B1 /* YHBBuyDetailData.m */; };
+		AB9B2B001A88E92700D26FF3 /* jubaoManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9B2AFF1A88E92700D26FF3 /* jubaoManage.m */; };
 		AB9BA0981A2CBA79000E34FE /* YHBPhotoImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9BA0971A2CBA79000E34FE /* YHBPhotoImageView.m */; };
 		AB9C29861A4CFF380084C912 /* YHBMySupplyManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9C29851A4CFF380084C912 /* YHBMySupplyManage.m */; };
 		AB9FD9941A465BD0003EBE40 /* AttentionManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9FD9931A465BD0003EBE40 /* AttentionManage.m */; };
@@ -953,6 +954,8 @@
 		AB98E1861A8882BD002B50B1 /* YHBBuyDetailAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBBuyDetailAlbum.m; sourceTree = "<group>"; };
 		AB98E1871A8882BD002B50B1 /* YHBBuyDetailData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBBuyDetailData.h; sourceTree = "<group>"; };
 		AB98E1881A8882BD002B50B1 /* YHBBuyDetailData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBBuyDetailData.m; sourceTree = "<group>"; };
+		AB9B2AFE1A88E92700D26FF3 /* jubaoManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jubaoManage.h; sourceTree = "<group>"; };
+		AB9B2AFF1A88E92700D26FF3 /* jubaoManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = jubaoManage.m; sourceTree = "<group>"; };
 		AB9BA0961A2CBA79000E34FE /* YHBPhotoImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPhotoImageView.h; sourceTree = "<group>"; };
 		AB9BA0971A2CBA79000E34FE /* YHBPhotoImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBPhotoImageView.m; sourceTree = "<group>"; };
 		AB9C29841A4CFF380084C912 /* YHBMySupplyManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBMySupplyManage.h; sourceTree = "<group>"; };
@@ -2224,6 +2227,8 @@
 				AB0ED65D1A591C52006EF96F /* YHBPublishSupplyManage.m */,
 				AB4A6CD11A7C6FF6007033BE /* YHBUploadImageManage.h */,
 				AB4A6CD21A7C6FF6007033BE /* YHBUploadImageManage.m */,
+				AB9B2AFE1A88E92700D26FF3 /* jubaoManage.h */,
+				AB9B2AFF1A88E92700D26FF3 /* jubaoManage.m */,
 			);
 			path = SupplyNetManage;
 			sourceTree = "<group>";
@@ -3784,6 +3789,7 @@
 				AB6247F31A6FD8A8002BA418 /* QuoteMeRslist.m in Sources */,
 				5B41E8C71A2DE8B6005DD38B /* CCEditTextView.m in Sources */,
 				ABC6462C1A6B8B3C003A8FB1 /* MessageReadManager.m in Sources */,
+				AB9B2B001A88E92700D26FF3 /* jubaoManage.m in Sources */,
 				ABB796681A46F766009E27F8 /* YHBPublishBuyViewController.m in Sources */,
 				FF2A6C761A0F3B7B001607AC /* UIImage+MultiFormat.m in Sources */,
 				ABC646F01A6B8BE2003A8FB1 /* UIViewController+DismissKeyboard.m in Sources */,

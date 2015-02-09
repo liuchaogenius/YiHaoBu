@@ -40,6 +40,9 @@
     int uploadIndex;
     UIActivityIndicatorView *activityView;
     BOOL isWeb;
+    
+    UIButton *pushPriceBtn;
+    UIButton *watchStoreBtn;
 }
 @property(nonatomic, strong) YHBBuyDetailManage *manage;
 @end
@@ -99,42 +102,10 @@
     variousImageView = [[YHBVariousImageView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 120) andPhotoArray:[NSArray new]];
     [scrollView addSubview:variousImageView];
     
-    buyDetailView = [[YHBBuyDetailView alloc] initWithFrame:CGRectMake(0, variousImageView.bottom, kMainScreenWidth, 235)];
+    buyDetailView = [[YHBBuyDetailView alloc] initWithFrame:CGRectMake(0, variousImageView.bottom, kMainScreenWidth, 235+38*2)];
     [scrollView addSubview:buyDetailView];
     
     [self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(dismissSelf)];
-    
-    if (!isMine)
-    {
-        UIButton *pushPriceBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, buyDetailView.bottom+20, kMainScreenWidth/2-20, 40)];
-        pushPriceBtn.backgroundColor = KColor;
-        [pushPriceBtn addTarget:self action:@selector(pushPriceBtn) forControlEvents:UIControlEventTouchUpInside];
-        [pushPriceBtn setTitle:@"我要报价" forState:UIControlStateNormal];
-        [pushPriceBtn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
-        pushPriceBtn.layer.cornerRadius = 2.5;
-        [scrollView addSubview:pushPriceBtn];
-        
-        UIButton *watchStoreBtn = [[UIButton alloc] initWithFrame:CGRectMake(pushPriceBtn.right+20, pushPriceBtn.top, kMainScreenWidth/2-20, 40)];
-        watchStoreBtn.backgroundColor = KColor;
-        [watchStoreBtn addTarget:self action:@selector(watchStoreBtn) forControlEvents:UIControlEventTouchUpInside];
-        [watchStoreBtn setTitle:@"他的采购" forState:UIControlStateNormal];
-        watchStoreBtn.layer.cornerRadius = 2.5;
-        [watchStoreBtn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
-        [scrollView addSubview:watchStoreBtn];
-        
-        if (pushPriceBtn.bottom+20>kMainScreenHeight-62-kContactViewHeight+1)
-        {
-            scrollView.contentSize = CGSizeMake(kMainScreenWidth, pushPriceBtn.bottom+20);
-        }
-        else
-        {
-            scrollView.contentSize = CGSizeMake(kMainScreenWidth, kMainScreenHeight-62-kContactViewHeight+1);
-        }
-        
-        contactView = [[YHBContactView alloc] initWithFrame:CGRectMake(0, scrollView.bottom, kMainScreenWidth, kContactViewHeight) isSupply:NO];
-        contactView.backgroundColor = [UIColor whiteColor];
-        [self.view addSubview:contactView];
-    }
     
     UIView *navRightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 22)];
     UIButton *shareBtn = [[UIButton alloc] initWithFrame:CGRectMake(navRightView.right-25, 0, 25, 21)];
@@ -168,11 +139,50 @@
         [self.manage getBuyDetailWithItemid:itemId SuccessBlock:^(YHBBuyDetailData *aModel)
          {
              myModel = aModel;
+             if (!myModel.amount>0)
+             {
+                 CGRect frame = buyDetailView.frame;
+                 frame.size.height -= 38;
+                 buyDetailView.frame = frame;
+             }
              int userid = [YHBUser sharedYHBUser].userInfo.userid;
              if (userid && userid==myModel.userid && !needUpload)
              {
                  isMine = YES;
                  contactView.hidden = YES;
+                 pushPriceBtn.hidden = YES;
+                 watchStoreBtn.hidden = YES;
+             }
+             if (!isMine)
+             {
+                 pushPriceBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, buyDetailView.bottom+20, kMainScreenWidth/2-20, 40)];
+                 pushPriceBtn.backgroundColor = KColor;
+                 [pushPriceBtn addTarget:self action:@selector(pushPriceBtn) forControlEvents:UIControlEventTouchUpInside];
+                 [pushPriceBtn setTitle:@"我要报价" forState:UIControlStateNormal];
+                 [pushPriceBtn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
+                 pushPriceBtn.layer.cornerRadius = 2.5;
+                 [scrollView addSubview:pushPriceBtn];
+                 
+                 watchStoreBtn = [[UIButton alloc] initWithFrame:CGRectMake(pushPriceBtn.right+20, pushPriceBtn.top, kMainScreenWidth/2-20, 40)];
+                 watchStoreBtn.backgroundColor = KColor;
+                 [watchStoreBtn addTarget:self action:@selector(watchStoreBtn) forControlEvents:UIControlEventTouchUpInside];
+                 [watchStoreBtn setTitle:@"他的采购" forState:UIControlStateNormal];
+                 watchStoreBtn.layer.cornerRadius = 2.5;
+                 [watchStoreBtn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
+                 [scrollView addSubview:watchStoreBtn];
+                 
+                 if (pushPriceBtn.bottom+20>kMainScreenHeight-62-kContactViewHeight+1)
+                 {
+                     scrollView.contentSize = CGSizeMake(kMainScreenWidth, pushPriceBtn.bottom+20);
+                 }
+                 else
+                 {
+                     scrollView.contentSize = CGSizeMake(kMainScreenWidth, kMainScreenHeight-62-kContactViewHeight+1);
+                 }
+                 
+                 contactView = [[YHBContactView alloc] initWithFrame:CGRectMake(0, scrollView.bottom, kMainScreenWidth, kContactViewHeight) isSupply:NO];
+                 contactView.backgroundColor = [UIColor whiteColor];
+                 [self.view addSubview:contactView];
              }
              [buyDetailView setDetailWithModel:aModel];
              if (needUpload==YES)
@@ -285,7 +295,7 @@
 #pragma mark 举报
 - (void)touchjubao
 {
-    JubaoViewController *vc = [[JubaoViewController alloc] initWithItemid:myModel.itemid];
+    JubaoViewController *vc = [[JubaoViewController alloc] initWithItemid:myModel.itemid isSupply:NO];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
