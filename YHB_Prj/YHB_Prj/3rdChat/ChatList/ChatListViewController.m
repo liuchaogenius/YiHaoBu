@@ -26,10 +26,14 @@
 #import "YHBDataService.h"
 #import "YHBGetPushBuylist.h"
 #import "YHBGetPushSyslist.h"
+#import "GetUserNameManage.h"
+#import "UserinfoBaseClass.h"
 
 @interface ChatListViewController ()<UITableViewDelegate,UITableViewDataSource, UISearchDisplayDelegate,SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
 
 @property (strong, nonatomic) NSMutableArray        *dataSource;
+@property (strong, nonatomic) NSMutableArray        *dataArray;
+@property (strong, nonatomic) GetUserNameManage *manage;
 
 @property (strong, nonatomic) UITableView           *tableView;
 //@property (nonatomic, strong) EMSearchBar           *searchBar;
@@ -56,6 +60,7 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = RGBCOLOR(239, 239, 239);
+    self.manage = [[GetUserNameManage alloc] init];
 
 //    [self.view addSubview:self.searchBar];
     [self settitleLabel:@"消息"];
@@ -400,7 +405,9 @@
             cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identify];
         }
         EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row-2];
-        cell.name = conversation.chatter;
+        UserinfoBaseClass *model = [self.dataArray objectAtIndex:indexPath.row-2];
+        cell.name = model.truename;
+        cell.imageURL = [NSURL URLWithString:model.avatar];
         if (!conversation.isGroup) {
             cell.placeholderImage = [UIImage imageNamed:@"chatListCellHead.png"];
         }
@@ -419,11 +426,11 @@
         cell.detailMsg = [self subTitleMessageByConversation:conversation];
         cell.time = [self lastMessageTimeByConversation:conversation];
         cell.unreadCount = [self unreadMessageCountByConversation:conversation];
-        if (indexPath.row % 2 == 1) {
-            cell.contentView.backgroundColor = RGBACOLOR(246, 246, 246, 1);
-        }else{
+//        if (indexPath.row % 2 == 1) {
+//            cell.contentView.backgroundColor = RGBACOLOR(246, 246, 246, 1);
+//        }else{
             cell.contentView.backgroundColor = [UIColor whiteColor];
-        }
+//        }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
         return cell;
@@ -467,7 +474,8 @@
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
         EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row-2];
-        
+        UserinfoBaseClass *model = [self.dataArray objectAtIndex:indexPath.row-2];
+
         ChatViewController *chatController;
         NSString *title = conversation.chatter;
         if (conversation.isGroup) {
@@ -481,8 +489,8 @@
         }
         
         NSString *chatter = conversation.chatter;
-        chatController = [[ChatViewController alloc] initWithChatter:chatter isGroup:conversation.isGroup];
-        chatController.title = title;
+        chatController = [[ChatViewController alloc] initWithChatter:chatter isGroup:conversation.isGroup andChatterAvatar:model.avatar];
+        chatController.title = model.truename;
         chatController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:chatController animated:YES];
     }
@@ -505,6 +513,7 @@
         EMConversation *converation = [self.dataSource objectAtIndex:indexPath.row-2];
         [[EaseMob sharedInstance].chatManager removeConversationByChatter:converation.chatter deleteMessages:NO];
         [self.dataSource removeObjectAtIndex:indexPath.row-2];
+        [self.dataArray removeObjectAtIndex:indexPath.row-2];
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
@@ -600,7 +609,23 @@
 -(void)refreshDataSource
 {
     self.dataSource = [self loadDataSource];
-    [_tableView reloadData];
+//    MLOG(@"%lu", (unsigned long)self.dataSource.count);
+    if (self.dataSource.count>0)
+    {
+        NSMutableArray *temarray = [NSMutableArray new];
+        for (int i=0; i<self.dataSource.count; i++)
+        {
+            EMConversation *con = [self.dataSource objectAtIndex:i];
+            [temarray addObject:con.chatter];
+        }
+        [self.manage getUserNameUseridArray:temarray succBlock:^(NSMutableArray *aMuArray) {
+            self.dataArray = aMuArray;
+            [_tableView reloadData];
+        } failBlock:^(NSString *aStr) {
+            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
+        }];
+    }
+//    MLOG(@"%lu", (unsigned long)self.dataSource.count);
 //    [self hideHud];
 }
 

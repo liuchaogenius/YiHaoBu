@@ -11,6 +11,7 @@
 #import "YHBUser.h"
 #import "SVProgressHUD.h"
 #import "YHBStoreViewController.h"
+#import "UserinfoBaseClass.h"
 
 typedef enum:NSUInteger{
     btnTypePhone = 12,
@@ -24,6 +25,7 @@ typedef enum:NSUInteger{
 {
     if (self = [super initWithFrame:frame]) {
         isSupply = aBool;
+        manage = [[GetUserNameManage alloc] init];
         if (aBool==YES)
         {
             self.backgroundColor = [UIColor whiteColor];
@@ -214,6 +216,7 @@ typedef enum:NSUInteger{
     }
     phoneLabel.text = aNumber;
     storeLabel.text = aName;
+    storeName = aName;
     phoneNumber = aNumber;
     itemId=aItemId;
     myImgUrl = aImgUrl;
@@ -275,10 +278,18 @@ typedef enum:NSUInteger{
 //            if (!error && loginInfo) {
 //                NSLog(@"登陆成功");
 //            }
-            NSString *userName = storeLabel.text;
-            ChatViewController *vc = [[ChatViewController alloc] initWithChatter:userName userid:userid itemid:itemId ImageUrl:myImgUrl Title:myTitle andType:myType];
-            vc.title = userName;
-            [[self viewController].navigationController pushViewController:vc animated:YES];
+            NSString *useridStr = [NSString stringWithFormat:@"%d",userid];
+            NSMutableArray *temArray = [NSMutableArray new];
+            [temArray addObject:useridStr];
+            [manage getUserNameUseridArray:temArray succBlock:^(NSMutableArray *aMuArray) {
+                NSString *userName = storeName;
+                UserinfoBaseClass *model = [aMuArray objectAtIndex:0];
+                ChatViewController *vc = [[ChatViewController alloc] initWithChatter:useridStr userid:userid itemid:itemId ImageUrl:myImgUrl Title:myTitle andType:myType andChatterAvatar:model.avatar];
+                vc.title = userName;
+                [[self viewController].navigationController pushViewController:vc animated:YES];
+            } failBlock:^(NSString *aStr) {
+                
+            }];
         }
     }
     else if(aBtn.tag==btnTypeShop)

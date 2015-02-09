@@ -14,6 +14,6 @@
 
 @interface ChatViewController : UIViewController
 
-- (instancetype)initWithChatter:(NSString *)chatter isGroup:(BOOL)isGroup;
-- (instancetype)initWithChatter:(NSString *)chatter userid:(int)aUserid itemid:(int)aItemid ImageUrl:(NSString *)aImgUrl Title:(NSString *)aTitle andType:(NSString *)aType;
+- (instancetype)initWithChatter:(NSString *)chatter isGroup:(BOOL)isGroup andChatterAvatar:(NSString *)aAvatar;
+- (instancetype)initWithChatter:(NSString *)chatter userid:(int)aUserid itemid:(int)aItemid ImageUrl:(NSString *)aImgUrl Title:(NSString *)aTitle andType:(NSString *)aType andChatterAvatar:(NSString *)aAvatar;
 @end

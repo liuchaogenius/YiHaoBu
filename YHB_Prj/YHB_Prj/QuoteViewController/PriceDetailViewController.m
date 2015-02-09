@@ -15,6 +15,8 @@
 #import "PriceDetailContactView.h"
 #import "ChatViewController.h"
 #import "YHBStoreDetailViewController.h"
+#import "GetUserNameManage.h"
+#import "UserinfoBaseClass.h"
 
 #define kContactViewHeight 60
 @interface PriceDetailViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -22,6 +24,7 @@
     int myItemid;
     QuoteDetailManage *netManage;
     PriceDetailRslist *myModel;
+    GetUserNameManage *manage;
 }
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) NSMutableArray *tableViewArray;
@@ -40,6 +43,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    manage = [[GetUserNameManage alloc] init];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"查看报价";
     self.tableViewArray = [NSMutableArray new];
@@ -207,21 +211,30 @@
 
 - (void)chatWithItemid:(NSString *)aItemid
 {
-    MLOG(@"在线沟通");
-    EMError *error = nil;
-    BOOL isSuccess = [[EaseMob sharedInstance].chatManager registerNewAccount:@"8001" password:@"111111" error:&error];
-    if (isSuccess && !isSuccess) {
-        NSLog(@"注册成功");
-    }
-    NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginWithUsername:@"8001" password:@"111111" error:&error];
-    if (!error && loginInfo) {
-        NSLog(@"登陆成功");
-    }
-    NSString *userName = @"123";
-    ChatViewController *vc = [[ChatViewController alloc] initWithChatter:userName isGroup:NO];
-    vc.title = userName;
-    [self removeMaskView];
-    [self.navigationController pushViewController:vc animated:YES];
+//    MLOG(@"在线沟通");
+//    EMError *error = nil;
+//    BOOL isSuccess = [[EaseMob sharedInstance].chatManager registerNewAccount:@"8001" password:@"111111" error:&error];
+//    if (isSuccess && !isSuccess) {
+//        NSLog(@"注册成功");
+//    }
+//    NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginWithUsername:@"8001" password:@"111111" error:&error];
+//    if (!error && loginInfo) {
+//        NSLog(@"登陆成功");
+//    }
+    NSString *useridStr = [NSString stringWithFormat:@"%d",(int)myModel.userid];
+    NSMutableArray *temArray = [NSMutableArray new];
+    [temArray addObject:useridStr];
+    [manage getUserNameUseridArray:temArray succBlock:^(NSMutableArray *aMuArray) {
+        UserinfoBaseClass *model = [aMuArray objectAtIndex:0];
+        ChatViewController *vc = [[ChatViewController alloc] initWithChatter:useridStr isGroup:NO andChatterAvatar:model.avatar];
+        vc.title = myModel.truename;
+        [self removeMaskView];
+        [self.navigationController pushViewController:vc animated:YES];
+
+    } failBlock:^(NSString *aStr) {
+        
+    }];
+    
 }
 
 #pragma mark 菊花

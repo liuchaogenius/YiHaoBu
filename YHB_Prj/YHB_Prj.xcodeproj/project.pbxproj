@@ -127,6 +127,8 @@
 		AB1AFD861A708E60005247C4 /* PriceDetailContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1AFD851A708E60005247C4 /* PriceDetailContactView.m */; };
 		AB1DD1431A7A618800F85B40 /* YHBMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1DD1421A7A618800F85B40 /* YHBMessageViewController.m */; };
 		AB1DD1461A7A61AD00F85B40 /* YHBRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1DD1451A7A61AD00F85B40 /* YHBRecommendViewController.m */; };
+		AB200BB21A8833B800EB961B /* GetUserNameManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB200BB11A8833B800EB961B /* GetUserNameManage.m */; };
+		AB200BB51A883C8500EB961B /* UserinfoBaseClass.m in Sources */ = {isa = PBXBuildFile; fileRef = AB200BB41A883C8500EB961B /* UserinfoBaseClass.m */; };
 		AB2660F41A864E4C007D529A /* JubaoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2660F31A864E4C007D529A /* JubaoViewController.m */; };
 		AB2860FF1A38216800EB654C /* YHBShoppingCartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2860FD1A38216800EB654C /* YHBShoppingCartTableViewCell.m */; };
 		AB2861041A382BEF00EB654C /* TableSectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2861031A382BEF00EB654C /* TableSectionFooterView.m */; };
@@ -785,6 +787,10 @@
 		AB1DD1421A7A618800F85B40 /* YHBMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBMessageViewController.m; sourceTree = "<group>"; };
 		AB1DD1441A7A61AD00F85B40 /* YHBRecommendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBRecommendViewController.h; sourceTree = "<group>"; };
 		AB1DD1451A7A61AD00F85B40 /* YHBRecommendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBRecommendViewController.m; sourceTree = "<group>"; };
+		AB200BB01A8833B800EB961B /* GetUserNameManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetUserNameManage.h; sourceTree = "<group>"; };
+		AB200BB11A8833B800EB961B /* GetUserNameManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetUserNameManage.m; sourceTree = "<group>"; };
+		AB200BB31A883C8500EB961B /* UserinfoBaseClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserinfoBaseClass.h; sourceTree = "<group>"; };
+		AB200BB41A883C8500EB961B /* UserinfoBaseClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserinfoBaseClass.m; sourceTree = "<group>"; };
 		AB2660F21A864E4C007D529A /* JubaoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JubaoViewController.h; sourceTree = "<group>"; };
 		AB2660F31A864E4C007D529A /* JubaoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JubaoViewController.m; sourceTree = "<group>"; };
 		AB2860FC1A38216800EB654C /* YHBShoppingCartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBShoppingCartTableViewCell.h; sourceTree = "<group>"; };
@@ -1854,6 +1860,8 @@
 		AB0D09111A7BA78A00E6123A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AB200BB31A883C8500EB961B /* UserinfoBaseClass.h */,
+				AB200BB41A883C8500EB961B /* UserinfoBaseClass.m */,
 				AB6B63631A7F0B41003AB4C0 /* YHBGetPushBuylist.h */,
 				AB6B63641A7F0B41003AB4C0 /* YHBGetPushBuylist.m */,
 				AB0D09141A7BA7AB00E6123A /* YHBGetPushData.h */,
@@ -2098,6 +2106,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		AB200BAF1A88339700EB961B /* manage */ = {
+			isa = PBXGroup;
+			children = (
+				AB200BB01A8833B800EB961B /* GetUserNameManage.h */,
+				AB200BB11A8833B800EB961B /* GetUserNameManage.m */,
+			);
+			path = manage;
+			sourceTree = "<group>";
+		};
 		AB2860FA1A38216800EB654C /* YHBShoppingCart */ = {
 			isa = PBXGroup;
 			children = (
@@ -2153,6 +2170,7 @@
 				AB0D090C1A7B9F8D00E6123A /* YHBGetPushManage.m */,
 				AB0D090E1A7BA21E00E6123A /* YHBDataService.h */,
 				AB0D090F1A7BA21E00E6123A /* YHBDataService.m */,
+				AB200BAF1A88339700EB961B /* manage */,
 			);
 			path = ChatList;
 			sourceTree = "<group>";
@@ -3854,6 +3872,7 @@
 				5B3B6BE11A4168FE00903880 /* YHBBannerVeiw.m in Sources */,
 				AB0ED6611A592530006EF96F /* YHBPublishBuyManage.m in Sources */,
 				ABC6462B1A6B8B3C003A8FB1 /* MessageModelManager.m in Sources */,
+				AB200BB51A883C8500EB961B /* UserinfoBaseClass.m in Sources */,
 				ABC646CE1A6B8BC8003A8FB1 /* PSTCollectionViewFlowLayout.m in Sources */,
 				ABC646CD1A6B8BC8003A8FB1 /* PSTCollectionViewData.m in Sources */,
 				FF2A6C6E1A0F3B7B001607AC /* SDWebImageCompat.m in Sources */,
@@ -3877,6 +3896,7 @@
 				ABC646AE1A6B8BC8003A8FB1 /* MBProgressHUD+Add.m in Sources */,
 				ABC646221A6B8B3C003A8FB1 /* EMChatLocationBubbleView.m in Sources */,
 				ABC646CF1A6B8BC8003A8FB1 /* PSTCollectionViewItemKey.m in Sources */,
+				AB200BB21A8833B800EB961B /* GetUserNameManage.m in Sources */,
 				AB4A6CD31A7C6FF6007033BE /* YHBUploadImageManage.m in Sources */,
 				ABE5BBCE1A2AF036000F5505 /* YHBSupplyDetailView.m in Sources */,
 				ABC646B51A6B8BC8003A8FB1 /* MWTapDetectingImageView.m in Sources */,

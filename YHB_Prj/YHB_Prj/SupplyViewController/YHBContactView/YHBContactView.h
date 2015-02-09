@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMessageComposeViewController.h>
+#import "GetUserNameManage.h"
 
 @interface YHBContactView : UIView<UIAlertViewDelegate, MFMessageComposeViewControllerDelegate>
 {
@@ -25,8 +26,10 @@
     NSString *myImgUrl;
     NSString *myTitle;
     NSString *myType;
+    NSString *storeName;
     int userid;
     BOOL isSupply;
+    GetUserNameManage *manage;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame isSupply:(BOOL)aBool;

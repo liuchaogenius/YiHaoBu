@@ -80,11 +80,13 @@
 @property (nonatomic) BOOL isScrollToBottom;
 @property (nonatomic) BOOL isPlayingAudio;
 
+@property(nonatomic, strong) NSString *avatar;
+
 @end
 
 @implementation ChatViewController
 
-- (instancetype)initWithChatter:(NSString *)chatter isGroup:(BOOL)isGroup
+- (instancetype)initWithChatter:(NSString *)chatter isGroup:(BOOL)isGroup andChatterAvatar:(NSString *)aAvatar
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
@@ -92,7 +94,7 @@
         _chatter = chatter;
         _isChatGroup = isGroup;
         _messages = [NSMutableArray array];
-        
+        self.avatar = aAvatar;
         //根据接收者的username获取当前会话的管理者
         _conversation = [[EaseMob sharedInstance].chatManager conversationForChatter:chatter isGroup:_isChatGroup];
         [_conversation markAllMessagesAsRead:YES];
@@ -101,7 +103,7 @@
     return self;
 }
 
-- (instancetype)initWithChatter:(NSString *)chatter userid:(int)aUserid itemid:(int)aItemid ImageUrl:(NSString *)aImgUrl Title:(NSString *)aTitle andType:(NSString *)aType
+- (instancetype)initWithChatter:(NSString *)chatter userid:(int)aUserid itemid:(int)aItemid ImageUrl:(NSString *)aImgUrl Title:(NSString *)aTitle andType:(NSString *)aType andChatterAvatar:(NSString *)aAvatar
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
@@ -109,6 +111,7 @@
         _chatter = chatter;
         _isChatGroup = NO;
         _messages = [NSMutableArray array];
+        self.avatar = aAvatar;
         
         myImgUrl = aImgUrl;
         myItemid = aItemid;
@@ -449,11 +452,10 @@
             {
                 NSString *userhead = [YHBUser sharedYHBUser].userInfo.avatar;
                 model.headImageURL = [NSURL URLWithString:userhead];
-//                MLOG(@"%@", userhead);
             }
             else
             {
-                
+                model.headImageURL = [NSURL URLWithString:self.avatar];
             }
             if (model.ext)
             {
@@ -525,6 +527,9 @@
     EMMessage *message = [[EMMessage alloc] initWithReceiver:_conversation.chatter bodies:@[body]];
     message.isGroup = NO; // 设置是否是群聊
     message.ext = [NSDictionary dictionaryWithObjectsAndKeys:myImgUrl,@"itemImage",myTitle,@"itemTitle",myType,@"itemType",[NSString stringWithFormat:@"%d", myItemid],@"itemId", nil];// 添加扩展，key和value必须是基本类型，且不能是json
+    int myuserid = (int)[YHBUser sharedYHBUser].userInfo.userid;
+    message.from=[NSString stringWithFormat:@"%d",myuserid];
+    message.to = [NSString stringWithFormat:@"%d",userId];
     
     // 发送消息
     [[EaseMob sharedInstance].chatManager asyncSendMessage:message progress:nil];
