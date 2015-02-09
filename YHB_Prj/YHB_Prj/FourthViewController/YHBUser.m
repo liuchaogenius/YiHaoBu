@@ -105,9 +105,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
 - (void)refreshUserInfoWithSuccess:(void(^)())sBlock failure:(void(^)())fBlock
 {
     __weak YHBUser *weakSelf = self;
-    [self.userManger getUserInfoWithToken:self.token orUserId:nil Success:^(NSDictionary *dataDic) {
-        
-        MLOG(@"%@",dataDic);
+    [self.userManger getUserInfoWithToken:self.token orUserId:nil action:nil Success:^(NSDictionary *dataDic) {
+        //MLOG(@"%@",dataDic);
         weakSelf.userInfo = [YHBUserInfo modelObjectWithDictionary:dataDic];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserInfoGetMessage object:nil];
         [self LoginEaseMobIfNeeded];

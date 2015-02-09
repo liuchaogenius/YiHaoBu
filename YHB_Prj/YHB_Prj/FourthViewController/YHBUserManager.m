@@ -56,13 +56,16 @@
     }];
 }
 
-- (void)getUserInfoWithToken:(NSString *)token orUserId:(NSString *)userId Success:(void(^)(NSDictionary *dataDic))sBlock failure:(void(^)())fBlock
+- (void)getUserInfoWithToken:(NSString *)token orUserId:(NSString *)userId action:(NSString *)action Success:(void(^)(NSDictionary *dataDic))sBlock failure:(void(^)())fBlock
 {
     NSString *url = nil;
     kYHBRequestUrl(@"getUser.php", url);
+    
     NSMutableDictionary *postDic = [NSMutableDictionary dictionaryWithCapacity:2];
     if(token) [postDic setObject:token forKey:@"token"];
     else if(userId) [postDic setObject:userId forKey:@"userid"];
+    if(action) [postDic setObject:action forKey:@"action"];
+    
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSInteger result = [successDict[@"result"] integerValue];
         kResult_11_CheckWithAlert;

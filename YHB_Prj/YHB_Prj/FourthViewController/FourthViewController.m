@@ -322,10 +322,10 @@ enum Button_Type
         [self.loginItem setTitle:@"注销"];
         YHBUser *user = [YHBUser sharedYHBUser];
         [self loadUserPhoto];
-        [self.userHeadView refreshSelfHeadWithIsLogin:YES name:user.userInfo.truename avator:nil thumb:nil group:(NSInteger)user.userInfo.groupid company:user.userInfo.company];
+        [self.userHeadView refreshSelfHeadWithIsLogin:YES name:user.userInfo.truename avator:nil thumb:nil group:(NSInteger)user.userInfo.groupid company:user.userInfo.company money:user.userInfo.money lock:user.userInfo.locking credit:[NSString stringWithFormat:@"%d",(int)user.userInfo.credit]];
     }else{
         [self.loginItem setTitle:@"注册"];
-        [self.userHeadView refreshSelfHeadWithIsLogin:NO name:nil avator:nil thumb:nil group:0 company:nil];
+        [self.userHeadView refreshSelfHeadWithIsLogin:NO name:nil avator:nil thumb:nil group:0 company:nil money:nil lock:nil credit:nil];
     }
 }
 

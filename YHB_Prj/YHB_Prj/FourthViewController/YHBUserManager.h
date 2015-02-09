@@ -14,8 +14,10 @@
 
 //用户登陆网络请求
 - (void)loginWithPhone:(NSString *)phone andPassWord:(NSString *)password withSuccess:(void(^)())sBlock failure:(void(^)(int result, NSString *errorStr))fBlock;
-//获取用户信息请求-传token获得个人信息 token=nil，传入userid时，获取他人信息
-- (void)getUserInfoWithToken:(NSString *)token orUserId:(NSString *)userId Success:(void(^)(NSDictionary *dataDic))sBlock failure:(void(^)())fBlock;
+
+//获取用户信息请求-传token获得个人信息 token=nil，传入userid时，获取他人信息 action:em|all 数据返回动作,正常为nil
+- (void)getUserInfoWithToken:(NSString *)token orUserId:(NSString *)userId action:(NSString *)action Success:(void(^)(NSDictionary *dataDic))sBlock failure:(void(^)())fBlock;
+
 //用户找回密码
 - (void)findPasswordWithPhone:(NSString *)phone newPassword:(NSString *)new checkcode:(NSString *)checkcode Success:(void(^)())sBlock failure:(void(^)(NSInteger result,NSString *resultString))fBlock;
 

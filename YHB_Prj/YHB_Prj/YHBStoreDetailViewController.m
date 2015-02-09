@@ -211,10 +211,9 @@
         [self setUIWithStoreInfo:self.storeInfo];
     }else{
         __weak YHBStoreDetailViewController *weakself = self;
-        [self.manager getUserInfoWithToken:nil orUserId:[NSString stringWithFormat:@"%li",(long)self.itemID] Success:^(NSDictionary *dataDic) {
+        [self.manager getUserInfoWithToken:nil orUserId:[NSString stringWithFormat:@"%li",(long)self.itemID] action:nil Success:^(NSDictionary *dataDic) {
             weakself.storeInfo = [YHBUserInfo modelObjectWithDictionary:dataDic];
             [weakself setUIWithStoreInfo:weakself.storeInfo];
-            
         } failure:^{
             
         }];
@@ -289,12 +288,7 @@
     self.star2label.bottom = ((UIButton *)self.stars2Array[4]).bottom;
     self.star2label.left = ((UIButton *)self.stars2Array[4]).right+10;
     [self.fistSectionView addSubview:self.star2label];
-    if (isTest) {
-        self.trueName.text = @"某某某";
-        self.companyName.text = @"xxxx公司";
-        self.star1label.text = @"0.0";
-        self.star2label.text = @"0.0";
-    }
+
 }
 
 - (void)creatSecondSectionView

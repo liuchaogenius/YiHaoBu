@@ -40,6 +40,7 @@
     NSIndexPath *_selIndexPath;
     YHBOConfirmExpress *_selExpress;
     NSString *_payMoneyInfo;//需支付价格信息
+    TouchPayHandle _touchPayHandle;
 }
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) YHBOrderAddressView *addressView;
@@ -67,6 +68,13 @@
 
 @implementation YHBOrderConfirmVC
 #pragma mark - Getter and Setter
+- (void)setDidTouchedPayButtonHandle:(TouchPayHandle)handle
+{
+    if (handle) {
+        _touchPayHandle = handle;
+    }
+}
+
 - (UIPickerView *)expressPicker
 {
     if (!_expressPicker) {
@@ -359,6 +367,7 @@
         [self.orderManager postOrderWithPostDic:self.postDic Success:^(NSString *info, NSArray *itemArray, NSString *ordermoney, NSString *overmoney, NSString *realmoney) {
             //info 拼接好的支付宝字段
             [SVProgressHUD dismissWithSuccess:@"下单成功"];
+            if (_touchPayHandle) _touchPayHandle();
             self.orderIDArray = [itemArray copy];
             _payMoneyInfo = [NSString stringWithFormat:@"订单总金额:%@ 余额支付:%@ 实际支付金额:%@",ordermoney,overmoney,realmoney];
             //MLOG(@"info:%@",info);

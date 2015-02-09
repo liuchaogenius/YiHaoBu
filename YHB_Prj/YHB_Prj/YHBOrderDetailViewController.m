@@ -30,7 +30,6 @@ typedef enum : NSInteger {
 @interface YHBOrderDetailViewController ()<YHBOrderFSDelegate,YHBOrderSecondViewDelegate>
 {
     NSString *_payMoneyInfo;
-    TouchPayHandle _touchPayHandle;
 }
 @property (assign, nonatomic) NSInteger itemID;
 @property (strong, nonatomic) YHBOrderManager *orderManager;
@@ -52,13 +51,6 @@ typedef enum : NSInteger {
         _scrollView.backgroundColor = kViewBackgroundColor;
     }
     return _scrollView;
-}
-
-- (void)setDidTouchedPayButtonHandle:(TouchPayHandle)handle
-{
-    if (handle) {
-        _touchPayHandle = handle;
-    }
 }
 
 -  (YHBOrderManager *)orderManager
@@ -199,7 +191,6 @@ typedef enum : NSInteger {
         }];
         [self.navigationController pushViewController:vc animated:YES];
     }else if ([sender.titleLabel.text isEqualToString:@"付款"]) {
-        if (_touchPayHandle) _touchPayHandle();
         //支付
         [self.orderManager getPayInfoWithToken:[YHBUser sharedYHBUser].token ItemID:self.itemID Success:^(NSString *info, NSString *ordermoney, NSString *overmoney, NSString *realmoney) {
             _payMoneyInfo = [NSString stringWithFormat:@"订单总金额:%@ 余额支付:%@ 实际支付金额:%@",ordermoney,overmoney,realmoney];

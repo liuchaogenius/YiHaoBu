@@ -10,6 +10,7 @@
 #import "UIImageView+WebCache.h"
 #define kImageWith 50
 #define kTitleFont 14
+#define kSmallFont 11
 @interface YHBUserHeadView()
 
 @property (strong, nonatomic) UIView *loginedView;
@@ -24,10 +25,36 @@
 @property (strong, nonatomic) UIImageView *buyTag;
 
 @property (strong, nonatomic) UIButton *privateButton; //关注按钮
+
+@property (strong, nonatomic) UILabel *creditLabel;
+@property (strong, nonatomic) UILabel *priceLabel;
+
 @end
 
 @implementation YHBUserHeadView
 #pragma mark - getter and setter
+
+- (UILabel *)creditLabel
+{
+    if (!_creditLabel) {
+        _creditLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-10-150, self.companylabel.top+4, 150, kSmallFont)];
+        _creditLabel.textColor = [UIColor whiteColor];
+        _creditLabel.font = [UIFont systemFontOfSize:kSmallFont];
+        _creditLabel.textAlignment = NSTextAlignmentRight;
+    }
+    return _creditLabel;
+}
+
+- (UILabel *)priceLabel
+{
+    if (!_priceLabel) {
+        _priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-10-150, self.userName.top+4, 150, kSmallFont)];
+        _priceLabel.textColor = [UIColor whiteColor];
+        _priceLabel.font = [UIFont systemFontOfSize:kSmallFont];
+        _priceLabel.textAlignment = NSTextAlignmentRight;
+    }
+    return _priceLabel;
+}
 
 - (UIButton *)privateButton
 {
@@ -73,7 +100,6 @@
         _userName.backgroundColor = [UIColor clearColor];
         _userName.font = [UIFont systemFontOfSize:kTitleFont];
         [_loginedView addSubview:_userName];
-        if(isTest) _userName.text = @"名字";
         
         //标签
         UIImageView *comTag = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"comTag"]];
@@ -128,7 +154,7 @@
     //self.backgroundColor = RGBCOLOR(58, 155, 9);
     [self addSubview:self.bannerImageView];
     self.backgroundColor = [UIColor lightGrayColor];
-    [self refreshSelfHeadWithIsLogin:NO name:nil avator:nil thumb:nil group:0 company:nil];
+    [self refreshSelfHeadWithIsLogin:NO name:nil avator:nil thumb:nil group:0 company:nil money:nil lock:nil credit:nil];
     //[self refreshViewWithIslogin:NO vcompany:0 sell:0 buy:0 name:@"" avator:nil];
     
     return self;
@@ -136,7 +162,7 @@
 
 
 #pragma mark - action
-- (void)refreshSelfHeadWithIsLogin:(BOOL)isLogin name:(NSString *)name avator:(NSString *)avator thumb:(NSString *)thumb group:(NSInteger)group company:(NSString *)company
+- (void)refreshSelfHeadWithIsLogin:(BOOL)isLogin name:(NSString *)name avator:(NSString *)avator thumb:(NSString *)thumb group:(NSInteger)group company:(NSString *)company money:(NSString *)money lock:(NSString *)lock credit:(NSString *)credit
 {
     MLOG(@"%@",avator);
     if (isLogin) {
@@ -163,16 +189,31 @@
                     [UIImage imageNamed:@"DefualtUser"]];
         if(thumb)
             [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:thumb] placeholderImage:[UIImage imageNamed:@"userBannerDefault"]];
+        
+        if (credit && !self.creditLabel.superview) {
+            [self.loginedView addSubview:self.creditLabel];
+        }
+        self.creditLabel.text = [NSString stringWithFormat:@"积分:%@分",credit];
+        if (money && !self.priceLabel.superview) {
+            [self.loginedView addSubview:self.priceLabel];
+        }
+        self.priceLabel.text = [NSString stringWithFormat:@"资金:%@元[%@元]",money,lock];
     }else{
         [self addSubview:self.notLoginedView];
         self.bannerImageView.image = [UIImage imageNamed:@"userBannerDefault"];
         [self.loginedView removeFromSuperview];
+        if (_creditLabel) {
+            [_creditLabel removeFromSuperview];
+        }
+        if (_priceLabel) {
+            [_priceLabel removeFromSuperview];
+        }
     }
 }
 
 - (void)refreshViewWithIslogin:(BOOL)isLogin group:(NSInteger)group name:(NSString *)name avator:(NSString *)avator thumb:(NSString *)thumb company:(NSString *)company friend:(NSInteger)firend
 {
-    [self refreshSelfHeadWithIsLogin:YES name:name avator:avator thumb:thumb group:group company:company];
+    [self refreshSelfHeadWithIsLogin:YES name:name avator:avator thumb:thumb group:group company:company  money:nil lock:nil credit:nil];
     if (![self.privateButton superview]) {
         [self addSubview:self.privateButton];
         self.privateButton.selected = firend ? YES : NO;

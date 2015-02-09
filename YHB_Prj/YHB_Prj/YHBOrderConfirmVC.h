@@ -8,6 +8,8 @@
 
 #import "BaseViewController.h"
 
+typedef void (^TouchPayHandle)();
+
 @interface YHBOrderConfirmVC : BaseViewController
 
 /**
@@ -25,5 +27,7 @@
  *  @return 实例
  */
 - (instancetype)initWithSource:(NSString *)source requestArray:(NSArray *)rArray;
+
+- (void)setDidTouchedPayButtonHandle:(TouchPayHandle)handle;//用户点击支付按钮追加操作
 
 @end

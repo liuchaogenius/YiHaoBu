@@ -26,7 +26,7 @@
 @property (strong, nonatomic) UIImageView *userImageView;
 
 //显示的是自己时，刷新方法
-- (void)refreshSelfHeadWithIsLogin:(BOOL)isLogin name:(NSString *)name avator:(NSString *)avator thumb:(NSString *)thumb group:(NSInteger)group company:(NSString *)company;
+- (void)refreshSelfHeadWithIsLogin:(BOOL)isLogin name:(NSString *)name avator:(NSString *)avator thumb:(NSString *)thumb group:(NSInteger)group company:(NSString *)company money:(NSString *)money lock:(NSString *)lock credit:(NSString *)credit;
 
 //显示他人时，刷新方法
 - (void)refreshViewWithIslogin:(BOOL)isLogin group:(NSInteger)group name:(NSString *)name avator:(NSString *)avator thumb:(NSString *)thumb company:(NSString *)company friend:(NSInteger)firend;
