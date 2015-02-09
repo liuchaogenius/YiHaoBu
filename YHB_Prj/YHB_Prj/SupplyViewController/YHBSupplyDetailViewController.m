@@ -205,10 +205,10 @@
              [self dismissFlower];
              if (needUpload && uploadPhotoArray.count>0)
              {
-                 [variousImageView setPhotoArray:uploadPhotoArray];
+                 [variousImageView setMyWebPhotoArray:uploadPhotoArray canEdit:NO];
                  uploadIndex = 0;
-                 [self uploadImage];
                  [SVProgressHUD showWithStatus:@"上传图片中" cover:YES offsetY:kMainScreenHeight/2.0];
+                 [self uploadImage];
              }
          } andFailBlock:^(NSString *aStr) {
              [self dismissFlower];
@@ -255,6 +255,10 @@
         if (![obj isKindOfClass:[UIImage class]])
         {
             uploadIndex++;
+            if (uploadIndex == uploadPhotoArray.count)
+            {
+                [SVProgressHUD dismiss];
+            }
             [self uploadImage];
         }
         else

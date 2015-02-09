@@ -17,6 +17,7 @@
 #import "YHBUser.h"
 #import "NetManager.h"
 #import "YHBVariousView.h"
+#import "YHBBuyDetailPic.h"
 
 #define kButtonTag_Yes 100
 @interface YHBPublishBuyViewController()<UITextFieldDelegate, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
@@ -53,6 +54,8 @@
     UILabel *detailPlaceHolder;
     
     YHBVariousView *variousView;
+    
+    BOOL webEdit;
 }
 
 @property(nonatomic, strong) UIPickerView *dayPickerView;
@@ -66,6 +69,7 @@
 {
     if (self = [super init]) {
         myModel = aModel;
+        webEdit = YES;
     }
     return self;
 }
@@ -261,6 +265,22 @@
         catNameLabel.text = myModel.catname;
         contentTextView.text = myModel.content;
         dayLabel.text = [NSString stringWithFormat:@"%d", myModel.today];
+        catidString=nil;
+        catidString=myModel.catid;
+
+        if (myModel.pic.count>0)
+        {
+            [variousImageView setMyWebPhotoArray:myModel.pic canEdit:YES];
+            
+        }
+        else
+        {
+            //            [variousImageView changeEdit];
+            variousImageView.webEdit = YES;
+            variousImageView.currentPhotoCount = 0;
+            [variousImageView.webPhotoArray addObject:[UIImage imageNamed:@"QSPlusBtn"]];
+        }
+
         
         dayPlaceHolder.hidden = YES;
         titlePlaceHolder.hidden = YES;
@@ -390,7 +410,7 @@
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [NSString stringWithFormat:@"%ld", row+1];
+    return [NSString stringWithFormat:@"%d", (int)row+1];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component;
@@ -500,18 +520,47 @@
 #pragma mark 发布
 - (void)TouchPublish
 {
-    if ([self isTextNotNil:titleLabel.text]&&[self isTextNotNil:priceTextField.text]&&[self isTextNotNil:dayLabel.text]&&[self isTextNotNil:contentTextView.text]&&[self isTextNotNil:catNameLabel.text]&&[self isTextNotNil:nameTextField.text]&&[self isTextNotNil:phoneTextField.text]&&variousImageView.currentPhotoCount>0)
+    if ([self isTextNotNil:titleLabel.text]&&[self isTextNotNil:dayLabel.text]&&[self isTextNotNil:contentTextView.text]&&[self isTextNotNil:catNameLabel.text]&&[self isTextNotNil:nameTextField.text]&&[self isTextNotNil:phoneTextField.text]&&variousImageView.currentPhotoCount>0)//&&[self isTextNotNil:priceTextField.text])
     {
         [self showFlower];
-        [self.netManage publishBuyWithItemid:0 title:titleLabel.text catid:catidString today:dayLabel.text content:contentTextView.text truename:nameTextField.text mobile:phoneTextField.text unit:variousView.itemLabel.text andSuccBlock:^(NSDictionary *aDict) {
-            [self dismissFlower];
-            int itemid = [[aDict objectForKey:@"itemid"] intValue];
-            NSMutableArray *photoArray = variousImageView.myPhotoArray;
+        int publishItemid = myModel?myModel.itemid:0;
+        NSMutableArray *photoArray = variousImageView.myPhotoArray;
+        NSMutableArray *havePhotoArray = [NSMutableArray new];
+        if (webEdit)
+        {
+            photoArray = variousImageView.webPhotoArray;
             if (variousImageView.currentPhotoCount!=5)
             {
                 [photoArray removeObjectAtIndex:0];
             }
-            YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:itemid itemDict:aDict uploadPhotoArray:photoArray];
+            for (int i=0; i<photoArray.count; i++)
+            {
+                id obj = [photoArray objectAtIndex:i];
+                if (![obj isKindOfClass:[UIImage class]])
+                {
+                    YHBBuyDetailPic *model = [photoArray objectAtIndex:i];
+                    [havePhotoArray addObject:model.thumb];
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            photoArray = variousImageView.myPhotoArray;
+            if (variousImageView.currentPhotoCount!=5)
+            {
+                [photoArray removeObjectAtIndex:0];
+            }
+        }
+
+
+        [self.netManage publishBuyWithItemid:publishItemid title:titleLabel.text catid:catidString today:dayLabel.text content:contentTextView.text truename:nameTextField.text mobile:phoneTextField.text unit:variousView.itemLabel.text photoArray:havePhotoArray andSuccBlock:^(NSDictionary *aDict) {
+            [self dismissFlower];
+            int itemid = [[aDict objectForKey:@"itemid"] intValue];
+            YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:itemid itemDict:aDict uploadPhotoArray:photoArray isWebArray:webEdit];
             [self.navigationController pushViewController:vc animated:YES];
         } failBlock:^(NSString *aStr) {
             [self dismissFlower];

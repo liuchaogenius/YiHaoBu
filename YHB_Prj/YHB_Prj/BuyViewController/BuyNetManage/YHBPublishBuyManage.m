@@ -12,18 +12,18 @@
 
 @implementation YHBPublishBuyManage
 
-- (void)publishBuyWithItemid:(int)aItemId title:(NSString *)aTitle catid:(NSString *)aCatId today:(NSString *)aToday content:(NSString *)aContent truename:(NSString *)aName mobile:(NSString *)aMobile unit:(NSString *)aUnit andSuccBlock:(void (^)(NSDictionary *aDict))aSuccBlock failBlock:(void (^)(NSString *aStr))aFailBlock
+- (void)publishBuyWithItemid:(int)aItemId title:(NSString *)aTitle catid:(NSString *)aCatId today:(NSString *)aToday content:(NSString *)aContent truename:(NSString *)aName mobile:(NSString *)aMobile unit:(NSString *)aUnit photoArray:(NSArray *)aArray andSuccBlock:(void (^)(NSDictionary *aDict))aSuccBlock failBlock:(void (^)(NSString *aStr))aFailBlock
 {
     NSString *supplyUrl = nil;
     NSDictionary *dict;
     NSString *token = [YHBUser sharedYHBUser].token;
     if (aItemId)
     {
-        dict = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",aTitle,@"title",aCatId,@"catid",aToday,@"today",aContent,@"introduce",aName,@"truename",aMobile,@"mobile",aItemId,@"itemid",aUnit,@"unit",nil];
+        dict = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",aTitle,@"title",aCatId,@"catid",aToday,@"today",aContent,@"introduce",aName,@"truename",aMobile,@"mobile",[NSString stringWithFormat:@"%d",aItemId],@"itemid",aUnit,@"unit",aArray,@"album",nil];
     }
     else
     {
-        dict = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",aTitle,@"title",aCatId,@"catid",aToday,@"today",aContent,@"introduce",aName,@"truename",aMobile,@"mobile",aUnit,@"unit",nil];
+        dict = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",aTitle,@"title",aCatId,@"catid",aToday,@"today",aContent,@"introduce",aName,@"truename",aMobile,@"mobile",aUnit,@"unit",aArray,@"album",nil];
     }
     kYHBRequestUrl(@"postBuy.php", supplyUrl);
     [NetManager requestWith:dict url:supplyUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {

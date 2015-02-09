@@ -39,6 +39,7 @@
     
     int uploadIndex;
     UIActivityIndicatorView *activityView;
+    BOOL isWeb;
 }
 @property(nonatomic, strong) YHBBuyDetailManage *manage;
 @end
@@ -56,7 +57,7 @@
     return self;
 }
 
-- (instancetype)initWithItemId:(int)aItemId itemDict:(NSDictionary *)aDict uploadPhotoArray:(NSArray *)aArray
+- (instancetype)initWithItemId:(int)aItemId itemDict:(NSDictionary *)aDict uploadPhotoArray:(NSArray *)aArray isWebArray:(BOOL)aBool
 {
     if (self = [super init]) {
         isModal = YES;
@@ -65,6 +66,7 @@
         uploadPhotoArray = aArray;
         needUpload = YES;
         itemDict = aDict;
+        isWeb = aBool;
     }
     
     return self;
@@ -198,10 +200,10 @@
              [self dismissFlower];
              if (needUpload && uploadPhotoArray.count>0)
              {
-                 [variousImageView setPhotoArray:uploadPhotoArray];
+                 [variousImageView setMyWebPhotoArray:uploadPhotoArray canEdit:NO];
                  uploadIndex = 0;
-                 [self uploadImage];
                  [SVProgressHUD showWithStatus:@"上传图片中" cover:YES offsetY:kMainScreenHeight/2.0];
+                 [self uploadImage];
              }
          } andFailBlock:^(NSString *aStr) {
              [self dismissFlower];
@@ -213,10 +215,31 @@
 
 - (void)uploadImage
 {
+    if (uploadIndex<uploadPhotoArray.count)
+    {
+        id obj = [uploadPhotoArray objectAtIndex:uploadIndex];
+        if (![obj isKindOfClass:[UIImage class]])
+        {
+            uploadIndex++;
+            if (uploadIndex == uploadPhotoArray.count)
+            {
+                [SVProgressHUD dismiss];
+            }
+            [self uploadImage];
+        }
+        else
+        {
+            [self upload];
+        }
+    }
+}
+
+- (void)upload
+{
     NSString *uploadPhototUrl = nil;
     kYHBRequestUrl(@"upload.php", uploadPhototUrl);
     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",[NSString stringWithFormat:@"%d", uploadIndex],@"order",@"album",@"action",[NSString stringWithFormat:@"%d",itemId],@"itemid",[itemDict objectForKey:@"moduleid"],@"moduleid", nil];
-    UIImage *uploadImage = [variousImageView.myPhotoArray objectAtIndex:uploadIndex];
+    UIImage *uploadImage = (UIImage *)[uploadPhotoArray objectAtIndex:uploadIndex];
     [NetManager uploadImg:uploadImage parameters:dic uploadUrl:uploadPhototUrl uploadimgName:nil parameEncoding:AFJSONParameterEncoding progressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
     } succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
@@ -230,19 +253,18 @@
             
         }
         uploadIndex++;
-        if (uploadIndex<variousImageView.myPhotoArray.count)
+        if (uploadIndex<uploadPhotoArray.count)
         {
-            [self uploadImage];
+            [self upload];
         }
         else
         {
             [SVProgressHUD dismiss];
         }
     } failure:^(NSDictionary *failDict, NSError *error) {
-        [SVProgressHUD dismiss];
         MLOG(@"%@", [failDict objectForKey:@"error"]);
     }];
-
+    
 }
 
 #pragma mark 分享

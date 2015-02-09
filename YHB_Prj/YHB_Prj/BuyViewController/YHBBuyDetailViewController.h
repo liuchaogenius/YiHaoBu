@@ -11,5 +11,5 @@
 @interface YHBBuyDetailViewController : BaseViewController
 
 - (instancetype)initWithItemId:(int)aItemId andIsMine:(BOOL)aIsMine isModal:(BOOL)aIsModal;
-- (instancetype)initWithItemId:(int)aItemId itemDict:(NSDictionary *)aDict uploadPhotoArray:(NSArray *)aArray;
+- (instancetype)initWithItemId:(int)aItemId itemDict:(NSDictionary *)aDict uploadPhotoArray:(NSArray *)aArray isWebArray:(BOOL)aBool;
 @end

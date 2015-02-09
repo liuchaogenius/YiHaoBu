@@ -53,7 +53,7 @@
         //        countLabel.text = @"×1";
         [self addSubview:countLabel];
         
-        UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(kMainScreenWidth-105, cellHeight-25-10, 95, 25)];
+        UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(kMainScreenWidth-115, cellHeight-30-10, 105, 30)];
         [self addSubview:backView];
         
         changeView = [[YHBNumControl alloc] init];//WithFrame:CGRectMake(kMainScreenWidth-105, cellHeight-25-10, 95, 25)];
