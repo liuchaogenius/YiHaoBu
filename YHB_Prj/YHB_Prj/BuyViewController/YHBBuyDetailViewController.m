@@ -18,7 +18,7 @@
 #import "YHBStoreViewController.h"
 #import "NetManager.h"
 #import "YHBUser.h"
-#import "YHBBuyDetailPic.h"
+#import "YHBBuyDetailAlbum.h"
 #import "YHBMySupplyViewController.h"
 #import "JubaoViewController.h"
 
@@ -181,14 +181,14 @@
              }
              else
              {
-                 [variousImageView setMyWebPhotoArray:aModel.pic canEdit:NO];
+                 [variousImageView setMyWebPhotoArray:aModel.album canEdit:NO];
              }
              if (!isMine) {
-                 NSArray *array = aModel.pic;
+                 NSArray *array = aModel.album;
                  NSString *picUrl;
                  if (array.count>0)
                  {
-                     YHBBuyDetailPic *picmodel = [array objectAtIndex:0];
+                     YHBBuyDetailAlbum *picmodel = [array objectAtIndex:0];
                      picUrl = picmodel.thumb;
                  }
                  else

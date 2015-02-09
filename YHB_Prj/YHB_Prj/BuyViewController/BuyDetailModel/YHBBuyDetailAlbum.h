@@ -1,15 +1,15 @@
 //
-//  YHBBuyDetailPic.h
+//  YHBBuyDetailAlbum.h
 //
-//  Created by  C陈政旭 on 14/12/21
-//  Copyright (c) 2014 __MyCompanyName__. All rights reserved.
+//  Created by  C陈政旭 on 15/2/9
+//  Copyright (c) 2015 __MyCompanyName__. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
 
 
-@interface YHBBuyDetailPic : NSObject <NSCoding, NSCopying>
+@interface YHBBuyDetailAlbum : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, strong) NSString *thumb;
 @property (nonatomic, strong) NSString *large;

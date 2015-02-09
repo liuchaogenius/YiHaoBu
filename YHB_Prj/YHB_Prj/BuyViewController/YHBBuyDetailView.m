@@ -196,7 +196,7 @@
         }
         [self addSubview:valueLabel];
     }
-    detailTextView.text = aModel.content;
+    detailTextView.text = aModel.introduce;
     timeLabel.text = [NSString stringWithFormat:@"发布时间 : %@", aModel.editdate];
     nameLabel.text = aModel.title;
     if (aModel.vip==1)

@@ -147,7 +147,8 @@ typedef enum:NSUInteger{
             
             UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(0, imgView2.bottom+3, 60, 18)];
             label2.font = kFont15;
-            label2.text = @"拨打电话";
+            label2.text = @"电话";
+            label2.textAlignment = NSTextAlignmentCenter;
             [secondView addSubview:label2];
             
             thirdView = [[UIButton alloc] initWithFrame:CGRectMake(secondView.right+interval, 0, 60, viewHeight)];
@@ -161,7 +162,8 @@ typedef enum:NSUInteger{
             
             UILabel *label3 = [[UILabel alloc] initWithFrame:CGRectMake(0, imgView3.bottom+3, 60, 18)];
             label3.font = kFont15;
-            label3.text = @"发送短信";
+            label3.textAlignment = NSTextAlignmentCenter;
+            label3.text = @"短信";
             [thirdView addSubview:label3];
             
             fourthView = [[UIButton alloc] initWithFrame:CGRectMake(thirdView.right+interval, 0, 60, viewHeight)];

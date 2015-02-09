@@ -17,7 +17,7 @@
 #import "YHBUser.h"
 #import "NetManager.h"
 #import "YHBVariousView.h"
-#import "YHBBuyDetailPic.h"
+#import "YHBBuyDetailAlbum.h"
 
 #define kButtonTag_Yes 100
 @interface YHBPublishBuyViewController()<UITextFieldDelegate, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
@@ -263,14 +263,19 @@
     {
         titleLabel.text = myModel.title;
         catNameLabel.text = myModel.catname;
-        contentTextView.text = myModel.content;
-        dayLabel.text = [NSString stringWithFormat:@"%d", myModel.today];
+        contentTextView.text = myModel.introduce;
+        dayLabel.text = myModel.today;
         catidString=nil;
         catidString=myModel.catid;
-
-        if (myModel.pic.count>0)
+        
+        if (myModel.amount>0)
         {
-            [variousImageView setMyWebPhotoArray:myModel.pic canEdit:YES];
+            priceTextField.text = myModel.amount;
+        }
+
+        if (myModel.album.count>0)
+        {
+            [variousImageView setMyWebPhotoArray:myModel.album canEdit:YES];
             
         }
         else
@@ -538,7 +543,7 @@
                 id obj = [photoArray objectAtIndex:i];
                 if (![obj isKindOfClass:[UIImage class]])
                 {
-                    YHBBuyDetailPic *model = [photoArray objectAtIndex:i];
+                    YHBBuyDetailAlbum *model = [photoArray objectAtIndex:i];
                     [havePhotoArray addObject:model.thumb];
                 }
                 else

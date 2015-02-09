@@ -1,25 +1,25 @@
 //
-//  YHBBuyDetailPic.m
+//  YHBBuyDetailAlbum.m
 //
-//  Created by  C陈政旭 on 14/12/21
-//  Copyright (c) 2014 __MyCompanyName__. All rights reserved.
+//  Created by  C陈政旭 on 15/2/9
+//  Copyright (c) 2015 __MyCompanyName__. All rights reserved.
 //
 
-#import "YHBBuyDetailPic.h"
+#import "YHBBuyDetailAlbum.h"
 
 
-NSString *const kYHBBuyDetailPicThumb = @"thumb";
-NSString *const kYHBBuyDetailPicLarge = @"large";
-NSString *const kYHBBuyDetailPicMiddle = @"middle";
+NSString *const kYHBBuyDetailAlbumThumb = @"thumb";
+NSString *const kYHBBuyDetailAlbumLarge = @"large";
+NSString *const kYHBBuyDetailAlbumMiddle = @"middle";
 
 
-@interface YHBBuyDetailPic ()
+@interface YHBBuyDetailAlbum ()
 
 - (id)objectOrNilForKey:(id)aKey fromDictionary:(NSDictionary *)dict;
 
 @end
 
-@implementation YHBBuyDetailPic
+@implementation YHBBuyDetailAlbum
 
 @synthesize thumb = _thumb;
 @synthesize large = _large;
@@ -38,9 +38,9 @@ NSString *const kYHBBuyDetailPicMiddle = @"middle";
     // This check serves to make sure that a non-NSDictionary object
     // passed into the model class doesn't break the parsing.
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
-            self.thumb = [self objectOrNilForKey:kYHBBuyDetailPicThumb fromDictionary:dict];
-            self.large = [self objectOrNilForKey:kYHBBuyDetailPicLarge fromDictionary:dict];
-            self.middle = [self objectOrNilForKey:kYHBBuyDetailPicMiddle fromDictionary:dict];
+            self.thumb = [self objectOrNilForKey:kYHBBuyDetailAlbumThumb fromDictionary:dict];
+            self.large = [self objectOrNilForKey:kYHBBuyDetailAlbumLarge fromDictionary:dict];
+            self.middle = [self objectOrNilForKey:kYHBBuyDetailAlbumMiddle fromDictionary:dict];
 
     }
     
@@ -51,9 +51,9 @@ NSString *const kYHBBuyDetailPicMiddle = @"middle";
 - (NSDictionary *)dictionaryRepresentation
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];
-    [mutableDict setValue:self.thumb forKey:kYHBBuyDetailPicThumb];
-    [mutableDict setValue:self.large forKey:kYHBBuyDetailPicLarge];
-    [mutableDict setValue:self.middle forKey:kYHBBuyDetailPicMiddle];
+    [mutableDict setValue:self.thumb forKey:kYHBBuyDetailAlbumThumb];
+    [mutableDict setValue:self.large forKey:kYHBBuyDetailAlbumLarge];
+    [mutableDict setValue:self.middle forKey:kYHBBuyDetailAlbumMiddle];
 
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
@@ -77,23 +77,23 @@ NSString *const kYHBBuyDetailPicMiddle = @"middle";
 {
     self = [super init];
 
-    self.thumb = [aDecoder decodeObjectForKey:kYHBBuyDetailPicThumb];
-    self.large = [aDecoder decodeObjectForKey:kYHBBuyDetailPicLarge];
-    self.middle = [aDecoder decodeObjectForKey:kYHBBuyDetailPicMiddle];
+    self.thumb = [aDecoder decodeObjectForKey:kYHBBuyDetailAlbumThumb];
+    self.large = [aDecoder decodeObjectForKey:kYHBBuyDetailAlbumLarge];
+    self.middle = [aDecoder decodeObjectForKey:kYHBBuyDetailAlbumMiddle];
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
 
-    [aCoder encodeObject:_thumb forKey:kYHBBuyDetailPicThumb];
-    [aCoder encodeObject:_large forKey:kYHBBuyDetailPicLarge];
-    [aCoder encodeObject:_middle forKey:kYHBBuyDetailPicMiddle];
+    [aCoder encodeObject:_thumb forKey:kYHBBuyDetailAlbumThumb];
+    [aCoder encodeObject:_large forKey:kYHBBuyDetailAlbumLarge];
+    [aCoder encodeObject:_middle forKey:kYHBBuyDetailAlbumMiddle];
 }
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    YHBBuyDetailPic *copy = [[YHBBuyDetailPic alloc] init];
+    YHBBuyDetailAlbum *copy = [[YHBBuyDetailAlbum alloc] init];
     
     if (copy) {
 

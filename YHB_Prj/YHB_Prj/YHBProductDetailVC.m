@@ -489,7 +489,8 @@
         NSString *productTitle = self.productModel.title;//产品title
         NSString *imageUrlStr = ((YHBAlbum *)(self.productModel.album.firstObject)).middle;//图片url str
 #warning 此处添加联系卖家---cc
-        ChatViewController *vc = [[ChatViewController alloc] initWithChatter:sellerName userid:(int)userID itemid:(int)productID ImageUrl:imageUrlStr Title:productTitle andType:@"product" andChatterAvatar:self.productModel.avatar];
+        ChatViewController *vc = [[ChatViewController alloc] initWithChatter:[NSString stringWithFormat:@"%d", (int)userID] userid:(int)userID itemid:(int)productID ImageUrl:imageUrlStr Title:productTitle andType:@"product" andChatterAvatar:self.productModel.avatar];
+        vc.title = sellerName;
         [self.navigationController pushViewController:vc animated:YES];
     }
     
