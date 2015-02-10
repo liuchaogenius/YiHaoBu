@@ -371,6 +371,10 @@
             self.orderIDArray = [itemArray copy];
             _payMoneyInfo = [NSString stringWithFormat:@"订单总金额:%@ 余额支付:%@ 实际支付金额:%@",ordermoney,overmoney,realmoney];
             //MLOG(@"info:%@",info);
+            if(!overmoney) overmoney = @"0";
+            if ([overmoney integerValue] > 0) {
+                [YHBUser sharedYHBUser].statusIsChanged = YES;
+            }
             if ([realmoney isEqualToString:@"0.00"]) {
                 //余额支付
                 YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] initWithAppendInfo:_payMoneyInfo];

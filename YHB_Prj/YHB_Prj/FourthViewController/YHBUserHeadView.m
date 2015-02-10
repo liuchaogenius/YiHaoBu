@@ -26,7 +26,7 @@
 
 @property (strong, nonatomic) UIButton *privateButton; //关注按钮
 
-@property (strong, nonatomic) UILabel *creditLabel;
+//@property (strong, nonatomic) UILabel *creditLabel;
 @property (strong, nonatomic) UILabel *priceLabel;
 
 @end
@@ -34,21 +34,21 @@
 @implementation YHBUserHeadView
 #pragma mark - getter and setter
 
-- (UILabel *)creditLabel
-{
-    if (!_creditLabel) {
-        _creditLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-10-150, self.companylabel.top+4, 150, kSmallFont)];
-        _creditLabel.textColor = [UIColor whiteColor];
-        _creditLabel.font = [UIFont systemFontOfSize:kSmallFont];
-        _creditLabel.textAlignment = NSTextAlignmentRight;
-    }
-    return _creditLabel;
-}
+//- (UILabel *)creditLabel
+//{
+//    if (!_creditLabel) {
+//        _creditLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-10-150, self.companylabel.top+4, 150, kSmallFont)];
+//        _creditLabel.textColor = [UIColor whiteColor];
+//        _creditLabel.font = [UIFont systemFontOfSize:kSmallFont];
+//        _creditLabel.textAlignment = NSTextAlignmentRight;
+//    }
+//    return _creditLabel;
+//}
 
 - (UILabel *)priceLabel
 {
     if (!_priceLabel) {
-        _priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-10-150, self.userName.top+4, 150, kSmallFont)];
+        _priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-15-150, self.bottom - kSmallFont-10, 150, kSmallFont)];
         _priceLabel.textColor = [UIColor whiteColor];
         _priceLabel.font = [UIFont systemFontOfSize:kSmallFont];
         _priceLabel.textAlignment = NSTextAlignmentRight;
@@ -190,21 +190,22 @@
         if(thumb)
             [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:thumb] placeholderImage:[UIImage imageNamed:@"userBannerDefault"]];
         
-        if (credit && !self.creditLabel.superview) {
-            [self.loginedView addSubview:self.creditLabel];
-        }
-        self.creditLabel.text = [NSString stringWithFormat:@"积分:%@分",credit];
+//        if (credit && !self.creditLabel.superview) {
+//            [self.loginedView addSubview:self.creditLabel];
+//        }
+//        self.creditLabel.text = [NSString stringWithFormat:@"积分:%@分",credit];
         if (money && !self.priceLabel.superview) {
             [self.loginedView addSubview:self.priceLabel];
         }
-        self.priceLabel.text = [NSString stringWithFormat:@"资金:%@元[%@元]",money,lock];
+        self.priceLabel.text = [NSString stringWithFormat:@"资金:%@元[%@元]  积分:%@分",money,lock,credit];
+
     }else{
         [self addSubview:self.notLoginedView];
         self.bannerImageView.image = [UIImage imageNamed:@"userBannerDefault"];
         [self.loginedView removeFromSuperview];
-        if (_creditLabel) {
-            [_creditLabel removeFromSuperview];
-        }
+//        if (_creditLabel) {
+//            [_creditLabel removeFromSuperview];
+//        }
         if (_priceLabel) {
             [_priceLabel removeFromSuperview];
         }

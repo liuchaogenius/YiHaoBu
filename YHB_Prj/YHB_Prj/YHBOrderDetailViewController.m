@@ -21,6 +21,8 @@
 #import "GetUserNameManage.h"
 #import "UserinfoBaseClass.h"
 #import "ChatViewController.h"
+#import "YHBOrderActionModel.h"
+>>>>>>> Stashed changes
 
 #define KAbtnWidth 70
 #define kAbtnHeight 25
@@ -149,11 +151,12 @@ typedef enum : NSInteger {
         [self.actionView removeSubviews];
 #warning 下一步动作 have problem
         for (int i = 0; i < self.orderModel.naction.count; i++) {
-            NSString *title = [self.orderModel getTitleOfNextStepForIndex:i];
+            NSString *title = [YHBOrderActionModel getTitleOfNextStepForNactionStr:self.orderModel.naction[i]];//[self.orderModel getTitleOfNextStepForIndex:i];
             if (title && title.length && i < 2) {
                 UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
                 [btn setTitle:title forState:UIControlStateNormal];
-                btn.frame = CGRectMake(kMainScreenWidth-(!i + 1)*(KAbtnWidth+10) , _actionView.height/2.0-kAbtnHeight/2.0, KAbtnWidth, kAbtnHeight);
+                CGFloat x = self.orderModel.naction.count == 1 ? (kMainScreenWidth-10-KAbtnWidth) : kMainScreenWidth-(!i + 1)*(KAbtnWidth+10);
+                btn.frame = CGRectMake(x , _actionView.height/2.0-kAbtnHeight/2.0, KAbtnWidth, kAbtnHeight);
                 [btn addTarget:self action:@selector(touchActionBtn:) forControlEvents:UIControlEventTouchUpInside];
                 btn.layer.cornerRadius  =2.0;
                 btn.titleLabel.font = kFont12;
@@ -191,6 +194,7 @@ typedef enum : NSInteger {
 #pragma mark 点击功能按钮
 - (void)touchActionBtn : (UIButton *)sender
 {
+    self.isPopToRoot = YES;
     if ([sender.titleLabel.text isEqualToString:@"评价"]) {
         YHBPublicCommentVC *vc = [[YHBPublicCommentVC alloc] initWithOrderDetailModel:self.orderModel];
         [vc setPublishSuccessHandler:^{
@@ -207,6 +211,10 @@ typedef enum : NSInteger {
         [self.orderManager getPayInfoWithToken:[YHBUser sharedYHBUser].token ItemID:self.itemID Success:^(NSString *info, NSString *ordermoney, NSString *overmoney, NSString *realmoney) {
             _payMoneyInfo = [NSString stringWithFormat:@"订单总金额:%@ 余额支付:%@ 实际支付金额:%@",ordermoney,overmoney,realmoney];
             //MLOG(@"info:%@",info);
+            if(!overmoney) overmoney = @"0";
+            if ([overmoney integerValue] > 0) {
+                [YHBUser sharedYHBUser].statusIsChanged = YES;
+            }
             if ([realmoney isEqualToString:@"0.00"]) {
                 //余额支付
                 YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] initWithAppendInfo:_payMoneyInfo];
@@ -300,13 +308,22 @@ typedef enum : NSInteger {
         case Com_message:
         {
             //短信
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"sms://%@",self.orderModel.sellmob]]];
+            if (self.orderModel.sellmob.length) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"sms://%@",self.orderModel.sellmob]]];
+            } else{
+                [SVProgressHUD showErrorWithStatus:@"卖家没有留下电话" cover:YES offsetY:0];
+            }
+            
         }
             break;
         case Com_phone:
         {
             //电话
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"sms://%@",self.orderModel.sellmob]]];
+            if (self.orderModel.sellmob.length) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",self.orderModel.sellmob]]];
+            } else {
+                [SVProgressHUD showErrorWithStatus:@"卖家没有留下电话" cover:YES offsetY:0];
+            }
         }
             break;
         default:

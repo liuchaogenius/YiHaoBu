@@ -1,7 +1,7 @@
 //
 //  YHBORslist.h
 //
-//  Created by   on 15/1/18
+//  Created by   on 15/2/10
 //  Copyright (c) 2015 __MyCompanyName__. All rights reserved.
 //
 
@@ -12,6 +12,7 @@
 @interface YHBORslist : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, strong) NSString *thumb;
+@property (nonatomic, strong) NSString *money;
 @property (nonatomic, strong) NSString *amount;
 @property (nonatomic, strong) NSString *addtime;
 @property (nonatomic, strong) NSString *fee;
@@ -26,6 +27,7 @@
 @property (nonatomic, strong) NSString *dstatus;
 @property (nonatomic, strong) NSString *seller;
 @property (nonatomic, assign) double status;
+@property (nonatomic, strong) NSArray *naction;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;

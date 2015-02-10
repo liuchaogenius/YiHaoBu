@@ -17,6 +17,7 @@
 @interface YHBOrderListCell : UITableViewCell
 
 @property (weak, nonatomic) id<YHBOrderListCellDelegte> delegate;
-- (void)setUIWithStatus:(NSInteger)status Title:(NSString *)title price:(NSString *)price number:(NSString *)num amount:(NSString *)amount itemID:(NSInteger)itemid;
+
+- (void)setUIWithStatus:(NSInteger)status Title:(NSString *)title price:(NSString *)price number:(NSString *)num amount:(NSString *)amount itemID:(NSInteger)itemid NextAction:(NSArray *)naction;
 
 @end

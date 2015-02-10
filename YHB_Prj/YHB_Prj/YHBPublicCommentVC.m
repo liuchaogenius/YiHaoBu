@@ -24,6 +24,7 @@
     NSInteger _star1;
     NSInteger _star2;
     Success_handler _handle;
+    UIButton *_commitBtn;
 }
 @property (strong, nonatomic) YHBOrderInfoView *orderInfoView;
 @property (strong, nonatomic) UIView *storeInfoView;
@@ -114,7 +115,7 @@
         self.commentTextView.layer.borderWidth = 1.0;
         self.commentTextView.layer.cornerRadius = 4.0;
         self.commentTextView.delegate = self;
-        self.commentTextView.font = kFont11;
+        self.commentTextView.font = kFont14;
         self.commentTextView.textColor = [UIColor lightGrayColor];
         _placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 200, 11)];
         _placeLabel.text = @"您的评价对其他买家很有帮助的哦!";
@@ -156,7 +157,7 @@
     [self.view addSubview:self.orderInfoView];
     
     [self.view addSubview:self.storeInfoView];
-    [self.view addSubview:[self customButtonWithTitle:@"提交评价" andY:self.storeInfoView.bottom+30]];
+    [self.view addSubview:(_commitBtn =  [self customButtonWithTitle:@"提交评价" andY:self.storeInfoView.bottom+30])];
     
     [self.orderInfoView.headImageView sd_setImageWithURL:[NSURL URLWithString:self.model.thumb]];
     self.orderInfoView.titleLabel.text = self.model.title;
@@ -205,6 +206,7 @@
 
 - (void)publicComment
 {
+    [self.commentTextView resignFirstResponder];
     NSString *url = nil;
     kYHBRequestUrl(@"postOrderComment.php", url);
     NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token?:@"",@"token",[NSNumber numberWithDouble:self.model.itemid],@"itemid",[NSString stringWithFormat:@"%ld",(long)_star1],@"star1",[NSString stringWithFormat:@"%ld",(long)_star2],@"star2",self.commentTextView.text?:@"",@"comment",nil];
@@ -212,6 +214,10 @@
         NSInteger result = [successDict[@"result"] integerValue];
         kResult_11_CheckWithAlert;
         if (result == 1) {
+            [_commitBtn setBackgroundColor:[UIColor lightGrayColor]];
+            _commitBtn.enabled = NO;
+            self.commentTextView.userInteractionEnabled = NO;
+            
             [SVProgressHUD showSuccessWithStatus:@"评价成功！" cover:YES offsetY:0];
             if (_handle) {
                 _handle();
@@ -253,7 +259,8 @@
 {
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setBackgroundColor:KColor];
-    [btn setTintColor:[UIColor whiteColor]];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    //[btn seti:[UIColor whiteColor]];
     btn.layer.cornerRadius = 4.0;
     btn.titleLabel.font = kFont18;
     btn.frame = CGRectMake(10, y, kMainScreenWidth-20, 40);

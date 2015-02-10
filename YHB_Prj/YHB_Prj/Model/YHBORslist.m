@@ -1,7 +1,7 @@
 //
 //  YHBORslist.m
 //
-//  Created by   on 15/1/18
+//  Created by   on 15/2/10
 //  Copyright (c) 2015 __MyCompanyName__. All rights reserved.
 //
 
@@ -9,6 +9,7 @@
 
 
 NSString *const kYHBORslistThumb = @"thumb";
+NSString *const kYHBORslistMoney = @"money";
 NSString *const kYHBORslistAmount = @"amount";
 NSString *const kYHBORslistAddtime = @"addtime";
 NSString *const kYHBORslistFee = @"fee";
@@ -21,8 +22,9 @@ NSString *const kYHBORslistItemid = @"itemid";
 NSString *const kYHBORslistFeeName = @"fee_name";
 NSString *const kYHBORslistSellcom = @"sellcom";
 NSString *const kYHBORslistDstatus = @"dstatus";
-NSString *const kYHBORslistSeller = @"sellname";
+NSString *const kYHBORslistSeller = @"seller";
 NSString *const kYHBORslistStatus = @"status";
+NSString *const kYHBORslistNaction = @"naction";
 
 
 @interface YHBORslist ()
@@ -34,6 +36,7 @@ NSString *const kYHBORslistStatus = @"status";
 @implementation YHBORslist
 
 @synthesize thumb = _thumb;
+@synthesize money = _money;
 @synthesize amount = _amount;
 @synthesize addtime = _addtime;
 @synthesize fee = _fee;
@@ -48,6 +51,7 @@ NSString *const kYHBORslistStatus = @"status";
 @synthesize dstatus = _dstatus;
 @synthesize seller = _seller;
 @synthesize status = _status;
+@synthesize naction = _naction;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
@@ -63,6 +67,7 @@ NSString *const kYHBORslistStatus = @"status";
     // passed into the model class doesn't break the parsing.
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
             self.thumb = [self objectOrNilForKey:kYHBORslistThumb fromDictionary:dict];
+            self.money = [self objectOrNilForKey:kYHBORslistMoney fromDictionary:dict];
             self.amount = [self objectOrNilForKey:kYHBORslistAmount fromDictionary:dict];
             self.addtime = [self objectOrNilForKey:kYHBORslistAddtime fromDictionary:dict];
             self.fee = [self objectOrNilForKey:kYHBORslistFee fromDictionary:dict];
@@ -77,6 +82,7 @@ NSString *const kYHBORslistStatus = @"status";
             self.dstatus = [self objectOrNilForKey:kYHBORslistDstatus fromDictionary:dict];
             self.seller = [self objectOrNilForKey:kYHBORslistSeller fromDictionary:dict];
             self.status = [[self objectOrNilForKey:kYHBORslistStatus fromDictionary:dict] doubleValue];
+            self.naction = [self objectOrNilForKey:kYHBORslistNaction fromDictionary:dict];
 
     }
     
@@ -88,6 +94,7 @@ NSString *const kYHBORslistStatus = @"status";
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];
     [mutableDict setValue:self.thumb forKey:kYHBORslistThumb];
+    [mutableDict setValue:self.money forKey:kYHBORslistMoney];
     [mutableDict setValue:self.amount forKey:kYHBORslistAmount];
     [mutableDict setValue:self.addtime forKey:kYHBORslistAddtime];
     [mutableDict setValue:self.fee forKey:kYHBORslistFee];
@@ -102,6 +109,17 @@ NSString *const kYHBORslistStatus = @"status";
     [mutableDict setValue:self.dstatus forKey:kYHBORslistDstatus];
     [mutableDict setValue:self.seller forKey:kYHBORslistSeller];
     [mutableDict setValue:[NSNumber numberWithDouble:self.status] forKey:kYHBORslistStatus];
+    NSMutableArray *tempArrayForNaction = [NSMutableArray array];
+    for (NSObject *subArrayObject in self.naction) {
+        if([subArrayObject respondsToSelector:@selector(dictionaryRepresentation)]) {
+            // This class is a model object
+            [tempArrayForNaction addObject:[subArrayObject performSelector:@selector(dictionaryRepresentation)]];
+        } else {
+            // Generic object
+            [tempArrayForNaction addObject:subArrayObject];
+        }
+    }
+    [mutableDict setValue:[NSArray arrayWithArray:tempArrayForNaction] forKey:kYHBORslistNaction];
 
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
@@ -126,6 +144,7 @@ NSString *const kYHBORslistStatus = @"status";
     self = [super init];
 
     self.thumb = [aDecoder decodeObjectForKey:kYHBORslistThumb];
+    self.money = [aDecoder decodeObjectForKey:kYHBORslistMoney];
     self.amount = [aDecoder decodeObjectForKey:kYHBORslistAmount];
     self.addtime = [aDecoder decodeObjectForKey:kYHBORslistAddtime];
     self.fee = [aDecoder decodeObjectForKey:kYHBORslistFee];
@@ -140,6 +159,7 @@ NSString *const kYHBORslistStatus = @"status";
     self.dstatus = [aDecoder decodeObjectForKey:kYHBORslistDstatus];
     self.seller = [aDecoder decodeObjectForKey:kYHBORslistSeller];
     self.status = [aDecoder decodeDoubleForKey:kYHBORslistStatus];
+    self.naction = [aDecoder decodeObjectForKey:kYHBORslistNaction];
     return self;
 }
 
@@ -147,6 +167,7 @@ NSString *const kYHBORslistStatus = @"status";
 {
 
     [aCoder encodeObject:_thumb forKey:kYHBORslistThumb];
+    [aCoder encodeObject:_money forKey:kYHBORslistMoney];
     [aCoder encodeObject:_amount forKey:kYHBORslistAmount];
     [aCoder encodeObject:_addtime forKey:kYHBORslistAddtime];
     [aCoder encodeObject:_fee forKey:kYHBORslistFee];
@@ -161,6 +182,7 @@ NSString *const kYHBORslistStatus = @"status";
     [aCoder encodeObject:_dstatus forKey:kYHBORslistDstatus];
     [aCoder encodeObject:_seller forKey:kYHBORslistSeller];
     [aCoder encodeDouble:_status forKey:kYHBORslistStatus];
+    [aCoder encodeObject:_naction forKey:kYHBORslistNaction];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -170,6 +192,7 @@ NSString *const kYHBORslistStatus = @"status";
     if (copy) {
 
         copy.thumb = [self.thumb copyWithZone:zone];
+        copy.money = [self.money copyWithZone:zone];
         copy.amount = [self.amount copyWithZone:zone];
         copy.addtime = [self.addtime copyWithZone:zone];
         copy.fee = [self.fee copyWithZone:zone];
@@ -184,6 +207,7 @@ NSString *const kYHBORslistStatus = @"status";
         copy.dstatus = [self.dstatus copyWithZone:zone];
         copy.seller = [self.seller copyWithZone:zone];
         copy.status = self.status;
+        copy.naction = [self.naction copyWithZone:zone];
     }
     
     return copy;

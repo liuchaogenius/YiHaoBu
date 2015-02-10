@@ -170,7 +170,7 @@
     }
 
     YHBORslist *model = self.listModel.rslist[indexPath.section];
-    [cell setUIWithStatus:(NSInteger)model.status Title:model.title price:model.price number:model.number amount:model.amount itemID:model.itemid];
+    [cell setUIWithStatus:(NSInteger)model.status Title:model.title price:model.price number:model.number amount:model.amount itemID:model.itemid NextAction:model.naction];
     
     return cell;
 }

@@ -8,6 +8,7 @@
 
 #import "YHBOrderListCell.h"
 #import "YHBOrderInfoView.h"
+#import "YHBOrderActionModel.h"
 
 #define kTitleFont 16
 #define kBtnWidth 70
@@ -91,51 +92,29 @@
     return self;
 }
 #warning 图片链接无
-- (void)setUIWithStatus:(NSInteger)status Title:(NSString *)title price:(NSString *)price number:(NSString *)num amount:(NSString *)amount itemID:(NSInteger)itemid
+- (void)setUIWithStatus:(NSInteger)status Title:(NSString *)title price:(NSString *)price number:(NSString *)num amount:(NSString *)amount itemID:(NSInteger)itemid NextAction:(NSArray *)naction
 {
     self.tag = itemid;
     self.orderInfoView.titleLabel.text = title;
     self.orderInfoView.numberLabel.text = [NSString stringWithFormat:@"数量：%@",num];
     self.orderInfoView.priceLabel.text = [NSString stringWithFormat:@"价格：%@",price];
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@",amount];
-    switch (status) {
-        case 2://已支付
-        case 5://卖家申请退款
-        case 6://已退款给卖家
-        case 8://买家关闭
-        case 9://卖家关闭
-        case 0:
-        {
-            //待确认
-            self.buttonsView.hidden = YES;
-            self.height = kpriceHeight+kInfoViewHeight;
-        }
-            break;
-        case 1://待确认
-        case 3:
-        {
-            //已发货
-            self.buttonsView.hidden = NO;
-            self.height = kpriceHeight+kInfoViewHeight+kBtnHeight;
-            self.leftButton.hidden = NO;
+    if (naction.count) {
+        self.buttonsView.hidden = NO;
+        self.height = kpriceHeight+kInfoViewHeight+kBtnHeight;
+        if (naction.count == 1) {
+            [self.rightButton setTitle:[YHBOrderActionModel getTitleOfNextStepForNactionStr:naction[0]] forState:UIControlStateNormal];
             self.rightButton.hidden = NO;
-            [self.leftButton setTitle:[self getButtonTitleWithWhitch:0 status:status] forState:UIControlStateNormal];
-            [self.rightButton setTitle:[self getButtonTitleWithWhitch:1 status:status] forState:UIControlStateNormal];
-        }
-            break;
-        case 4://交易成功
-        case 7:
-        {
-            self.buttonsView.hidden = NO;
-            self.height = kpriceHeight+kInfoViewHeight+kBtnHeight;
             self.leftButton.hidden = YES;
+        }else{
+            [self.leftButton setTitle:[YHBOrderActionModel getTitleOfNextStepForNactionStr:naction[0]] forState:UIControlStateNormal];
+            self.leftButton.hidden = NO;
+            [self.rightButton setTitle:[YHBOrderActionModel getTitleOfNextStepForNactionStr:naction[1]] forState:UIControlStateNormal];
             self.rightButton.hidden = NO;
-            //[self.leftButton setTitle:@"取消订单" forState:UIControlStateNormal];
-            [self.rightButton setTitle:[self getButtonTitleWithWhitch:1 status:status] forState:UIControlStateNormal];
         }
-            break;
-        default:
-            break;
+    }else {
+        self.buttonsView.hidden = YES;
+        self.height = kpriceHeight+kInfoViewHeight;
     }
 }
 
@@ -153,26 +132,6 @@
 }
 
 
-- (NSString *)getButtonTitleWithWhitch:(int)whitch status:(NSInteger)status
-{
-    switch (status) {
-        case 1:
-            return (!whitch ?@"取消订单":@"付款");
-            break;
-        case 3:
-            return (!whitch ? @"申请退款":@"确认收货");
-            break;
-        case 4:
-            return (!whitch? @"":@"评价");
-            break;
-        case 7:
-            return (!whitch? @"":@"申请退款");
-            break;
-        default:
-            return @"";
-            break;
-    }
-}
 
 //type = 0 灰色，type = 1 正常
 - (UIButton *)customButtonWithFrame:(CGRect)frame Type:(int)type
