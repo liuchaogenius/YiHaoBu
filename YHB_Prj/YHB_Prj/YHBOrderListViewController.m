@@ -18,11 +18,16 @@
 #import "YHBPage.h"
 #import "YHBStoreViewController.h"
 #import "YHBOrderDetailViewController.h"
+#import "YHBPublicCommentVC.h"
+#import "YHBPaySuccessVC.h"
+#import <AlipaySDK/AlipaySDK.h>
+#import "YHBOrderActionModel.h"
+//#import "YHBOrderManager.h"
 #define kPageSize 30
 @interface YHBOrderListViewController ()<UITableViewDataSource,UITableViewDelegate,YHBOrderListCellDelegte,YHBOrderShopInfoDelegte>
 {
     NSString *_headIdentifer;
-
+    NSString *_payMoneyInfo;
 }
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) YHBOrderList *listModel;
@@ -72,6 +77,7 @@
     [SVProgressHUD showWithStatus:@"拼命加载中.." cover:YES offsetY:0];
     [self getDataWithPageID:1];
     [self addTableViewTragWithTableView:self.tableView];
+    
 }
 
 #pragma mark - 网络请求
@@ -150,7 +156,7 @@
         head.delegate = self;
     }
     YHBORslist *model = self.listModel.rslist[section];
-    [head setUIWithCompany:model.sellcom statusDes:model.dstatus ItemID:(NSInteger)model.itemid];
+    [head setUIWithCompany:model.sellcom statusDes:model.dstatus ItemID:(NSInteger)model.sellid];
     return head;
 }
 
@@ -170,7 +176,7 @@
     }
 
     YHBORslist *model = self.listModel.rslist[indexPath.section];
-    [cell setUIWithStatus:(NSInteger)model.status Title:model.title price:model.price number:model.number amount:model.amount itemID:model.itemid NextAction:model.naction];
+    [cell setUIWithStatus:(NSInteger)model.status Title:model.title price:model.price number:model.number amount:model.amount itemID:(int)model.itemid NextAction:model.naction shopID:(NSInteger)model.sellid];
     
     return cell;
 }
@@ -196,18 +202,90 @@
 #pragma mark 点击按钮
 - (void)touchActionButtonWithItemID:(NSInteger)itemid actionStr:(NSString *)action
 {
-    MLOG(@"touch btn");
-    if ([action isEqualToString:@"取消订单"]) {
-        
-    }else if ([action isEqualToString:@"付款"]){
-        
-    }else if([action isEqualToString:@"申请退款"]){
-        
-    }else if([action isEqualToString:@"确认收货"]){
-        
-    }else if([action isEqualToString:@"评价"]){
-        
+    MLOG(@"touch btn----itemid: %d",itemid );
+    if ([action isEqualToString:@"评价"]) {
+        [SVProgressHUD showWithStatus:@"加载中.." cover:YES offsetY:0];
+        [self.orderManger getOrderDetailWithToken:([YHBUser sharedYHBUser].token ? :@"") ItemID:itemid Success:^(YHBOrderDetail *model) {
+            [SVProgressHUD dismiss];
+            YHBPublicCommentVC *vc = [[YHBPublicCommentVC alloc] initWithOrderDetailModel:model];
+            [vc setPublishSuccessHandler:^{
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            }];
+            [self.navigationController pushViewController:vc animated:YES];
+        } failure:^(NSString *error) {
+            [SVProgressHUD dismissWithError:error];
+        }];
+
+    }else if ([action isEqualToString:@"付款"]) {
+        //支付
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aliPayresult:) name:kAlipayOrderResultMessage object:nil];
+        [self.orderManger getPayInfoWithToken:[YHBUser sharedYHBUser].token ItemID:itemid Success:^(NSString *info, NSString *ordermoney, NSString *overmoney, NSString *realmoney) {
+            _payMoneyInfo = [NSString stringWithFormat:@"订单总金额:%@ 余额支付:%@ 实际支付金额:%@",ordermoney,overmoney,realmoney];
+            //MLOG(@"info:%@",info);
+            if(!overmoney) overmoney = @"0";
+            if ([overmoney integerValue] > 0) {
+                [YHBUser sharedYHBUser].statusIsChanged = YES;
+            }
+            if ([realmoney isEqualToString:@"0.00"]) {
+                //余额支付
+                YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] initWithAppendInfo:_payMoneyInfo];
+                [self.navigationController pushViewController:sVc animated:YES];
+            }else if (info) {
+                static NSString *strSchem = @"com.yibu.kuaibu";
+                [[AlipaySDK defaultService] payOrder:info fromScheme:strSchem callback:^(NSDictionary *resultDic) {
+                    MLOG(@"%@",resultDic);
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kAlipayOrderResultMessage object:resultDic];
+                }];
+            }
+        } failure:^(NSString *error) {
+            [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
+        }];
+    }else{
+        NSString *actionStr = [YHBOrderActionModel getNextActionStrWithTitle:action];
+        [SVProgressHUD showWithStatus:@"操作中..." cover:YES offsetY:0];
+        __weak YHBOrderListViewController *weakself = self;
+        [self.orderManger changeOrderStatusWithToken:([YHBUser sharedYHBUser].token ? :@"") ItemID:(NSInteger)itemid Action:actionStr?:@"" Success:^{
+            [SVProgressHUD showWithStatus:@"操作成功,正在重新加载订单信息.." cover:YES offsetY:0];
+            [weakself getDataWithPageID:1];
+        } failure:^(NSString *error) {
+            [SVProgressHUD dismissWithError:error];
+        }];
     }
+
+}
+
+#pragma mark - 支付结果处理
+- (void)aliPayresult:(NSNotification *)aNotification
+{
+    //MLOG(@"resultDic :  %@",aNotification);
+    MLOG(@"litcontroller had do");
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAlipayOrderResultMessage object:nil];
+    NSDictionary *resultDic = [aNotification object];
+    
+    if(resultDic && resultDic.count)
+    {
+        MLOG(@"notificationDict = %@",resultDic);
+        int resultStatus = [[resultDic objectForKey:@"resultStatus"] intValue];
+        NSString *resultDesc = [resultDic objectForKey:@"result"];
+        if(resultStatus == 9000)///支付成功
+        {
+            YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] initWithAppendInfo:_payMoneyInfo];
+            [self.navigationController pushViewController:sVc animated:YES];
+            
+        }
+        else if(resultStatus == 8000)///正在处理
+        {
+            YHBPaySuccessVC *sVc = [[YHBPaySuccessVC alloc] initWithAppendInfo:_payMoneyInfo];
+            [self.navigationController pushViewController:sVc animated:YES];
+            
+        }
+        else///支付失败
+        {
+            [SVProgressHUD showErrorWithStatus:@"支付失败，请重新支付" cover:YES offsetY:kMainScreenHeight/2.0];
+            // [[NSNotificationCenter defaultCenter] postNotificationName:kPayFail object:self];
+        }
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {

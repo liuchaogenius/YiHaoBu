@@ -23,7 +23,24 @@
     }else if ([str isEqualToString:@"refund"]) {
         return nil;
     }
-    return nil;
+    return @"";
+}
+
++ (NSString *)getNextActionStrWithTitle: (NSString *)title
+{
+    if ([title isEqualToString:@"取消订单"]) {
+        return @"close";
+    }else if([title isEqualToString:@"付款"]) {
+        return @"pay";
+    }else if ([title isEqualToString:@"立即收货"]) {
+        return @"receive";
+    }else if ([title isEqualToString:@"评价"]) {
+        return @"comment";
+    }else if ([title isEqualToString:@"refund"]) {
+        return @"";
+    }
+    return @"";
+
 }
 
 @end

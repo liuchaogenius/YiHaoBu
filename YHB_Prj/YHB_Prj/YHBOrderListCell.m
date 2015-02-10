@@ -14,7 +14,10 @@
 #define kBtnWidth 70
 #define kBtnHeight 25
 @interface YHBOrderListCell ()
-
+{
+    //NSInteger _shopID;
+    NSInteger _itemID;
+}
 @property (strong, nonatomic) YHBOrderInfoView *orderInfoView;
 @property (strong, nonatomic) UIView *priceNumView;
 @property (strong, nonatomic) UIView *buttonsView;
@@ -92,8 +95,10 @@
     return self;
 }
 #warning 图片链接无
-- (void)setUIWithStatus:(NSInteger)status Title:(NSString *)title price:(NSString *)price number:(NSString *)num amount:(NSString *)amount itemID:(NSInteger)itemid NextAction:(NSArray *)naction
+- (void)setUIWithStatus:(NSInteger)status Title:(NSString *)title price:(NSString *)price number:(NSString *)num amount:(NSString *)amount itemID:(NSInteger)itemid NextAction:(NSArray *)naction shopID:(NSInteger)shopID
 {
+    //_shopID = shopID;
+    _itemID = itemid;
     self.tag = itemid;
     self.orderInfoView.titleLabel.text = title;
     self.orderInfoView.numberLabel.text = [NSString stringWithFormat:@"数量：%@",num];
@@ -121,7 +126,7 @@
 - (void)touchButton : (UIButton *)sender
 {
     if ([self.delegate respondsToSelector:@selector(touchActionButtonWithItemID:actionStr:)]) {
-        [self.delegate touchActionButtonWithItemID:self.tag actionStr:self.textLabel.text];
+        [self.delegate touchActionButtonWithItemID:_itemID actionStr:sender.titleLabel.text];
     }
 }
 

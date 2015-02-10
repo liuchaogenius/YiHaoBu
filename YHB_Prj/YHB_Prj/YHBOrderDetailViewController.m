@@ -22,7 +22,6 @@
 #import "UserinfoBaseClass.h"
 #import "ChatViewController.h"
 #import "YHBOrderActionModel.h"
->>>>>>> Stashed changes
 
 #define KAbtnWidth 70
 #define kAbtnHeight 25

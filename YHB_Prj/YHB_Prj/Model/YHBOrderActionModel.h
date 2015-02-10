@@ -11,5 +11,6 @@
 @interface YHBOrderActionModel : NSObject
 
 + (NSString *)getTitleOfNextStepForNactionStr:(NSString *)str;
++ (NSString *)getNextActionStrWithTitle: (NSString *)title;
 
 @end
