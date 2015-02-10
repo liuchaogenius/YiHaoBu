@@ -10,6 +10,8 @@
 
 @interface YHBMySupplyViewController : BaseViewController
 
+@property (assign, nonatomic) BOOL shouldDisableUserInteractionWhileEditing;
+
 - (instancetype)initWithIsSupply:(BOOL)aIsSupply;
 
 - (instancetype)initWithUserid:(int)aUserid;

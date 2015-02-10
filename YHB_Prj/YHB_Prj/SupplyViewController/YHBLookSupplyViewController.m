@@ -139,7 +139,8 @@
     }
     
 #pragma mark 建立tableview
-    self.supplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, topViewHeight, kMainScreenWidth, kMainScreenHeight-topViewHeight-62)];
+    self.supplyTableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+    self.supplyTableView.tableHeaderView = topView;
     self.supplyTableView.delegate = self;
     self.supplyTableView.dataSource = self;
     self.supplyTableView.separatorStyle = UITableViewCellSeparatorStyleNone;

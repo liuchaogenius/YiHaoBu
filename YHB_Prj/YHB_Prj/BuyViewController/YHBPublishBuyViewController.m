@@ -179,7 +179,7 @@
 //    priceLabelNote.text = @"元/米";
 //    [editSupplyView addSubview:priceLabelNote];
     
-    variousView = [[YHBVariousView alloc] initWithFrame:CGRectMake(priceTextField.right, priceTextField.top+5, 50, labelHeight) andItemArray:@[@"米",@"码",@"本"] andSelectedItem:0];
+    variousView = [[YHBVariousView alloc] initWithFrame:CGRectMake(priceTextField.right, priceTextField.top+5, 50, labelHeight) andItemArray:@[@"米",@"本",@"码"] andSelectedItem:0];
     variousView.layer.borderColor = [KColor CGColor];
     variousView.layer.borderWidth=0.5;
     variousView.layer.cornerRadius = 10;

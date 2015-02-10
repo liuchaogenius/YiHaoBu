@@ -18,6 +18,9 @@
 #import "YHBPublicCommentVC.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import "YHBPaySuccessVC.h"
+#import "GetUserNameManage.h"
+#import "UserinfoBaseClass.h"
+#import "ChatViewController.h"
 
 #define KAbtnWidth 70
 #define kAbtnHeight 25
@@ -39,6 +42,7 @@ typedef enum : NSInteger {
 @property (strong, nonatomic) YHBOrderSecondView *secondSection;
 @property (strong, nonatomic) YHBOrderDetailInfoView *infoView;
 @property (strong, nonatomic) UIView *actionView;
+@property (strong, nonatomic) GetUserNameManage *userManage;
 @end
 
 @implementation YHBOrderDetailViewController
@@ -51,6 +55,14 @@ typedef enum : NSInteger {
         _scrollView.backgroundColor = kViewBackgroundColor;
     }
     return _scrollView;
+}
+
+- (GetUserNameManage *)userManage
+{
+    if (!_userManage) {
+        _userManage = [[GetUserNameManage alloc] init];
+    }
+    return _userManage;
 }
 
 -  (YHBOrderManager *)orderManager
@@ -272,7 +284,17 @@ typedef enum : NSInteger {
             double userID = self.orderModel.sellid;//用户id
             //缺少头像
 #warning 待添加聊天 - cc
-
+            NSString *useridStr = [NSString stringWithFormat:@"%d",(int)userID];
+            NSMutableArray *temArray = [NSMutableArray new];
+            [temArray addObject:useridStr];
+            [self.userManage getUserNameUseridArray:temArray succBlock:^(NSMutableArray *aMuArray) {
+                UserinfoBaseClass *model = [aMuArray objectAtIndex:0];
+                ChatViewController *vc = [[ChatViewController alloc] initWithChatter:useridStr isGroup:NO andChatterAvatar:model.avatar];
+                vc.title = sellerName;
+                [self.navigationController pushViewController:vc animated:YES];
+            } failBlock:^(NSString *aStr) {
+                
+            }];
         }
             break;
         case Com_message:

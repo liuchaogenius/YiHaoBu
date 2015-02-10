@@ -169,7 +169,7 @@
 //    priceLabelNote.textAlignment = NSTextAlignmentRight;
 //    [editSupplyView addSubview:priceLabelNote];
     
-    variousView = [[YHBVariousView alloc] initWithFrame:CGRectMake(priceTextField.right, priceTextField.top+5, 60, labelHeight) andItemArray:@[@"元/米",@"元/本"] andSelectedItem:0];
+    variousView = [[YHBVariousView alloc] initWithFrame:CGRectMake(priceTextField.right, priceTextField.top+5, 60, labelHeight) andItemArray:@[@"元/米",@"元/本",@"元/码"] andSelectedItem:0];
     variousView.layer.borderColor = [KColor CGColor];
     variousView.layer.borderWidth=0.5;
     variousView.layer.cornerRadius = 10;
@@ -414,7 +414,7 @@
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [NSString stringWithFormat:@"%ld", row+1];
+    return [NSString stringWithFormat:@"%d", (int)row+1];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component;

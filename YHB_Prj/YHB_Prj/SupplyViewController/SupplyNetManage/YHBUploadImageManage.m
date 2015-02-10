@@ -16,7 +16,7 @@
 {
     NSString *uploadUrl = nil;
     NSString *token = [YHBUser sharedYHBUser].token;
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",@"album",@"action",aItemid,@"itemid",aModuleid,@"moduleid",aOrder,@"order",aImage,@"files",nil];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",@"album",@"action",aItemid,@"itemid",aModuleid,@"mid",aOrder,@"order",aImage,@"files",nil];
     kYHBRequestUrl(@"upload.php", uploadUrl);
     [NetManager requestWith:dict url:uploadUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         //        MLOG(@"%@", successDict);

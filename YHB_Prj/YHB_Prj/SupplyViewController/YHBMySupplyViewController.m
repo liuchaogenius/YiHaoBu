@@ -7,7 +7,7 @@
 //
 
 #import "YHBMySupplyViewController.h"
-#import "GoodsTableViewCell.h"
+#import "DAContextMenuCell.h"
 #import "SVPullToRefresh.h"
 #import "SVProgressHUD.h"
 #import "YHBSupplyModel.h"
@@ -16,10 +16,12 @@
 #import "YHBPublishSupplyViewController.h"
 #import "YHBPublishBuyViewController.h"
 #import "YHBMySupplyManage.h"
+#import "DAOverlayView.h"
+#import "YHBPostSell.h"
 
 #define topViewHeight 40
 
-@interface YHBMySupplyViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface YHBMySupplyViewController ()<UITableViewDataSource, UITableViewDelegate,DAContextMenuCellDelegate,DAOverlayViewDelegate,UIAlertViewDelegate>
 {
     BOOL isSupply;
     YHBMySupplyManage *manage;
@@ -27,12 +29,18 @@
     UIView *underLine;
     
     int userId;
+    YHBPostSell *postManage;
+    int selRow;
 }
 
 @property(nonatomic, strong) UITableView *supplyTableView;
 @property(nonatomic, strong) NSMutableArray *tableViewArray;
 @property(nonatomic, strong) UIButton *selectAllBtn;
 @property(nonatomic, strong) UIButton *selectVipBtn;
+@property (assign, nonatomic) BOOL customEditing;
+@property (assign, nonatomic) BOOL customEditingAnimationInProgress;
+@property (strong, nonatomic) DAContextMenuCell *cellDisplayingMenuOptions;
+@property (strong, nonatomic) DAOverlayView *overlayView;
 @end
 
 @implementation YHBMySupplyViewController
@@ -57,6 +65,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.customEditing = self.customEditingAnimationInProgress = NO;
     if (isSupply)
     {
         self.title = @"我的供应";
@@ -103,7 +112,8 @@
         underLine.backgroundColor = KColor;
         [topView addSubview:underLine];
         
-        self.supplyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, topViewHeight, kMainScreenWidth, kMainScreenHeight-62-topViewHeight)];
+        self.supplyTableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+        self.supplyTableView.tableHeaderView = topView;
     }
     
     if (userId>0)
@@ -125,6 +135,8 @@
     
     manage = [[YHBMySupplyManage alloc] init];
     [self getFirstDataWithIsSupply:isSupply andIsFind:isFind];
+    
+    postManage = [[YHBPostSell alloc] init];
 }
 
 - (void)getFirstDataWithIsSupply:(BOOL)aSupplyBool andIsFind:(BOOL)aFindBool
@@ -246,17 +258,30 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80;
+    return [DAContextMenuCell returnCellHeight];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    GoodsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    DAContextMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (!cell)
     {
-        cell = [[GoodsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        cell = [[DAContextMenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    if (!userId>0)
+    {
+        cell.delegate = self;
+    }
+    if (isSupply)
+    {
+        cell.moreOptionsButtonTitle = @"刷新";
+    }
+    else
+    {
+        cell.moreOptionsButtonTitle = @"状态";
+    }
+    cell.row = (int)indexPath.row;
     YHBSupplyModel *model = [self.tableViewArray objectAtIndex:indexPath.row];
     [cell setCellWithModel:model];
     return cell;
@@ -275,6 +300,165 @@
         YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:model.itemid andIsMine:isMine isModal:NO];
         [self.navigationController pushViewController:vc animated:YES];
     }
+}
+
+#pragma mark - Private
+
+- (void)hideMenuOptionsAnimated:(BOOL)animated
+{
+    __block YHBMySupplyViewController *weakSelf = self;
+    [self.cellDisplayingMenuOptions setMenuOptionsViewHidden:YES animated:animated completionHandler:^{
+        weakSelf.customEditing = NO;
+    }];
+}
+
+- (void)setCustomEditing:(BOOL)customEditing
+{
+    if (_customEditing != customEditing) {
+        _customEditing = customEditing;
+        self.supplyTableView.scrollEnabled = !customEditing;
+        if (customEditing) {
+            if (!_overlayView) {
+                _overlayView = [[DAOverlayView alloc] initWithFrame:self.view.bounds];
+                _overlayView.backgroundColor = [UIColor clearColor];
+                _overlayView.delegate = self;
+            }
+            self.overlayView.frame = self.view.bounds;
+            [self.view addSubview:_overlayView];
+            if (self.shouldDisableUserInteractionWhileEditing) {
+                for (UIView *view in self.supplyTableView.subviews) {
+                    if ((view.gestureRecognizers.count == 0) && view != self.cellDisplayingMenuOptions && view != self.overlayView) {
+                        view.userInteractionEnabled = NO;
+                    }
+                }
+            }
+        } else {
+            self.cellDisplayingMenuOptions = nil;
+            [self.overlayView removeFromSuperview];
+            for (UIView *view in self.supplyTableView.subviews) {
+                if ((view.gestureRecognizers.count == 0) && view != self.cellDisplayingMenuOptions && view != self.overlayView) {
+                    view.userInteractionEnabled = YES;
+                }
+            }
+        }
+    }
+}
+
+#pragma mark * DAContextMenuCell delegate
+
+- (void)contextMenuCellDidSelectMoreOption:(DAContextMenuCell *)cell
+{
+//    NSAssert(NO, @"Should be implemented in subclasses");
+    selRow = cell.row;
+    YHBSupplyModel *model = [self.tableViewArray objectAtIndex:selRow];
+    if (isSupply==YES)
+    {
+        [postManage postItemid:model.itemid action:@"refresh" typeid:0 succBlock:^{
+            [SVProgressHUD showSuccessWithStatus:@"刷新成功" cover:YES offsetY:kMainScreenHeight/2.0];
+            [self hideMenuOptionsAnimated:YES];
+        } failBlock:^(NSString *aStr) {
+            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
+        }];
+    }
+    else
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"设置状态" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"寻找中",@"已找到", nil];
+        [alertView show];
+    }
+    MLOG(@"more");
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if ((isFind==NO&&buttonIndex==1) || (isFind==YES&&buttonIndex==0))
+    {
+        YHBSupplyModel *model = [self.tableViewArray objectAtIndex:selRow];
+        [postManage postItemid:model.itemid action:@"type" typeid:(int)buttonIndex succBlock:^{
+            [self.tableViewArray removeObjectAtIndex:selRow];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:selRow inSection:0];
+            [self.supplyTableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationRight];
+            [self.supplyTableView reloadData];
+            [SVProgressHUD showSuccessWithStatus:@"修改成功" cover:YES offsetY:kMainScreenHeight/2.0];
+            self.customEditing = NO;
+        } failBlock:^(NSString *aStr) {
+            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
+        }];
+    }
+    else
+    {
+        [self hideMenuOptionsAnimated:YES];
+    }
+}
+
+- (void)contextMenuCellDidSelectDeleteOption:(DAContextMenuCell *)cell
+{
+//    [cell.superview sendSubviewToBack:cell];
+    selRow = cell.row;
+    YHBSupplyModel *model = [self.tableViewArray objectAtIndex:selRow];
+    [postManage deleteItemWithItemid:model.itemid andIsSupply:isSupply succBlock:^{
+        [self.tableViewArray removeObjectAtIndex:selRow];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:cell.row inSection:0];
+        [self.supplyTableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationRight];
+        [self.supplyTableView reloadData];
+        self.customEditing = NO;
+        [SVProgressHUD showSuccessWithStatus:@"删除成功" cover:YES offsetY:kMainScreenHeight/2.0];
+    } failBlock:^(NSString *aStr) {
+        [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
+    }];
+    MLOG(@"delete");
+}
+
+- (void)contextMenuDidHideInCell:(DAContextMenuCell *)cell
+{
+    self.customEditing = NO;
+    self.customEditingAnimationInProgress = NO;
+}
+
+- (void)contextMenuDidShowInCell:(DAContextMenuCell *)cell
+{
+    self.cellDisplayingMenuOptions = cell;
+    self.customEditing = YES;
+    self.customEditingAnimationInProgress = NO;
+}
+
+- (void)contextMenuWillHideInCell:(DAContextMenuCell *)cell
+{
+    self.customEditingAnimationInProgress = YES;
+}
+
+- (void)contextMenuWillShowInCell:(DAContextMenuCell *)cell
+{
+    self.customEditingAnimationInProgress = YES;
+}
+
+- (BOOL)shouldShowMenuOptionsViewInCell:(DAContextMenuCell *)cell
+{
+    return self.customEditing && !self.customEditingAnimationInProgress;
+}
+
+#pragma mark * DAOverlayView delegate
+
+- (UIView *)overlayView:(DAOverlayView *)view didHitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    BOOL shouldIterceptTouches = YES;
+    CGPoint location = [self.view convertPoint:point fromView:view];
+    CGRect rect = [self.view convertRect:self.cellDisplayingMenuOptions.frame toView:self.view];
+    shouldIterceptTouches = CGRectContainsPoint(rect, location);
+    if (!shouldIterceptTouches) {
+        [self hideMenuOptionsAnimated:YES];
+    }
+    return (shouldIterceptTouches) ? [self.cellDisplayingMenuOptions hitTest:point withEvent:event] : view;
+}
+
+#pragma mark * UITableView delegate
+
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([tableView cellForRowAtIndexPath:indexPath] == self.cellDisplayingMenuOptions) {
+        [self hideMenuOptionsAnimated:YES];
+        return NO;
+    }
+    return YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated

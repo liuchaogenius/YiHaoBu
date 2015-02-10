@@ -16,7 +16,7 @@
 {
     NSString *supplyUrl = nil;
     NSString *token = [YHBUser sharedYHBUser].token;
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",[NSString stringWithFormat:@"%d", aModuleid],@"moduleid",[NSString stringWithFormat:@"%d", aItemid],@"itemid",[NSString stringWithFormat:@"%d", aTypeid],@"typeid",aIntroduce,@"introduce",nil];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:token,@"token",[NSString stringWithFormat:@"%d", aModuleid],@"mid",[NSString stringWithFormat:@"%d", aItemid],@"itemid",[NSString stringWithFormat:@"%d", aTypeid],@"typeid",aIntroduce,@"introduce",nil];
 
     kYHBRequestUrl(@"postReport.php", supplyUrl);
     [NetManager requestWith:dict url:supplyUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {

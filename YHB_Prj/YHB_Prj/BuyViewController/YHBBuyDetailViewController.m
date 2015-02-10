@@ -248,7 +248,7 @@
 {
     NSString *uploadPhototUrl = nil;
     kYHBRequestUrl(@"upload.php", uploadPhototUrl);
-    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",[NSString stringWithFormat:@"%d", uploadIndex],@"order",@"album",@"action",[NSString stringWithFormat:@"%d",itemId],@"itemid",[itemDict objectForKey:@"moduleid"],@"moduleid", nil];
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",[NSString stringWithFormat:@"%d", uploadIndex],@"order",@"album",@"action",[NSString stringWithFormat:@"%d",itemId],@"itemid",[itemDict objectForKey:@"moduleid"],@"mid", nil];
     UIImage *uploadImage = (UIImage *)[uploadPhotoArray objectAtIndex:uploadIndex];
     [NetManager uploadImg:uploadImage parameters:dic uploadUrl:uploadPhototUrl uploadimgName:nil parameEncoding:AFJSONParameterEncoding progressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
     } succ:^(NSDictionary *successDict) {

@@ -139,6 +139,9 @@
 		AB34037A1A67B80000A38FF6 /* YHBCatData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3403771A67B80000A38FF6 /* YHBCatData.m */; };
 		AB34037B1A67B80000A38FF6 /* YHBCatSubcate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3403791A67B80000A38FF6 /* YHBCatSubcate.m */; };
 		AB34037E1A67B81F00A38FF6 /* YHBCatManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB34037D1A67B81F00A38FF6 /* YHBCatManage.m */; };
+		AB366A1B1A8A2DBE00E8F45A /* DAContextMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB366A1A1A8A2DBE00E8F45A /* DAContextMenuCell.m */; };
+		AB366A1E1A8A34C800E8F45A /* DAOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB366A1D1A8A34C800E8F45A /* DAOverlayView.m */; };
+		AB366A211A8A42E800E8F45A /* YHBPostSell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB366A201A8A42E800E8F45A /* YHBPostSell.m */; };
 		AB37699F1A3BEE8B00D8B507 /* TableSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB37699E1A3BEE8B00D8B507 /* TableSectionHeaderView.m */; };
 		AB4A6CD31A7C6FF6007033BE /* YHBUploadImageManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4A6CD21A7C6FF6007033BE /* YHBUploadImageManage.m */; };
 		AB4CE3ED1A7739E000967998 /* EMChatCommandBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CE3EC1A7739E000967998 /* EMChatCommandBubbleView.m */; };
@@ -814,6 +817,12 @@
 		AB3403791A67B80000A38FF6 /* YHBCatSubcate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBCatSubcate.m; sourceTree = "<group>"; };
 		AB34037C1A67B81F00A38FF6 /* YHBCatManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBCatManage.h; sourceTree = "<group>"; };
 		AB34037D1A67B81F00A38FF6 /* YHBCatManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBCatManage.m; sourceTree = "<group>"; };
+		AB366A191A8A2DBE00E8F45A /* DAContextMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAContextMenuCell.h; sourceTree = "<group>"; };
+		AB366A1A1A8A2DBE00E8F45A /* DAContextMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAContextMenuCell.m; sourceTree = "<group>"; };
+		AB366A1C1A8A34C800E8F45A /* DAOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAOverlayView.h; sourceTree = "<group>"; };
+		AB366A1D1A8A34C800E8F45A /* DAOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAOverlayView.m; sourceTree = "<group>"; };
+		AB366A1F1A8A42E800E8F45A /* YHBPostSell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPostSell.h; sourceTree = "<group>"; };
+		AB366A201A8A42E800E8F45A /* YHBPostSell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBPostSell.m; sourceTree = "<group>"; };
 		AB37699D1A3BEE8B00D8B507 /* TableSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableSectionHeaderView.h; sourceTree = "<group>"; };
 		AB37699E1A3BEE8B00D8B507 /* TableSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableSectionHeaderView.m; sourceTree = "<group>"; };
 		AB4A6CD11A7C6FF6007033BE /* YHBUploadImageManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBUploadImageManage.h; sourceTree = "<group>"; };
@@ -2208,6 +2217,10 @@
 			children = (
 				AB59D9511A33224E002B76E1 /* GoodsTableViewCell.h */,
 				AB59D9521A33224E002B76E1 /* GoodsTableViewCell.m */,
+				AB366A191A8A2DBE00E8F45A /* DAContextMenuCell.h */,
+				AB366A1A1A8A2DBE00E8F45A /* DAContextMenuCell.m */,
+				AB366A1C1A8A34C800E8F45A /* DAOverlayView.h */,
+				AB366A1D1A8A34C800E8F45A /* DAOverlayView.m */,
 			);
 			path = GoodsTableViewCell;
 			sourceTree = "<group>";
@@ -2229,6 +2242,8 @@
 				AB4A6CD21A7C6FF6007033BE /* YHBUploadImageManage.m */,
 				AB9B2AFE1A88E92700D26FF3 /* jubaoManage.h */,
 				AB9B2AFF1A88E92700D26FF3 /* jubaoManage.m */,
+				AB366A1F1A8A42E800E8F45A /* YHBPostSell.h */,
+				AB366A201A8A42E800E8F45A /* YHBPostSell.m */,
 			);
 			path = SupplyNetManage;
 			sourceTree = "<group>";
@@ -3495,7 +3510,7 @@
 				TargetAttributes = {
 					FF2A6BD91A0F3780001607AC = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = JERPD52W3W;
+						DevelopmentTeam = VDPFN6MNDG;
 					};
 					FF2A6BEC1A0F3780001607AC = {
 						CreatedOnToolsVersion = 6.0;
@@ -3883,6 +3898,7 @@
 				5B6774FD1A559A6500457012 /* YHBProductDetailVC.m in Sources */,
 				ABC646C01A6B8BC8003A8FB1 /* MKAnnotationView+EMWebCache.m in Sources */,
 				FF2A6C321A0F3B50001607AC /* NetManager.m in Sources */,
+				AB366A1E1A8A34C800E8F45A /* DAOverlayView.m in Sources */,
 				FF2A6BE01A0F3780001607AC /* main.m in Sources */,
 				5B10A82B1A88B48D0018E2D6 /* CCListCellView.m in Sources */,
 				ABC646B41A6B8BC8003A8FB1 /* MWPhotoBrowser.m in Sources */,
@@ -3898,6 +3914,7 @@
 				5B13A4DF1A58200F00713C5E /* YHBCommentCellView.m in Sources */,
 				AB28610B1A38309000EB654C /* YHBShopCartRslist.m in Sources */,
 				5BCBB0901A6FF39900BF5E5C /* YHBOrderConfirmCell.m in Sources */,
+				AB366A1B1A8A2DBE00E8F45A /* DAContextMenuCell.m in Sources */,
 				5B05ACF41A8603F50060D75B /* YHBOConfirmExpress.m in Sources */,
 				5B13A4D91A57FBE800713C5E /* YHBPdtInfoView.m in Sources */,
 				5B10A8271A88814E0018E2D6 /* YHBSearchInputVC.m in Sources */,
@@ -3950,6 +3967,7 @@
 				ABC646B81A6B8BC8003A8FB1 /* DACircularProgressView.m in Sources */,
 				ABC646281A6B8B3C003A8FB1 /* EMChatViewCell.m in Sources */,
 				AB0D090A1A7B9C3F00E6123A /* RecommendTableViewCell.m in Sources */,
+				AB366A211A8A42E800E8F45A /* YHBPostSell.m in Sources */,
 				FF2A6C441A0F3B6D001607AC /* SVProgressHUD.m in Sources */,
 				5B23F44C1A45399900F39D8E /* YHBFunctionCell.m in Sources */,
 				5B5A6DA71A6620750043B246 /* CCTextfieldToolView.m in Sources */,
