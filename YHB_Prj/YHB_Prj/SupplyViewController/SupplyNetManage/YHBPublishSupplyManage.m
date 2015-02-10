@@ -12,18 +12,18 @@
 
 @implementation YHBPublishSupplyManage
 
-- (void)publishSupplyWithItemid:(int)aItemId title:(NSString *)aTitle price:(NSString *)aPrice catid:(NSString *)aCatId typeid:(NSString *)aTypeid today:(NSString *)aToday content:(NSString *)aContent truename:(NSString *)aName mobile:(NSString *)aMobile photoArray:(NSArray *)aArray andSuccBlock:(void(^)(NSDictionary *aDict))aSuccBlock failBlock:(void (^)(NSString *aStr))aFailBlock
+- (void)publishSupplyWithItemid:(int)aItemId title:(NSString *)aTitle price:(NSString *)aPrice catid:(NSString *)aCatId typeid:(NSString *)aTypeid today:(NSString *)aToday content:(NSString *)aContent truename:(NSString *)aName mobile:(NSString *)aMobile unit:(NSString *)aUnit photoArray:(NSArray *)aArray andSuccBlock:(void(^)(NSDictionary *aDict))aSuccBlock failBlock:(void (^)(NSString *aStr))aFailBlock
 {
     NSString *supplyUrl = nil;
     NSDictionary *dict;
     YHBUser *user = [YHBUser sharedYHBUser];
     if (aItemId)
     {
-        dict = [NSDictionary dictionaryWithObjectsAndKeys:user.token,@"token",aTitle,@"title",aPrice,@"price",aCatId,@"catid",aTypeid,@"typeid",aToday,@"today",aContent,@"introduce",aName,@"truename",aMobile,@"mobile",[NSString stringWithFormat:@"%d", aItemId],@"itemid",aArray,@"album",nil];
+        dict = [NSDictionary dictionaryWithObjectsAndKeys:user.token,@"token",aTitle,@"title",aPrice,@"price",aCatId,@"catid",aTypeid,@"typeid",aToday,@"today",aContent,@"introduce",aName,@"truename",aMobile,@"mobile",[NSString stringWithFormat:@"%d", aItemId],@"itemid",aArray,@"album",aUnit,@"unit",nil];
     }
     else
     {
-        dict = [NSDictionary dictionaryWithObjectsAndKeys:user.token,@"token",aTitle,@"title",aPrice,@"price",aCatId,@"catid",aTypeid,@"typeid",aToday,@"today",aContent,@"introduce",aName,@"truename",aMobile,@"mobile",aArray,@"album",nil];
+        dict = [NSDictionary dictionaryWithObjectsAndKeys:user.token,@"token",aTitle,@"title",aPrice,@"price",aCatId,@"catid",aTypeid,@"typeid",aToday,@"today",aContent,@"introduce",aName,@"truename",aMobile,@"mobile",aArray,@"album",aUnit,@"unit",nil];
     }
     kYHBRequestUrl(@"postSell.php", supplyUrl);
     [NetManager requestWith:dict url:supplyUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {

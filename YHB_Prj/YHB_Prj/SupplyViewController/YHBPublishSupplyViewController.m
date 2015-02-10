@@ -18,6 +18,7 @@
 #import "YHBUploadImageManage.h"
 #import "NetManager.h"
 #import "YHBSupplyDetailPic.h"
+#import "YHBVariousView.h"
 
 
 #define kButtonTag_Yes 100
@@ -54,6 +55,7 @@
     UILabel *detailPlaceHolder;
     
     BOOL webEdit;
+    YHBVariousView *variousView;
 }
 
 @property(nonatomic, strong) UIPickerView *dayPickerView;
@@ -147,7 +149,7 @@
     tapTitleGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchTitle)];
     [titleLabel addGestureRecognizer:tapTitleGesture];
     
-    priceTextField = [[UITextField alloc] initWithFrame:CGRectMake(85, interval*1.5+labelHeight-5, kMainScreenWidth-85-50, labelHeight+10)];
+    priceTextField = [[UITextField alloc] initWithFrame:CGRectMake(85, interval*1.5+labelHeight-5, kMainScreenWidth-85-70, labelHeight+10)];
     priceTextField.font = [UIFont systemFontOfSize:15];
 //    priceTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     priceTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
@@ -160,12 +162,18 @@
 //    priceTextField.layer.borderWidth = 0.5;
     [editSupplyView addSubview:priceTextField];
     
-    UILabel *priceLabelNote = [[UILabel alloc] initWithFrame:CGRectMake(priceTextField.right, priceTextField.top, 40, labelHeight+10)];
-    priceLabelNote.font = [UIFont systemFontOfSize:15];
-    priceLabelNote.textColor = [UIColor lightGrayColor];
-    priceLabelNote.text = @"元/米";
-    priceLabelNote.textAlignment = NSTextAlignmentRight;
-    [editSupplyView addSubview:priceLabelNote];
+//    UILabel *priceLabelNote = [[UILabel alloc] initWithFrame:CGRectMake(priceTextField.right, priceTextField.top, 40, labelHeight+10)];
+//    priceLabelNote.font = [UIFont systemFontOfSize:15];
+//    priceLabelNote.textColor = [UIColor lightGrayColor];
+//    priceLabelNote.text = @"元/米";
+//    priceLabelNote.textAlignment = NSTextAlignmentRight;
+//    [editSupplyView addSubview:priceLabelNote];
+    
+    variousView = [[YHBVariousView alloc] initWithFrame:CGRectMake(priceTextField.right, priceTextField.top+5, 60, labelHeight) andItemArray:@[@"元/米",@"元/本"] andSelectedItem:0];
+    variousView.layer.borderColor = [KColor CGColor];
+    variousView.layer.borderWidth=0.5;
+    variousView.layer.cornerRadius = 10;
+    variousView.clipsToBounds = YES;
     
     dayView = [[UIView alloc] initWithFrame:CGRectMake(85, (interval+labelHeight)*2+interval/2-5, kMainScreenWidth-85-10, labelHeight+10)];
 //    dayView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
@@ -254,6 +262,8 @@
     detailPlaceHolder.font = kFont15;
     detailPlaceHolder.textColor = [UIColor lightGrayColor];
     [editSupplyView addSubview:detailPlaceHolder];
+    
+    [editSupplyView addSubview:variousView];
     
     if (myModel)
     {
@@ -564,7 +574,7 @@
                 [photoArray removeObjectAtIndex:0];
             }
         }
-        [self.netManage publishSupplyWithItemid:publishItemid title:titleLabel.text price:priceTextField.text catid:catidString typeid:[NSString stringWithFormat:@"%d", typeId] today:dayLabel.text content:contentTextView.text truename:nameTextField.text mobile:phoneTextField.text photoArray:havePhotoArray andSuccBlock:^(NSDictionary *aDict) {
+        [self.netManage publishSupplyWithItemid:publishItemid title:titleLabel.text price:priceTextField.text catid:catidString typeid:[NSString stringWithFormat:@"%d", typeId] today:dayLabel.text content:contentTextView.text truename:nameTextField.text mobile:phoneTextField.text unit:variousView.itemLabel.text photoArray:havePhotoArray  andSuccBlock:^(NSDictionary *aDict) {
             [self dismissFlower];
             int itemid = [[aDict objectForKey:@"itemid"] intValue];
             YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:itemid itemDict:aDict uploadPhotoArray:photoArray isWebArray:webEdit];

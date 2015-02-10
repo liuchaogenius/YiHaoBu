@@ -130,7 +130,7 @@
 
 - (void)touchLikeBtn
 {
-    [SVProgressHUD show:nil offsetY:100];
+    [SVProgressHUD show:YES offsetY:100];
     [self.manage changeLikeStatusAction:@"sell" itemid:myModel.itemid SuccBlock:^{
         [SVProgressHUD dismiss];
         [UIView beginAnimations:nil context:nil];
@@ -196,8 +196,9 @@
                 CGRect temFrame = valueLabel.frame;
                 temFrame.size.width = size.width;
                 valueLabel.frame = temFrame;
-                UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(valueLabel.right+15, valueLabel.top, 40, 18)];
+                UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(valueLabel.right+10, valueLabel.top, 100, 18)];
                 unitLabel.textColor = [UIColor lightGrayColor];
+                unitLabel.textAlignment = NSTextAlignmentLeft;
                 unitLabel.font = kFont15;
                 unitLabel.text = aModel.unit;
                 [self addSubview:unitLabel];
