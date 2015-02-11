@@ -333,7 +333,7 @@
 {
     _isBuy = NO;
     if ([self infoCheck]) {
-        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:self.productID],@"itemid",[NSString stringWithFormat:@"%lf",_number],@"number",[NSNumber numberWithInt:(int)_selSku.colorid],@"skuid", nil];
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:self.productID],@"itemid",[NSString stringWithFormat:@"%lf",_number],@"number",[NSNumber numberWithInt:(int)self.selSku.colorid],@"skuid", nil];
         [self.shopCartManger changeShopCartWithArray:@[dic] andSuccBlock:^{
             [SVProgressHUD showSuccessWithStatus:@"添加购物车成功！" cover:YES offsetY:0];
         } failBlock:^(NSString *aStr){
@@ -358,9 +358,16 @@
 {
     if ([YHBUser sharedYHBUser].isLogin) {
         if (self.selSku) {
+            if (_selView.superview) {
+                [_selView touchQuitButton];
+            }
             return YES;
         }else{
-            [SVProgressHUD showErrorWithStatus:@"你还没有选择色块/型号哦" cover:YES offsetY:0];
+            if (_selView.superview) {
+                [SVProgressHUD showErrorWithStatus:@"你还没有选择色块/型号哦" cover:YES offsetY:0];
+            }else{
+                [self touchSelectColorCell];
+            }
             return NO;
         }
     }else{

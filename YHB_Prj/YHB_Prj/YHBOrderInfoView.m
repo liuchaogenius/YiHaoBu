@@ -22,6 +22,7 @@
         _headImageView.layer.borderColor = [kLineColor CGColor];
         _headImageView.layer.borderWidth = 0.5;
         _headImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _headImageView.clipsToBounds = YES;
         _headImageView.backgroundColor = [UIColor whiteColor];
     }
     return _headImageView;

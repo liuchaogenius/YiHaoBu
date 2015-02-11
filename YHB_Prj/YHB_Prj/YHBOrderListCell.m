@@ -9,6 +9,7 @@
 #import "YHBOrderListCell.h"
 #import "YHBOrderInfoView.h"
 #import "YHBOrderActionModel.h"
+#import "UIImageView+WebCache.h"
 
 #define kTitleFont 16
 #define kBtnWidth 70
@@ -95,7 +96,7 @@
     return self;
 }
 #warning 图片链接无
-- (void)setUIWithStatus:(NSInteger)status Title:(NSString *)title price:(NSString *)price number:(NSString *)num amount:(NSString *)amount itemID:(NSInteger)itemid NextAction:(NSArray *)naction shopID:(NSInteger)shopID
+- (void)setUIWithStatus:(NSInteger)status Title:(NSString *)title price:(NSString *)price number:(NSString *)num amount:(NSString *)amount itemID:(NSInteger)itemid NextAction:(NSArray *)naction shopID:(NSInteger)shopID thumb:(NSString *)thumb
 {
     //_shopID = shopID;
     _itemID = itemid;
@@ -104,6 +105,7 @@
     self.orderInfoView.numberLabel.text = [NSString stringWithFormat:@"数量：%@",num];
     self.orderInfoView.priceLabel.text = [NSString stringWithFormat:@"价格：%@",price];
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@",amount];
+    [self.orderInfoView.headImageView sd_setImageWithURL:[NSURL URLWithString:thumb] placeholderImage:[UIImage imageNamed:@"DefaultProduct"]];
     if (naction.count) {
         self.buttonsView.hidden = NO;
         self.height = kpriceHeight+kInfoViewHeight+kBtnHeight;

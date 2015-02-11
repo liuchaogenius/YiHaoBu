@@ -27,5 +27,6 @@
 @property (strong, nonatomic) YHBSku *selSku;
 
 - (void)registerForKeyboradNotifications;
+- (void)touchQuitButton;
 
 @end

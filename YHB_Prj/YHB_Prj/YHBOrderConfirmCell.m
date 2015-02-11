@@ -8,6 +8,7 @@
 
 #import "YHBOrderConfirmCell.h"
 #import "YHBNumControl.h"
+#import "UIImageView+WebCache.h"
 typedef enum : NSUInteger
 {
     TextFiledNumber = 0,
@@ -102,6 +103,8 @@ typedef enum : NSUInteger
         _productImageView.layer.borderColor = [kLineColor CGColor];
         _productImageView.layer.borderWidth = 0.5;
         [_productInfoCell addSubview:_productImageView];
+        [_productImageView setContentMode:UIViewContentModeScaleAspectFill];
+        _productImageView.clipsToBounds = YES;
         
         _priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-100-10, _productImageView.top, 100, kTitleFont)];
         _priceLabel.backgroundColor = [UIColor clearColor];
@@ -163,11 +166,12 @@ typedef enum : NSUInteger
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)setUIWithTitle:(NSString *)title sku:(NSString *)sku price:(NSString *)price number:(NSString *)number isFloat:(BOOL)isFloat message:(NSString *)message Express:(NSString *)express exPrice:(NSString *)ePrice;
+- (void)setUIWithTitle:(NSString *)title sku:(NSString *)sku price:(NSString *)price number:(NSString *)number isFloat:(BOOL)isFloat message:(NSString *)message Express:(NSString *)express exPrice:(NSString *)ePrice thumb:(NSString *)thumb
 {
     _productTitle.text = title;
     _priceLabel.text = [NSString stringWithFormat:@"￥%@",price];
     _numberLabel.text = [NSString stringWithFormat:@"x%@",number];
+    [_productImageView sd_setImageWithURL:[NSURL URLWithString:thumb] placeholderImage:[UIImage imageNamed:@"DefaultProduct"]];
     self.numControl.number = [number doubleValue];
     self.numControl.isNumFloat = isFloat;
     _skuLabel.text = [NSString stringWithFormat:@"分类:%@",sku];
