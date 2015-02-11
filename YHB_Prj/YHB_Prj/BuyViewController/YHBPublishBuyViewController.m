@@ -517,6 +517,8 @@
 #pragma mark 返回
 - (void)dismissSelf
 {
+    [[CategoryViewController sharedInstancetype] cleanAll];
+    [self dismissFlower];
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
@@ -566,6 +568,7 @@
             [self dismissFlower];
             int itemid = [[aDict objectForKey:@"itemid"] intValue];
             YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:itemid itemDict:aDict uploadPhotoArray:photoArray isWebArray:webEdit];
+            [[CategoryViewController sharedInstancetype] cleanAll];
             [self.navigationController pushViewController:vc animated:YES];
         } failBlock:^(NSString *aStr) {
             [self dismissFlower];
@@ -759,6 +762,12 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    
+}
+
+- (void)dealloc
+{
+
 }
 
 - (void)didReceiveMemoryWarning {

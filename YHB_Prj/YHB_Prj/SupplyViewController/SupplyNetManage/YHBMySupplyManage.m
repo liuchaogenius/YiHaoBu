@@ -28,11 +28,18 @@ NSString *typeid;
     buyPageid = 1;
     pagesize = 20;
     isSupply = aBool;
-    isFind = aBool;
+    isFind = aFindBool;
     userid = aUserid;
     NSString *supplyUrl = nil;
     NSDictionary *dict;
-    typeid = isFind?@"1":@"0";
+    if (isFind==YES)
+    {
+        typeid = @"1";
+    }
+    else
+    {
+        typeid = @"0";
+    }
     YHBUser *user = [YHBUser sharedYHBUser];
     int useUserid;
     if (userid>0)

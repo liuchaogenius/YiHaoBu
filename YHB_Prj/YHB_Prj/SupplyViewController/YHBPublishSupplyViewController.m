@@ -531,6 +531,7 @@
 - (void)dismissSelf
 {
     [self dismissFlower];
+    [[CategoryViewController sharedInstancetype] cleanAll];
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
@@ -578,6 +579,7 @@
             [self dismissFlower];
             int itemid = [[aDict objectForKey:@"itemid"] intValue];
             YHBSupplyDetailViewController *vc = [[YHBSupplyDetailViewController alloc] initWithItemId:itemid itemDict:aDict uploadPhotoArray:photoArray isWebArray:webEdit];
+            [[CategoryViewController sharedInstancetype] cleanAll];
             [self.navigationController pushViewController:vc animated:YES];
         } failBlock:^(NSString *aStr) {
             [self dismissFlower];
@@ -761,7 +763,11 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    
+    [super viewWillDisappear:YES];
+}
+
+- (void)dealloc
+{
 }
 
 
