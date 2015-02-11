@@ -169,6 +169,7 @@
 		AB6B63651A7F0B41003AB4C0 /* YHBGetPushBuylist.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6B63641A7F0B41003AB4C0 /* YHBGetPushBuylist.m */; };
 		AB8533F31A47F7280002CC15 /* YHBShopCartCartlist.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8533F21A47F7280002CC15 /* YHBShopCartCartlist.m */; };
 		AB8533F61A47F7600002CC15 /* YHBShopCartExpress.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8533F51A47F7600002CC15 /* YHBShopCartExpress.m */; };
+		AB89AAA81A8B4A5200A18991 /* ConversationType.m in Sources */ = {isa = PBXBuildFile; fileRef = AB89AAA71A8B4A5200A18991 /* ConversationType.m */; };
 		AB8F917A1A6E31E400B884F3 /* chatFire_audioPlaying0.png in Resources */ = {isa = PBXBuildFile; fileRef = AB8F911B1A6E31E300B884F3 /* chatFire_audioPlaying0.png */; };
 		AB8F917B1A6E31E400B884F3 /* chatFire_audioPlaying0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AB8F911C1A6E31E300B884F3 /* chatFire_audioPlaying0@2x.png */; };
 		AB8F917C1A6E31E400B884F3 /* chatFire_audioPlaying1.png in Resources */ = {isa = PBXBuildFile; fileRef = AB8F911D1A6E31E300B884F3 /* chatFire_audioPlaying1.png */; };
@@ -873,6 +874,8 @@
 		AB8533F21A47F7280002CC15 /* YHBShopCartCartlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBShopCartCartlist.m; sourceTree = "<group>"; };
 		AB8533F41A47F7600002CC15 /* YHBShopCartExpress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBShopCartExpress.h; sourceTree = "<group>"; };
 		AB8533F51A47F7600002CC15 /* YHBShopCartExpress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBShopCartExpress.m; sourceTree = "<group>"; };
+		AB89AAA61A8B4A5200A18991 /* ConversationType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationType.h; sourceTree = "<group>"; };
+		AB89AAA71A8B4A5200A18991 /* ConversationType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationType.m; sourceTree = "<group>"; };
 		AB8F911B1A6E31E300B884F3 /* chatFire_audioPlaying0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatFire_audioPlaying0.png; sourceTree = "<group>"; };
 		AB8F911C1A6E31E300B884F3 /* chatFire_audioPlaying0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatFire_audioPlaying0@2x.png"; sourceTree = "<group>"; };
 		AB8F911D1A6E31E300B884F3 /* chatFire_audioPlaying1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatFire_audioPlaying1.png; sourceTree = "<group>"; };
@@ -1910,6 +1913,8 @@
 				AB0D09151A7BA7AB00E6123A /* YHBGetPushData.m */,
 				AB0D09161A7BA7AB00E6123A /* YHBGetPushSyslist.h */,
 				AB0D09171A7BA7AB00E6123A /* YHBGetPushSyslist.m */,
+				AB89AAA61A8B4A5200A18991 /* ConversationType.h */,
+				AB89AAA71A8B4A5200A18991 /* ConversationType.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3515,10 +3520,11 @@
 				TargetAttributes = {
 					FF2A6BD91A0F3780001607AC = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = JERPD52W3W;
+						DevelopmentTeam = VDPFN6MNDG;
 					};
 					FF2A6BEC1A0F3780001607AC = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = VDPFN6MNDG;
 						TestTargetID = FF2A6BD91A0F3780001607AC;
 					};
 				};
@@ -3875,6 +3881,7 @@
 				FF2A6C701A0F3B7B001607AC /* SDWebImageDownloader.m in Sources */,
 				ABC6461F1A6B8B3C003A8FB1 /* EMChatAudioBubbleView.m in Sources */,
 				FF2A6C481A0F3B72001607AC /* JSONKit.m in Sources */,
+				AB89AAA81A8B4A5200A18991 /* ConversationType.m in Sources */,
 				ABC645EB1A6B8B3C003A8FB1 /* ChatViewController.m in Sources */,
 				AB9FD9AD1A46A105003EBE40 /* PushPriceViewController.m in Sources */,
 				ABE1B33F1A42A2D200F63AFA /* TitleTagManage.m in Sources */,

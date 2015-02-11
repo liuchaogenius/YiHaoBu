@@ -28,6 +28,7 @@
 #import "YHBGetPushSyslist.h"
 #import "GetUserNameManage.h"
 #import "UserinfoBaseClass.h"
+#import "ConversationType.h"
 
 @interface ChatListViewController ()<UITableViewDelegate,UITableViewDataSource, UISearchDisplayDelegate,SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
 
@@ -42,7 +43,7 @@
 @property(nonatomic, strong) YHBGetPushManage *netManage;
 @property(nonatomic, strong) NSMutableArray *pushArray;
 //@property (strong, nonatomic) EMSearchDisplayController *searchController;
-
+@property(nonatomic, strong) NSMutableArray *myDataSource;
 @end
 
 @implementation ChatListViewController
@@ -404,9 +405,10 @@
         if (!cell) {
             cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identify];
         }
-        EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row-2];
+        ConversationType *conversationModel = [self.myDataSource objectAtIndex:indexPath.row-2];
+        EMConversation *conversation = conversationModel.conversation;
         MLOG(@"%d", (int)indexPath.row);
-        UserinfoBaseClass *model = [self.dataArray objectAtIndex:indexPath.row-2];
+        UserinfoBaseClass *model = conversationModel.userInfo;
         cell.name = model.truename;
         cell.imageURL = [NSURL URLWithString:model.avatar];
         if (!conversation.isGroup) {
@@ -611,6 +613,14 @@
 -(void)refreshDataSource
 {
     self.dataSource = [self loadDataSource];
+    self.myDataSource = [NSMutableArray new];
+    for (int i=0; i<self.dataSource.count; i++)
+    {
+        ConversationType *model = [[ConversationType alloc] init];
+        EMConversation *temConversation = [self.dataSource objectAtIndex:i];
+        model.conversation = temConversation;
+        [self.myDataSource addObject:model];
+    }
 //    MLOG(@"%lu", (unsigned long)self.dataSource.count);
     if (self.dataSource.count>0)
     {
@@ -622,6 +632,12 @@
         }
         [self.manage getUserNameUseridArray:temarray succBlock:^(NSMutableArray *aMuArray) {
             self.dataArray = aMuArray;
+            for (int i=0; i<self.dataArray.count; i++)
+            {
+                ConversationType *model = [self.myDataSource objectAtIndex:i];
+                UserinfoBaseClass *temModel = [self.dataArray objectAtIndex:i];
+                model.userInfo = temModel;
+            }
             [_tableView reloadData];
         } failBlock:^(NSString *aStr) {
             [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];

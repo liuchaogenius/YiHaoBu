@@ -46,6 +46,13 @@
     [_takePicButton addTarget:self action:@selector(takePicAction) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_takePicButton];
     
+    _videoButton =[UIButton buttonWithType:UIButtonTypeCustom];
+    [_videoButton setFrame:CGRectMake(insets * 3 + CHAT_BUTTON_SIZE*2, 10, CHAT_BUTTON_SIZE , CHAT_BUTTON_SIZE)];
+    [_videoButton setImage:[UIImage imageNamed:@"chatBar_colorMore_video"] forState:UIControlStateNormal];
+    [_videoButton setImage:[UIImage imageNamed:@"chatBar_colorMore_videoSelected"] forState:UIControlStateHighlighted];
+    [_videoButton addTarget:self action:@selector(takeVideoAction) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_videoButton];
+    
     CGRect frame = self.frame;
     frame.size.height = 95;
     self.frame = frame;
@@ -64,7 +71,12 @@
     _takePicLabel.text = @"拍照";
     [self addSubview:_takePicLabel];
 
-    
+    _videoLabel = [[UILabel alloc] initWithFrame:CGRectMake(_videoButton.left, _videoButton.bottom, CHAT_BUTTON_SIZE, 15)];
+    _videoLabel.font = kFont12;
+    _videoLabel.textColor = [UIColor blackColor];
+    _videoLabel.textAlignment = NSTextAlignmentCenter;
+    _videoLabel.text = @"视频";
+    [self addSubview:_videoLabel];
 //    _locationButton =[UIButton buttonWithType:UIButtonTypeCustom];
 //    [_locationButton setFrame:CGRectMake(insets * 2 + CHAT_BUTTON_SIZE, 10, CHAT_BUTTON_SIZE , CHAT_BUTTON_SIZE)];
 //    [_locationButton setImage:[UIImage imageNamed:@"chatBar_colorMore_location"] forState:UIControlStateNormal];
