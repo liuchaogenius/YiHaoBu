@@ -58,7 +58,7 @@
         [postDic setObject:[YHBUser sharedYHBUser].token forKey:@"token"];
     }
     if (userID != kAll) {
-        [postDic setObject:[NSNumber numberWithInteger:userID] forKey:@"userID"];
+        [postDic setObject:[NSNumber numberWithInteger:userID] forKey:@"userid"];
     }
     if (typeID != kAll) {
         [postDic setObject:[NSNumber numberWithInteger:typeID] forKey:@"typeid"];
@@ -118,7 +118,7 @@
         [postDic setObject:[YHBUser sharedYHBUser].token forKey:@"token"];
     }
     if (userID >0) {
-        [postDic setObject:[NSNumber numberWithInteger:userID] forKey:@"userID"];
+        [postDic setObject:[NSNumber numberWithInteger:userID] forKey:@"userid"];
     }
     if (vip != kAll) {
         [postDic setObject:[NSNumber numberWithInteger:vip] forKey:@"vip"];
@@ -176,7 +176,7 @@
         [postDic setObject:[YHBUser sharedYHBUser].token forKey:@"token"];
     }
     if (userID) {
-        [postDic setObject:[NSNumber numberWithInteger:userID] forKey:@"userID"];
+        [postDic setObject:[NSNumber numberWithInteger:userID] forKey:@"userid"];
     }
     if (vip != kAll) {
         [postDic setObject:[NSNumber numberWithInteger:vip] forKey:@"vip"];
