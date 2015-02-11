@@ -220,10 +220,10 @@ typedef enum : NSUInteger {
 {
     if (!_isNeedNav) {
         self.tabBarController.tabBarController.tabBar.hidden = NO;
-        self.navigationController.navigationBarHidden = YES;
+        self.navigationController.navigationBar.hidden = YES;
         
     }else
-        self.navigationController.navigationBarHidden = NO;
+        self.navigationController.navigationBar.hidden = NO;
     
     [super viewWillAppear:YES];
 }
