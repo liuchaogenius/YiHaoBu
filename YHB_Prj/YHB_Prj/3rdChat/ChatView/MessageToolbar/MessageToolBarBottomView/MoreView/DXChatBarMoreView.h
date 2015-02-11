@@ -31,6 +31,7 @@ typedef enum{
 @property(nonatomic, strong) UILabel *photoLabel;
 @property(nonatomic, strong) UILabel *takePicLabel;
 @property(nonatomic, strong) UILabel *videoLabel;
+@property(nonatomic, strong) UILabel *locationLabel;
 
 - (instancetype)initWithFrame:(CGRect)frame typw:(ChatMoreType)type;
 
