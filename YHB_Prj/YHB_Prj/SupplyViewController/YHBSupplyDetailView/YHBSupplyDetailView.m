@@ -158,6 +158,7 @@
 - (void)setDetailWithModel:(YHBSupplyDetailModel *)aModel
 {
 //    NSArray *array = [aModel.catname componentsSeparatedByString:@","];
+    myModel = aModel;
     likeBtn.userInteractionEnabled = YES;
     NSMutableDictionary *dict = [NSMutableDictionary new];
     if (aModel.price)

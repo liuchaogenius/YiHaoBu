@@ -405,6 +405,7 @@
             cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identify];
         }
         EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row-2];
+        MLOG(@"%d", (int)indexPath.row);
         UserinfoBaseClass *model = [self.dataArray objectAtIndex:indexPath.row-2];
         cell.name = model.truename;
         cell.imageURL = [NSURL URLWithString:model.avatar];

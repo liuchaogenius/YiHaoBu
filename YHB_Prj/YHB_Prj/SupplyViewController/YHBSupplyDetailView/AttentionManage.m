@@ -16,9 +16,10 @@
 {
     NSString *shopCartUrl = nil;
     NSString *token = [YHBUser sharedYHBUser].token;
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:aAction,@"action",aId,"itemid",token,@"token",nil];
+    NSString *itemidStr = [NSString stringWithFormat:@"%d", aId];
+    NSDictionary *mydict = [NSDictionary dictionaryWithObjectsAndKeys:aAction,@"action",itemidStr,@"itemid",token,@"token", nil];
     kYHBRequestUrl(@"postFavorite.php", shopCartUrl);
-    [NetManager requestWith:dict url:shopCartUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
+    [NetManager requestWith:mydict url:shopCartUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         NSString *result = [successDict objectForKey:@"result"];
         if ([result intValue] != 1)
         {
