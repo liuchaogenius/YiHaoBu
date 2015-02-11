@@ -11,8 +11,12 @@
 #import "EaseMob.h"
 #import "YHBUser.h"
 #import <AlipaySDK/AlipaySDK.h>
+#import "NetManager.h"
  
-@interface AppDelegate ()
+@interface AppDelegate ()<UIAlertViewDelegate>
+
+@property (strong, nonatomic) NSString *updateUrl;
+@property (assign, nonatomic) int force;
 
 @end
 
@@ -33,6 +37,8 @@
     self.window.rootViewController = rootvc;
     [self.window makeKeyAndVisible];
     [self registerRemoteNotification];
+    
+    [self checkVersion];
     
     //注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
     NSString *apnsCertName = @"chatdemo";
@@ -62,6 +68,57 @@
     }
     
 #endif
+}
+
+- (void)checkVersion
+{
+    self.updateUrl = nil;
+    NSString *url = nil;
+    self.force = 0;
+    kYHBRequestUrl(@"getVersion.php", url);
+    NSDictionary *bundleDic = [[NSBundle mainBundle] infoDictionary];
+    NSString *appVersion = [bundleDic objectForKey:@"CFBundleShortVersionString"];
+    NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:@"IOS",@"device",appVersion?:@"",@"version", nil];
+    [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
+        int result = [successDict[@"result"] intValue];
+        if (result == 1) {
+            NSDictionary *dataDict = [successDict objectForKey:@"data"];
+            int force = [[dataDict objectForKey:@"force"] intValue];
+            self.force = force;
+            ////"force":0/*0不更新，1强制更新，2可选更新*/
+            NSString *title = dataDict[@"title"];
+            NSString *content = dataDict[@"content"];
+            if (force == 1) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:content delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                self.updateUrl = dataDict[@"url"];
+                [alertView show];
+                
+            }else if (force == 2){
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:content delegate:self cancelButtonTitle:@"更新" otherButtonTitles:@"取消", nil];
+                self.updateUrl = dataDict[@"url"];
+                [alertView show];
+            }
+        }
+    } failure:^(NSDictionary *failDict, NSError *error) {
+        
+    }];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        MLOG(@"%@",self.updateUrl);
+        //#if RELEASE
+        NSString *str = self.updateUrl;//[NSString stringWithFormat:@"http://itunes.apple.com/us/app/id%d", 945963130];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+        if(self.force == 1)
+        {
+            NSMutableArray *ary = [NSMutableArray array];
+            [ary addObject:nil];
+            
+        }
+        //#endif
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
