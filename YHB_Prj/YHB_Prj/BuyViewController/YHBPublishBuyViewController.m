@@ -564,7 +564,7 @@
         }
 
 
-        [self.netManage publishBuyWithItemid:publishItemid title:titleLabel.text catid:catidString today:dayLabel.text content:contentTextView.text truename:nameTextField.text mobile:phoneTextField.text unit:variousView.itemLabel.text photoArray:havePhotoArray andSuccBlock:^(NSDictionary *aDict) {
+        [self.netManage publishBuyWithItemid:publishItemid title:titleLabel.text catid:catidString today:dayLabel.text content:contentTextView.text truename:nameTextField.text mobile:phoneTextField.text unit:variousView.itemLabel.text photoArray:havePhotoArray amount:priceTextField.text andSuccBlock:^(NSDictionary *aDict) {
             [self dismissFlower];
             int itemid = [[aDict objectForKey:@"itemid"] intValue];
             YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:itemid itemDict:aDict uploadPhotoArray:photoArray isWebArray:webEdit];

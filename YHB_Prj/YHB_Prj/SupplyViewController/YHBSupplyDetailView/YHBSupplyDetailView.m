@@ -200,7 +200,7 @@
                 unitLabel.textColor = [UIColor lightGrayColor];
                 unitLabel.textAlignment = NSTextAlignmentLeft;
                 unitLabel.font = kFont15;
-                unitLabel.text = aModel.unit;
+                unitLabel.text = [NSString stringWithFormat:@"元/%@", aModel.unit];
                 [self addSubview:unitLabel];
             }
         }
