@@ -441,8 +441,8 @@
 - (UIView *)overlayView:(DAOverlayView *)view didHitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
     BOOL shouldIterceptTouches = YES;
-    CGPoint location = [self.view convertPoint:point fromView:view];
-    CGRect rect = [self.view convertRect:self.cellDisplayingMenuOptions.frame toView:self.view];
+    CGPoint location = [self.supplyTableView convertPoint:point fromView:view];
+    CGRect rect = [self.supplyTableView convertRect:self.cellDisplayingMenuOptions.frame toView:self.supplyTableView];
     shouldIterceptTouches = CGRectContainsPoint(rect, location);
     if (!shouldIterceptTouches) {
         [self hideMenuOptionsAnimated:YES];
