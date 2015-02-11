@@ -324,7 +324,9 @@
             UINavigationController *navVc = [[UINavigationController alloc] initWithRootViewController:[CategoryViewController sharedInstancetype]];
             __weak FirstViewController *weakself = self;
             [CategoryViewController sharedInstancetype].hidesBottomBarWhenPushed = YES;
+            [[CategoryViewController sharedInstancetype] cleanAll];
             [CategoryViewController sharedInstancetype].isSingleSelect = YES;
+            [CategoryViewController sharedInstancetype].isPushed = NO;
             [[CategoryViewController sharedInstancetype] setBlock:^(NSArray *aArray) {
                 [CategoryViewController sharedInstancetype].isSingleSelect = NO;
                 YHBCatSubcate *cate = (YHBCatSubcate *)[aArray lastObject];

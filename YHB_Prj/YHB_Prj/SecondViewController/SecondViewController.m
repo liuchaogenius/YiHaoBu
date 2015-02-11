@@ -597,7 +597,7 @@ typedef enum : NSUInteger {
     [self.tagsArray removeAllObjects];
     [self.tagsArray addObject:cate];
     
-    UIButton *btn = (UIButton *)[self.segmentView viewWithTag:Search_product];
+    UIButton *btn = (UIButton *)[self.segmentView viewWithTag:Search_sell];
     if (btn && self.searchView) {
         if (btn == _selectSegBtn) {
             [self.tableView reloadData];
@@ -649,6 +649,9 @@ typedef enum : NSUInteger {
             __weak SecondViewController *weakself = self;
             [CategoryViewController sharedInstancetype].hidesBottomBarWhenPushed = YES;
             //navVc.hidesBottomBarWhenPushed = YES;
+            [[CategoryViewController sharedInstancetype] cleanAll];
+            [CategoryViewController sharedInstancetype].isPushed = NO;
+            [CategoryViewController sharedInstancetype].isSingleSelect = NO;
             [[CategoryViewController sharedInstancetype] setBlock:^(NSArray *aArray) {
                 weakself.tagsArray = [NSMutableArray arrayWithArray:aArray];
                 [weakself.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
