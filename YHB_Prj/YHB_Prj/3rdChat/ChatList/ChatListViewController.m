@@ -511,6 +511,7 @@
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         EMConversation *converation = [self.dataSource objectAtIndex:indexPath.row-2];
+        [converation removeAllMessages];
         [[EaseMob sharedInstance].chatManager removeConversationByChatter:converation.chatter deleteMessages:NO];
         [self.dataSource removeObjectAtIndex:indexPath.row-2];
         [self.dataArray removeObjectAtIndex:indexPath.row-2];
