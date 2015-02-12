@@ -25,6 +25,7 @@ typedef enum:NSUInteger{
 {
     if (self = [super initWithFrame:frame]) {
         isSupply = aBool;
+        isFromMall = NO;
         manage = [[GetUserNameManage alloc] init];
         if (aBool==YES)
         {
@@ -194,6 +195,14 @@ typedef enum:NSUInteger{
     redLine.hidden = YES;
 }
 
+- (void)setViewForCompanyWithPhoneNumber:(NSString *)aNumber andType:(NSString *)aType userid:(int)aUserid avator:(NSString *)avatorStr truename:(NSString *)name isFromMall: (BOOL)isFrom
+{
+    [self setPhoneNumber:aNumber storeName:@"" itemId:0 isVip:0 imgUrl:@"" Title:@"" andType:aType userid:(int)aUserid];
+    isFromMall = isFrom;
+    avator = avatorStr;
+    trueName = name;
+}
+
 - (void)setPhoneNumber:(NSString *)aNumber storeName:(NSString *)aName itemId:(int)aItemId isVip:(int)aisVip imgUrl:(NSString *)aImgUrl Title:(NSString *)aTitle andType:(NSString *)aType userid:(int)aUserid
 {
     if (aisVip==1)
@@ -250,6 +259,10 @@ typedef enum:NSUInteger{
             {
                 body = [NSString stringWithFormat:@"您好，%@，我对您在快布发布的“%@”比较感兴趣，请联系%@。", storeLabel.text, myTitle, myPhoneNumber];
             }
+            else if ([myType isEqualToString:@"mall"])
+            {
+                body = @"";
+            }
             else
             {
                 NSString *company = [YHBUser sharedYHBUser].userInfo.company;
@@ -280,24 +293,34 @@ typedef enum:NSUInteger{
 //            if (!error && loginInfo) {
 //                NSLog(@"登陆成功");
 //            }
-            NSString *useridStr = [NSString stringWithFormat:@"%d",userid];
-            NSMutableArray *temArray = [NSMutableArray new];
-            [temArray addObject:useridStr];
-            [manage getUserNameUseridArray:temArray succBlock:^(NSMutableArray *aMuArray) {
-                NSString *userName = storeName;
-                UserinfoBaseClass *model = [aMuArray objectAtIndex:0];
-                ChatViewController *vc = [[ChatViewController alloc] initWithChatter:useridStr userid:userid itemid:itemId ImageUrl:myImgUrl Title:myTitle andType:myType andChatterAvatar:model.avatar];
-                vc.title = userName;
+            if ([myType isEqualToString:@"mall"]) {
+                ChatViewController *vc = [[ChatViewController alloc] initWithChatter:[NSString stringWithFormat:@"%d",userid] isGroup:NO andChatterAvatar:avator];
+                vc.title = trueName;
                 [[self viewController].navigationController pushViewController:vc animated:YES];
-            } failBlock:^(NSString *aStr) {
-                
-            }];
+            }else{
+                NSString *useridStr = [NSString stringWithFormat:@"%d",userid];
+                NSMutableArray *temArray = [NSMutableArray new];
+                [temArray addObject:useridStr];
+                [manage getUserNameUseridArray:temArray succBlock:^(NSMutableArray *aMuArray) {
+                    NSString *userName = storeName;
+                    UserinfoBaseClass *model = [aMuArray objectAtIndex:0];
+                    ChatViewController *vc = [[ChatViewController alloc] initWithChatter:useridStr userid:userid itemid:itemId ImageUrl:myImgUrl Title:myTitle andType:myType andChatterAvatar:model.avatar];
+                    vc.title = userName;
+                    [[self viewController].navigationController pushViewController:vc animated:YES];
+                } failBlock:^(NSString *aStr) {
+                    
+                }];
+            }
         }
     }
     else if(aBtn.tag==btnTypeShop)
     {
-        YHBStoreViewController *vc = [[YHBStoreViewController alloc] initWithShopID:userid];
-        [[self viewController].navigationController pushViewController:vc animated:YES];
+        if (isFromMall) {
+            [[self viewController].navigationController popViewControllerAnimated:YES];
+        }else{
+            YHBStoreViewController *vc = [[YHBStoreViewController alloc] initWithShopID:userid];
+            [[self viewController].navigationController pushViewController:vc animated:YES];
+        }
     }
 }
 

@@ -449,7 +449,6 @@ enum SgmBtn_tag
 #pragma mark - action
 - (void)touchSgmButton:(UIButton *)sender
 {
-#warning 待刷新tableview -cc
     if(_selectSgmButton.tag != sender.tag){
         _selectSgmButton.selected = NO;
         [self setSelectOfButton:_selectSgmButton andisSelect:NO];
@@ -526,7 +525,7 @@ enum SgmBtn_tag
 
 - (void)shopInfoItem
 {
-    YHBStoreDetailViewController *vc = [[YHBStoreDetailViewController alloc] initWithStoreInfo:self.shopInfo];
+    YHBStoreDetailViewController *vc = [[YHBStoreDetailViewController alloc] initWithStoreInfo:self.shopInfo isFromMall:YES];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -550,7 +549,7 @@ enum SgmBtn_tag
 - (void)touchHeadImagBtn
 {
     if (self.shopInfo){
-        YHBStoreDetailViewController *vc = [[YHBStoreDetailViewController alloc] initWithStoreInfo:self.shopInfo];
+        YHBStoreDetailViewController *vc = [[YHBStoreDetailViewController alloc] initWithStoreInfo:self.shopInfo isFromMall:YES];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

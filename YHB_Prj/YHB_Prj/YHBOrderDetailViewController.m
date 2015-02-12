@@ -290,7 +290,7 @@ typedef enum : NSInteger {
             NSString *sellerName = self.orderModel.sellname;//姓名
             double userID = self.orderModel.sellid;//用户id
             //缺少头像
-#warning 待添加聊天 - cc
+
             NSString *useridStr = [NSString stringWithFormat:@"%d",(int)userID];
             NSMutableArray *temArray = [NSMutableArray new];
             [temArray addObject:useridStr];

@@ -35,7 +35,7 @@
 - (NSArray *)actionArray
 {
     if (!_actionArray) {
-        _actionArray = @[@"sell",@"buy",@"mall",@"company"];
+        _actionArray = @[@"company",@"sell",@"buy",@"mall"];
     }
     return _actionArray;
 }

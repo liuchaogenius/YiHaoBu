@@ -195,7 +195,7 @@
 - (void)toStore
 {
     [self removeMaskView];
-    YHBStoreDetailViewController *vc = [[YHBStoreDetailViewController alloc] initWithItemID:(int)myModel.userid];
+    YHBStoreDetailViewController *vc = [[YHBStoreDetailViewController alloc] initWithItemID:(int)myModel.userid isFromMall:NO];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

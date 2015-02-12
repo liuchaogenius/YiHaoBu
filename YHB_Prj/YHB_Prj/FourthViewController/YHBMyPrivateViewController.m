@@ -21,7 +21,7 @@
 #import "YHBBuyDetailViewController.h"
 #import "YHBSupplyDetailViewController.h"
 #import "YHBProductDetailVC.h"
-#import "YHBStoreViewController.h"
+#import "YHBStoreDetailViewController.h"
 #define kSgmBtnHeight 45
 #define kPageSize 30
 #define kGoodsCellHeight 80
@@ -85,7 +85,7 @@
 - (NSArray *)titleArray
 {
     if (!_titleArray) {
-        _titleArray = @[@"求购",@"供应",@"产品",@"商城"];
+        _titleArray = @[@"商友",@"供应",@"求购",@"产品"];
     }
     return _titleArray;
 }
@@ -96,7 +96,7 @@
     [super viewDidLoad];
     self.title = @"我的收藏";
     [self.view addSubview:self.sgmBtmScrollView];
-    _selTag = Get_Sell;
+    _selTag = Get_Company;
     self.view.backgroundColor = kViewBackgroundColor;
     [self.view addSubview:self.tableView];
     [self setExtraCellLineHidden:self.tableView];
@@ -272,7 +272,7 @@
                 case Get_Company:
                 {
                     //店铺
-                    YHBStoreViewController *vc = [[YHBStoreViewController alloc] initWithShopID:(int)((YHBCRslist *)model).userid];
+                    YHBStoreDetailViewController *vc = [[YHBStoreDetailViewController alloc] initWithItemID:(NSInteger)((YHBCRslist *)model).userid isFromMall:NO];
                     vc.hidesBottomBarWhenPushed = YES;
                     vc.navigationController.navigationBar.hidden = NO;
                     [self.navigationController pushViewController:vc animated:YES];

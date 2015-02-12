@@ -27,11 +27,17 @@
     NSString *myTitle;
     NSString *myType;
     NSString *storeName;
+    NSString *trueName;
+    NSString *avator;
     int userid;
     BOOL isSupply;
+    BOOL isFromMall;
     GetUserNameManage *manage;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame isSupply:(BOOL)aBool;
 - (void)setPhoneNumber:(NSString *)aNumber storeName:(NSString *)aName itemId:(int)aItemId isVip:(int)aisVip imgUrl:(NSString *)aImgUrl Title:(NSString *)aTitle andType:(NSString *)aType userid:(int)aUserid;
+//商城详情页用
+- (void)setViewForCompanyWithPhoneNumber:(NSString *)aNumber andType:(NSString *)aType userid:(int)aUserid avator:(NSString *)avatorStr truename:(NSString *)name isFromMall: (BOOL)isFrom;
+
 @end

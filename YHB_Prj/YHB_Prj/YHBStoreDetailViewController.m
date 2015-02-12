@@ -10,15 +10,16 @@
 #import "YHBUserInfo.h"
 #import "YHBUserManager.h"
 #import "UIImageView+WebCache.h"
+#import "YHBContactView.h"
 
-#define kimgHeight 35
+#define kimgHeight 65
 #define kDetailCellHeight 40
 #define kBlankHeight 15
 #define kTitleFont 13
 #define kSmallFont 11
 #define kStarWidth 25
 #define isTest 0
-
+#define kContactViewHeight 60
 @interface YHBStoreDetailViewController ()
 
 @property (assign, nonatomic) NSInteger itemID;
@@ -45,12 +46,24 @@
 
 @property (assign, nonatomic) CGFloat currentY;
 @property (strong, nonatomic) YHBUserManager *manager;
+@property (strong, nonatomic) YHBContactView *contactView;
+@property (assign, nonatomic) BOOL isFromMall;
 
 @end
 
 @implementation YHBStoreDetailViewController
 
 #pragma mark - getter and setter
+- (YHBContactView *)contactView
+{
+    if (!_contactView) {
+        _contactView = [[YHBContactView alloc] initWithFrame:CGRectMake(0, self.scrollView.bottom, kMainScreenWidth, kContactViewHeight) isSupply:YES];
+        _contactView.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:_contactView];
+    }
+    return _contactView;
+}
+
 - (YHBUserManager *)manager
 {
     if (!_manager) {
@@ -116,7 +129,7 @@
 {
     if (!_companyName) {
         _companyName = [[UILabel alloc] init];
-        _companyName.font = [UIFont systemFontOfSize:kSmallFont];
+        _companyName.font = [UIFont systemFontOfSize:16];
         _companyName.textColor = [UIColor blackColor];
     }
     return _companyName;
@@ -126,7 +139,7 @@
 {
     if (!_trueName) {
         _trueName = [[UILabel alloc] init];
-        _trueName.font = [UIFont systemFontOfSize:kSmallFont];
+        _trueName.font = [UIFont systemFontOfSize:16];
         _trueName.textColor = [UIColor blackColor];
     }
     return _trueName;
@@ -139,6 +152,8 @@
         _headImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, kimgHeight, kimgHeight)];
         _headImageView.backgroundColor = [UIColor whiteColor];
         _headImageView.layer.borderColor = [kLineColor CGColor];
+        [_headImageView setContentMode:UIViewContentModeScaleAspectFill];
+        _headImageView.clipsToBounds = YES;
         _headImageView.layer.borderWidth = 0.5;
         _headImageView.layer.cornerRadius = 2.0f;
     }
@@ -148,7 +163,7 @@
 - (UIScrollView *)scrollView
 {
     if (!_scrollView) {
-        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight-20-44)];
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight-20-44-kContactViewHeight)];
         _scrollView.backgroundColor = kViewBackgroundColor;
         _scrollView.contentSize = CGSizeMake(kMainScreenWidth, 530);
     }
@@ -158,7 +173,7 @@
 - (UIView *)fistSectionView
 {
     if (!_fistSectionView) {
-        _fistSectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, kMainScreenWidth, 220)];
+        _fistSectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 220)];
         _fistSectionView.backgroundColor = [UIColor whiteColor];
     }
     return _fistSectionView;
@@ -167,28 +182,30 @@
 - (UIView *)secondSectionView
 {
     if (!_secondSectionView) {
-        _secondSectionView = [[UIView alloc] initWithFrame:CGRectMake(0, self.fistSectionView.bottom+kBlankHeight, kMainScreenWidth, 270)];
+        _secondSectionView = [[UIView alloc] initWithFrame:CGRectMake(0, self.fistSectionView.bottom+1, kMainScreenWidth, 270)];
         _secondSectionView.backgroundColor = [UIColor whiteColor];
     }
     return _secondSectionView;
 }
 
-- (instancetype)initWithStoreInfo:(YHBUserInfo *)storeInfo
+- (instancetype)initWithStoreInfo:(YHBUserInfo *)storeInfo isFromMall:(BOOL)from
 {
     self = [super init];
     if (self) {
         self.storeInfo = storeInfo;
         self.itemID = 0;
+        self.isFromMall = from;
     }
     return self;
 }
 
-- (instancetype)initWithItemID:(NSInteger)itemID
+- (instancetype)initWithItemID:(NSInteger)itemID isFromMall:(BOOL)from
 {
     self = [self init];
     if (self) {
         self.itemID = itemID;
         self.storeInfo = nil;
+        self.isFromMall = from;
     }
     return self;
 }
@@ -205,6 +222,7 @@
     
     [self creatFirstSectionView];
     [self creatSecondSectionView];
+    [self.view addSubview:self.contactView];
     
     //Data
     if (self.storeInfo) {
@@ -247,6 +265,8 @@
     }
     self.star1label.text = info.star1;
     self.star2label.text = info.star2;
+    
+    [self.contactView setViewForCompanyWithPhoneNumber:self.storeInfo.telephone andType:@"mall" userid:(int)self.storeInfo.userid avator:self.storeInfo.avatar truename:self.storeInfo.truename isFromMall:self.isFromMall];
 }
 
 
@@ -257,13 +277,13 @@
     [self.fistSectionView addSubview:self.headImageView];
     self.companyName.frame = CGRectMake(self.headImageView.right+5, 12, 200, kSmallFont);
     [self.fistSectionView addSubview:self.companyName];
-    self.trueName.frame = CGRectMake(self.companyName.left, self.companyName.bottom+3, 180, kSmallFont);
+    self.trueName.frame = CGRectMake(self.companyName.left, self.companyName.bottom+20, 180, kSmallFont);
     [self.fistSectionView addSubview:self.trueName];
     
     self.currentY = self.headImageView.bottom + 10;
     [self.fistSectionView addSubview:[self getLineWithY:self.currentY]];
-    [self.fistSectionView addSubview:[self customTitleLabelWithY:self.currentY+10 Title:@"评分情况:" isBlackColor:YES]];
-    self.currentY += 35;
+//    [self.fistSectionView addSubview:[self customTitleLabelWithY:self.currentY+10 Title:@"评分情况:" isBlackColor:YES]];
+//    self.currentY += 35;
     [self.fistSectionView addSubview:[self getLineWithY:self.currentY]];
     self.currentY += 10;
     [self.fistSectionView addSubview:[self customTitleLabelWithY:self.currentY Title:@"描述相符:" isBlackColor:NO]];

@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #define kAll -1
 
-typedef enum : NSUInteger {
-    Get_Sell = 0,
+typedef enum : long {
+    Get_Company = 0,
+    Get_Sell,
     Get_Buy,
     Get_Product,
-    Get_Company
 } GetPrivateTag;
 
 @class YHBPage;

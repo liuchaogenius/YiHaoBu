@@ -23,6 +23,7 @@
 #import "YHBProductListViewController.h"
 #import "YHBStoreViewController.h"
 #import "UMSocial.h"
+#import "IntroduceViewController.h"
 
 #define kBtnsViewHeight 65
 #define kBtnImageWidth 25
@@ -268,17 +269,26 @@ enum Button_Type
             break;
         case Cell_aboutUs:
         {
-            
+            IntroduceViewController *vc = [[IntroduceViewController alloc] init];
+            [vc setUrl:[NSString stringWithFormat:@"%@file/apphtml/about.html",kYHBUrl] title:@"关于我们"];
+            vc.isSysPush = YES;
+            [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case Cell_clause:
         {
-            
+            IntroduceViewController *vc = [[IntroduceViewController alloc] init];
+            [vc setUrl:[NSString stringWithFormat:@"%@file/apphtml/service.html",kYHBUrl] title:@"服务条款"];
+            vc.isSysPush = YES;
+            [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case Cell_tips:
         {
-            
+            IntroduceViewController *vc = [[IntroduceViewController alloc] init];
+            [vc setUrl:[NSString stringWithFormat:@"%@file/apphtml/help.html",kYHBUrl] title:@"使用帮助"];
+            vc.isSysPush = YES;
+            [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case Cell_share:

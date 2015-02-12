@@ -8,7 +8,7 @@
 
 #import "BaseViewController.h"
 #define kSegBase 700
-typedef enum : NSUInteger {
+typedef enum : long {
     Search_buy = kSegBase, //采购
     Search_sell,//供应
     Search_mall,//店铺
