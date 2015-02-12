@@ -132,7 +132,7 @@ enum Button_Type
 - (void)creatButtonsView {
     UIView *buttonsView = [[UIView alloc] initWithFrame:CGRectMake(0, self.userHeadView.bottom, kMainScreenWidth, kBtnsViewHeight)];
     //buttonsView.backgroundColor = [UIColor blackColor];
-    NSArray *titleArray = @[@"我的采购",@"我的供应",@"我的产品",@"浏览商城"];
+    NSArray *titleArray = @[@"我的采购",@"我的供应",@"我的产品",@"我的商城"];
     for (int i = 0; i < titleArray.count; i++) {
         UIButton *button  = [self customButtonViewWithNum:i title:titleArray[i]];
         //button.backgroundColor = [UIColor blueColor];

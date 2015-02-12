@@ -9,7 +9,7 @@
 #import "YHBConnectStoreVeiw.h"
 #import "UIImageView+WebCache.h"
 #define kImgwidth 30
-#define kbtnwidth 40
+#define kbtnwidth 55
 @interface YHBConnectStoreVeiw()
 
 @property (strong, nonatomic) UIImageView *imageView;
@@ -60,9 +60,9 @@
 - (UILabel *)titleLabel
 {
     if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, kImgwidth)];
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 250, kImgwidth)];
         _titleLabel.numberOfLines = 2;
-        _titleLabel.font = kFont12;
+        _titleLabel.font = kFont14;
         _titleLabel.textColor = [UIColor blackColor];
     }
     return _titleLabel;
@@ -72,7 +72,7 @@
 {
     if (!_connectButton) {
         _connectButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _connectButton.frame = CGRectMake(kMainScreenWidth-5-kbtnwidth, 10, kbtnwidth, 30);
+        _connectButton.frame = CGRectMake(kMainScreenWidth-10-kbtnwidth, (self.height-40)/2.0, kbtnwidth, 40);
         [_connectButton setBackgroundImage:[UIImage imageNamed:@"connectStore"] forState:UIControlStateNormal];
         [_connectButton setContentMode:UIViewContentModeScaleAspectFit];
         [_connectButton addTarget:self action:@selector(touchConnectButton) forControlEvents:UIControlEventTouchUpInside];
@@ -103,10 +103,10 @@
     self.titleLabel.left = self.imageView.right+5;
     [detailView addSubview:self.titleLabel];
     
-    UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(detailView.width-10, detailView.height/2.0 - 9.5, 12, 19)];
+    UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(detailView.width-15, self.height/2.0 - 9.5, 12, 19)];
     arrowImageView.image = [UIImage imageNamed:@"Arrow_right"];
     [arrowImageView setContentMode:UIViewContentModeScaleAspectFit];
-    [detailView addSubview:arrowImageView];
+    
     
     UILabel *desTitle = [[UILabel alloc] initWithFrame:CGRectMake(10, detailView.bottom+7, 4*11, 11)];
     desTitle.text = @"描述相符";
@@ -128,6 +128,7 @@
     
     [self addSubview:self.connectButton];
     
+    [self addSubview:arrowImageView];
 }
 
 - (void)setUIWithTitle:(NSString *)title imageUrl:(NSString *)urlstr desStar:(NSString *)star1 servStar:(NSString *)star2

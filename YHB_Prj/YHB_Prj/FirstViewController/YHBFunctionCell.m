@@ -9,7 +9,7 @@
 #import "YHBFunctionCell.h"
 #define buttonWidth 45
 #define buttonHeight buttonWidth
-#define kTitleFont 12
+#define kTitleFont 14
 
 @implementation YHBFunctionCell
 
@@ -20,9 +20,9 @@
         self.backgroundColor = [UIColor whiteColor];
 
         NSArray *titleArray = @[@"类目",@"团购",@"供应",@"采购"];
-        CGFloat blankWidth = (kMainScreenWidth - 4*buttonWidth)/5.0f;
+        CGFloat blankWidth = (kMainScreenWidth -2*20- 4*buttonWidth)/3.0f;
         for (int i = 0; i < 4; i++) {
-            UIButton *button = [self customedButtonWithFrame:CGRectMake(blankWidth+i*(blankWidth+buttonWidth), 10, buttonWidth, buttonHeight) andTag:i+fcViewTagBase andImage:[UIImage imageNamed:[NSString stringWithFormat:@"funcImage%d",i]]];
+            UIButton *button = [self customedButtonWithFrame:CGRectMake(20+i*(blankWidth+buttonWidth), 10, buttonWidth, buttonHeight) andTag:i+fcViewTagBase andImage:[UIImage imageNamed:[NSString stringWithFormat:@"funcImage%d",i]]];
             [self.contentView addSubview:button];
             
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(button.left-10, button.bottom+5, button.width+20, kTitleFont)];
