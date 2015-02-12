@@ -95,7 +95,7 @@
 - (void)touchLikeBtn
 {
     [SVProgressHUD show:YES offsetY:100];
-    [self.manage changeLikeStatusAction:@"sell" itemid:myModel.itemid SuccBlock:^{
+    [self.manage changeLikeStatusAction:@"buy" itemid:myModel.itemid SuccBlock:^{
         [SVProgressHUD dismiss];
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
@@ -122,6 +122,7 @@
 
 - (void)setDetailWithModel:(YHBBuyDetailData *)aModel
 {
+    myModel = aModel;
     likeBtn.userInteractionEnabled = YES;
     BOOL isHaveAmount = YES;
     NSMutableDictionary *dict = [NSMutableDictionary new];
