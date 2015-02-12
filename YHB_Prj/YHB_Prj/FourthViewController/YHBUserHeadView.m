@@ -48,7 +48,7 @@
 - (UILabel *)priceLabel
 {
     if (!_priceLabel) {
-        _priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-15-150, self.bottom - kSmallFont-10, 150, kSmallFont)];
+        _priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-15-150, self.bottom - kSmallFont-10, kMainScreenWidth-20, kSmallFont)];
         _priceLabel.textColor = [UIColor whiteColor];
         _priceLabel.font = [UIFont systemFontOfSize:kSmallFont];
         _priceLabel.textAlignment = NSTextAlignmentRight;
@@ -77,7 +77,8 @@
         _userImageView.backgroundColor = [UIColor whiteColor];
         _userImageView.layer.borderWidth = 1.0;
         _userImageView.layer.borderColor = [kLineColor CGColor];
-        _userImageView.layer.cornerRadius = 2.0;
+        _userImageView.layer.cornerRadius = 4.0;
+        _userImageView.clipsToBounds = YES;
         [_loginedView addSubview:_userImageView];
         
         UIButton *imageButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -186,10 +187,10 @@
         
         if(avator)
             [self.userImageView sd_setImageWithURL:[NSURL URLWithString:avator] placeholderImage:
-                    [UIImage imageNamed:@"DefualtUser"]];
+                    [UIImage imageNamed:@"DefualtUser"] options:SDWebImageCacheMemoryOnly];
         if(thumb)
-            [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:thumb] placeholderImage:[UIImage imageNamed:@"userBannerDefault"]];
-        
+            [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:thumb] placeholderImage:[UIImage imageNamed:@"userBannerDefault"] options:SDWebImageCacheMemoryOnly];
+        MLOG(@"thumb:---->%@",thumb);
 //        if (credit && !self.creditLabel.superview) {
 //            [self.loginedView addSubview:self.creditLabel];
 //        }

@@ -322,8 +322,8 @@ enum Button_Type
     if ([YHBUser sharedYHBUser].isLogin ) {
         [self.loginItem setTitle:@"注销"];
         YHBUser *user = [YHBUser sharedYHBUser];
-        [self loadUserPhoto];
-        [self.userHeadView refreshSelfHeadWithIsLogin:YES name:user.userInfo.truename avator:nil thumb:nil group:(NSInteger)user.userInfo.groupid company:user.userInfo.company money:user.userInfo.money lock:user.userInfo.locking credit:[NSString stringWithFormat:@"%d",(int)user.userInfo.credit]];
+        //[self loadUserPhoto];
+        [self.userHeadView refreshSelfHeadWithIsLogin:YES name:user.userInfo.truename avator:user.userInfo.avatar thumb:user.userInfo.thumb group:(NSInteger)user.userInfo.groupid company:user.userInfo.company money:user.userInfo.money lock:user.userInfo.locking credit:[NSString stringWithFormat:@"%d",(int)user.userInfo.credit]];
     }else{
         [self.loginItem setTitle:@"注册"];
         [self.userHeadView refreshSelfHeadWithIsLogin:NO name:nil avator:nil thumb:nil group:0 company:nil money:nil lock:nil credit:nil];
@@ -381,6 +381,7 @@ enum Button_Type
     return button;
 }
 
+/*
 - (void)loadUserPhoto
 {
     YHBUser *user = [YHBUser sharedYHBUser];
@@ -397,7 +398,7 @@ enum Button_Type
     }else{
         [self.userHeadView.userImageView sd_setImageWithURL:[NSURL URLWithString:user.userInfo.avatar] placeholderImage:[UIImage imageNamed:@"userDefault"]];
     }
-}
+}*/
 
 /*
 #pragma mark - Navigation

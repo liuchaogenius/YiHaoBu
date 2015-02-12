@@ -409,11 +409,14 @@ enum TextTag
             }else{
                 self.bannerImageView.image = image;
             }
+            [YHBUser sharedYHBUser].statusIsChanged = YES;
+            [[SDWebImageManager sharedManager].imageCache removeImageForKey:(type == Picker_Banner ? [YHBUser sharedYHBUser].userInfo.thumb:[YHBUser sharedYHBUser].userInfo.avatar)];
+            /*
             //本地操作
             BOOL result = [UIImagePNGRepresentation((type == Picker_Banner ? self.bannerImageView.image:self.userImageView.image)) writeToFile: (type == Picker_Banner ? [YHBUser sharedYHBUser].localBannerUrl:[YHBUser sharedYHBUser].localHeadUrl)    atomically:YES];
             if (result) {
                 [YHBUser sharedYHBUser].statusIsChanged = YES;
-            }
+            }*/
         }else{
             [SVProgressHUD dismissWithError:kErrorStr];
         }
@@ -750,6 +753,9 @@ enum TextTag
 {
     YHBUser *user = [YHBUser sharedYHBUser];
     
+    [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:user.userInfo.thumb] placeholderImage:[UIImage imageNamed:@"userBannerDefault"] options:SDWebImageCacheMemoryOnly];
+    [self.userImageView sd_setImageWithURL:[NSURL URLWithString:user.userInfo.avatar] placeholderImage:[UIImage imageNamed:@"DefualtUser"] options:SDWebImageCacheMemoryOnly];
+    /*
     if ([[NSFileManager defaultManager] fileExistsAtPath:user.localBannerUrl]) {
         self.bannerImageView.image = [UIImage imageWithContentsOfFile:user.localBannerUrl];
         
@@ -762,6 +768,7 @@ enum TextTag
     }else{
         [self.userImageView sd_setImageWithURL:[NSURL URLWithString:user.userInfo.avatar] placeholderImage:[UIImage imageNamed:@"DefualtUser"]];
     }
+     */
 }
 
 
