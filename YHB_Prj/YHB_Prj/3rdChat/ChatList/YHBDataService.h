@@ -27,12 +27,8 @@
 - (void)saveChangedBuyList:(NSMutableArray *)aArray;
 
 
-- (void)saveunreadSys:(BOOL)aBool;
-
-- (BOOL)getunreadSys;
-
-- (void)saveunreadBuy:(BOOL)aBool;
-
-- (BOOL)getunreadBuy;
-
+- (void)saveunreadSys:(NSString *)aStr;
+- (NSString *)getunreadSys;
+- (void)saveunreadBuy:(NSString *)aStr;
+- (NSString *)getunreadBuy;
 @end

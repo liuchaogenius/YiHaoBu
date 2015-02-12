@@ -47,32 +47,32 @@
 }
 
 
-- (void)saveunreadSys:(BOOL)aBool
+- (void)saveunreadSys:(NSString *)aStr
 {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud synchronize];
-    [ud setBool:aBool forKey:@"unreadSys"];
+    [ud setValue:aStr forKey:@"unreadSys"];
 }
 
-- (BOOL)getunreadSys
+- (NSString *)getunreadSys
 {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud synchronize];
-    return [ud boolForKey:@"unreadSys"];
+    return [ud valueForKey:@"unreadSys"];
 }
 
-- (void)saveunreadBuy:(BOOL)aBool
+- (void)saveunreadBuy:(NSString *)aStr
 {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud synchronize];
-    [ud setBool:aBool forKey:@"unreadBuy"];
+    [ud setValue:aStr forKey:@"unreadBuy"];
 }
 
-- (BOOL)getunreadBuy
+- (NSString *)getunreadBuy
 {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud synchronize];
-    return [ud boolForKey:@"unreadBuy"];
+    return [ud valueForKey:@"unreadBuy"];
 }
 
 - (void)saveBuyList:(NSMutableArray *)aArray

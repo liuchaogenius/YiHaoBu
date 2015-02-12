@@ -32,8 +32,8 @@
 
 @interface ChatListViewController ()<UITableViewDelegate,UITableViewDataSource, UISearchDisplayDelegate,SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
 {
-    BOOL unreadSys;
-    BOOL unreadBuy;
+    NSString *unreadSys;
+    NSString *unreadBuy;
 }
 @property (strong, nonatomic) NSMutableArray        *dataSource;
 @property (strong, nonatomic) NSMutableArray        *dataArray;
@@ -104,11 +104,23 @@
         NSMutableArray *syslist = [self.pushArray objectAtIndex:1];
         if (buylist.count>0)
         {
-            [[YHBDataService sharedYHBDataSevice] saveunreadBuy:YES];
+            NSString *str = [[YHBDataService sharedYHBDataSevice] getunreadBuy];
+            if (!str)
+            {
+                str = @"0";
+            }
+            int count = (int)buylist.count+[str intValue];
+            [[YHBDataService sharedYHBDataSevice] saveunreadBuy:[NSString stringWithFormat:@"%d", count]];
         }
         if (syslist.count>0)
         {
-            [[YHBDataService sharedYHBDataSevice] saveunreadSys:YES];
+            NSString *str = [[YHBDataService sharedYHBDataSevice] getunreadSys];
+            if (!str)
+            {
+                str = @"0";
+            }
+            int count = (int)syslist.count+[str intValue];
+            [[YHBDataService sharedYHBDataSevice] saveunreadSys:[NSString stringWithFormat:@"%d", count]];
         }
         if (buylist)
         {
@@ -381,9 +393,9 @@
         cell.time = timeStr;
         [cell setUnreadViewHidden:YES];
         unreadSys = [[YHBDataService sharedYHBDataSevice] getunreadSys];
-        if (unreadSys==YES)
+        if ([unreadSys intValue]>0)
         {
-            [cell setUnreadViewHidden:NO];
+            cell.unreadCount = [unreadSys intValue];
         }
         return cell;
     }
@@ -412,9 +424,9 @@
         cell.time = timeStr;
         unreadBuy = [[YHBDataService sharedYHBDataSevice] getunreadBuy];
         [cell setUnreadViewHidden:YES];
-        if (unreadBuy==YES)
+        if ([unreadBuy intValue]>0)
         {
-            [cell setUnreadViewHidden:NO];
+            cell.unreadCount = [unreadBuy intValue];
         }
         
         return cell;
@@ -487,14 +499,16 @@
         {
             YHBMessageViewController *vc = [[YHBMessageViewController alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
-            [[YHBDataService sharedYHBDataSevice] saveunreadSys:NO];
+            [[YHBDataService sharedYHBDataSevice] saveunreadSys:@"0"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"setupUnread" object:nil];
             [self.navigationController pushViewController:vc animated:YES];
         }
         else if (indexPath.row==1)
         {
             YHBRecommendViewController *vc = [[YHBRecommendViewController alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
-            [[YHBDataService sharedYHBDataSevice] saveunreadBuy:NO];
+            [[YHBDataService sharedYHBDataSevice] saveunreadBuy:@"0"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"setupUnread" object:nil];
             [self.navigationController pushViewController:vc animated:YES];
         }
         

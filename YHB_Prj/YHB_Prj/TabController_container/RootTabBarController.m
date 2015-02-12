@@ -17,6 +17,10 @@
 #import "YHBUser.h"
 #import "YHBLoginViewController.h"
 #import "ChatListViewController.h"
+#import "YHBGetPushManage.h"
+#import "YHBDataService.h"
+#import "YHBGetPushBuylist.h"
+#import "SVProgressHUD.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -47,6 +51,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 @property (nonatomic, strong)  YHBLoginViewController *loginVC;
 @property (nonatomic, strong) UINavigationController *loginNav;
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
+@property(strong, nonatomic) YHBGetPushManage *netManage;
 @end
 
 @implementation RootTabBarController
@@ -208,12 +213,14 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self didUnreadMessagesCountChanged];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupUntreatedApplyCount) name:@"setupUntreatedApplyCount" object:nil];
     [self setupUnreadMessageCount];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupUnreadMessageCount) name:@"setupUnread" object:nil];
 //    [self setupUntreatedApplyCount];
 }
 
 - (void)dealloc
 {
     [self unregisterNotifications];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - private
@@ -247,6 +254,14 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                                         nil] forState:UIControlStateSelected];
 }
 
+- (YHBGetPushManage *)netManage
+{
+    if (!_netManage) {
+        _netManage = [[YHBGetPushManage alloc] init];
+    }
+    return _netManage;
+}
+
 // 统计未读消息数
 -(void)setupUnreadMessageCount
 {
@@ -255,17 +270,77 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     for (EMConversation *conversation in conversations) {
         unreadCount += conversation.unreadMessagesCount;
     }
-    if (_chatListVC) {
-        if (unreadCount > 0) {
-//            _chatListVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%d",(int)unreadCount];
-            [[self.tabBar.items objectAtIndex:2] setBadgeValue:[NSString stringWithFormat:@"%d",(int)unreadCount]];
-        }else{
-            [[self.tabBar.items objectAtIndex:2] setBadgeValue:nil];
+
+    [self.netManage getPushSucc:^(NSMutableArray *aArray) {
+        NSMutableArray *pushArray = [NSMutableArray new];
+        pushArray = aArray;
+        NSMutableArray *buylist = [pushArray objectAtIndex:0];
+        NSMutableArray *syslist = [pushArray objectAtIndex:1];
+        if (buylist.count>0)
+        {
+            NSString *str = [[YHBDataService sharedYHBDataSevice] getunreadBuy];
+            if (!str)
+            {
+                str = @"0";
+            }
+            int count = (int)buylist.count+[str intValue];
+            [[YHBDataService sharedYHBDataSevice] saveunreadBuy:[NSString stringWithFormat:@"%d", count]];
         }
-    }
+        if (syslist.count>0)
+        {
+            NSString *str = [[YHBDataService sharedYHBDataSevice] getunreadSys];
+            if (!str)
+            {
+                str = @"0";
+            }
+            int count = (int)syslist.count+[str intValue];
+            [[YHBDataService sharedYHBDataSevice] saveunreadSys:[NSString stringWithFormat:@"%d", count]];
+        }
+        if (buylist)
+        {
+            NSMutableArray *newBuyList = [NSMutableArray new];
+            for (YHBGetPushBuylist *model in buylist)
+            {
+                model.isread = @"NO";
+                [newBuyList addObject:model];
+            }
+            [[YHBDataService sharedYHBDataSevice] saveBuyList:newBuyList];
+        }
+        if (syslist)
+        {
+            [[YHBDataService sharedYHBDataSevice] saveSysList:syslist];
+        }
+        NSString *str1 = [[YHBDataService sharedYHBDataSevice] getunreadBuy];
+        NSString *str2 = [[YHBDataService sharedYHBDataSevice] getunreadSys];
+        if (!str1)
+        {
+            str1 = @"0";
+        }
+        if (!str2)
+        {
+            str2 = @"0";
+        }
+        int count1 = [str1 intValue];
+        int count2 = [str2 intValue];
+        
+        int allcount = count1+count2+(int)unreadCount;
+        if (_chatListVC) {
+            if (allcount > 0) {
+                //            _chatListVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%d",(int)unreadCount];
+                [[self.tabBar.items objectAtIndex:2] setBadgeValue:[NSString stringWithFormat:@"%d",(int)allcount]];
+            }else{
+                [[self.tabBar.items objectAtIndex:2] setBadgeValue:nil];
+            }
+        }
+        UIApplication *application = [UIApplication sharedApplication];
+        [application setApplicationIconBadgeNumber:allcount];
+    } andFail:^(NSString *aStr) {
+        [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
+    }];
     
-    UIApplication *application = [UIApplication sharedApplication];
-    [application setApplicationIconBadgeNumber:unreadCount];
+    
+    
+
 }
 
 //- (void)setupUntreatedApplyCount
