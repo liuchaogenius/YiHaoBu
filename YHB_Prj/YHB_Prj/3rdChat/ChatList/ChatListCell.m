@@ -19,11 +19,17 @@
     UILabel *_unreadLabel;
     UILabel *_detailLabel;
     UIView *_lineView;
+    UIView *_unreadView;
 }
 
 @end
 
 @implementation ChatListCell
+
+- (void)setUnreadViewHidden:(BOOL)aBool
+{
+    _unreadView.hidden = aBool;
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier
@@ -36,6 +42,13 @@
         _timeLabel.textAlignment = NSTextAlignmentRight;
         _timeLabel.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:_timeLabel];
+        
+        _unreadView = [[UILabel alloc] initWithFrame:CGRectMake(45, 0, 20, 20)];
+        _unreadView.backgroundColor = [UIColor redColor];
+        _unreadView.layer.cornerRadius = 10;
+        _unreadView.clipsToBounds = YES;
+        [self.contentView addSubview:_unreadView];
+        
         
         _unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 0, 20, 20)];
         _unreadLabel.backgroundColor = [UIColor redColor];

@@ -31,7 +31,10 @@
 #import "ConversationType.h"
 
 @interface ChatListViewController ()<UITableViewDelegate,UITableViewDataSource, UISearchDisplayDelegate,SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
-
+{
+    BOOL unreadSys;
+    BOOL unreadBuy;
+}
 @property (strong, nonatomic) NSMutableArray        *dataSource;
 @property (strong, nonatomic) NSMutableArray        *dataArray;
 @property (strong, nonatomic) GetUserNameManage *manage;
@@ -99,6 +102,14 @@
         self.pushArray = aArray;
         NSMutableArray *buylist = [self.pushArray objectAtIndex:0];
         NSMutableArray *syslist = [self.pushArray objectAtIndex:1];
+        if (buylist.count>0)
+        {
+            [[YHBDataService sharedYHBDataSevice] saveunreadBuy:YES];
+        }
+        if (syslist.count>0)
+        {
+            [[YHBDataService sharedYHBDataSevice] saveunreadSys:YES];
+        }
         if (buylist)
         {
             NSMutableArray *newBuyList = [NSMutableArray new];
@@ -368,7 +379,12 @@
         }
         cell.detailMsg = detailStr;
         cell.time = timeStr;
-
+        [cell setUnreadViewHidden:YES];
+        unreadSys = [[YHBDataService sharedYHBDataSevice] getunreadSys];
+        if (unreadSys==YES)
+        {
+            [cell setUnreadViewHidden:NO];
+        }
         return cell;
     }
     else if(indexPath.row==1)
@@ -394,6 +410,12 @@
         }
         cell.detailMsg = detailStr;
         cell.time = timeStr;
+        unreadBuy = [[YHBDataService sharedYHBDataSevice] getunreadBuy];
+        [cell setUnreadViewHidden:YES];
+        if (unreadBuy==YES)
+        {
+            [cell setUnreadViewHidden:NO];
+        }
         
         return cell;
     }
@@ -435,6 +457,7 @@
             cell.contentView.backgroundColor = [UIColor whiteColor];
 //        }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell setUnreadViewHidden:YES];
 
         return cell;
     }
@@ -458,16 +481,20 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row<2)
     {
+        ChatListCell *cell = (ChatListCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        [cell setUnreadViewHidden:YES];
         if (indexPath.row==0)
         {
             YHBMessageViewController *vc = [[YHBMessageViewController alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
+            [[YHBDataService sharedYHBDataSevice] saveunreadSys:NO];
             [self.navigationController pushViewController:vc animated:YES];
         }
         else if (indexPath.row==1)
         {
             YHBRecommendViewController *vc = [[YHBRecommendViewController alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
+            [[YHBDataService sharedYHBDataSevice] saveunreadBuy:NO];
             [self.navigationController pushViewController:vc animated:YES];
         }
         

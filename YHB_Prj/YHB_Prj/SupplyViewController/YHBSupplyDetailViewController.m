@@ -205,7 +205,7 @@
              [self dismissFlower];
              if (needUpload && uploadPhotoArray.count>0)
              {
-                 [variousImageView setMyWebPhotoArray:uploadPhotoArray canEdit:NO];
+                 [variousImageView setPhotoArray:uploadPhotoArray];
                  uploadIndex = 0;
                  [SVProgressHUD showWithStatus:@"上传图片中" cover:YES offsetY:kMainScreenHeight/2.0];
                  [self uploadImage];

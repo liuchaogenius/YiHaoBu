@@ -22,4 +22,5 @@
 
 +(CGFloat)tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)setUnreadViewHidden:(BOOL)aBool;
 @end

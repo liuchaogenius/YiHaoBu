@@ -46,6 +46,35 @@
     return [ud stringForKey:@"time"];
 }
 
+
+- (void)saveunreadSys:(BOOL)aBool
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud synchronize];
+    [ud setBool:aBool forKey:@"unreadSys"];
+}
+
+- (BOOL)getunreadSys
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud synchronize];
+    return [ud boolForKey:@"unreadSys"];
+}
+
+- (void)saveunreadBuy:(BOOL)aBool
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud synchronize];
+    [ud setBool:aBool forKey:@"unreadBuy"];
+}
+
+- (BOOL)getunreadBuy
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud synchronize];
+    return [ud boolForKey:@"unreadBuy"];
+}
+
 - (void)saveBuyList:(NSMutableArray *)aArray
 {
     NSMutableArray *buylist = [self getBuylist];

@@ -12,6 +12,7 @@
 #import "LookQuoteManage.h"
 #import "QuoteTableViewCell.h"
 #import "PriceDetailViewController.h"
+#import "YHBBuyDetailViewController.h"
 
 #define topViewHeight 40
 
@@ -192,6 +193,22 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (isMe)
+    {
+        QuoteMeRslist *meModel = [self.tableViewArray objectAtIndex:indexPath.row];
+        YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:meModel.itemid andIsMine:YES isModal:NO];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else
+    {
+        QuoteRslist *model = [self.tableViewArray objectAtIndex:indexPath.row];
+        YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:model.itemid andIsMine:NO isModal:NO];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (void)touchBtn:(UIButton *)aBtn

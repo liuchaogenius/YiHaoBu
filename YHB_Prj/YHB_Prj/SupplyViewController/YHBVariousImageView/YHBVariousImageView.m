@@ -21,6 +21,7 @@
 - (void)setPhotoArray:(NSArray *)aPhotoArray
 {
     self.myPhotoArray = [aPhotoArray mutableCopy];
+    _currentPhotoCount = (int)aPhotoArray.count;
     [self reloadPhotoScrollView];
 }
 
