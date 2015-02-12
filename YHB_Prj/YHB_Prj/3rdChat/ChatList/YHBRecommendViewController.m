@@ -125,6 +125,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     YHBGetPushBuylist *model = [self.dataSource objectAtIndex:indexPath.row];
+    if ([model.isread isEqualToString:@"NO"])
+    {
+        model.isread = @"YES";
+        [[YHBDataService sharedYHBDataSevice] saveChangedBuyList:self.dataSource];
+    }
+    RecommendTableViewCell *cell = (RecommendTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [cell hideRedView];
     YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:(int)model.itemid andIsMine:NO isModal:NO];
     [self.navigationController pushViewController:vc animated:YES];
 }

@@ -62,6 +62,7 @@
         [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:[NSString stringWithFormat:@"%d",(int)[YHBUser sharedYHBUser].userInfo.userid] password:[YHBUser sharedYHBUser].userInfo.empass completion:^(NSDictionary *loginInfo, EMError *error) {
             if (!error && loginInfo) {
                 MLOG(@"登陆环信成功");
+                [rootvc registerEaseMob];
             }else{
                 MLOG(@"登陆失败 %@",error);
             }

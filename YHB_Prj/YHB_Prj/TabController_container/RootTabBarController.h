@@ -15,4 +15,5 @@
 
 @interface RootTabBarController : UITabBarController<UITabBarControllerDelegate,UITabBarDelegate>
 
+- (void)registerEaseMob;
 @end

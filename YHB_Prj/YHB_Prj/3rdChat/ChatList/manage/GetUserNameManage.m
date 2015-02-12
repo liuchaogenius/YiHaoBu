@@ -21,7 +21,7 @@
     
     kYHBRequestUrl(@"getUser.php", supplyUrl);
     [NetManager requestWith:dict url:supplyUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
-        MLOG(@"%@", successDict);
+//        MLOG(@"%@", successDict);
         NSString *result = [successDict objectForKey:@"result"];
         if ([result intValue] != 1)
         {

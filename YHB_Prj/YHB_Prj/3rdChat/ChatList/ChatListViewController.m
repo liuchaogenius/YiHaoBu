@@ -429,7 +429,7 @@
         }
         ConversationType *conversationModel = [self.myDataSource objectAtIndex:indexPath.row-2];
         EMConversation *conversation = conversationModel.conversation;
-        MLOG(@"%d", (int)indexPath.row);
+//        MLOG(@"%d", (int)indexPath.row);
         UserinfoBaseClass *model = conversationModel.userInfo;
         cell.name = model.truename;
         cell.imageURL = [NSURL URLWithString:model.avatar];

@@ -24,6 +24,8 @@
 - (void)saveSysList:(NSMutableArray *)aArray;
 - (NSMutableArray *)getSyslist;
 
+- (void)saveChangedBuyList:(NSMutableArray *)aArray;
+
 
 - (void)saveunreadSys:(BOOL)aBool;
 

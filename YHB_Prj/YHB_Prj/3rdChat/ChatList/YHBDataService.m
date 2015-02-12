@@ -101,6 +101,34 @@
     [userData setObject:archiveArray forKey:key];
 }
 
+- (void)saveChangedBuyList:(NSMutableArray *)aArray
+{
+    NSMutableArray *buylist = [self getBuylist];
+    if (!buylist)
+    {
+        buylist = [NSMutableArray new];
+    }
+    int length = (int)aArray.count;
+    [buylist removeObjectsInRange:NSMakeRange(0, length)];
+    for (int i=0; i<aArray.count; i++)
+    {
+        YHBGetPushBuylist *model = [aArray objectAtIndex:i];
+        [buylist insertObject:model atIndex:i];
+    }
+    
+    
+    NSMutableArray *archiveArray = [NSMutableArray arrayWithCapacity:buylist.count];
+    for (YHBGetPushBuylist *model in buylist) {
+        NSData *personEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:model];
+        [archiveArray addObject:personEncodedObject];
+    }
+    
+    NSUserDefaults *userData = [NSUserDefaults standardUserDefaults];
+    YHBUser *user = [YHBUser sharedYHBUser];
+    NSString *key = user.isLogin?[NSString stringWithFormat:@"buylist%d",(int)user.userInfo.userid]:@"buylist";
+    [userData setObject:archiveArray forKey:key];
+}
+
 - (NSMutableArray *)getBuylist
 {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];

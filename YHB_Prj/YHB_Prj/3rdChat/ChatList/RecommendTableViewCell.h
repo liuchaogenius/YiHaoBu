@@ -13,4 +13,5 @@
 
 - (void)setCellWithModel:(YHBGetPushBuylist *)aModel;
 +(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)hideRedView;
 @end
