@@ -7,9 +7,9 @@
 //
 
 #import "YHBFunctionCell.h"
-#define buttonWidth 45
+#define buttonWidth (150*kMainScreenWidth/1080.0f)
 #define buttonHeight buttonWidth
-#define kTitleFont 14
+#define kTitleFont 15
 
 @implementation YHBFunctionCell
 
@@ -18,14 +18,14 @@
     self = [super initWithFrame:frame];
     if (self ) {
         self.backgroundColor = [UIColor whiteColor];
-
+        
         NSArray *titleArray = @[@"类目",@"团购",@"供应",@"采购"];
-        CGFloat blankWidth = (kMainScreenWidth -2*20- 4*buttonWidth)/3.0f;
+        CGFloat blankWidth = (kMainScreenWidth -2*(60*kMainScreenWidth/1080.0)- 4*buttonWidth)/3.0f;
         for (int i = 0; i < 4; i++) {
-            UIButton *button = [self customedButtonWithFrame:CGRectMake(20+i*(blankWidth+buttonWidth), 10, buttonWidth, buttonHeight) andTag:i+fcViewTagBase andImage:[UIImage imageNamed:[NSString stringWithFormat:@"funcImage%d",i]]];
+            UIButton *button = [self customedButtonWithFrame:CGRectMake((60*kMainScreenWidth/1080.0)+i*(blankWidth+buttonWidth), 10, buttonWidth, buttonHeight) andTag:i+fcViewTagBase andImage:[UIImage imageNamed:[NSString stringWithFormat:@"funcImage%d",i]]];
             [self.contentView addSubview:button];
             
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(button.left-10, button.bottom+5, button.width+20, kTitleFont)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(button.left-10, button.bottom+7, button.width+20, kTitleFont)];
             label.backgroundColor = [UIColor clearColor];
             label.textColor = [UIColor lightGrayColor];
             label.font = [UIFont systemFontOfSize:kTitleFont];

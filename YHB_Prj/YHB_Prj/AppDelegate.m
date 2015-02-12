@@ -16,6 +16,7 @@
 #import "MobClickSocialAnalytics.h"
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
+#import "YHBUser.h"
 
 @interface AppDelegate ()<UIAlertViewDelegate>
 
@@ -50,9 +51,25 @@
     // 需要在注册sdk后写上该方法
     [[EaseMob sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 
+    [self LoginEaseMob];
+    
     return YES;
 }
-///注册友盟
+//登录环信
+- (void)LoginEaseMob
+{
+    if ([YHBUser sharedYHBUser].isLogin && [YHBUser sharedYHBUser].userInfo && ![[EaseMob sharedInstance].chatManager isLoggedIn]) {
+        [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:[NSString stringWithFormat:@"%d",(int)[YHBUser sharedYHBUser].userInfo.userid] password:[YHBUser sharedYHBUser].userInfo.empass completion:^(NSDictionary *loginInfo, EMError *error) {
+            if (!error && loginInfo) {
+                MLOG(@"登陆环信成功");
+            }else{
+                MLOG(@"登陆失败 %@",error);
+            }
+        } onQueue:nil];
+    }
+}
+
+//注册友盟
 - (void)umengregister
 {
     NSDictionary *bundleDic = [[NSBundle mainBundle] infoDictionary];
@@ -60,9 +77,8 @@
     [MobClick startWithAppkey:kUMENG_APPKEY reportPolicy:SENDWIFIONLY channelId:nil];
     
     [UMSocialData setAppKey:kUMENG_APPKEY];
-    //[UMSocialWechatHandler setWXAppId:<#(NSString *)#> appSecret:<#(NSString *)#> url:<#(NSString *)#>]
-//    [UMFeedback setAppkey:kUMENG_APPKEY];
-//    [UMSocialWechatHandler setWXAppId:kShareWEIXINAPPID appSecret:kShareWEIXINAPPSECRET url:@"http://app.hu8h u.com/"];
+    [UMSocialWechatHandler setWXAppId:nil appSecret:nil url:nil];
+    
     [MobClick setAppVersion:appVersion];
     
 }

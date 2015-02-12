@@ -32,7 +32,7 @@
 #import "YHBCatSubcate.h"
 
 #define kBannerHeight (kMainScreenWidth * 397/1080.0f)
-#define kFuncCellHeight 85
+#define kFuncCellHeight (kMainScreenWidth *285/1080.0f)
 #define kFooterHeigt 14
 #define kFuncBlockCellHeight (439*kMainScreenWidth/2.0/540.0f)
 @interface FirstViewController ()<YHBBannerDelegate,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,YHBFunctionCellDelegate,YHBFuncBlockCellDelegate,YHBHotTagsDelegate,ShopMallCellDelegate>
