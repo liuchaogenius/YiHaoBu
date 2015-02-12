@@ -12,7 +12,11 @@
 #import "YHBUser.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import "NetManager.h"
- 
+#import "MobClick.h"
+#import "MobClickSocialAnalytics.h"
+#import "UMSocial.h"
+#import "UMSocialWechatHandler.h"
+
 @interface AppDelegate ()<UIAlertViewDelegate>
 
 @property (strong, nonatomic) NSString *updateUrl;
@@ -47,6 +51,20 @@
     [[EaseMob sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 
     return YES;
+}
+///注册友盟
+- (void)umengregister
+{
+    NSDictionary *bundleDic = [[NSBundle mainBundle] infoDictionary];
+    NSString *appVersion = [bundleDic objectForKey:@"CFBundleShortVersionString"];
+    [MobClick startWithAppkey:kUMENG_APPKEY reportPolicy:SENDWIFIONLY channelId:nil];
+    
+    [UMSocialData setAppKey:kUMENG_APPKEY];
+    //[UMSocialWechatHandler setWXAppId:<#(NSString *)#> appSecret:<#(NSString *)#> url:<#(NSString *)#>]
+//    [UMFeedback setAppkey:kUMENG_APPKEY];
+//    [UMSocialWechatHandler setWXAppId:kShareWEIXINAPPID appSecret:kShareWEIXINAPPSECRET url:@"http://app.hu8h u.com/"];
+    [MobClick setAppVersion:appVersion];
+    
 }
 
 - (void)registerRemoteNotification

@@ -23,4 +23,6 @@
 #define kPayFail @"payFail"
 #define kAlipayOrderResultMessage @"payorderResult"
 
+#define kUMENG_APPKEY  @"54d87c2efd98c567420003da"
+
 #endif
