@@ -136,6 +136,7 @@
         [manage jubaoModuleid:moduleid itemid:itemid typeid:selectIndex-100+1 andintroduce:_textView.text succBlock:^{
             [SVProgressHUD dismiss];
             [SVProgressHUD showSuccessWithStatus:@"举报成功" cover:YES offsetY:kMainScreenHeight/2.0];
+            [self.navigationController popViewControllerAnimated:YES];
         } failBlock:^(NSString *aStr) {
             [SVProgressHUD dismiss];
             [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
