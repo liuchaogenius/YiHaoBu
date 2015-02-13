@@ -26,8 +26,8 @@
 
 #define kSgmBtnHeight 50
 #define kSelectTagBase 100
-#define kNumberFont 14
-#define kButtonFont 15
+#define kNumberFont 17
+#define kButtonFont 14
 #define kPageSize 21 //分页-每页的数量
 
 enum SgmLabel_tag
@@ -38,9 +38,10 @@ enum SgmLabel_tag
 
 enum SgmBtn_tag
 {
-    SgmBtn_productInfo = kSelectTagBase, //产品信息
-    SgmBtn_sellInfo,//供应信息
-    SgmBtn_templetInfo//样板信息
+    SgmBtn_sellInfo = kSelectTagBase,//供应信息
+    SgmBtn_productInfo, //产品信息
+    SgmBtn_templetInfo,//样板信息
+    SgmBtn_private//收藏
 };
 
 @interface YHBStoreViewController ()<UserHeadDelegate,UITableViewDataSource,UITableViewDelegate,ShopMallCellDelegate,UIScrollViewDelegate>
@@ -223,7 +224,7 @@ enum SgmBtn_tag
         //MLOG(@"%@",weakself.shopInfo);
         if ((int)weakself.shopInfo.groupid > 5) {
             //刷新页面
-            weakself.titleArray =( (int)weakself.shopInfo.groupid == 7 ? @[@"产品信息",@"供应信息",@"样板信息"] : @[@"供应信息"]);
+            weakself.titleArray =@[@"供应信息",@"产品信息",@"样板信息",@"加商友"];
             [weakself refreshUI];
             if ((int)weakself.shopInfo.groupid == 6) {
                 weakself.sellTableView.left = 0;
@@ -231,23 +232,27 @@ enum SgmBtn_tag
                 [weakself.backScrollView setContentSize:CGSizeMake(kMainScreenWidth, _backScrollView.height)];
                 [weakself getDataWithPageID:1 andInfoListTypr:SgmBtn_sellInfo];
                 [weakself addTableViewTragWithTableView:weakself.sellTableView];
+                [weakself touchSgmButton:(UIButton *)[self.sgmBtmScrollView viewWithTag:SgmBtn_sellInfo]];
             }else if ((int)weakself.shopInfo.groupid == 7){
                 [weakself.backScrollView setContentSize:CGSizeMake(kMainScreenWidth*3, _backScrollView.height)];
-                weakself.productTableView.left = 0;
-                [weakself.backScrollView addSubview:weakself.productTableView];
-                [weakself getDataWithPageID:1 andInfoListTypr:SgmBtn_productInfo];
-                
-                weakself.sellTableView.left = kMainScreenWidth;
+               // weakself.backScrollView.contentSize = CGSizeMake(kMainScreenWidth, 0);
+                weakself.sellTableView.left = 0;
                 [weakself.backScrollView addSubview:weakself.sellTableView];
-                [weakself getDataWithPageID:1 andInfoListTypr:SgmBtn_sellInfo];
+                //[weakself getDataWithPageID:1 andInfoListTypr:SgmBtn_sellInfo];
+                
+                weakself.productTableView.left = kMainScreenWidth;
+                [weakself.backScrollView addSubview:weakself.productTableView];
+                //[weakself getDataWithPageID:1 andInfoListTypr:SgmBtn_productInfo];
                 
                 weakself.templetTableView.left = 2*kMainScreenWidth;
                 [weakself.backScrollView addSubview:weakself.templetTableView];
-                [weakself getDataWithPageID:1 andInfoListTypr:SgmBtn_templetInfo];
+                //[weakself getDataWithPageID:1 andInfoListTypr:SgmBtn_templetInfo];
 
                 [weakself addTableViewTragWithTableView:weakself.productTableView];
                 [weakself addTableViewTragWithTableView:weakself.sellTableView];
                 [weakself addTableViewTragWithTableView:weakself.templetTableView];
+                [weakself.backScrollView setContentOffset:CGPointMake(kMainScreenWidth, 0) animated:NO];
+                [weakself touchSgmButton:(UIButton *)[self.sgmBtmScrollView viewWithTag:SgmBtn_productInfo]];
             }
         }
     } failure:^{
@@ -284,10 +289,8 @@ enum SgmBtn_tag
         CGFloat buttonWidth = (self.sgmCount>=5 ? kMainScreenWidth/5.0f : kMainScreenWidth/(float)self.sgmCount);
         for (int i = 0; i < self.sgmCount; i++) {
             UIButton *sgmButton = [self customButtonWithFrame:CGRectMake(i*buttonWidth, 0, buttonWidth, kSgmBtnHeight) andTitle:self.titleArray[i] andNumber:@""];
-            sgmButton.tag = i + kSelectTagBase;//用tag%kSelectTagBase 来记录选中的分类
-            if (6 == (int)self.shopInfo.groupid) {
-                sgmButton.tag = SgmBtn_sellInfo;
-            }
+            sgmButton.tag = i + kSelectTagBase;//
+          
             UILabel *numLabel = (UILabel *)[sgmButton viewWithTag:SgmLabel_number];
 
             if (sgmButton.tag == SgmBtn_productInfo) {
@@ -296,14 +299,22 @@ enum SgmBtn_tag
                 numLabel.text = [NSString stringWithFormat:@"%d",(int)self.shopInfo.selltotal];
             }else if(sgmButton.tag == SgmBtn_templetInfo){
                 numLabel.text = [NSString stringWithFormat:@"%d",(int)self.shopInfo.mall1total];
+            }else{
+                numLabel.text = [NSString stringWithFormat:@"%d",(int)self.shopInfo.friendtotal];
+                UILabel *title = (UILabel *)[sgmButton viewWithTag:SgmLabel_title];
+                title.text = (int)self.shopInfo.friend ? @"已关注" : @"加商友";
             }
 
             
-            if (i == 0) {
-                sgmButton.selected = YES; //默认选择第一个
-                [self setSelectOfButton:sgmButton andisSelect:YES];
-                _selectSgmButton = sgmButton;
-            }
+//            if ((int)self.shopInfo.groupid == 6 && i == 0) {
+//                sgmButton.selected = YES; //默认选择第一个
+//                [self setSelectOfButton:sgmButton andisSelect:YES];
+//                _selectSgmButton = sgmButton;
+//            }else if((int)self.shopInfo.groupid == 7 && i == 1){
+//                sgmButton.selected = YES; //
+//                [self setSelectOfButton:sgmButton andisSelect:YES];
+//                _selectSgmButton = sgmButton;
+//            }
             [_sgmBtmScrollView addSubview:sgmButton];
         }
     }
@@ -317,14 +328,14 @@ enum SgmBtn_tag
         {
             [self.listManger getProductListWithUserID:self.shopID typeID:(type==SgmBtn_productInfo?0:1) pageID:pageID pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
                 if (pageID == 1) {
-                    [self.rslistDic setObject:modelArray forKey:[NSString stringWithFormat:@"%d",type-kSelectTagBase]];
+                    [self.rslistDic setObject:modelArray forKey:[NSString stringWithFormat:@"%d",type]];
                 }else{
-                    NSMutableArray *array = self.rslistDic[[NSString stringWithFormat:@"%d",type-kSelectTagBase]];
+                    NSMutableArray *array = self.rslistDic[[NSString stringWithFormat:@"%d",type]];
                     if (array) {
                         [array addObjectsFromArray:modelArray];
                     }
                 }
-                [self.pageDic setObject:page forKey:[NSString stringWithFormat:@"%d",type-kSelectTagBase]];
+                [self.pageDic setObject:page forKey:[NSString stringWithFormat:@"%d",type]];
                 type == SgmBtn_productInfo ? [self.productTableView reloadData] : [self.templetTableView reloadData];
             } failure:^(NSString *error) {
                 [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
@@ -335,14 +346,14 @@ enum SgmBtn_tag
         {
             [self.listManger getSellListWithUserID:self.shopID pageID:pageID pageSize:kPageSize Success:^(NSMutableArray *modelArray, YHBPage *page) {
                 if (pageID == 1) {
-                    [self.rslistDic setObject:modelArray forKey:[NSString stringWithFormat:@"%d",type-kSelectTagBase]];
+                    [self.rslistDic setObject:modelArray forKey:[NSString stringWithFormat:@"%d",type]];
                 }else{
-                    NSMutableArray *array = self.rslistDic[[NSString stringWithFormat:@"%d",type-kSelectTagBase]];
+                    NSMutableArray *array = self.rslistDic[[NSString stringWithFormat:@"%d",type]];
                     if (array) {
                         [array addObjectsFromArray:modelArray];
                     }
                 }
-                [self.pageDic setObject:page forKey:[NSString stringWithFormat:@"%d",type-kSelectTagBase]];
+                [self.pageDic setObject:page forKey:[NSString stringWithFormat:@"%d",type]];
                 [self.sellTableView reloadData];
             } failure:^(NSString *error) {
                 [SVProgressHUD showErrorWithStatus:error cover:YES offsetY:0];
@@ -371,8 +382,8 @@ enum SgmBtn_tag
     }];
     
     [tableView addInfiniteScrollingWithActionHandler:^{
-        YHBPage *page = weakself.pageDic[[NSString stringWithFormat:@"%d",type-kSelectTagBase]];
-        NSMutableArray *array = weakself.rslistDic[[NSString stringWithFormat:@"%d",type-kSelectTagBase]];
+        YHBPage *page = weakself.pageDic[[NSString stringWithFormat:@"%d",type]];
+        NSMutableArray *array = weakself.rslistDic[[NSString stringWithFormat:@"%d",type]];
         if (page && (int)page.pageid * kPageSize <= (int)page.pagetotal && array.count >= kPageSize) {
             int16_t delayInSeconds = 2.0;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
@@ -389,7 +400,7 @@ enum SgmBtn_tag
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     int type = (int)tableView.tag;
-    NSMutableArray *array = self.rslistDic[[NSString stringWithFormat:@"%d",type-kSelectTagBase]];
+    NSMutableArray *array = self.rslistDic[[NSString stringWithFormat:@"%d",type]];
     MLOG(@"%@",array);
     return array ? (array.count/3 + (array.count%3 ?1 : 0)) : 0;
 }
@@ -397,7 +408,7 @@ enum SgmBtn_tag
 #pragma mark 每行显示内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSMutableArray *array = self.rslistDic[[NSString stringWithFormat:@"%d",(int)tableView.tag-kSelectTagBase]];
+    NSMutableArray *array = self.rslistDic[[NSString stringWithFormat:@"%d",(int)tableView.tag]];
     NSInteger count = array.count;
     switch (tableView.tag) {
         case SgmBtn_productInfo:
@@ -449,40 +460,52 @@ enum SgmBtn_tag
 #pragma mark - action
 - (void)touchSgmButton:(UIButton *)sender
 {
-    if(_selectSgmButton.tag != sender.tag){
-        _selectSgmButton.selected = NO;
-        [self setSelectOfButton:_selectSgmButton andisSelect:NO];
+    if (sender.tag == SgmBtn_private) {
+        [self touchPrivateBtn:sender];
+    } else if(_selectSgmButton.tag != sender.tag){
         
-        _selectSgmButton = sender;
-        [self setSelectOfButton:sender andisSelect:YES];
-        sender.selected = YES;
+        if ((int)self.shopInfo.groupid < 7 && sender.tag > SgmBtn_sellInfo) {
+            [SVProgressHUD showErrorWithStatus:@"暂未开通" cover:YES offsetY:0];
+        }else {
+            _selectSgmButton.selected = NO;
+            [self setSelectOfButton:_selectSgmButton andisSelect:NO];
+            
+            _selectSgmButton = sender;
+            [self setSelectOfButton:sender andisSelect:YES];
+            sender.selected = YES;
+            
+            if (!self.pageDic[[NSString stringWithFormat:@"%d",(int)sender.tag]]) {
+                [self getDataWithPageID:1 andInfoListTypr:(int)sender.tag];
+            }
+            switch (sender.tag) {
+                case SgmBtn_productInfo:
+                {
+                    //产品信息
+                    [self.backScrollView setContentOffset:CGPointMake(kMainScreenWidth, 0) animated:YES];
+                }
+                    break;
+                case SgmBtn_sellInfo:
+                {
+                    //供应信息
+                    [self.backScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+                }
+                    break;
+                case SgmBtn_templetInfo:
+                {
+                    //样板信息
+                    /*
+                     YHBShopInfoViewController *infoVC = [[YHBShopInfoViewController alloc] init];
+                     infoVC.hidesBottomBarWhenPushed = YES;
+                     [self.navigationController pushViewController:infoVC animated:YES];*/
+                    [self.backScrollView setContentOffset:CGPointMake(kMainScreenWidth*2, 0) animated:YES];
+                }
+                    break;
+                default:
+                    break;
+            }
 
-        switch (sender.tag) {
-            case SgmBtn_productInfo:
-            {
-                //产品信息
-                [self.backScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-            }
-                break;
-            case SgmBtn_sellInfo:
-            {
-                //供应信息
-                [self.backScrollView setContentOffset:CGPointMake(kMainScreenWidth, 0) animated:YES];
-            }
-                break;
-            case SgmBtn_templetInfo:
-            {
-                //样板信息
-                /*
-                YHBShopInfoViewController *infoVC = [[YHBShopInfoViewController alloc] init];
-                infoVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:infoVC animated:YES];*/
-                [self.backScrollView setContentOffset:CGPointMake(kMainScreenWidth*2, 0) animated:YES];
-            }
-                break;
-            default:
-                break;
         }
+        
     }
 }
 
@@ -492,7 +515,7 @@ enum SgmBtn_tag
 #pragma mark - 点击进入产品、供应详情
 - (void)selectCellPartWithIndexPath : (NSIndexPath*)indexPath part:(NSInteger)part
 {
-    NSMutableArray *array = self.rslistDic[[NSString stringWithFormat:@"%d",(int)_selectSgmButton.tag-kSelectTagBase]];
+    NSMutableArray *array = self.rslistDic[[NSString stringWithFormat:@"%d",(int)_selectSgmButton.tag]];
     
     YHBRslist *model = array[indexPath.row * 3 + part];
     
@@ -535,7 +558,9 @@ enum SgmBtn_tag
     if ([YHBUser sharedYHBUser].isLogin) {
         [self.privateManager privateOrDisPrivateWithItemID:[NSString stringWithFormat:@"%d",self.shopID] privateType:private_company token:[YHBUser sharedYHBUser].token Success:^{
             sender.selected = !sender.selected;
-            [SVProgressHUD dismissWithSuccess:@"关注成功"];
+            UILabel *title = (UILabel *)[sender viewWithTag:SgmLabel_title];
+            title.text = sender.selected ? @"已关注" : @"加商友";
+            [SVProgressHUD dismissWithSuccess:sender.selected ? @"关注成功" : @"取消关注成功"];
         } failure:^(NSString *error) {
             [SVProgressHUD dismissWithError:error];
         }];
@@ -584,7 +609,7 @@ enum SgmBtn_tag
     UILabel *titleLabel =[[UILabel alloc] initWithFrame:CGRectMake(0, button.height/2.0+5, button.width, kButtonFont)];
     titleLabel.backgroundColor  = [UIColor clearColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.textColor = [UIColor lightGrayColor];
     titleLabel.tag = SgmLabel_title;
     [titleLabel setFont:[UIFont systemFontOfSize:kButtonFont]];
     titleLabel.text = title;
@@ -610,7 +635,7 @@ enum SgmBtn_tag
     UILabel *numLabel = (UILabel *)[button viewWithTag:SgmLabel_number];
     UILabel *titleLabel = (UILabel *)[button viewWithTag:SgmLabel_title];
     numLabel.textColor = isSelect ? KColor : [UIColor blackColor];
-    titleLabel.textColor = isSelect ? KColor : [UIColor blackColor];
+    titleLabel.textColor = isSelect ? KColor : [UIColor lightGrayColor];
 }
 
 - (void)didReceiveMemoryWarning {

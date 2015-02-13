@@ -24,6 +24,7 @@
 #import "YHBStoreViewController.h"
 #import "UMSocial.h"
 #import "IntroduceViewController.h"
+#import "UMSocialWechatHandler.h"
 
 #define kBtnsViewHeight 65
 #define kBtnImageWidth 25
@@ -293,7 +294,10 @@ enum Button_Type
             break;
         case Cell_share:
         {
-            [UMSocialSnsService presentSnsIconSheetView:self appKey:kUMENG_APPKEY shareText:@"#【快布】#  全球首款专业移动装饰面料交易APP上线啦！一键发布找布信息，躺着也能把生意做了！猛戳了解：http://www.51kuaibu.com/app" shareImage:nil shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatTimeline,UMShareToQQ,UMShareToTencent,UMShareToRenren,nil] delegate:nil];
+            
+            [UMSocialWechatHandler setWXAppId:kShareWEIXINAPPID appSecret:kShareWEIXINAPPSECRET url:nil];
+            
+            [UMSocialSnsService presentSnsIconSheetView:self appKey:kUMENG_APPKEY shareText:@"#【快布】#  全球首款专业移动装饰面料交易APP上线啦！一键发布找布信息，躺着也能把生意做了！猛戳了解：http://www.51kuaibu.com/app" shareImage:nil shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToWechatFavorite,UMShareToQQ,UMShareToTencent,UMShareToRenren,nil] delegate:nil];
         }
             break;
         case Cell_Myprice:

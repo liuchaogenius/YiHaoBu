@@ -22,6 +22,7 @@
 #import "YHBMySupplyViewController.h"
 #import "JubaoViewController.h"
 #import "UMSocial.h"
+#import "UMSocialWechatHandler.h"
 
 #define kContactViewHeight 60
 @interface YHBBuyDetailViewController ()
@@ -282,6 +283,7 @@
 - (void)share
 {
     MLOG(@"分享");
+     [UMSocialWechatHandler setWXAppId:kShareWEIXINAPPID appSecret:kShareWEIXINAPPSECRET url:nil];
     [UMSocialSnsService presentSnsIconSheetView:self appKey:kUMENG_APPKEY shareText:@"#【快布】#  全球首款专业移动装饰面料交易APP上线啦！一键发布找布信息，躺着也能把生意做了！猛戳了解：http://www.51kuaibu.com/app" shareImage:nil shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToTencent,UMShareToRenren,nil] delegate:nil];
 }
 

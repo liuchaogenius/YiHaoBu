@@ -25,4 +25,7 @@
 
 #define kUMENG_APPKEY  @"54d87c2efd98c567420003da"
 
+#define kShareWEIXINAPPID @"wxdf71533663734340"
+#define kShareWEIXINAPPSECRET  @"dec9729d50175d100d09b177586b0243"
+
 #endif

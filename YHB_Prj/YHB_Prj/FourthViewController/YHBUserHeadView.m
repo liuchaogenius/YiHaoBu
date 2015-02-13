@@ -8,8 +8,8 @@
 #define isTest 0
 #import "YHBUserHeadView.h"
 #import "UIImageView+WebCache.h"
-#define kImageWith 50
-#define kTitleFont 14
+#define kImageWith 55
+#define kTitleFont 15
 #define kSmallFont 11
 @interface YHBUserHeadView()
 
@@ -24,7 +24,8 @@
 @property (strong, nonatomic) UIImageView *selTag;
 @property (strong, nonatomic) UIImageView *buyTag;
 
-@property (strong, nonatomic) UIButton *privateButton; //关注按钮
+@property (strong, nonatomic) UIImageView *vipImageView;
+//@property (strong, nonatomic) UIButton *privateButton; //关注按钮
 
 //@property (strong, nonatomic) UILabel *creditLabel;
 @property (strong, nonatomic) UILabel *priceLabel;
@@ -33,7 +34,15 @@
 
 @implementation YHBUserHeadView
 #pragma mark - getter and setter
-
+- (UIImageView *)vipImageView
+{
+    if (!_vipImageView) {
+        _vipImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kMainScreenWidth-36-15, 20, 35, 26)];
+        _vipImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _vipImageView.image = [UIImage imageNamed:@"VipCrow"];
+    }
+    return _vipImageView;
+}
 //- (UILabel *)creditLabel
 //{
 //    if (!_creditLabel) {
@@ -56,17 +65,17 @@
     return _priceLabel;
 }
 
-- (UIButton *)privateButton
-{
-    if (!_privateButton) {
-        _privateButton = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth-65, 50, 55, 20)];
-        [_privateButton setBackgroundImage:[UIImage imageNamed:@"privateBtn"] forState:UIControlStateNormal];
-        [_privateButton setBackgroundImage:[UIImage imageNamed:@"privateHighBtn"] forState:UIControlStateSelected];
-        [_privateButton addTarget:self action:@selector(touchPrivateButton:) forControlEvents:UIControlEventTouchUpInside];
-        _privateButton.selected = NO;
-    }
-    return _privateButton;
-}
+//- (UIButton *)privateButton
+//{
+//    if (!_privateButton) {
+//        _privateButton = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth-65, 50, 55, 20)];
+//        [_privateButton setBackgroundImage:[UIImage imageNamed:@"privateBtn"] forState:UIControlStateNormal];
+//        [_privateButton setBackgroundImage:[UIImage imageNamed:@"privateHighBtn"] forState:UIControlStateSelected];
+//        [_privateButton addTarget:self action:@selector(touchPrivateButton:) forControlEvents:UIControlEventTouchUpInside];
+//        _privateButton.selected = NO;
+//    }
+//    return _privateButton;
+//}
 
 - (UIView *)loginedView
 {
@@ -96,7 +105,7 @@
         _companylabel.font = [UIFont systemFontOfSize:kTitleFont];
         [_loginedView addSubview:_companylabel];
         
-        _userName = [[UILabel alloc] initWithFrame:CGRectMake(self.companylabel.left, self.companylabel.bottom+20, 30, kTitleFont-4)];
+        _userName = [[UILabel alloc] initWithFrame:CGRectMake(self.companylabel.left, self.companylabel.bottom+15, 30, kTitleFont-4)];
         _userName.textColor = [UIColor whiteColor];
         _userName.backgroundColor = [UIColor clearColor];
         _userName.font = [UIFont systemFontOfSize:kTitleFont];
@@ -106,7 +115,7 @@
         UIImageView *comTag = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"comTag"]];
         UIImageView *selTag = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selTag"]];
         UIImageView *buyTag = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buyTag"]];
-        buyTag.frame = CGRectMake(_userName.right+5, self.userName.top, 40/2.5, 45/2.5);
+        buyTag.frame = CGRectMake(_userName.right+10, self.userName.top, 40/2.5, 45/2.5);
         selTag.frame = CGRectMake(buyTag.right+5, self.userName.top, 40/2.5, 45/2.5);
         comTag.frame = CGRectMake(selTag.right+5, self.userName.top, 40/2.5, 45/2.5);
         
@@ -168,16 +177,19 @@
     MLOG(@"%@",avator);
     if (isLogin) {
         [self addSubview:self.loginedView];
-        if([self.privateButton superview]) [self.privateButton removeFromSuperview];
+        //if([self.privateButton superview]) [self.privateButton removeFromSuperview];
         [self.notLoginedView removeFromSuperview];
         self.companylabel.text = company;
         
         CGSize size = CGSizeMake(kMainScreenWidth-self.userName.left-10-70, self.userName.height);
         CGSize newSize = [name sizeWithFont:self.userName.font constrainedToSize:size];
         self.userName.frame = CGRectMake(self.userName.left, self.userName.top, newSize.width, newSize.height);
-        self.comTag.left = self.userName.right;
-        self.selTag.left = self.comTag.right + 5;
-        self.buyTag.left = self.selTag.right + 5;
+        _buyTag.frame = CGRectMake(_userName.right+10, self.userName.top, 40/2.5, 45/2.5);
+        _selTag.frame = CGRectMake(_buyTag.right+5, self.userName.top, 40/2.5, 45/2.5);
+        _comTag.frame = CGRectMake(_selTag.right+5, self.userName.top, 40/2.5, 45/2.5);
+//        self.comTag.left = self.userName.right;
+//        self.selTag.left = self.comTag.right + 5;
+//        self.buyTag.left = self.selTag.right + 5;
         
         self.userName.text = name;
         self.comTag.hidden = group >= 7 ? NO : YES;
@@ -199,7 +211,12 @@
             [self.loginedView addSubview:self.priceLabel];
         }
         self.priceLabel.text = [NSString stringWithFormat:@"资金:%@元[%@元]  积分:%@分",money,lock,credit];
-
+        
+        if (group == 7) {
+            [self.loginedView addSubview:self.vipImageView];
+        }else {
+            [_vipImageView removeFromSuperview];
+        }
     }else{
         [self addSubview:self.notLoginedView];
         self.bannerImageView.image = [UIImage imageNamed:@"userBannerDefault"];
@@ -216,10 +233,10 @@
 - (void)refreshViewWithIslogin:(BOOL)isLogin group:(NSInteger)group name:(NSString *)name avator:(NSString *)avator thumb:(NSString *)thumb company:(NSString *)company friend:(NSInteger)firend
 {
     [self refreshSelfHeadWithIsLogin:YES name:name avator:avator thumb:thumb group:group company:company  money:nil lock:nil credit:nil];
-    if (![self.privateButton superview]) {
-        [self addSubview:self.privateButton];
-        self.privateButton.selected = firend ? YES : NO;
-    }
+//    if (![self.privateButton superview]) {
+//        [self addSubview:self.privateButton];
+//        self.privateButton.selected = firend ? YES : NO;
+//    }
 }
 
 
@@ -232,12 +249,12 @@
 }
 
 #pragma mark touch private 收藏
-- (void)touchPrivateButton : (UIButton *)sender
-{
-    if ([self.delegate respondsToSelector:@selector(touchPrivateBtn:)]) {
-        [self.delegate touchPrivateBtn:sender];
-    }
-}
+//- (void)touchPrivateButton : (UIButton *)sender
+//{
+//    if ([self.delegate respondsToSelector:@selector(touchPrivateBtn:)]) {
+//        [self.delegate touchPrivateBtn:sender];
+//    }
+//}
 
 #pragma mark touch 头像
 - (void)touchHeadImageView
