@@ -137,7 +137,7 @@
     [editSupplyView addSubview:titleLabel];
     
     titlePlaceHolder = [[UILabel alloc] initWithFrame:titleLabel.frame];
-    titlePlaceHolder.text = @"请选择或输入品名关键词";
+    titlePlaceHolder.text = @"请选择品名+输入货号";
     titlePlaceHolder.font = kFont15;
     titlePlaceHolder.textColor = [UIColor lightGrayColor];
     [editSupplyView addSubview:titlePlaceHolder];
