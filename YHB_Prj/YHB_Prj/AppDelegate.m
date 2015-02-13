@@ -131,7 +131,7 @@
                 self.updateUrl = dataDict[@"url"];
                 [alertView show];
                 
-            }else if (force == 2){
+            }else if (force == 0){
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:content delegate:self cancelButtonTitle:@"更新" otherButtonTitles:@"取消", nil];
                 self.updateUrl = dataDict[@"url"];
                 [alertView show];
