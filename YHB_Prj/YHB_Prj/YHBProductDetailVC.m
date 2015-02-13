@@ -364,7 +364,7 @@
             return YES;
         }else{
             if (_selView.superview) {
-                [SVProgressHUD showErrorWithStatus:@"你还没有选择色块/型号哦" cover:YES offsetY:0];
+                [SVProgressHUD showErrorWithStatus:@"你还没有选择颜色/型号哦" cover:YES offsetY:0];
             }else{
                 [self touchSelectColorCell];
             }

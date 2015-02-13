@@ -194,7 +194,7 @@
     self.tipLabel.font = [UIFont systemFontOfSize:kTitleFont];
     self.tipLabel.backgroundColor = [UIColor clearColor];
     self.tipLabel.textColor = [UIColor lightGrayColor];
-    self.tipLabel.text = @"请选择色块、数量";
+    self.tipLabel.text = @"请选择颜色、数量";
     [self.infoView addSubview:self.tipLabel];
     
     UIButton *quitButton = [UIButton buttonWithType:UIButtonTypeCustom];

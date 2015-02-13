@@ -340,8 +340,8 @@ typedef enum : NSUInteger{
 //上传
     NSString *uploadUrl = nil;
     kYHBRequestUrl(@"upload.php", uploadUrl);
-    NSString *itemID = (_pickTag == Pick_Cert ? @"0": @"1");
-    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",@"validate",@"action",itemID,@"itemid", nil];
+    NSString *order = (_pickTag == Pick_Cert ? @"0": @"1");
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",@"validate",@"action",order,@"order", nil];
     
     
     

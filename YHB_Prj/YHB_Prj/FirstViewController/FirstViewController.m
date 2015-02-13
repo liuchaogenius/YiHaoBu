@@ -55,10 +55,10 @@
         _headersArray = [NSMutableArray arrayWithCapacity:3];
         NSArray *titleArray = @[@"热门标签",@"产品推荐",@"采购推荐"];
         for (int i=0; i < 3; i++) {
-            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 25)];
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 30)];
             view.backgroundColor = [UIColor whiteColor];
-            UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 100, 20)];
-            title.font = [UIFont systemFontOfSize:14];
+            UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 30)];
+            title.font = [UIFont systemFontOfSize:15];
             title.text = titleArray[i];
             [view addSubview:title];
             _headersArray[i] = view;
@@ -159,7 +159,7 @@
 {
     if (section == 2) {
         //热门标签
-        return self.pageIndexMdoel.taglist.count/6 + self.pageIndexMdoel.taglist.count%6 ? 1 : 0;
+        return self.pageIndexMdoel.taglist.count/kTagRowNum + self.pageIndexMdoel.taglist.count%kTagRowNum ? 1 : 0;
     }else if (section == 3){
         //产品推荐
         return self.pageIndexMdoel.malllist.count/3 + self.pageIndexMdoel.malllist.count%3 ? 1 : 0;

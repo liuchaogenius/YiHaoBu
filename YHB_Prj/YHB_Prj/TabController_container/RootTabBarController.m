@@ -21,6 +21,7 @@
 #import "YHBDataService.h"
 #import "YHBGetPushBuylist.h"
 #import "SVProgressHUD.h"
+#import <CoreLocation/CoreLocation.h>
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -625,7 +626,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         [alertView show];
     } onQueue:nil];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

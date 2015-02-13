@@ -10,9 +10,9 @@
 #import "UIImageView+WebCache.h"
 #define isTest 1
 
-#define kSpaceWidth 5
-#define kCViewWidth kMainScreenWidth/3.0
-#define kImageWidth (kCViewWidth-2*kSpaceWidth)
+#define kSpaceWidth 10
+#define kCViewWidth (kMainScreenWidth- 4*kSpaceWidth)/3.0
+#define kImageWidth (kMainScreenWidth- 4*kSpaceWidth)/3.0
 #define kImageHeight (kImageWidth*292/340.0f)
 
 #define kTitlefont 11
@@ -88,7 +88,7 @@
 - (UIView *)midBlankView
 {
     if (!_midBlankView) {
-        _midBlankView = [[UIView alloc] initWithFrame:CGRectMake(1*kCViewWidth, 0, kCViewWidth, kcellHeight)];
+        _midBlankView = [[UIView alloc] initWithFrame:CGRectMake(10+(kCViewWidth+10), 0, kCViewWidth+10, kcellHeight)];
         _midBlankView.backgroundColor = [UIColor whiteColor];
     }
     return _midBlankView;
@@ -97,7 +97,7 @@
 - (UIView *)rightBlankView
 {
     if (!_rightBlankView) {
-        _rightBlankView = [[UIView alloc] initWithFrame:CGRectMake(2*kCViewWidth, 0, kCViewWidth, kcellHeight)];
+        _rightBlankView = [[UIView alloc] initWithFrame:CGRectMake(10+2*(kCViewWidth+10), 0, kCViewWidth+10, kcellHeight)];
         _rightBlankView.backgroundColor = [UIColor whiteColor];
     }
     return _rightBlankView;
@@ -184,8 +184,8 @@
 
 - (UIView *)customViewWithNum:(int)num andType:(NSInteger)type
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(num*kCViewWidth, 0, kCViewWidth, kcellHeight)];
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(kSpaceWidth, 10, kImageWidth, kImageHeight)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10+num*(kCViewWidth+10), 0, kCViewWidth, kcellHeight)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, kImageWidth, kImageHeight)];
     imageView.image = [UIImage imageNamed:@"DefaultProduct"];
     self.imageViewArray[num] = imageView;
     [view addSubview:imageView];

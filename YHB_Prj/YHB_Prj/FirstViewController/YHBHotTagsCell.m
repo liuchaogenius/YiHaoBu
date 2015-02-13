@@ -8,9 +8,9 @@
 
 #import "YHBHotTagsCell.h"
 #define kHotTagBase 60
-#define kTitleFont 12
-#define kBlankWidth 8
-#define kTagBtnHeight 20
+#define kTitleFont 14
+#define kBlankWidth 10
+#define kTagBtnHeight 26
 
 @implementation YHBHotTagsCell
 
@@ -19,9 +19,9 @@
     if (!_tagsArray) {
         _tagsArray = [NSMutableArray arrayWithCapacity:10];
         
-        CGFloat btnWidth = (kMainScreenWidth-kBlankWidth*6)/5.0f;
+        CGFloat btnWidth = (kMainScreenWidth-kBlankWidth*kTagRowNum)/4.0f;
         for (int i = 0; i < 10; i++) {
-            UIButton *btn = [self customTagButtonWithFrame:CGRectMake(kBlankWidth + (i%5)*(kBlankWidth+btnWidth), 5+(i/5)*(10+kTagBtnHeight), btnWidth, kTagBtnHeight) andTag:i+kHotTagBase];
+            UIButton *btn = [self customTagButtonWithFrame:CGRectMake(kBlankWidth + (i%kTagRowNum)*(kBlankWidth+btnWidth), 5+(i/kTagRowNum)*(10+kTagBtnHeight), btnWidth, kTagBtnHeight) andTag:i+kHotTagBase];
 
             _tagsArray[i] = btn;
             btn.hidden = NO;
@@ -61,7 +61,7 @@
     button.layer.borderColor = [kLineColor CGColor];
     button.layer.borderWidth = 0.7;
     button.layer.cornerRadius = 2.0f;
-    [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [button setTitleColor:RGBCOLOR(153, 153, 153) forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:kTitleFont];
     [button addTarget:self action:@selector(touchTagButton:) forControlEvents:UIControlEventTouchUpInside];
     
