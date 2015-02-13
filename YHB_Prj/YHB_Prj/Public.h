@@ -11,8 +11,8 @@
 
 #define kMainScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kMainScreenWidth  [UIScreen mainScreen].bounds.size.width
-#define kYHBUrl @"http://yihaobu.hu8hu.com/"
-#define kYHBBaseUrl @"http://yihaobu.hu8hu.com/app/"
+#define kYHBUrl @"http://www.51kuaibu.com/"
+#define kYHBBaseUrl @"http://www.51kuaibu.com/app/"
 #define kYHBRequestUrl(path,outUrl) do{\
   outUrl = [NSString stringWithFormat:@"%@%@",kYHBBaseUrl,path];\
 }while(0)

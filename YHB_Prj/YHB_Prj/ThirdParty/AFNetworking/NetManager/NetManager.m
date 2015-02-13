@@ -162,15 +162,15 @@
     if ([net getLon]) {
         [aRequest setValue:[NSString stringWithFormat:@"%.3f",[net getLon]] forHTTPHeaderField:@"hbh-lon"];
     }
-#if DEBUG
-    [aRequest addValue:@"0" forHTTPHeaderField:@"mock"];
-#else
-    [aRequest addValue:@"0" forHTTPHeaderField:@"mock"];
-#endif
+//#if DEBUG
+//    [aRequest addValue:@"0" forHTTPHeaderField:@"mock"];
+//#else
+//    [aRequest addValue:@"0" forHTTPHeaderField:@"mock"];
+//#endif
     
-    NSDictionary *bundleDic = [[NSBundle mainBundle] infoDictionary];
-    NSString *appVersion = [bundleDic objectForKey:@"CFBundleShortVersionString"];
-    [aRequest addValue:appVersion forHTTPHeaderField:@"hbh-appver"];
+//    NSDictionary *bundleDic = [[NSBundle mainBundle] infoDictionary];
+//    NSString *appVersion = [bundleDic objectForKey:@"CFBundleShortVersionString"];
+//    [aRequest addValue:appVersion forHTTPHeaderField:@"hbh-appver"];
 }
 
 + (void)cancelOperation:(id)aKey

@@ -115,6 +115,7 @@ enum SgmBtn_tag
         _productTableView.dataSource = self;
         _productTableView.backgroundColor = kViewBackgroundColor;
         _productTableView.rowHeight = kcellHeight;
+        
     }
     return _productTableView;
 }
@@ -231,22 +232,22 @@ enum SgmBtn_tag
                 [weakself.backScrollView addSubview:weakself.sellTableView];
                 [weakself.backScrollView setContentSize:CGSizeMake(kMainScreenWidth, _backScrollView.height)];
                 [weakself getDataWithPageID:1 andInfoListTypr:SgmBtn_sellInfo];
+                [weakself setExtraCellLineHidden:weakself.sellTableView];
                 [weakself addTableViewTragWithTableView:weakself.sellTableView];
                 [weakself touchSgmButton:(UIButton *)[self.sgmBtmScrollView viewWithTag:SgmBtn_sellInfo]];
             }else if ((int)weakself.shopInfo.groupid == 7){
                 [weakself.backScrollView setContentSize:CGSizeMake(kMainScreenWidth*3, _backScrollView.height)];
-               // weakself.backScrollView.contentSize = CGSizeMake(kMainScreenWidth, 0);
                 weakself.sellTableView.left = 0;
                 [weakself.backScrollView addSubview:weakself.sellTableView];
-                //[weakself getDataWithPageID:1 andInfoListTypr:SgmBtn_sellInfo];
+                [weakself setExtraCellLineHidden:weakself.sellTableView];
                 
                 weakself.productTableView.left = kMainScreenWidth;
                 [weakself.backScrollView addSubview:weakself.productTableView];
-                //[weakself getDataWithPageID:1 andInfoListTypr:SgmBtn_productInfo];
+                [weakself setExtraCellLineHidden:weakself.productTableView];
                 
                 weakself.templetTableView.left = 2*kMainScreenWidth;
                 [weakself.backScrollView addSubview:weakself.templetTableView];
-                //[weakself getDataWithPageID:1 andInfoListTypr:SgmBtn_templetInfo];
+                [weakself setExtraCellLineHidden:weakself.templetTableView];
 
                 [weakself addTableViewTragWithTableView:weakself.productTableView];
                 [weakself addTableViewTragWithTableView:weakself.sellTableView];
@@ -637,6 +638,13 @@ enum SgmBtn_tag
     UILabel *titleLabel = (UILabel *)[button viewWithTag:SgmLabel_title];
     numLabel.textColor = isSelect ? KColor : [UIColor blackColor];
     titleLabel.textColor = isSelect ? KColor : [UIColor lightGrayColor];
+}
+
+- (void)setExtraCellLineHidden: (UITableView *)tableView
+{
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor clearColor];
+    [tableView setTableFooterView:view];
 }
 
 - (void)didReceiveMemoryWarning {
