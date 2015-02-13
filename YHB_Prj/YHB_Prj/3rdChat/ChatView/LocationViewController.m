@@ -18,7 +18,7 @@
 
 static LocationViewController *defaultLocation = nil;
 
-@interface LocationViewController () <MKMapViewDelegate>
+@interface LocationViewController () <MKMapViewDelegate,CLLocationManagerDelegate>
 {
     MKMapView *_mapView;
     MKPointAnnotation *_annotation;
@@ -28,6 +28,7 @@ static LocationViewController *defaultLocation = nil;
 }
 
 @property (strong, nonatomic) NSString *addressString;
+@property(nonatomic, strong) CLLocationManager *locationManager;
 
 @end
 
@@ -56,11 +57,33 @@ static LocationViewController *defaultLocation = nil;
     return self;
 }
 
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    switch (status) {
+        case kCLAuthorizationStatusNotDetermined:
+            if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+                [self.locationManager requestAlwaysAuthorization];
+            }
+            break;
+        default:
+            break;
+            
+            
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     self.title = @"位置信息";
+    
+    self.locationManager = [[CLLocationManager alloc]init];
+    self.locationManager.delegate = self;
+    [self.locationManager requestAlwaysAuthorization];
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
+    [self.locationManager startUpdatingLocation];
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 15, 25)];
     [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];

@@ -288,7 +288,18 @@
                 if ([obj isKindOfClass:[YHBSupplyDetailPic class]] || [obj isKindOfClass:[YHBBuyDetailAlbum class]])
                 {
                     YHBSupplyDetailPic *model = (YHBSupplyDetailPic *)[self.webPhotoArray objectAtIndex:i];
-                    photo = [MWPhoto photoWithURL:[NSURL URLWithString:model.middle]];
+                    if (model.large)
+                    {
+                        photo = [MWPhoto photoWithURL:[NSURL URLWithString:model.large]];
+                    }
+                    else if(model.middle)
+                    {
+                        photo = [MWPhoto photoWithURL:[NSURL URLWithString:model.middle]];
+                    }
+                    else
+                    {
+                        photo = [MWPhoto photoWithURL:[NSURL URLWithString:model.thumb]];
+                    }
                     self.showPhotoArray[i] = photo;
                 }
                 else
@@ -383,21 +394,21 @@
     return nil;
 }
 
-#warning 未测试照相增加图片
 #pragma mark - image picker delegte
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [picker dismissViewControllerAnimated:YES completion:^{}];
     
     UIImage *image = [info objectForKey:@"UIImagePickerControllerEditedImage"];
-    //self.photoImg = [info objectForKey:@"UIImagePickerControllerEditedImage"];
-//    CGRect rect = CGRectMake(0,0,100,100);
-//    UIGraphicsBeginImageContext( rect.size );
-//    [image drawInRect:rect];
-////    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
+    CGRect oldRect = [[info objectForKey:UIImagePickerControllerCropRect] CGRectValue];
+    CGRect rect =  CGRectMake(0, 0, 1080, oldRect.size.height * 1080.0f/ oldRect.size.width);
+    UIGraphicsBeginImageContext( rect.size );
+    [image drawInRect:rect];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
     NSMutableArray *array = [NSMutableArray new];
-    [array addObject:image];
+    [array addObject:newImage];
     [self addImageWithImageArray:array];
     
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {

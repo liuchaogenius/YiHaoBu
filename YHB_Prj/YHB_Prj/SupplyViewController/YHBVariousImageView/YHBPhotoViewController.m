@@ -151,46 +151,54 @@
             ALAsset *asset = [self.photoArray objectAtIndex:index];
             CGImageRef cgImage = [[asset defaultRepresentation] fullScreenImage];
             UIImage *image = [UIImage imageWithCGImage:cgImage];
-            CGFloat imageHeight = image.size.height;
-            CGFloat imageWidth = image.size.width;
-//            CGRect rect = CGRectMake((imageWidth-kMainScreenWidth)/2.0,(imageHeight-kMainScreenWidth*imageHeight/imageWidth)/2.0,kMainScreenWidth,kMainScreenWidth*imageHeight/imageWidth);
-//            CGImageRef imageRefRect = CGImageCreateWithImageInRect(cgImage, rect);
-//            UIImage *imageRect = [[UIImage alloc] initWithCGImage:imageRefRect];
-//            UIImageView *imgView = [[UIImageView alloc] initWithImage:imageRect];
             
-            UIImage *newimage = nil;
-            if (imageWidth>kMainScreenWidth)
-            {
-                CGSize asize = CGSizeMake(kMainScreenWidth,kMainScreenWidth*imageHeight/imageWidth);
-                CGRect rect;
-                CGSize oldsize = CGSizeMake(imageWidth, imageHeight);
-                if (asize.width/asize.height > oldsize.width/oldsize.height) {
-                    rect.size.width = asize.height*oldsize.width/oldsize.height;
-                    rect.size.height = asize.height;
-                    rect.origin.x = (asize.width - rect.size.width)/2;
-                    rect.origin.y = 0;
-                }
-                else{
-                    rect.size.width = asize.width;
-                    rect.size.height = asize.width*oldsize.height/oldsize.width;
-                    rect.origin.x = 0;
-                    rect.origin.y = (asize.height - rect.size.height)/2;
-                }
-                UIGraphicsBeginImageContext(asize);
-                CGContextRef context = UIGraphicsGetCurrentContext();
-                CGContextSetFillColorWithColor(context, [[UIColor clearColor] CGColor]);
-                UIRectFill(CGRectMake(0, 0, asize.width, asize.height));//clear background
-                [image drawInRect:rect];
-                newimage = UIGraphicsGetImageFromCurrentImageContext();
-                UIGraphicsEndImageContext();
-            }
-            else
-            {
-                newimage = image;
-            }
-            UIImageView *imgView = [[UIImageView alloc] initWithImage:newimage];
+            CGRect oldRect = CGRectMake(0, 0, image.size.width, image.size.height);
+            CGRect rect =  CGRectMake(0, 0, 1080, oldRect.size.height * 1080.0f/ oldRect.size.width);
+            UIGraphicsBeginImageContext( rect.size );
+            [image drawInRect:rect];
+            UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            
+//            CGFloat imageHeight = image.size.height;
+//            CGFloat imageWidth = image.size.width;
+////            CGRect rect = CGRectMake((imageWidth-kMainScreenWidth)/2.0,(imageHeight-kMainScreenWidth*imageHeight/imageWidth)/2.0,kMainScreenWidth,kMainScreenWidth*imageHeight/imageWidth);
+////            CGImageRef imageRefRect = CGImageCreateWithImageInRect(cgImage, rect);
+////            UIImage *imageRect = [[UIImage alloc] initWithCGImage:imageRefRect];
+////            UIImageView *imgView = [[UIImageView alloc] initWithImage:imageRect];
+//            
+//            UIImage *newimage = nil;
+//            if (imageWidth>kMainScreenWidth)
+//            {
+//                CGSize asize = CGSizeMake(kMainScreenWidth,kMainScreenWidth*imageHeight/imageWidth);
+//                CGRect rect;
+//                CGSize oldsize = CGSizeMake(imageWidth, imageHeight);
+//                if (asize.width/asize.height > oldsize.width/oldsize.height) {
+//                    rect.size.width = asize.height*oldsize.width/oldsize.height;
+//                    rect.size.height = asize.height;
+//                    rect.origin.x = (asize.width - rect.size.width)/2;
+//                    rect.origin.y = 0;
+//                }
+//                else{
+//                    rect.size.width = asize.width;
+//                    rect.size.height = asize.width*oldsize.height/oldsize.width;
+//                    rect.origin.x = 0;
+//                    rect.origin.y = (asize.height - rect.size.height)/2;
+//                }
+//                UIGraphicsBeginImageContext(asize);
+//                CGContextRef context = UIGraphicsGetCurrentContext();
+//                CGContextSetFillColorWithColor(context, [[UIColor clearColor] CGColor]);
+//                UIRectFill(CGRectMake(0, 0, asize.width, asize.height));//clear background
+//                [image drawInRect:rect];
+//                newimage = UIGraphicsGetImageFromCurrentImageContext();
+//                UIGraphicsEndImageContext();
+//            }
+//            else
+//            {
+//                newimage = image;
+//            }
+//            UIImageView *imgView = [[UIImageView alloc] initWithImage:newimage];
 //            MLOG(@"%@", imgView);
-            [_photoDictionary setObject:newimage forKey:[NSString stringWithFormat:@"%d", index]];
+            [_photoDictionary setObject:newImage forKey:[NSString stringWithFormat:@"%d", index]];
         }
         else if(temImgView.isSelected==YES)
         {

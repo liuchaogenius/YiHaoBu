@@ -200,13 +200,13 @@
     if (isMe)
     {
         QuoteMeRslist *meModel = [self.tableViewArray objectAtIndex:indexPath.row];
-        YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:meModel.itemid andIsMine:YES isModal:NO];
+        YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:meModel.itemid andIsMine:NO isModal:NO];
         [self.navigationController pushViewController:vc animated:YES];
     }
     else
     {
         QuoteRslist *model = [self.tableViewArray objectAtIndex:indexPath.row];
-        YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:model.itemid andIsMine:NO isModal:NO];
+        YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:model.itemid andIsMine:YES isModal:NO];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
