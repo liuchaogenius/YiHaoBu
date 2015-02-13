@@ -11,6 +11,8 @@
 #import "YHBFindPswViewController.h"
 #import "YHBUser.h"
 #import "SVProgressHUD.h"
+#import "LSNavigationController.h"
+
 #define sgmButtonHeight 40
 
 enum SegmentBtn_Type
@@ -358,7 +360,7 @@ enum TextField_Type
 - (void)touchForgetPswBtn
 {
     YHBFindPswViewController *findVC = [[YHBFindPswViewController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:findVC];
+    LSNavigationController *nav = [[LSNavigationController alloc] initWithRootViewController:findVC];
     [self presentViewController:nav animated:YES completion:nil];
 }
 

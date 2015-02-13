@@ -31,6 +31,7 @@
 #import "YHBStoreViewController.h"
 #import "MWPhotoBrowser.h"
 #import "ChatViewController.h"
+#import "LSNavigationController.h"
 
 #define kBlankHeight 15
 #define kCCellHeight 35
@@ -456,7 +457,7 @@
 
 - (void)selViewShouldPushViewController:(UIViewController *)vc
 {
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    LSNavigationController *nav = [[LSNavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:NO completion:^{
         
     }];

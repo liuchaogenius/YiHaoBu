@@ -30,6 +30,7 @@
 #import "YHBBuyDetailViewController.h"
 #import "CategoryViewController.h"
 #import "YHBCatSubcate.h"
+#import "LSNavigationController.h"
 
 #define kBannerHeight (kMainScreenWidth * 397/1080.0f)
 #define kFuncCellHeight (kMainScreenWidth *285/1080.0f)
@@ -322,7 +323,7 @@
         case button_cate:
         {
             //类目
-            UINavigationController *navVc = [[UINavigationController alloc] initWithRootViewController:[CategoryViewController sharedInstancetype]];
+            LSNavigationController *navVc = [[LSNavigationController alloc] initWithRootViewController:[CategoryViewController sharedInstancetype]];
             __weak FirstViewController *weakself = self;
             [CategoryViewController sharedInstancetype].hidesBottomBarWhenPushed = YES;
             [[CategoryViewController sharedInstancetype] cleanAll];
@@ -390,7 +391,7 @@
             if ([self userLoginConfirm]) {
 
             YHBPublishSupplyViewController *supplyVC = [[YHBPublishSupplyViewController alloc] init];
-            [self presentViewController:[[UINavigationController alloc] initWithRootViewController:supplyVC] animated:YES completion:^{
+            [self presentViewController:[[LSNavigationController alloc] initWithRootViewController:supplyVC] animated:YES completion:^{
                 
             }];
             }
@@ -402,7 +403,7 @@
             if ([self userLoginConfirm]) {
 
             YHBPublishBuyViewController *supplyVC = [[YHBPublishBuyViewController alloc] init];
-            [self presentViewController:[[UINavigationController alloc] initWithRootViewController:supplyVC] animated:YES completion:^{
+            [self presentViewController:[[LSNavigationController alloc] initWithRootViewController:supplyVC] animated:YES completion:^{
                 
             }];
             }
@@ -461,7 +462,7 @@
         YHBSlidelist *slideModel = self.pageIndexMdoel.slidelist[num];
         if (slideModel.linkurl.length > 1) {
             IntroduceViewController *iVC = [[IntroduceViewController alloc] init];
-            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:iVC];
+            LSNavigationController *nav = [[LSNavigationController alloc] initWithRootViewController:iVC];
             iVC.isSysPresent = YES;
            
             [self presentViewController:nav animated:YES completion:^{

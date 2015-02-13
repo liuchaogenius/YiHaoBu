@@ -19,6 +19,8 @@
 #import "CategoryViewController.h"
 #import "YHBCity.h"
 #import "YHBCatData.h"
+#import "LSNavigationController.h"
+
 #define kHeadHeight 135
 #define kImageWith 50
 #define kTitleFont 15
@@ -473,7 +475,7 @@ enum TextTag
     if (textField.tag == TextField_Attention) {
         [CategoryViewController sharedInstancetype].isPushed = NO;
         [[CategoryViewController sharedInstancetype] cleanAll];
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[CategoryViewController sharedInstancetype]];
+        LSNavigationController *nav = [[LSNavigationController alloc] initWithRootViewController:[CategoryViewController sharedInstancetype]];
         [self presentViewController:nav animated:YES completion:nil];
         [[CategoryViewController sharedInstancetype] setBlock:^(NSArray *aArray) {
             NSMutableString *text = [NSMutableString stringWithCapacity:25];

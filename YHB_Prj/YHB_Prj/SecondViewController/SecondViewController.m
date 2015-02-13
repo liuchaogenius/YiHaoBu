@@ -25,6 +25,7 @@
 #import "YHBBuyDetailViewController.h"
 #import "SecondViewController.h"
 #import "YHBSearchInputVC.h"
+#import "LSNavigationController.h"
 
 #define ksegBtnWidth (kMainScreenWidth/4.0)
 #define kFilBtnWidth (kMainScreenWidth/3.0)
@@ -645,7 +646,7 @@ typedef enum : NSUInteger {
 {
     if (sender != _selectFilBtn) {
         if (sender.tag == Filter_filt) {
-            UINavigationController *navVc = [[UINavigationController alloc] initWithRootViewController:[CategoryViewController sharedInstancetype]];
+            LSNavigationController *navVc = [[LSNavigationController alloc] initWithRootViewController:[CategoryViewController sharedInstancetype]];
             __weak SecondViewController *weakself = self;
             [CategoryViewController sharedInstancetype].hidesBottomBarWhenPushed = YES;
             //navVc.hidesBottomBarWhenPushed = YES;

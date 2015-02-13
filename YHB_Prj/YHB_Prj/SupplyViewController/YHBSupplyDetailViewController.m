@@ -20,6 +20,7 @@
 #import "JubaoViewController.h"
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
+#import "LSNavigationController.h"
 
 #define kContactViewHeight 60
 @interface YHBSupplyDetailViewController ()
@@ -316,7 +317,7 @@
 - (void)edit
 {
     YHBPublishSupplyViewController *vc = [[YHBPublishSupplyViewController alloc] initWithModel:myModel];
-    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:vc] animated:YES completion:^{
+    [self presentViewController:[[LSNavigationController alloc] initWithRootViewController:vc] animated:YES completion:^{
         [self.navigationController popViewControllerAnimated:YES];
     }];
 }

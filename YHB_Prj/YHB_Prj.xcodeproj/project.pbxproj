@@ -491,6 +491,7 @@
 		FF2A6C9F1A0F3D41001607AC /* FifthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2A6C9E1A0F3D41001607AC /* FifthViewController.m */; };
 		FF2A6CA41A0F40B0001607AC /* ThreadSafeMutableArry.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2A6CA11A0F40B0001607AC /* ThreadSafeMutableArry.m */; };
 		FF2A6CA51A0F40B0001607AC /* ThreadSafeMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2A6CA31A0F40B0001607AC /* ThreadSafeMutableDictionary.m */; };
+		FFED1B771A8E37700060F581 /* LSNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFED1B761A8E37700060F581 /* LSNavigationController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1290,7 +1291,7 @@
 		ABE5BBCD1A2AF036000F5505 /* YHBSupplyDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBSupplyDetailView.m; sourceTree = "<group>"; };
 		ABE5BBCF1A2B4291000F5505 /* YHBPhotoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPhotoTableViewCell.h; sourceTree = "<group>"; };
 		ABE5BBD01A2B4291000F5505 /* YHBPhotoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBPhotoTableViewCell.m; sourceTree = "<group>"; };
-		FF2A6BDA1A0F3780001607AC /* YHB_Prj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YHB_Prj.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF2A6BDA1A0F3780001607AC /* KuaiBu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KuaiBu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF2A6BDE1A0F3780001607AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF2A6BDF1A0F3780001607AC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FF2A6BE11A0F3780001607AC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -1400,6 +1401,8 @@
 		FF2A6CA11A0F40B0001607AC /* ThreadSafeMutableArry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadSafeMutableArry.m; sourceTree = "<group>"; };
 		FF2A6CA21A0F40B0001607AC /* ThreadSafeMutableDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadSafeMutableDictionary.h; sourceTree = "<group>"; };
 		FF2A6CA31A0F40B0001607AC /* ThreadSafeMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadSafeMutableDictionary.m; sourceTree = "<group>"; };
+		FFED1B751A8E37700060F581 /* LSNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSNavigationController.h; sourceTree = "<group>"; };
+		FFED1B761A8E37700060F581 /* LSNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSNavigationController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3246,7 +3249,7 @@
 		FF2A6BDB1A0F3780001607AC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FF2A6BDA1A0F3780001607AC /* YHB_Prj.app */,
+				FF2A6BDA1A0F3780001607AC /* KuaiBu.app */,
 				FF2A6BED1A0F3780001607AC /* YHB_PrjTests.xctest */,
 			);
 			name = Products;
@@ -3313,6 +3316,7 @@
 		FF2A6C041A0F39E3001607AC /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				FFED1B741A8E37700060F581 /* LSNavigationController */,
 				5B2C323E1A8C662300891A26 /* UMSocial_Sdk_4.2.1 */,
 				5B2C32591A8C662300891A26 /* UMSocial_Sdk_Extra_Frameworks */,
 				5B2C32391A8C5F8000891A26 /* UMAnalytics_Sdk_3.4.4 */,
@@ -3598,6 +3602,15 @@
 			path = FirstViewController;
 			sourceTree = "<group>";
 		};
+		FFED1B741A8E37700060F581 /* LSNavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				FFED1B751A8E37700060F581 /* LSNavigationController.h */,
+				FFED1B761A8E37700060F581 /* LSNavigationController.m */,
+			);
+			path = LSNavigationController;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3615,7 +3628,7 @@
 			);
 			name = YHB_Prj;
 			productName = YHB_Prj;
-			productReference = FF2A6BDA1A0F3780001607AC /* YHB_Prj.app */;
+			productReference = FF2A6BDA1A0F3780001607AC /* KuaiBu.app */;
 			productType = "com.apple.product-type.application";
 		};
 		FF2A6BEC1A0F3780001607AC /* YHB_PrjTests */ = {
@@ -4084,6 +4097,7 @@
 				5B0531D11A76903D0020077D /* YHBPublicCommentVC.m in Sources */,
 				ABE5BBBD1A2AD511000F5505 /* YHBEditSupplyView.m in Sources */,
 				ABC646D11A6B8BC8003A8FB1 /* PSTCollectionViewUpdateItem.m in Sources */,
+				FFED1B771A8E37700060F581 /* LSNavigationController.m in Sources */,
 				FF2A6C2B1A0F3B50001607AC /* AFImageRequestOperation.m in Sources */,
 				ABC646C41A6B8BC8003A8FB1 /* UIImage+EMMultiFormat.m in Sources */,
 				5BCE1F621A1497F00004BE32 /* YHBLoginViewController.m in Sources */,
@@ -4276,8 +4290,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Le Shu (J97ECALLU9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Le Shu (J97ECALLU9)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YHB_Prj/ThirdParty",
@@ -4299,7 +4313,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = KuaiBu;
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
@@ -4310,8 +4324,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Le Shu (J97ECALLU9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Le Shu (J97ECALLU9)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YHB_Prj/ThirdParty",
@@ -4332,7 +4346,7 @@
 					"$(PROJECT_DIR)/YHB_Prj/ThirdParty/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = KuaiBu;
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};

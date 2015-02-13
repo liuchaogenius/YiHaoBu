@@ -12,6 +12,7 @@
 #import "UIButton+WebCache.h"
 #import "YHBSupplyDetailPic.h"
 #import "YHBBuyDetailAlbum.h"
+#import "LSNavigationController.h"
 #define interval 10
 #define photoHeight 100
 #define plusTag 1000
@@ -193,7 +194,7 @@
         }
         else
         {
-            [[self viewController] presentViewController:[[UINavigationController alloc] initWithRootViewController:[[YHBAlbumViewController alloc] initWithBlock:^(NSArray *aArray) {
+            [[self viewController] presentViewController:[[LSNavigationController alloc] initWithRootViewController:[[YHBAlbumViewController alloc] initWithBlock:^(NSArray *aArray) {
                 [self addImageWithImageArray:aArray];
             } andPhotoCount:5-_currentPhotoCount]] animated:YES completion:^{
                 

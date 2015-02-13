@@ -18,6 +18,7 @@
 #import "YHBMySupplyManage.h"
 #import "DAOverlayView.h"
 #import "YHBPostSell.h"
+#import "LSNavigationController.h"
 
 #define topViewHeight 40
 
@@ -226,14 +227,14 @@
     if (isSupply)
     {
         YHBPublishSupplyViewController *vc = [[YHBPublishSupplyViewController alloc] init];
-        [self presentViewController:[[UINavigationController alloc] initWithRootViewController:vc] animated:YES completion:^{
+        [self presentViewController:[[LSNavigationController alloc] initWithRootViewController:vc] animated:YES completion:^{
             
         }];
     }
     else
     {
         YHBPublishBuyViewController *vc = [[YHBPublishBuyViewController alloc] init];
-        [self presentViewController:[[UINavigationController alloc] initWithRootViewController:vc] animated:YES completion:^{
+        [self presentViewController:[[LSNavigationController alloc] initWithRootViewController:vc] animated:YES completion:^{
             
         }];
     }

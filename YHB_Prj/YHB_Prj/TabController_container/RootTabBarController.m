@@ -22,18 +22,18 @@
 #import "YHBGetPushBuylist.h"
 #import "SVProgressHUD.h"
 #import <CoreLocation/CoreLocation.h>
-
+#import "LSNavigationController.h"
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 @interface RootTabBarController ()<IChatManagerDelegate>
 {
-    UINavigationController *firstNav;
-    UINavigationController *secondNav;
-    UINavigationController *thirdNav;
-    UINavigationController *fourthNav;
-    UINavigationController *fifthNav;
-    UINavigationController *chatListNav;
+    LSNavigationController *firstNav;
+    LSNavigationController *secondNav;
+    LSNavigationController *thirdNav;
+    LSNavigationController *fourthNav;
+    LSNavigationController *fifthNav;
+    LSNavigationController *chatListNav;
     
     FirstViewController *firstVC;
     SecondViewController *secondVC;
@@ -50,7 +50,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     BOOL isGoBack;
 }
 @property (nonatomic, strong)  YHBLoginViewController *loginVC;
-@property (nonatomic, strong) UINavigationController *loginNav;
+@property (nonatomic, strong) LSNavigationController *loginNav;
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
 @property(strong, nonatomic) YHBGetPushManage *netManage;
 @end
@@ -80,22 +80,22 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (void)initTabViewController
 {
     firstVC = [[FirstViewController alloc] init];
-    firstNav = [[UINavigationController alloc] initWithRootViewController:firstVC];
+    firstNav = [[LSNavigationController alloc] initWithRootViewController:firstVC];
     
     secondVC = [[SecondViewController alloc] init];
-    secondNav = [[UINavigationController alloc] initWithRootViewController:secondVC];
+    secondNav = [[LSNavigationController alloc] initWithRootViewController:secondVC];
     
     thirdVC = [[ThirdViewController alloc] init];
-    thirdNav = [[UINavigationController alloc] initWithRootViewController:thirdVC];
+    thirdNav = [[LSNavigationController alloc] initWithRootViewController:thirdVC];
     
     _chatListVC = [[ChatListViewController alloc] init];
-    chatListNav = [[UINavigationController alloc] initWithRootViewController:_chatListVC];
+    chatListNav = [[LSNavigationController alloc] initWithRootViewController:_chatListVC];
     
     fifthVC = [[FifthViewController alloc] init];
-    fourthNav = [[UINavigationController alloc] initWithRootViewController:fifthVC];
+    fourthNav = [[LSNavigationController alloc] initWithRootViewController:fifthVC];
     
     fourthVC = [[FourthViewController alloc] init];
-    fifthNav = [[UINavigationController alloc] initWithRootViewController:fourthVC];
+    fifthNav = [[LSNavigationController alloc] initWithRootViewController:fourthVC];
     self.viewControllers = @[firstNav,secondNav,chatListNav,fourthNav,fifthNav];
 }
 
@@ -169,7 +169,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         }
         if(!self.loginNav)
         {
-            self.loginNav = [[UINavigationController alloc] initWithRootViewController:self.loginVC];
+            self.loginNav = [[LSNavigationController alloc] initWithRootViewController:self.loginVC];
             
         }
 

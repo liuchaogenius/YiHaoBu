@@ -42,7 +42,6 @@
     self.window.rootViewController = rootvc;
     [self.window makeKeyAndVisible];
     [self registerRemoteNotification];
-    
     [self checkVersion];
   
     //注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
@@ -52,7 +51,10 @@
     [[EaseMob sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 
     [self LoginEaseMob];
-    
+    if(application.applicationIconBadgeNumber>0)
+    {
+        application.applicationIconBadgeNumber = 0;
+    }
     return YES;
 }
 //登录环信
