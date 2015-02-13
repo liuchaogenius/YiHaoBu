@@ -65,7 +65,8 @@ enum TextTag
 @property (strong, nonatomic) UIView *userHeadCell;
 @property (strong, nonatomic) UIView *toolBarView;
 
-@property (strong, nonatomic) NSMutableArray *textFieldArray; 
+@property (strong, nonatomic) NSMutableArray *textFieldArray;
+@property (strong, nonatomic) NSMutableArray *arrowsArray;
 @property (weak, nonatomic) UITextView *mProductTextView;//主营产品
 @property (weak, nonatomic) UITextView *mIntroduceTextView;//介绍
 @property (strong, nonatomic) YHBUserManager *userManager;
@@ -82,6 +83,14 @@ enum TextTag
 @end
 
 @implementation YHBShopInfoViewController
+
+- (NSMutableArray *)arrowsArray
+{
+    if (!_arrowsArray) {
+        _arrowsArray = [NSMutableArray arrayWithCapacity:6];
+    }
+    return _arrowsArray;
+}
 
 - (YHBAddressManager *)addManager
 {
@@ -219,7 +228,9 @@ enum TextTag
         [cellView addSubview:textField];
         self.textFieldArray[i] = textField;
         
-        [cellView addSubview:[self getArrowImageViewWithFrame:CGRectMake(kMainScreenWidth-10-15, (cellView.height-15)/2.0, 10, 15)]];
+        UIView *arrow = [self getArrowImageViewWithFrame:CGRectMake(kMainScreenWidth-10-15, (cellView.height-15)/2.0, 10, 15)];
+        self.arrowsArray[i] = arrow;
+        [cellView addSubview:arrow];
         
     }else{
         UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(titleLabel.left, titleLabel.bottom+5, kMainScreenWidth-titleLabel.left*2, cellView.height-titleLabel.bottom-10)];
@@ -307,6 +318,10 @@ enum TextTag
     UITextField *tf;
     tf = self.textFieldArray[TextField_Name];
     tf.text = user.userInfo.truename;
+    if (1 == (int)user.userInfo.vtruename) {
+        ((UIView *)(self.arrowsArray[TextField_Name])).hidden = YES;
+        tf.enabled = NO;
+    }
     MLOG(@"%@",user.userInfo.catname);
     tf = self.textFieldArray[TextField_Attention];
     tf.text = [user.userInfo.catname isKindOfClass:[NSString class]]?user.userInfo.catname:@"";
@@ -319,6 +334,10 @@ enum TextTag
     
     tf = self.textFieldArray[TextField_company];
     tf.text = user.userInfo.company;
+    if (1 == (int)user.userInfo.vcompany) {
+        ((UIView *)(self.arrowsArray[TextField_company])).hidden = YES;
+        tf.enabled = NO;
+    }
     
     tf = self.textFieldArray[TextField_area];
     tf.text = user.userInfo.area;
@@ -571,16 +590,17 @@ enum TextTag
 {
     [picker dismissViewControllerAnimated:YES completion:^{}];
     
-    UIImage * oriImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-// 保存图片到相册中
-    SEL selectorToCall = @selector(imageWasSavedSuccessfully:didFinishSavingWithError:contextInfo:);
-    UIImageWriteToSavedPhotosAlbum(oriImage, self,selectorToCall, NULL);
-
+    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+        UIImage * oriImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+        // 保存图片到相册中
+        SEL selectorToCall = @selector(imageWasSavedSuccessfully:didFinishSavingWithError:contextInfo:);
+        UIImageWriteToSavedPhotosAlbum(oriImage, self,selectorToCall, NULL);
+    }
 
 
     UIImage *image = [info objectForKey:@"UIImagePickerControllerEditedImage"];
-    
-    CGRect rect = (_pickType == Picker_Head ? CGRectMake(0,0,128,128) : CGRectMake(0, 0, 1080, 1080));
+    CGRect oldRect = [[info objectForKey:UIImagePickerControllerCropRect] CGRectValue];
+    CGRect rect = (_pickType == Picker_Head ? CGRectMake(0,0,128,128) : CGRectMake(0, 0, 1080, oldRect.size.height * 1080.0f/ oldRect.size.width));
     UIGraphicsBeginImageContext( rect.size );
     [image drawInRect:rect];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();

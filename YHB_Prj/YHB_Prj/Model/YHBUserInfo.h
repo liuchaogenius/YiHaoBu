@@ -1,7 +1,7 @@
 //
 //  YHBUserInfo.h
 //
-//  Created by   on 15/2/9
+//  Created by   on 15/2/13
 //  Copyright (c) 2015 __MyCompanyName__. All rights reserved.
 //
 
@@ -33,6 +33,7 @@
 @property (nonatomic, strong) NSString *catid;
 @property (nonatomic, strong) NSString *mobile;
 @property (nonatomic, assign) double malltotal;
+@property (nonatomic, assign) double vtruename;
 @property (nonatomic, strong) NSString *star2;
 @property (nonatomic, strong) NSString *avatar;
 @property (nonatomic, strong) NSString *area;

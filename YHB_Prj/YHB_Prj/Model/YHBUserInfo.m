@@ -1,7 +1,7 @@
 //
 //  YHBUserInfo.m
 //
-//  Created by   on 15/2/9
+//  Created by   on 15/2/13
 //  Copyright (c) 2015 __MyCompanyName__. All rights reserved.
 //
 
@@ -30,6 +30,7 @@ NSString *const kYHBUserInfoThumb = @"thumb";
 NSString *const kYHBUserInfoCatid = @"catid";
 NSString *const kYHBUserInfoMobile = @"mobile";
 NSString *const kYHBUserInfoMalltotal = @"malltotal";
+NSString *const kYHBUserInfoVtruename = @"vtruename";
 NSString *const kYHBUserInfoStar2 = @"star2";
 NSString *const kYHBUserInfoAvatar = @"avatar";
 NSString *const kYHBUserInfoArea = @"area";
@@ -70,6 +71,7 @@ NSString *const kYHBUserInfoIntroduce = @"introduce";
 @synthesize catid = _catid;
 @synthesize mobile = _mobile;
 @synthesize malltotal = _malltotal;
+@synthesize vtruename = _vtruename;
 @synthesize star2 = _star2;
 @synthesize avatar = _avatar;
 @synthesize area = _area;
@@ -114,6 +116,7 @@ NSString *const kYHBUserInfoIntroduce = @"introduce";
             self.catid = [self objectOrNilForKey:kYHBUserInfoCatid fromDictionary:dict];
             self.mobile = [self objectOrNilForKey:kYHBUserInfoMobile fromDictionary:dict];
             self.malltotal = [[self objectOrNilForKey:kYHBUserInfoMalltotal fromDictionary:dict] doubleValue];
+            self.vtruename = [[self objectOrNilForKey:kYHBUserInfoVtruename fromDictionary:dict] doubleValue];
             self.star2 = [self objectOrNilForKey:kYHBUserInfoStar2 fromDictionary:dict];
             self.avatar = [self objectOrNilForKey:kYHBUserInfoAvatar fromDictionary:dict];
             self.area = [self objectOrNilForKey:kYHBUserInfoArea fromDictionary:dict];
@@ -154,6 +157,7 @@ NSString *const kYHBUserInfoIntroduce = @"introduce";
     [mutableDict setValue:self.catid forKey:kYHBUserInfoCatid];
     [mutableDict setValue:self.mobile forKey:kYHBUserInfoMobile];
     [mutableDict setValue:[NSNumber numberWithDouble:self.malltotal] forKey:kYHBUserInfoMalltotal];
+    [mutableDict setValue:[NSNumber numberWithDouble:self.vtruename] forKey:kYHBUserInfoVtruename];
     [mutableDict setValue:self.star2 forKey:kYHBUserInfoStar2];
     [mutableDict setValue:self.avatar forKey:kYHBUserInfoAvatar];
     [mutableDict setValue:self.area forKey:kYHBUserInfoArea];
@@ -207,6 +211,7 @@ NSString *const kYHBUserInfoIntroduce = @"introduce";
     self.catid = [aDecoder decodeObjectForKey:kYHBUserInfoCatid];
     self.mobile = [aDecoder decodeObjectForKey:kYHBUserInfoMobile];
     self.malltotal = [aDecoder decodeDoubleForKey:kYHBUserInfoMalltotal];
+    self.vtruename = [aDecoder decodeDoubleForKey:kYHBUserInfoVtruename];
     self.star2 = [aDecoder decodeObjectForKey:kYHBUserInfoStar2];
     self.avatar = [aDecoder decodeObjectForKey:kYHBUserInfoAvatar];
     self.area = [aDecoder decodeObjectForKey:kYHBUserInfoArea];
@@ -243,6 +248,7 @@ NSString *const kYHBUserInfoIntroduce = @"introduce";
     [aCoder encodeObject:_catid forKey:kYHBUserInfoCatid];
     [aCoder encodeObject:_mobile forKey:kYHBUserInfoMobile];
     [aCoder encodeDouble:_malltotal forKey:kYHBUserInfoMalltotal];
+    [aCoder encodeDouble:_vtruename forKey:kYHBUserInfoVtruename];
     [aCoder encodeObject:_star2 forKey:kYHBUserInfoStar2];
     [aCoder encodeObject:_avatar forKey:kYHBUserInfoAvatar];
     [aCoder encodeObject:_area forKey:kYHBUserInfoArea];
@@ -281,6 +287,7 @@ NSString *const kYHBUserInfoIntroduce = @"introduce";
         copy.catid = [self.catid copyWithZone:zone];
         copy.mobile = [self.mobile copyWithZone:zone];
         copy.malltotal = self.malltotal;
+        copy.vtruename = self.vtruename;
         copy.star2 = [self.star2 copyWithZone:zone];
         copy.avatar = [self.avatar copyWithZone:zone];
         copy.area = [self.area copyWithZone:zone];

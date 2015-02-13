@@ -23,7 +23,6 @@
 		5B10A8271A88814E0018E2D6 /* YHBSearchInputVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B10A8261A88814E0018E2D6 /* YHBSearchInputVC.m */; };
 		5B10A82B1A88B48D0018E2D6 /* CCListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B10A82A1A88B48D0018E2D6 /* CCListCellView.m */; };
 		5B10A82E1A88E4830018E2D6 /* YHBOrderDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B10A82D1A88E4830018E2D6 /* YHBOrderDetail.m */; };
-		5B10A8311A88F16C0018E2D6 /* YHBUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B10A8301A88F16C0018E2D6 /* YHBUserInfo.m */; };
 		5B13A4D61A57EC4B00713C5E /* YHBProductManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B13A4D51A57EC4B00713C5E /* YHBProductManager.m */; };
 		5B13A4D91A57FBE800713C5E /* YHBPdtInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B13A4D81A57FBE800713C5E /* YHBPdtInfoView.m */; };
 		5B13A4DC1A58128900713C5E /* YHBBuytoolBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B13A4DB1A58128900713C5E /* YHBBuytoolBarView.m */; };
@@ -53,6 +52,7 @@
 		5B2C326A1A8C662300891A26 /* UMSocialSDKResourcesNew.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5B2C32571A8C662300891A26 /* UMSocialSDKResourcesNew.bundle */; };
 		5B2C326B1A8C662300891A26 /* libSocialWechat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B2C325B1A8C662300891A26 /* libSocialWechat.a */; };
 		5B2C326C1A8C662300891A26 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B2C325C1A8C662300891A26 /* libWeChatSDK.a */; };
+		5B2C326F1A8D91DE00891A26 /* YHBUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2C326E1A8D91DE00891A26 /* YHBUserInfo.m */; };
 		5B2FB0811A39A1FA000177D9 /* YHBStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2FB0801A39A1FA000177D9 /* YHBStoreViewController.m */; };
 		5B3B6BDE1A4146E800903880 /* YHBShopIndexManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3B6BDD1A4146E800903880 /* YHBShopIndexManager.m */; };
 		5B3B6BE11A4168FE00903880 /* YHBBannerVeiw.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3B6BE01A4168FE00903880 /* YHBBannerVeiw.m */; };
@@ -532,8 +532,6 @@
 		5B10A82A1A88B48D0018E2D6 /* CCListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCListCellView.m; sourceTree = "<group>"; };
 		5B10A82C1A88E4830018E2D6 /* YHBOrderDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBOrderDetail.h; sourceTree = "<group>"; };
 		5B10A82D1A88E4830018E2D6 /* YHBOrderDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBOrderDetail.m; sourceTree = "<group>"; };
-		5B10A82F1A88F16C0018E2D6 /* YHBUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBUserInfo.h; sourceTree = "<group>"; };
-		5B10A8301A88F16C0018E2D6 /* YHBUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUserInfo.m; sourceTree = "<group>"; };
 		5B13A4D41A57EC4B00713C5E /* YHBProductManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBProductManager.h; sourceTree = "<group>"; };
 		5B13A4D51A57EC4B00713C5E /* YHBProductManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBProductManager.m; sourceTree = "<group>"; };
 		5B13A4D71A57FBE800713C5E /* YHBPdtInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBPdtInfoView.h; sourceTree = "<group>"; };
@@ -595,6 +593,8 @@
 		5B2C325D1A8C662300891A26 /* UMSocialWechatHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialWechatHandler.h; sourceTree = "<group>"; };
 		5B2C325E1A8C662300891A26 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		5B2C325F1A8C662300891A26 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		5B2C326D1A8D91DE00891A26 /* YHBUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBUserInfo.h; sourceTree = "<group>"; };
+		5B2C326E1A8D91DE00891A26 /* YHBUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBUserInfo.m; sourceTree = "<group>"; };
 		5B2FB07F1A39A1FA000177D9 /* YHBStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YHBStoreViewController.h; path = FirstViewController/YHBStoreViewController.h; sourceTree = "<group>"; };
 		5B2FB0801A39A1FA000177D9 /* YHBStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YHBStoreViewController.m; path = FirstViewController/YHBStoreViewController.m; sourceTree = "<group>"; };
 		5B3B6BDC1A4146E800903880 /* YHBShopIndexManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBShopIndexManager.h; sourceTree = "<group>"; };
@@ -1733,8 +1733,8 @@
 		5B6774F91A55996800457012 /* UserModel */ = {
 			isa = PBXGroup;
 			children = (
-				5B10A82F1A88F16C0018E2D6 /* YHBUserInfo.h */,
-				5B10A8301A88F16C0018E2D6 /* YHBUserInfo.m */,
+				5B2C326D1A8D91DE00891A26 /* YHBUserInfo.h */,
+				5B2C326E1A8D91DE00891A26 /* YHBUserInfo.m */,
 				5BCE1F5C1A1496550004BE32 /* SynthesizeSingleton.h */,
 				5BCE1F5D1A1496980004BE32 /* YHBUser.h */,
 				5BCE1F5E1A1496980004BE32 /* YHBUser.m */,
@@ -4100,7 +4100,6 @@
 				ABC646221A6B8B3C003A8FB1 /* EMChatLocationBubbleView.m in Sources */,
 				ABC646CF1A6B8BC8003A8FB1 /* PSTCollectionViewItemKey.m in Sources */,
 				AB200BB21A8833B800EB961B /* GetUserNameManage.m in Sources */,
-				5B10A8311A88F16C0018E2D6 /* YHBUserInfo.m in Sources */,
 				AB4A6CD31A7C6FF6007033BE /* YHBUploadImageManage.m in Sources */,
 				ABE5BBCE1A2AF036000F5505 /* YHBSupplyDetailView.m in Sources */,
 				ABC646B51A6B8BC8003A8FB1 /* MWTapDetectingImageView.m in Sources */,
@@ -4128,6 +4127,7 @@
 				AB4EF1F41A7A56E800CDB9EB /* ChatListViewController.m in Sources */,
 				AB65A4EE1A6774E9009475DC /* CategoryViewController.m in Sources */,
 				FF2A6C731A0F3B7B001607AC /* SDWebImagePrefetcher.m in Sources */,
+				5B2C326F1A8D91DE00891A26 /* YHBUserInfo.m in Sources */,
 				5BC5211C1A4C000F00B78E52 /* YHBInfoListManager.m in Sources */,
 				5B13A4D61A57EC4B00713C5E /* YHBProductManager.m in Sources */,
 				AB34037A1A67B80000A38FF6 /* YHBCatData.m in Sources */,

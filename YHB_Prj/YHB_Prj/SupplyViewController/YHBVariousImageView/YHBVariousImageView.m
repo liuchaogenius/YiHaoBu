@@ -390,10 +390,12 @@
     [array addObject:image];
     [self addImageWithImageArray:array];
     
-    UIImage *oriImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    
-    SEL selectorToCall = @selector(imageWasSavedSuccessfully:didFinishSavingWithError:contextInfo:);
-    UIImageWriteToSavedPhotosAlbum(oriImage, self,selectorToCall, NULL);
+    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+        UIImage * oriImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+        // 保存图片到相册中
+        SEL selectorToCall = @selector(imageWasSavedSuccessfully:didFinishSavingWithError:contextInfo:);
+        UIImageWriteToSavedPhotosAlbum(oriImage, self,selectorToCall, NULL);
+    }
     
 //    self.photoImg = newImage;
 //    self.imgView.image = newImage;

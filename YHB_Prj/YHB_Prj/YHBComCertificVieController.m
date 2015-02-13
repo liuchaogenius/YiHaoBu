@@ -30,6 +30,8 @@ typedef enum : NSUInteger{
     Pick_ImagTag _pickTag;
     UIButton *_submitButton;
     
+    NSString *_certUploadedImgUrl;
+    NSString *_idUploadedImgUrl;
 }
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UILabel *bigTitleLabel;
@@ -186,23 +188,37 @@ typedef enum : NSUInteger{
 {
     if ([self infoCheck]) {
         //上传
-        [self updateInfo];
+        [self uploadInfo];
     }
 }
 
-- (void)updateInfo
+- (void)uploadInfo
 {
     NSString *uploadUrl = nil;
     kYHBRequestUrl(@"postValidate.php", uploadUrl);
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:6];
+    [dic setObject:[YHBUser sharedYHBUser].token forKey:@"token"];
+    [dic setObject:_comTextField.text forKey:@"title"];
+    [dic setObject:_nameTextField.text forKey:@"truename"];
+    [dic setObject:_numTextFile.text forKey:@"idcard"];
+    [dic setObject:_certUploadedImgUrl forKey:@"thumb"];
+    [dic setObject:_idUploadedImgUrl forKey:@"thumb1"];
     
-    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,"token",_comTextField.text,@"title",_nameTextField.text,@"truename",_numTextFile.text,@"idcard", nil];
+   // NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,"token",_comTextField.text,@"title",_nameTextField.text,@"truename",_numTextFile.text,@"idcard",_certUploadedImgUrl,@"thumb",_idUploadedImgUrl,@"thumb1", nil];
+    
+    
     _submitButton.enabled = NO;
     
     [SVProgressHUD showWithStatus:@"上传信息中，请耐心等待" cover:YES offsetY:0];
-    [NetManager uploadArryImg:@[_certImage,_identiImage] parameters:dic uploadUrl:uploadUrl uploadimgName:@"thumb" parameEncoding:AFJSONParameterEncoding progressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+    [NetManager requestWith:dic url:uploadUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
+        int result = [successDict[@"result"] intValue];
+        if (result) {
+            [SVProgressHUD dismissWithSuccess:@"上传成功，请耐心等待审核"];
+        }else {
+            [SVProgressHUD dismissWithError:kErrorStr];
+        }
+        _submitButton.enabled = YES;
         
-    } succ:^(NSDictionary *successDict) {
-        [SVProgressHUD dismissWithSuccess:@"上传成功，请耐心等待审核"];
     } failure:^(NSDictionary *failDict, NSError *error) {
         [SVProgressHUD dismissWithError:@"上传失败，请重试"];
         _submitButton.enabled = YES;
@@ -223,8 +239,8 @@ typedef enum : NSUInteger{
 - (BOOL)infoCheck
 {
     if (_comTextField.text.length && _nameTextField.text.length && _numTextFile.text.length) {
-        if (_identiImage) {
-            if (_identiImage) {
+        if (_certUploadedImgUrl.length) {
+            if (_idUploadedImgUrl.length) {
                 return YES;
             }else [SVProgressHUD showErrorWithStatus:@"请选择身份证照片" cover:YES offsetY:0];
         }else [SVProgressHUD showErrorWithStatus:@"请选择营业执照" cover:YES offsetY:0];
@@ -295,16 +311,18 @@ typedef enum : NSUInteger{
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [picker dismissViewControllerAnimated:YES completion:^{}];
-    
-    UIImage * oriImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    // 保存图片到相册中
-    SEL selectorToCall = @selector(imageWasSavedSuccessfully:didFinishSavingWithError:contextInfo:);
-    UIImageWriteToSavedPhotosAlbum(oriImage, self,selectorToCall, NULL);
+    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+        UIImage * oriImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+        // 保存图片到相册中
+        SEL selectorToCall = @selector(imageWasSavedSuccessfully:didFinishSavingWithError:contextInfo:);
+        UIImageWriteToSavedPhotosAlbum(oriImage, self,selectorToCall, NULL);
+    }
     
     UIImage *image = [info objectForKey:@"UIImagePickerControllerEditedImage"];
     //self.photoImg = [info objectForKey:@"UIImagePickerControllerEditedImage"];
-    
-    CGRect rect = CGRectMake(0, 0, 1024, 1024);
+    CGRect oldRect = [[info objectForKey:UIImagePickerControllerCropRect] CGRectValue];
+
+    CGRect rect = CGRectMake(0, 0, 1080, oldRect.size.height * 1024.0f/ oldRect.size.width);
     UIGraphicsBeginImageContext( rect.size );
     [image drawInRect:rect];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -319,17 +337,32 @@ typedef enum : NSUInteger{
     UIGraphicsEndImageContext();
     _pickTag == Pick_Cert ? (_certImageView.image = sImage) : (_identiImageView.image = sImage);
     
-    //self.photoImg = newImage;
-    //self.imgView.image = newImage;
+//上传
+    NSString *uploadUrl = nil;
+    kYHBRequestUrl(@"upload.php", uploadUrl);
+    NSString *itemID = (_pickTag == Pick_Cert ? @"0": @"1");
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[YHBUser sharedYHBUser].token,@"token",@"validate",@"action",itemID,@"itemid", nil];
     
-    //NSLog(@"imagew = %f,h = %f",self.photoImg.size.width,
-    // self.photoImg.size.height);
     
-    //    self.photoUrl = [[info objectForKey:@"UIImagePickerControllerMediaURL"] absoluteString];
-    //    NSData *imageData = UIImageJPEGRepresentation(image, COMPRESSED_RATE);
-    //    UIImage *compressedImage = [UIImage imageWithData:imageData];
     
-    //    [HttpRequestManager uploadImage:compressedImage httpClient:self.httpClient delegate:self];
+    [SVProgressHUD showWithStatus:@"上传图片中，请耐心等待" cover:YES offsetY:0];
+    [NetManager uploadImg:newImage parameters:dic uploadUrl:uploadUrl uploadimgName:@"thumb" parameEncoding:AFJSONParameterEncoding progressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+    } succ:^(NSDictionary *successDict) {
+        [SVProgressHUD dismissWithSuccess:@"上传成功"];
+        NSDictionary *data = successDict[@"data"];
+        NSString *thumb = data[@"thumb"];
+        if (_pickTag == Pick_Cert) {
+            _certUploadedImgUrl = thumb;
+            _certImage = nil;
+        }else{
+            _idUploadedImgUrl = thumb;
+            _identiImage = nil;
+        }
+       
+        MLOG(@"%@",thumb);
+    } failure:^(NSDictionary *failDict, NSError *error) {
+        [SVProgressHUD dismissWithError:@"上传失败，请重试"];
+    }];
     
 }
 
