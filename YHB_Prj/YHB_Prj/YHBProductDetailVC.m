@@ -355,7 +355,7 @@
 {
     [UMSocialWechatHandler setWXAppId:kShareWEIXINAPPID appSecret:kShareWEIXINAPPSECRET url:nil];
     
-    [UMSocialSnsService presentSnsIconSheetView:self appKey:kUMENG_APPKEY shareText:@"#【快布】#  全球首款专业移动装饰面料交易APP上线啦！一键发布找布信息，躺着也能把生意做了！猛戳了解：http://www.51kuaibu.com/app" shareImage:[UIImage imageNamed:@"AppIcon"] shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToWechatFavorite,nil] delegate:nil];
+    [UMSocialSnsService presentSnsIconSheetView:self appKey:kUMENG_APPKEY shareText:@"#【快布】#  全球首款专业移动装饰面料交易APP上线啦！一键发布找布信息，躺着也能把生意做了！猛戳了解：http://www.51kuaibu.com/app" shareImage:[UIImage imageNamed:@"ShareIcon"] shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToWechatFavorite,nil] delegate:nil];
 }
 
 #pragma mark 点击购买按钮
