@@ -284,9 +284,14 @@ typedef enum : NSUInteger {
     if (self.tagsArray) {
         NSMutableString *str= [NSMutableString stringWithCapacity:20];
         YHBCatSubcate *cate;
-        for (int i=0;i<self.tagsArray.count;i++) {
-            [str stringByAppendingString:(i+1==self.tagsArray.count ? [NSString stringWithFormat:@"%d,",(int)cate.catid] : [NSString stringWithFormat:@"%d",(int)cate.catid])];
+        for (int i=0;i<self.tagsArray.count-1;i++) {
+            cate = [self.tagsArray objectAtIndex:i];
+            [str appendString:[NSString stringWithFormat:@"%d,",(int)cate.catid]];
+            //[str stringByAppendingString:(i+1==self.tagsArray.count ? [NSString stringWithFormat:@"%d,",(int)cate.catid] : [NSString stringWithFormat:@"%d",(int)cate.catid])];
+            MLOG(@"str = %@",str);
         }
+        cate = [self.tagsArray lastObject];
+        [str appendString:[NSString stringWithFormat:@"%d",(int)cate.catid]];
         return str;
     }else return nil;
 }
@@ -669,8 +674,8 @@ typedef enum : NSUInteger {
             NSArray *array;
             if ((array = self.modelsDic[[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]]) != nil) {
                 [self.modelsDic removeObjectForKey:[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]];
-                [self getFirstPageData];
             }
+            [self getFirstPageData];
             
         }
     }
