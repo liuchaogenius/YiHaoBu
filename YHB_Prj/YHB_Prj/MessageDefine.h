@@ -27,5 +27,6 @@
 
 #define kShareWEIXINAPPID @"wxdf71533663734340"
 #define kShareWEIXINAPPSECRET  @"dec9729d50175d100d09b177586b0243"
+#define kWeChatOpenUrl @"http://www.51kuaibu.com/app"
 
 #endif
