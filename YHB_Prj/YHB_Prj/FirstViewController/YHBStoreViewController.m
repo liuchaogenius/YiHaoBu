@@ -618,9 +618,10 @@ enum SgmBtn_tag
     //[button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     //[button setTitleColor:KColor forState:UIControlStateSelected];
     //[button setTitle:title forState:UIControlStateNormal];
-    [button setBackgroundColor:[UIColor clearColor]];
+    [button setBackgroundColor:[UIColor whiteColor]];
     button.titleLabel.font = kFont16;
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(button.width+0.2, 0, 0.6f, button.height)];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(button.width+0.2, 10, 0.6f, button.height-20
+                                                            )];
     line.backgroundColor = kLineColor;
     [button addSubview:line];
     //button.layer.borderWidth = 0.7f;
