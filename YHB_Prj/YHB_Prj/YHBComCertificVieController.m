@@ -348,19 +348,28 @@ typedef enum : NSUInteger{
     [SVProgressHUD showWithStatus:@"上传图片中，请耐心等待" cover:YES offsetY:0];
     [NetManager uploadImg:newImage parameters:dic uploadUrl:uploadUrl uploadimgName:@"thumb" parameEncoding:AFJSONParameterEncoding progressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
     } succ:^(NSDictionary *successDict) {
-        [SVProgressHUD dismissWithSuccess:@"上传成功"];
-        NSDictionary *data = successDict[@"data"];
-        NSString *thumb = data[@"thumb"];
-        if (_pickTag == Pick_Cert) {
-            _certUploadedImgUrl = thumb;
-            _certImage = nil;
-        }else{
-            _idUploadedImgUrl = thumb;
-            _identiImage = nil;
+        if ([successDict[@"result"] integerValue] == 1) {
+            [SVProgressHUD dismissWithSuccess:@"上传成功"];
+            NSDictionary *data = successDict[@"data"];
+            NSString *thumb = data[@"thumb"];
+            if (_pickTag == Pick_Cert) {
+                _certUploadedImgUrl = thumb;
+                _certImage = nil;
+            }else{
+                _idUploadedImgUrl = thumb;
+                _identiImage = nil;
+            }
+            
+            MLOG(@"%@",thumb);
+        }else {
+            [SVProgressHUD dismissWithError:kErrorStr] ;
+            _pickTag == Pick_Cert ? (_certImageView.image = nil) : (_identiImageView.image = nil);
+            _pickTag == Pick_Cert ? (_certUploadedImgUrl = nil) : (_idUploadedImgUrl = nil);
         }
-       
-        MLOG(@"%@",thumb);
+        
     } failure:^(NSDictionary *failDict, NSError *error) {
+        _pickTag == Pick_Cert ? (_certImageView.image = nil) : (_identiImageView.image = nil);
+        _pickTag == Pick_Cert ? (_certUploadedImgUrl = nil) : (_idUploadedImgUrl = nil);
         [SVProgressHUD dismissWithError:@"上传失败，请重试"];
     }];
     

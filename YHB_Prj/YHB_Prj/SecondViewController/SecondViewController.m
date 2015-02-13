@@ -229,6 +229,7 @@ typedef enum : NSUInteger {
     [super viewWillAppear:YES];
 }
 
+
 - (instancetype)initFromMall
 {
     self = [super init];
@@ -254,6 +255,7 @@ typedef enum : NSUInteger {
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
+    self.navigationController.navigationBar.hidden = NO;
     [SVProgressHUD dismiss];
     [super viewWillDisappear:animated];
 }

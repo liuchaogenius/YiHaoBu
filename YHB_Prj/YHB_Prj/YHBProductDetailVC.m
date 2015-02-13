@@ -30,6 +30,8 @@
 #import "YHBProductWebVC.h"
 #import "YHBStoreViewController.h"
 #import "MWPhotoBrowser.h"
+#import "UMSocialWechatHandler.h"
+#import "UMSocial.h"
 #import "ChatViewController.h"
 #import "LSNavigationController.h"
 
@@ -180,6 +182,11 @@
     
     [self creatCommentHead];
     
+//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"detailShareImg"] style:UIBarButtonItemStylePlain target:self action:@selector(touchShareBtn)];
+//    self.navigationController.navigationItem.rightBarButtonItem = item;
+//    self.navigationController.navigationBar.tintColor = [UIColor lightGrayColor];
+    
+    [self setRightButton:[UIImage imageNamed:@"detailShare"] title:nil target:self action:@selector(touchShareBtn)];
     
     self.conStoreView = [[YHBConnectStoreVeiw alloc] init];
     self.conStoreView.delegate = self;
@@ -341,6 +348,14 @@
             [SVProgressHUD showErrorWithStatus:@"添加购物车失败，请重新尝试！" cover:YES offsetY:0];
         }];
     }
+}
+
+#pragma mark - share
+- (void)touchShareBtn
+{
+    [UMSocialWechatHandler setWXAppId:kShareWEIXINAPPID appSecret:kShareWEIXINAPPSECRET url:nil];
+    
+    [UMSocialSnsService presentSnsIconSheetView:self appKey:kUMENG_APPKEY shareText:@"#【快布】#  全球首款专业移动装饰面料交易APP上线啦！一键发布找布信息，躺着也能把生意做了！猛戳了解：http://www.51kuaibu.com/app" shareImage:[UIImage imageNamed:@"AppIcon"] shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToWechatFavorite,nil] delegate:nil];
 }
 
 #pragma mark 点击购买按钮

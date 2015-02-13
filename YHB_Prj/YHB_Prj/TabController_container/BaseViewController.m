@@ -172,18 +172,21 @@
     [button addTarget:aTarget action:aSelector forControlEvents:UIControlEventTouchUpInside];
     
     
+    CGRect viewFrame = CGRectMake(0, 0, 88/2, 44);
+    UIView *view = [[UIView alloc]initWithFrame:viewFrame];
+    if(aImg)
+    {
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(22, 11, 25, 25)];
+        [imageView setContentMode:UIViewContentModeScaleAspectFit];
+        imageView.image = aImg;
+        [view addSubview:imageView];
+    }
     if(aTitle)
     {
         [button setTitle:aTitle forState:UIControlStateNormal];
-        
     }
-    if(aImg)
-    {
-        [button setBackgroundImage:aImg forState:UIControlStateNormal];
-    }
-    CGRect viewFrame = CGRectMake(kMainScreenWidth-100/2, 0, 59, 44);
-    UIView *view = [[UIView alloc]initWithFrame:viewFrame];
-;
+    
+    
     [view addSubview:button];
     if(self.navigationController && self.navigationItem)
     {
