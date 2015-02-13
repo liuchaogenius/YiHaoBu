@@ -467,26 +467,29 @@
 
 - (void)changeCellCount:(YHBShoppingCartTableViewCell *)aCell keyBoardHeight:(CGFloat)aHeight
 {
-    CGSize size = self.tableView.contentSize;
-    changeHeight += aHeight-49-bottomHeight;
-    size.height += aHeight-49-bottomHeight;
-    self.tableView.contentSize = size;
-    
-    MLOG(@"%f", size.height);
-    MLOG(@"%f", aCell.top);
-    
-    CGFloat cellbottom = aCell.bottom+62+20;
-    if (cellbottom+aHeight>kMainScreenHeight)
+    if (changeHeight==0)
     {
-        oldOffset = self.tableView.contentOffset.y;
-        CGFloat cha = cellbottom+aHeight-kMainScreenHeight;
-        [UIView animateWithDuration:0.2 animations:^{
-            self.tableView.contentOffset = CGPointMake(0, cha);
-        }];
-    }
-    else
-    {
-        oldOffset = 0;
+        CGSize size = self.tableView.contentSize;
+        changeHeight += aHeight-49-bottomHeight;
+        size.height += aHeight-49-bottomHeight;
+        self.tableView.contentSize = size;
+        
+//        MLOG(@"%f", size.height);
+//        MLOG(@"%f", aCell.top);
+        
+        CGFloat cellbottom = aCell.bottom+62+20;
+        if (cellbottom+aHeight>kMainScreenHeight)
+        {
+            oldOffset = self.tableView.contentOffset.y;
+            CGFloat cha = cellbottom+aHeight-kMainScreenHeight;
+            [UIView animateWithDuration:0.2 animations:^{
+                self.tableView.contentOffset = CGPointMake(0, cha);
+            }];
+        }
+        else
+        {
+            oldOffset = 0;
+        }
     }
 }
 
@@ -497,7 +500,7 @@
     self.tableView.contentSize = size;
     changeHeight=0;
     
-    MLOG(@"%f", size.height);
+//    MLOG(@"%f", size.height);
 
     if (oldOffset>0)
     {
