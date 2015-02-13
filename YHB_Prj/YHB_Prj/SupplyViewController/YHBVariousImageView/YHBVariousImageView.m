@@ -11,6 +11,7 @@
 #import "UIViewAdditions.h"
 #import "UIButton+WebCache.h"
 #import "YHBSupplyDetailPic.h"
+#import "YHBBuyDetailAlbum.h"
 #define interval 10
 #define photoHeight 100
 #define plusTag 1000
@@ -283,9 +284,18 @@
             self.showPhotoArray = [NSMutableArray arrayWithCapacity:self.webPhotoArray.count];
             NSInteger imageNum = self.webPhotoArray.count;
             for (NSInteger i = 0; i < imageNum; i++) {
-                YHBSupplyDetailPic *model = [self.webPhotoArray objectAtIndex:i];
-                photo = [MWPhoto photoWithURL:[NSURL URLWithString:model.middle]];
-                self.showPhotoArray[i] = photo;
+                id obj = [self.webPhotoArray objectAtIndex:i];
+                if ([obj isKindOfClass:[YHBSupplyDetailPic class]] || [obj isKindOfClass:[YHBBuyDetailAlbum class]])
+                {
+                    YHBSupplyDetailPic *model = (YHBSupplyDetailPic *)[self.webPhotoArray objectAtIndex:i];
+                    photo = [MWPhoto photoWithURL:[NSURL URLWithString:model.middle]];
+                    self.showPhotoArray[i] = photo;
+                }
+                else
+                {
+                    photo = [MWPhoto photoWithImage:[self.webPhotoArray objectAtIndex:i]];
+                    self.showPhotoArray[i] = photo;
+                }
             }
         }
         [self showPhotoBrownserWithIndex:index-1];
