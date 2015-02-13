@@ -36,6 +36,9 @@
 //    UIButton *moveToFavoriteBtn;
     NSMutableArray *changeItemArray;
     NSMutableArray *changeModelArray;
+    
+    CGFloat changeHeight;
+    CGFloat oldOffset;
 }
 @property(nonatomic, strong) YHBShopCartManage *netManage;
 @property(nonatomic, strong) NSMutableArray *tableViewArray;
@@ -460,6 +463,50 @@
         [changeItemArray addObject:itemDict];
         [changeModelArray addObject:modelDict];
     }
+}
+
+- (void)changeCellCount:(YHBShoppingCartTableViewCell *)aCell keyBoardHeight:(CGFloat)aHeight
+{
+    CGSize size = self.tableView.contentSize;
+    changeHeight += aHeight-49-bottomHeight;
+    size.height += aHeight-49-bottomHeight;
+    self.tableView.contentSize = size;
+    
+    MLOG(@"%f", size.height);
+    MLOG(@"%f", aCell.top);
+    
+    CGFloat cellbottom = aCell.bottom+62+20;
+    if (cellbottom+aHeight>kMainScreenHeight)
+    {
+        oldOffset = self.tableView.contentOffset.y;
+        CGFloat cha = cellbottom+aHeight-kMainScreenHeight;
+        [UIView animateWithDuration:0.2 animations:^{
+            self.tableView.contentOffset = CGPointMake(0, cha);
+        }];
+    }
+    else
+    {
+        oldOffset = 0;
+    }
+}
+
+- (void)overChangeCellCount
+{
+    CGSize size = self.tableView.contentSize;
+    size.height -= changeHeight;
+    self.tableView.contentSize = size;
+    changeHeight=0;
+    
+    MLOG(@"%f", size.height);
+
+    if (oldOffset>0)
+    {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.tableView.contentOffset = CGPointMake(0, oldOffset);
+        }];
+        oldOffset=0;
+    }
+
 }
 
 - (void)touchCell:(YHBShoppingCartTableViewCell *)aCell WithSection:(int)aSection row:(int)aRow

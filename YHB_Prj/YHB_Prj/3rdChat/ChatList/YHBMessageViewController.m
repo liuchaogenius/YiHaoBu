@@ -30,6 +30,16 @@
     [super viewWillAppear:animated];
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (self.tableView.contentSize.height > self.tableView.frame.size.height)
+    {
+        CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
+        [self.tableView setContentOffset:offset animated:YES];
+    }
+}
+
 - (void)scrollViewToBottom
 {
     if (self.tableView.contentSize.height > self.tableView.frame.size.height)
@@ -155,11 +165,11 @@
     int row = (int)indexPath.row;
     if (row < self.dataSource.count)//|| row==self.dataSource.count)
     {
-        if (self.tableView.contentSize.height > self.tableView.frame.size.height && isFirstLoad)
-        {
-            [self scrollViewToBottom];
-            isFirstLoad = NO;
-        }
+//        if (self.tableView.contentSize.height > self.tableView.frame.size.height && isFirstLoad)
+//        {
+//            [self scrollViewToBottom];
+//            isFirstLoad = NO;
+//        }
         id obj = [self.dataSource objectAtIndex:row];
         if ([obj isKindOfClass:[NSString class]])
         {

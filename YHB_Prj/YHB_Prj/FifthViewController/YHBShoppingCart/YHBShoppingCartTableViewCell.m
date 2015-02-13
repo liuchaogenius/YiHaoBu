@@ -149,6 +149,57 @@
     return[scan scanFloat:&val] && [scan isAtEnd];
 }
 
+#pragma mark 键盘
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    [self keyboardWillAppear];
+    return YES;
+}
+
+- (void)keyboardWillAppear
+{
+    //注册通知,监听键盘出现
+    [[NSNotificationCenter defaultCenter]addObserver:self
+                                            selector:@selector(handleKeyboardDidShow:)
+                                                name:UIKeyboardDidShowNotification
+                                              object:nil];
+    //注册通知，监听键盘消失事件
+    [[NSNotificationCenter defaultCenter]addObserver:self
+                                            selector:@selector(handleKeyboardDidHidden)
+                                                name:UIKeyboardDidHideNotification
+                                              object:nil];
+}
+
+//监听事件
+- (void)handleKeyboardDidShow:(NSNotification*)paramNotification
+{
+    //获取键盘高度
+    NSValue *keyboardRectAsObject=[[paramNotification userInfo]objectForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect keyboardRect;
+    [keyboardRectAsObject getValue:&keyboardRect];
+    
+    [self.delegate changeCellCount:self keyBoardHeight:keyboardRect.size.height];
+}
+
+//- (void)handleKeyboardDidHidden
+//{
+//    [self.delegate overChangeCellCount];
+//}
+
+- (void)keyboardDidDisappear
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    [self keyboardDidDisappear];
+    [self.delegate overChangeCellCount];
+    return YES;
+}
+
+
 - (void)awakeFromNib {
     // Initialization code
 }

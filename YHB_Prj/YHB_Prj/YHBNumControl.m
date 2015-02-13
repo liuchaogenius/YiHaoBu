@@ -136,6 +136,18 @@
         [self.numberTextfield resignFirstResponder];
         self.numberTextfield.text = [oldText copy];
     }];
+    
+    if ([self.delegate respondsToSelector:@selector(textFieldShouldBeginEditing:)]) {
+        [self.delegate textFieldShouldBeginEditing:textField];
+    }
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    if ([self.delegate respondsToSelector:@selector(textFieldShouldEndEditing:)]) {
+        [self.delegate textFieldShouldEndEditing:textField];
+    }
     return YES;
 }
 
