@@ -91,7 +91,7 @@
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, (kHeadHeight-kTitleFont)/2.0, 200, kTitleFont)];
         label.textColor = [UIColor blackColor];
         label.font = [UIFont systemFontOfSize:kTitleFont];
-        label.text = @"色块 (长按显示大图)";
+        label.text = @"颜色 (长按显示大图)";
         _tipLabel = label;
         [_headView addSubview:label];
     }

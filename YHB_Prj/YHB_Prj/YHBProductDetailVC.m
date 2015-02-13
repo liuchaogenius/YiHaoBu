@@ -219,7 +219,7 @@
     view.backgroundColor = [UIColor whiteColor];
     UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, (view.height-kTitlefont)/2.0, kMainScreenWidth-20, kTitlefont)];
     textLabel.font = [UIFont systemFontOfSize:kTitlefont];
-    textLabel.text = @"选择色块、型号";
+    textLabel.text = @"选择颜色、型号";
     textLabel.textColor = [UIColor blackColor];
     [view addSubview:textLabel];
     self.selectCell = view;
