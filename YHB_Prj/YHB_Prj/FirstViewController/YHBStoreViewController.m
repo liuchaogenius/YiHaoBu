@@ -220,7 +220,7 @@ enum SgmBtn_tag
     
     //网络请求
     __weak YHBStoreViewController *weakself = self;
-    [self.infoManger getUserInfoWithToken:nil orUserId:[NSString stringWithFormat:@"%d",self.shopID] action:@"all" Success:^(NSDictionary *dataDic){
+    [self.infoManger getUserInfoWithToken:([YHBUser sharedYHBUser].token?:@"") orUserId:[NSString stringWithFormat:@"%d",self.shopID] action:@"all" Success:^(NSDictionary *dataDic){
         weakself.shopInfo = [YHBUserInfo modelObjectWithDictionary:dataDic];
         //MLOG(@"%@",weakself.shopInfo);
         if ((int)weakself.shopInfo.groupid > 5) {

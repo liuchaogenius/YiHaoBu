@@ -63,7 +63,7 @@
     
     NSMutableDictionary *postDic = [NSMutableDictionary dictionaryWithCapacity:2];
     if(token) [postDic setObject:token forKey:@"token"];
-    else if(userId) [postDic setObject:userId forKey:@"userid"];
+    if(userId) [postDic setObject:userId forKey:@"userid"];
     if(action) [postDic setObject:action forKey:@"action"];
     
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
