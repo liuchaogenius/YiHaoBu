@@ -38,6 +38,7 @@
 #import "ChatLinkTableViewCell.h"
 #import "YHBUser.h"
 #import "YHBProductDetailVC.h"
+#import "YHBStoreDetailViewController.h"
 
 #define KPageCount 20
 
@@ -617,6 +618,19 @@
     else if ([eventName isEqualToString:kRouterEventCommandTapEventName])
     {
         [self chatLinkPressed:model];
+    }
+    else if([eventName isEqualToString:kRouterEventChatHeadImageTapEventName])
+    {
+        [self headViewPressed:model];
+    }
+}
+
+- (void)headViewPressed:(MessageModel *)model
+{
+    if (model.isSender==NO)
+    {
+        YHBStoreDetailViewController *vc = [[YHBStoreDetailViewController alloc] initWithItemID:[_chatter intValue] isFromMall:NO];
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 
