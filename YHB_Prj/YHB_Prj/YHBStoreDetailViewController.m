@@ -19,6 +19,7 @@
 #define kSmallFont 11
 #define kStarWidth 25
 #define isTest 0
+#define kBigFont 16
 #define kContactViewHeight 60
 @interface YHBStoreDetailViewController ()
 
@@ -129,7 +130,7 @@
 {
     if (!_companyName) {
         _companyName = [[UILabel alloc] init];
-        _companyName.font = [UIFont systemFontOfSize:16];
+        _companyName.font = [UIFont systemFontOfSize:kBigFont];
         _companyName.textColor = [UIColor blackColor];
     }
     return _companyName;
@@ -139,7 +140,7 @@
 {
     if (!_trueName) {
         _trueName = [[UILabel alloc] init];
-        _trueName.font = [UIFont systemFontOfSize:16];
+        _trueName.font = [UIFont systemFontOfSize:kBigFont];
         _trueName.textColor = [UIColor blackColor];
     }
     return _trueName;
@@ -275,9 +276,9 @@
     [self.scrollView addSubview:self.fistSectionView];
     
     [self.fistSectionView addSubview:self.headImageView];
-    self.companyName.frame = CGRectMake(self.headImageView.right+5, 12, 200, kSmallFont);
+    self.companyName.frame = CGRectMake(self.headImageView.right+5, 12, 200, kBigFont);
     [self.fistSectionView addSubview:self.companyName];
-    self.trueName.frame = CGRectMake(self.companyName.left, self.companyName.bottom+20, 180, kSmallFont);
+    self.trueName.frame = CGRectMake(self.companyName.left, self.companyName.bottom+20, 180,kBigFont );
     [self.fistSectionView addSubview:self.trueName];
     
     self.currentY = self.headImageView.bottom + 10;
