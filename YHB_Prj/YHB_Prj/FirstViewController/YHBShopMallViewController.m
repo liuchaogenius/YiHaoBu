@@ -57,7 +57,7 @@
         _headersArray[1] = shopHead;
         
         YHBShopMallHeadView *productHead = [[YHBShopMallHeadView alloc] init];
-        productHead.title = @"产品推荐";
+        productHead.title = @"推荐产品";
         _headersArray[2] = productHead;
     }
     return _headersArray;

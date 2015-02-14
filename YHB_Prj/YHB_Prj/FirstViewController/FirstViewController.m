@@ -54,7 +54,7 @@
 {
     if (!_headersArray) {
         _headersArray = [NSMutableArray arrayWithCapacity:3];
-        NSArray *titleArray = @[@"热门标签",@"推荐产品",@"采购推荐"];
+        NSArray *titleArray = @[@"热门标签",@"产品推荐",@"采购推荐"];
         for (int i=0; i < 3; i++) {
             UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 30)];
             view.backgroundColor = [UIColor whiteColor];
