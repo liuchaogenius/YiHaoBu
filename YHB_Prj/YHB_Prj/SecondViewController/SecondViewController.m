@@ -281,7 +281,7 @@ typedef enum : NSUInteger {
 
 - (NSString *)getCateID
 {
-    if (self.tagsArray) {
+    if (_tagsArray && self.tagsArray.count) {
         NSMutableString *str= [NSMutableString stringWithCapacity:20];
         YHBCatSubcate *cate;
         for (int i=0;i<self.tagsArray.count-1;i++) {
@@ -587,6 +587,7 @@ typedef enum : NSUInteger {
 - (void)shouldSearch:(NSNotification *)notf
 {
     NSString *content = notf.userInfo[kSearchMessage];
+    _tagsArray = nil;
     MLOG(@"%@",notf.userInfo);
     if (content.length) {
         UIButton *btn = (UIButton *)[self.segmentView viewWithTag:Search_product];

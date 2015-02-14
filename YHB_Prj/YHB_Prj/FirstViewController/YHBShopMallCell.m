@@ -88,7 +88,7 @@
 - (UIView *)midBlankView
 {
     if (!_midBlankView) {
-        _midBlankView = [[UIView alloc] initWithFrame:CGRectMake(10+(kCViewWidth+10), 0, kCViewWidth+10, kcellHeight)];
+        _midBlankView = [[UIView alloc] initWithFrame:CGRectMake(10+(kCViewWidth+10), 0, kCViewWidth+10, self.height)];
         _midBlankView.backgroundColor = [UIColor whiteColor];
     }
     return _midBlankView;
@@ -97,7 +97,7 @@
 - (UIView *)rightBlankView
 {
     if (!_rightBlankView) {
-        _rightBlankView = [[UIView alloc] initWithFrame:CGRectMake(10+2*(kCViewWidth+10), 0, kCViewWidth+10, kcellHeight)];
+        _rightBlankView = [[UIView alloc] initWithFrame:CGRectMake(10+2*(kCViewWidth+10), 0, kCViewWidth+10, self.height)];
         _rightBlankView.backgroundColor = [UIColor whiteColor];
     }
     return _rightBlankView;
@@ -156,6 +156,7 @@
 
 - (void)setImage:(NSString *)imgurl title:(NSString *)title time:(NSString *)time hits:(int)hits part:(int)part
 {
+    self.height = kcell2Height;
     UILabel *titleLabel = self.titleLabelArray[part];
     titleLabel.text = title;
     UIImageView *imageView = self.imageViewArray[part];
@@ -191,9 +192,9 @@
     [view addSubview:imageView];
 
     
-    UILabel *titleLable = [[UILabel alloc] initWithFrame:CGRectMake(kSpaceWidth, imageView.bottom+5, kImageWidth, kTitlefont*2+5)];
+    UILabel *titleLable = [[UILabel alloc] initWithFrame:CGRectMake(0, imageView.bottom+5, kImageWidth, kTitlefont*2+5)];
     titleLable.textAlignment = NSTextAlignmentLeft;
-    titleLable.textColor = [UIColor lightGrayColor];
+    titleLable.textColor = RGBCOLOR(153, 153, 153);
     titleLable.numberOfLines = 2;
     titleLable.font = [UIFont systemFontOfSize:kTitlefont];
     self.titleLabelArray[num] = titleLable;

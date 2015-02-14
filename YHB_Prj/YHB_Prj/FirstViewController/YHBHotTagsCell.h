@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #define kHotTagCellHeight 75
-#define kTagRowNum 5
+#define kTagRowNum 4
 @protocol YHBHotTagsDelegate <NSObject>
 
 - (void)touchHotTagsWithTag:(NSInteger)tag;
@@ -20,5 +20,6 @@
 @property (strong, nonatomic) NSMutableArray *tagsArray;
 //@property (strong, nonatomic) UILabel *titleLabel;
 @property (weak, nonatomic) id<YHBHotTagsDelegate> delegate;
+- (void)setButtonCount:(NSInteger)count;
 
 @end

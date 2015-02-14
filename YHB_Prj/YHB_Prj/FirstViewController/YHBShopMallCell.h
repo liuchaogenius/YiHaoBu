@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #define kcellHeight kMainScreenWidth *485/(1080)
+#define kcell2Height (kcellHeight-25)
 enum shopMallPart
 {
     left_part = 0,

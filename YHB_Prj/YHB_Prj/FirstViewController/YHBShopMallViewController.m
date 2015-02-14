@@ -136,11 +136,11 @@
     if (section == 0) {
         return 1;
     }else if(section == 1){//促销产品
-        return self.indexModel.hotlist.count/3 + self.indexModel.hotlist.count%3 ? 1 : 0;
+        return self.indexModel.hotlist.count/3 + (self.indexModel.hotlist.count%3 ? 1 : 0);
     }else if (section == 2){//推荐店铺
         return self.indexModel.shoplist.count ? 1:0;
     }else if (section == 3){//产品推荐
-        return self.indexModel.malllist.count/3 + self.indexModel.malllist.count%3 ? 1 : 0;
+        return self.indexModel.malllist.count/3 + (self.indexModel.malllist.count%3 ? 1 : 0);
     }
     else{
         return 2;

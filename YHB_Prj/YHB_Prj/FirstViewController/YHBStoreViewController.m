@@ -101,7 +101,8 @@ enum SgmBtn_tag
         _sellTableView.delegate = self;
         _sellTableView.dataSource = self;
         _sellTableView.backgroundColor = kViewBackgroundColor;
-        _sellTableView.rowHeight = kcellHeight;
+        [_sellTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        _sellTableView.rowHeight = kcell2Height;
     }
     return _sellTableView;
 }
@@ -113,6 +114,7 @@ enum SgmBtn_tag
         _productTableView.tag = SgmBtn_productInfo;
         _productTableView.delegate = self;
         _productTableView.dataSource = self;
+        [_productTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         _productTableView.backgroundColor = kViewBackgroundColor;
         _productTableView.rowHeight = kcellHeight;
         
@@ -127,6 +129,7 @@ enum SgmBtn_tag
         _templetTableView.tag = SgmBtn_templetInfo;
         _templetTableView.delegate = self;
         _templetTableView.dataSource = self;
+        [_templetTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         _templetTableView.backgroundColor = kViewBackgroundColor;
         _templetTableView.rowHeight = kcellHeight;
     }
@@ -402,7 +405,8 @@ enum SgmBtn_tag
 {
     int type = (int)tableView.tag;
     NSMutableArray *array = self.rslistDic[[NSString stringWithFormat:@"%d",type]];
-    MLOG(@"%@",array);
+    //MLOG(@"%@",array);
+    //MLOG(@"count = %d",array.count);
     return array ? (array.count/3 + (array.count%3 ?1 : 0)) : 0;
 }
 

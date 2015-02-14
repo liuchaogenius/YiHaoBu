@@ -160,13 +160,14 @@
 {
     if (section == 2) {
         //热门标签
-        return self.pageIndexMdoel.taglist.count/kTagRowNum + self.pageIndexMdoel.taglist.count%kTagRowNum ? 1 : 0;
+        return 1;
+        //return self.pageIndexMdoel.taglist.count/kTagRowNum + (self.pageIndexMdoel.taglist.count%kTagRowNum ? 1 : 0);
     }else if (section == 3){
         //产品推荐
-        return self.pageIndexMdoel.malllist.count/3 + self.pageIndexMdoel.malllist.count%3 ? 1 : 0;
+        return self.pageIndexMdoel.malllist.count/3 + (self.pageIndexMdoel.malllist.count%3 ? 1 : 0);
     }else if(section == 4){
         //采购推荐
-        return self.pageIndexMdoel.selllist.count/3 + self.pageIndexMdoel.selllist.count%3 ? 1 : 0;
+        return self.pageIndexMdoel.selllist.count/3 + (self.pageIndexMdoel.selllist.count%3 ? 1 : 0);
     }else return 1;
 }
 
@@ -206,8 +207,10 @@
             return kHotTagCellHeight;
             break;
         case 3:
-        case 4:
             return kcellHeight;
+            break;
+        case 4:
+            return kcell2Height;
         default:
             return 0;
             break;
@@ -237,13 +240,17 @@
                 cell.delegate = self;
             }
             int i = 0;
-            NSInteger max = self.pageIndexMdoel.taglist.count > 10 ? 10 : self.pageIndexMdoel.taglist.count;
-            for (i = 0; i < max ;i++) {
-                UIButton *button = cell.tagsArray[i];
-                [button setTitle:self.pageIndexMdoel.taglist[i] forState:UIControlStateNormal];
-                button.hidden = NO;
+           // NSInteger max = self.pageIndexMdoel.taglist.count > 10 ? 10 : self.pageIndexMdoel.taglist.count;
+            if (self.pageIndexMdoel.taglist.count) {
+                [cell setButtonCount:self.pageIndexMdoel.taglist.count];
+                for (i = 0; i < self.pageIndexMdoel.taglist.count ;i++) {
+                    UIButton *button = cell.tagsArray[i];
+                    [button setTitle:self.pageIndexMdoel.taglist[i] forState:UIControlStateNormal];
+                    button.hidden = NO;
+                }
             }
-            for (; i < 10; i++)  ((UIButton *)cell.tagsArray[i]).hidden = YES;
+            
+            //for (; i < 10; i++)  ((UIButton *)cell.tagsArray[i]).hidden = YES;
             return cell;
             
         }
@@ -292,8 +299,7 @@
         }
         default:
         {
-            UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
-            return cell;
+            return nil;
         }
             break;
     }
@@ -423,7 +429,7 @@
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.section == 4){
-        YHBSelllist *list = self.pageIndexMdoel.malllist[indexPath.row*3+part];
+        YHBSelllist *list = self.pageIndexMdoel.selllist[indexPath.row*3+part];
         YHBBuyDetailViewController *vc = [[YHBBuyDetailViewController alloc] initWithItemId:(int)list.itemid andIsMine:NO isModal:NO];
         vc.hidesBottomBarWhenPushed  = YES;
         [self.navigationController pushViewController:vc animated:YES];

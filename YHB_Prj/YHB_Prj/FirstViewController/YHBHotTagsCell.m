@@ -14,21 +14,35 @@
 
 @implementation YHBHotTagsCell
 
-- (NSMutableArray *)tagsArray
+//- (NSMutableArray *)tagsArray
+//{
+//    if (!_tagsArray) {
+//        _tagsArray = [NSMutableArray arrayWithCapacity:10];
+//        
+//        CGFloat btnWidth = (kMainScreenWidth-kBlankWidth*kTagRowNum)/kTagRowNum;
+//        for (int i = 0; i < _tagsArray.count; i++) {
+//            UIButton *btn = [self customTagButtonWithFrame:CGRectMake(kBlankWidth + (i%kTagRowNum)*(kBlankWidth+btnWidth), kTagRowNum+(i/kTagRowNum)*(10+kTagBtnHeight), btnWidth, kTagBtnHeight) andTag:i+kHotTagBase];
+//
+//            _tagsArray[i] = btn;
+//            btn.hidden = NO;
+//            [self.contentView addSubview:btn];
+//        }
+//    }
+//    return _tagsArray;
+//}
+- (void)setButtonCount:(NSInteger)count
 {
-    if (!_tagsArray) {
-        _tagsArray = [NSMutableArray arrayWithCapacity:10];
-        
-        CGFloat btnWidth = (kMainScreenWidth-kBlankWidth*kTagRowNum)/4.0f;
-        for (int i = 0; i < 10; i++) {
-            UIButton *btn = [self customTagButtonWithFrame:CGRectMake(kBlankWidth + (i%kTagRowNum)*(kBlankWidth+btnWidth), 5+(i/kTagRowNum)*(10+kTagBtnHeight), btnWidth, kTagBtnHeight) andTag:i+kHotTagBase];
-
-            _tagsArray[i] = btn;
-            btn.hidden = NO;
-            [self.contentView addSubview:btn];
-        }
+    if (_tagsArray.count < count) {
+        _tagsArray = [NSMutableArray arrayWithCapacity:count];
     }
-    return _tagsArray;
+    CGFloat btnWidth = (kMainScreenWidth-kBlankWidth*(kTagRowNum+1))/kTagRowNum;
+    for (int i = 0; i < count; i++) {
+        UIButton *btn = [self customTagButtonWithFrame:CGRectMake(kBlankWidth + (i%kTagRowNum)*(kBlankWidth+btnWidth), kTagRowNum+(i/kTagRowNum)*(10+kTagBtnHeight), btnWidth, kTagBtnHeight) andTag:i+kHotTagBase];
+        
+        _tagsArray[i] = btn;
+        btn.hidden = NO;
+        [self.contentView addSubview:btn];
+    }
 }
 
 - (void)awakeFromNib {
@@ -48,8 +62,7 @@
 //        label.tintColor = [UIColor blackColor];
 //        [self.contentView addSubview:label];
 //        self.titleLabel = label;
-        if (self.tagsArray) {
-        }
+
     }
     return self;
 }

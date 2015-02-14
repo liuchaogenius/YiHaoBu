@@ -8,13 +8,15 @@
 
 #import "YHBSupplyDetailManage.h"
 #import "NetManager.h"
+#import "YHBUser.h"
 
 @implementation YHBSupplyDetailManage
 
 - (void)getSupllyDetailWithItemid:(int)aItemId SuccessBlock:(void(^)(YHBSupplyDetailModel *aModel))aSuccBlock andFailBlock:(void(^)(NSString *aStr))aFailBlock
 {
     NSString *supplyDetailUrl = nil;
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", aItemId], @"itemid",nil];
+
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", aItemId], @"itemid",[YHBUser sharedYHBUser].token?:@"",@"token",nil];
     kYHBRequestUrl(@"getSellDetail.php", supplyDetailUrl);
     [NetManager requestWith:dict url:supplyDetailUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
 //        MLOG(@"%@", successDict);
