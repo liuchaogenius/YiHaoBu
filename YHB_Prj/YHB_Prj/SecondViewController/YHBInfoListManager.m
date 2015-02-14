@@ -67,7 +67,7 @@
         [postDic setObject:keyWord forKey:@"keyword"];
     }
     if (cateID.length) {
-        [postDic setObject:cateID forKey:@"cateid"];
+        [postDic setObject:cateID forKey:@"catid"];
     }
     [postDic setObject:[NSNumber numberWithInteger:pageID] forKey:@"pageid"];
     [postDic setObject:[NSNumber numberWithInteger:pageSize] forKey:@"pagesize"];
@@ -127,7 +127,7 @@
         [postDic setObject:keyWord forKey:@"keyword"];
     }
     if (cateID.length) {
-        [postDic setObject:cateID forKey:@"cateid"];
+        [postDic setObject:cateID forKey:@"catid"];
     }
     [postDic setObject:[NSNumber numberWithInteger:pageID] forKey:@"pageid"];
     [postDic setObject:[NSNumber numberWithInteger:pageSize] forKey:@"pagesize"];
@@ -185,7 +185,7 @@
         [postDic setObject:keyWord forKey:@"keyword"];
     }
     if (cateID.length) {
-        [postDic setObject:cateID forKey:@"cateid"];
+        [postDic setObject:cateID forKey:@"catid"];
     }
     [postDic setObject:[NSNumber numberWithInteger:pageID] forKey:@"pageid"];
     [postDic setObject:[NSNumber numberWithInteger:pageSize] forKey:@"pagesize"];
@@ -231,7 +231,7 @@
         [postDic setObject:keyWord forKey:@"keyword"];
     }
     if (cateID.length) {
-        [postDic setObject:cateID forKey:@"cateid"];
+        [postDic setObject:cateID forKey:@"catid"];
     }
     [postDic setObject:[NSNumber numberWithInteger:pageID] forKey:@"pageid"];
     [postDic setObject:[NSNumber numberWithInteger:pageSize] forKey:@"pagesize"];

@@ -32,9 +32,9 @@
 //}
 - (void)setButtonCount:(NSInteger)count
 {
-    if (_tagsArray.count < count) {
-        _tagsArray = [NSMutableArray arrayWithCapacity:count];
-    }
+    _tagsArray = nil;
+    _tagsArray = [NSMutableArray arrayWithCapacity:count];
+
     CGFloat btnWidth = (kMainScreenWidth-kBlankWidth*(kTagRowNum+1))/kTagRowNum;
     for (int i = 0; i < count; i++) {
         UIButton *btn = [self customTagButtonWithFrame:CGRectMake(kBlankWidth + (i%kTagRowNum)*(kBlankWidth+btnWidth), kTagRowNum+(i/kTagRowNum)*(10+kTagBtnHeight), btnWidth, kTagBtnHeight) andTag:i+kHotTagBase];

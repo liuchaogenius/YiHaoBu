@@ -239,6 +239,7 @@
                 //[cell setSelectionStyle:UITableViewCellSelectionStyleNone];
                 cell.delegate = self;
             }
+            [cell.contentView removeSubviews];
             int i = 0;
            // NSInteger max = self.pageIndexMdoel.taglist.count > 10 ? 10 : self.pageIndexMdoel.taglist.count;
             if (self.pageIndexMdoel.taglist.count) {
