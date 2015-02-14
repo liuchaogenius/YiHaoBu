@@ -162,13 +162,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(YHBUser);
     //MLOG(@"%@",self.userFilePath);
 }
 
-#pragma mark - result = -11 时的alertview回调方法
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kLoginForUserMessage object:[NSNumber numberWithBool:NO]];
-    }
-}
+//#pragma mark - 全局异常result  时的alertview回调方法
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    if ([alertView.title isEqualToString:@"APP维护中"]) {
+//        NSMutableArray *ary = [NSMutableArray array];
+//        [ary addObject:nil];
+//    }
+//    if (buttonIndex == 1) {
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kLoginForUserMessage object:[NSNumber numberWithBool:NO]];
+//    }
+//}
 
 #pragma mark - 环信相关
 - (void)LoginEaseMobIfNeeded

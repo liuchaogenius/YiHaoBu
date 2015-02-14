@@ -170,6 +170,5 @@ NSNumber *iNum = [NSNumber numberWithLongLong:i];\
 #define kNoNet @"你的网络有点问题"
 #define kErrorStr ((NSString *)successDict[@"error"])?:@"未知错误"
 
-#define kResult_11_CheckWithAlert if(result == -11)[[[UIAlertView alloc] initWithTitle:@"请先登录" message:@"登录后才能继续操作" delegate:[YHBUser sharedYHBUser] cancelButtonTitle:@"取消" otherButtonTitles:@"登陆", nil] show];
-
+#define kResult_11_CheckWithAlert if(result>=-19 && result <= -10){[[NSNotificationCenter defaultCenter] postNotificationName:KGlobalResultMessage object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:result],@"result",kErrorStr,@"error", nil]];}
 #endif

@@ -17,6 +17,7 @@
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
 #import "YHBUser.h"
+#define kGlobleAVTag 404
 
 @interface AppDelegate ()<UIAlertViewDelegate>
 
@@ -43,7 +44,8 @@
     [self.window makeKeyAndVisible];
     [self registerRemoteNotification];
     [self checkVersion];
-  
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(globalResultHandle:) name:KGlobalResultMessage object:nil];
+    
     //注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
     NSString *apnsCertName = @"kuaibu_pushcert";
     [[EaseMob sharedInstance] registerSDKWithAppKey:@"yibu2015#kuaibu" apnsCertName:apnsCertName];
@@ -119,6 +121,7 @@
     NSDictionary *postDic = [NSDictionary dictionaryWithObjectsAndKeys:@"IOS",@"device",appVersion?:@"",@"version", nil];
     [NetManager requestWith:postDic url:url method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         int result = [successDict[@"result"] intValue];
+        kResult_11_CheckWithAlert;
         if (result == 1) {
             NSDictionary *dataDict = [successDict objectForKey:@"data"];
             int force = [[dataDict objectForKey:@"force"] intValue];
@@ -144,18 +147,28 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 0) {
-        MLOG(@"%@",self.updateUrl);
-        //#if RELEASE
-        NSString *str = self.updateUrl;//[NSString stringWithFormat:@"http://itunes.apple.com/us/app/id%d", 945963130];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
-        if(self.force == 1)
-        {
+    if (alertView.tag == kGlobleAVTag) {
+        if ([alertView.title isEqualToString:@"APP维护中"]) {
             NSMutableArray *ary = [NSMutableArray array];
             [ary addObject:nil];
-            
         }
-        //#endif
+        if (buttonIndex == 1) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kLoginForUserMessage object:[NSNumber numberWithBool:NO]];
+        }
+    }else {
+        if (buttonIndex == 0) {
+            MLOG(@"%@",self.updateUrl);
+            //#if RELEASE
+            NSString *str = self.updateUrl;//[NSString stringWithFormat:@"http://itunes.apple.com/us/app/id%d", 945963130];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+            if(self.force == 1)
+            {
+                NSMutableArray *ary = [NSMutableArray array];
+                [ary addObject:nil];
+                
+            }
+            //#endif
+        }
     }
 }
 
@@ -237,6 +250,25 @@
 {
     //SDK方法调用
     [[EaseMob sharedInstance] application:application didReceiveLocalNotification:notification];
+}
+
+#pragma mark - 全局错误处理
+- (void)globalResultHandle : (NSNotification *)notif
+{
+    NSInteger result =  [notif.userInfo[@"result"] integerValue];
+    NSString *errorStr = notif.userInfo[@"error"];
+    if(result <= -11 && result >= -19){
+        if ([YHBUser sharedYHBUser].isLogin) {
+            [[YHBUser sharedYHBUser] logoutUser];
+        }
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先登录" message:errorStr delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登陆", nil];
+        alertView.tag = kGlobleAVTag;
+    }else if(result == -10){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"APP维护中" message:errorStr delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        alertView.tag = kGlobleAVTag;
+        [alertView show];
+    }
+    
 }
 
 @end

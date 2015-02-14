@@ -19,6 +19,8 @@
 #define kSearchMessage @"search"//搜索通知
 #define kSearchCateMessage @"searchCate"//搜索cate
 
+#define KGlobalResultMessage @"globalresult"
+
 #define kPaySuccess @"paySuccess"
 #define kPayFail @"payFail"
 #define kAlipayOrderResultMessage @"payorderResult"

@@ -252,7 +252,7 @@
             
             //for (; i < 10; i++)  ((UIButton *)cell.tagsArray[i]).hidden = YES;
             return cell;
-            
+
         }
             break;
         case 3: //产品推荐
