@@ -286,7 +286,7 @@
 //    [self.fistSectionView addSubview:[self customTitleLabelWithY:self.currentY+10 Title:@"评分情况:" isBlackColor:YES]];
 //    self.currentY += 35;
     [self.fistSectionView addSubview:[self getLineWithY:self.currentY]];
-    self.currentY += 10;
+    self.currentY += 10; 
     [self.fistSectionView addSubview:[self customTitleLabelWithY:self.currentY Title:@"描述相符:" isBlackColor:NO]];
     self.currentY += 20;
     for (NSInteger i = 0; i < 5; i++) {

@@ -675,7 +675,10 @@ typedef enum : NSUInteger {
             if ((array = self.modelsDic[[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]]) != nil) {
                 [self.modelsDic removeObjectForKey:[self keyWithSearchType:_selectSearchType FilterType:_selectFilType]];
             }
-            [self getFirstPageData];
+            if ([self isNeedSearch]) {
+                [self getFirstPageData];
+            }
+            
             
         }
     }
