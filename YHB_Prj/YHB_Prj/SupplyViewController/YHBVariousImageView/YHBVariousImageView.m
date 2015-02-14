@@ -187,7 +187,7 @@
             imagePickerController.mediaTypes =[UIImagePickerController availableMediaTypesForSourceType:imagePickerController.sourceType];
             if (sourceType == UIImagePickerControllerSourceTypeCamera)
             {
-                imagePickerController.allowsEditing = NO;
+                imagePickerController.allowsEditing = YES;
             }
             
             [[self viewController] presentViewController:imagePickerController animated:YES completion:^{}];
