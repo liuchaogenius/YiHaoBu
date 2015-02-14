@@ -159,7 +159,7 @@
     [self.view addSubview:self.storeInfoView];
     [self.view addSubview:(_commitBtn =  [self customButtonWithTitle:@"提交评价" andY:self.storeInfoView.bottom+30])];
     
-    [self.orderInfoView.headImageView sd_setImageWithURL:[NSURL URLWithString:self.model.thumb]];
+    [self.orderInfoView.headImageView sd_setImageWithURL:[NSURL URLWithString:self.model.thumb] placeholderImage:nil options:SDWebImageCacheMemoryOnly];
     self.orderInfoView.titleLabel.text = self.model.title;
     self.orderInfoView.numberLabel.text = [NSString stringWithFormat:@"数量：%@",self.model.number];
 #warning money or price ?

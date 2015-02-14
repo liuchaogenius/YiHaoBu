@@ -167,7 +167,7 @@
     _shopTitle.text = sellCom;
     _smallShopTitle.text = [NSString stringWithFormat:@"卖家：%@",sellCom];
     _productTitle.text = title;
-    [_productImageView sd_setImageWithURL:[NSURL URLWithString:thumb]];
+    [_productImageView sd_setImageWithURL:[NSURL URLWithString:thumb] placeholderImage:nil options:SDWebImageCacheMemoryOnly];
     _numberLabel.text = [@"x" stringByAppendingString:number];
     _priceLabel.text = [@"￥" stringByAppendingString:price];
     _feeLabel.text = [@"￥" stringByAppendingString:fee];

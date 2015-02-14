@@ -105,7 +105,7 @@
     self.orderInfoView.numberLabel.text = [NSString stringWithFormat:@"数量：%@",num];
     self.orderInfoView.priceLabel.text = [NSString stringWithFormat:@"价格：%@",price];
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@",amount];
-    [self.orderInfoView.headImageView sd_setImageWithURL:[NSURL URLWithString:thumb] placeholderImage:[UIImage imageNamed:@"DefaultProduct"]];
+    [self.orderInfoView.headImageView sd_setImageWithURL:[NSURL URLWithString:thumb] placeholderImage:[UIImage imageNamed:@"DefaultProduct"] options:SDWebImageCacheMemoryOnly];
     if (naction.count) {
         self.buttonsView.hidden = NO;
         self.height = kpriceHeight+kInfoViewHeight+kBtnHeight;

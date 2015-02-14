@@ -56,7 +56,7 @@
 
 - (void)setCellWithModel:(YHBGetPushBuylist *)aModel
 {
-    [imgView sd_setImageWithURL:[NSURL URLWithString:aModel.thumb] placeholderImage:[UIImage imageNamed:@"DefaultProduct"]];
+    [imgView sd_setImageWithURL:[NSURL URLWithString:aModel.thumb] placeholderImage:[UIImage imageNamed:@"DefaultProduct"] options:SDWebImageCacheMemoryOnly];
     NSString *newString = [aModel.adddate substringWithRange:NSMakeRange(0, 10)];
     timeLabel.text = newString;
     if ([aModel.isread isEqualToString:@"YES"])

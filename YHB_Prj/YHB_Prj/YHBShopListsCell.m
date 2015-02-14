@@ -71,7 +71,7 @@
             
             UIImageView *imageView = (UIImageView *)[button viewWithTag:kImageViewTag];
             
-            [imageView sd_setImageWithURL:[NSURL URLWithString:list.avatar] placeholderImage:[UIImage imageNamed:@"DefualtProduct"]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:list.avatar] placeholderImage:[UIImage imageNamed:@"DefualtProduct"] options:SDWebImageCacheMemoryOnly];
             [button addTarget:self action:@selector(touchButton:) forControlEvents:UIControlEventTouchUpInside];
             button.tag = i;
             [self.contentView addSubview:button];

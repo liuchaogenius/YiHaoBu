@@ -116,7 +116,7 @@
 - (void)setCellWithModel:(YHBShopCartCartlist *)aModel
 {
     myModel = aModel;
-    [shopImgView sd_setImageWithURL:[NSURL URLWithString:aModel.thumb]];
+    [shopImgView sd_setImageWithURL:[NSURL URLWithString:aModel.thumb] placeholderImage:nil options:SDWebImageCacheMemoryOnly];
     countLabel.text = [NSString stringWithFormat:@"×%.1f", [aModel.number floatValue]];
     NSString *newString = [countLabel.text substringWithRange:NSMakeRange(1, [countLabel.text length] - 1)];
     changeView.number = [newString floatValue];

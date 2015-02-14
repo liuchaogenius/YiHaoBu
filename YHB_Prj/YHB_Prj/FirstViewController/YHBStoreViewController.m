@@ -192,10 +192,10 @@ enum SgmBtn_tag
     [super viewWillAppear:YES];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
+- (void)viewDidDisappear:(BOOL)animated
 {
     [SVProgressHUD dismiss];
-    [super viewWillDisappear:animated];
+    [super viewDidDisappear:animated];
 }
 
 - (instancetype)initWithShopID:(int)shopID
@@ -258,6 +258,9 @@ enum SgmBtn_tag
                 [weakself.backScrollView setContentOffset:CGPointMake(kMainScreenWidth, 0) animated:NO];
                 [weakself touchSgmButton:(UIButton *)[self.sgmBtmScrollView viewWithTag:SgmBtn_productInfo]];
             }
+        }else {
+            [SVProgressHUD showErrorWithStatus:@"该用户未开通商城" duration:1.0 cover:YES offsetY:0];
+            [self.navigationController popViewControllerAnimated:YES];
         }
     } failure:^{
         [SVProgressHUD showErrorWithStatus:@"获取信息失败,请稍后再试！" cover:YES offsetY:0];
@@ -565,7 +568,7 @@ enum SgmBtn_tag
             sender.selected = !sender.selected;
             UILabel *title = (UILabel *)[sender viewWithTag:SgmLabel_title];
             title.text = sender.selected ? @"已关注" : @"加商友";
-            [SVProgressHUD dismissWithSuccess:sender.selected ? @"关注成功" : @"取消关注成功"];
+            [SVProgressHUD dismiss];
         } failure:^(NSString *error) {
             [SVProgressHUD dismissWithError:error];
         }];

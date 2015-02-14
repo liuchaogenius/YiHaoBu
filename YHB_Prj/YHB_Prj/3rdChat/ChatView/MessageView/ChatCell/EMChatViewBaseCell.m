@@ -79,7 +79,7 @@ NSString *const kRouterEventChatHeadImageTapEventName = @"kRouterEventChatHeadIm
     else
     {
         UIImage *placeholderImage = [UIImage imageNamed:@"chatListCellHead"];
-        [self.headImageView sd_setImageWithURL:_messageModel.headImageURL placeholderImage:placeholderImage];
+        [self.headImageView sd_setImageWithURL:_messageModel.headImageURL placeholderImage:placeholderImage options:SDWebImageCacheMemoryOnly];
     }
 }
 

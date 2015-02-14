@@ -67,7 +67,7 @@
                 else
                 {
                     YHBSupplyDetailPic *model = [self.webPhotoArray objectAtIndex:i];
-                    [photoBtn sd_setImageWithURL:[NSURL URLWithString:model.thumb] forState:UIControlStateNormal];
+                    [photoBtn sd_setImageWithURL:[NSURL URLWithString:model.thumb] forState:UIControlStateNormal placeholderImage:nil options:SDWebImageCacheMemoryOnly];
                 }
                 [photoBtn addTarget:self action:@selector(touchPhoto:) forControlEvents:UIControlEventTouchUpInside];
                 photoBtn.tag = 1000+i;

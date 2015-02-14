@@ -134,7 +134,7 @@
 - (void)setUIWithTitle:(NSString *)title imageUrl:(NSString *)urlstr desStar:(NSString *)star1 servStar:(NSString *)star2
 {
     self.titleLabel.text = title;
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:urlstr]];
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:urlstr] placeholderImage:nil options:SDWebImageCacheMemoryOnly];
     self.desStarlabel.text = star1;
     self.servStarlabel.text = star2;
 }

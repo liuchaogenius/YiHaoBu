@@ -202,7 +202,7 @@
                     [UIImage imageNamed:@"DefualtUser"] options:SDWebImageCacheMemoryOnly];
         if(thumb)
             [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:thumb] placeholderImage:[UIImage imageNamed:@"userBannerDefault"] options:SDWebImageCacheMemoryOnly];
-        MLOG(@"thumb:---->%@",thumb);
+        MLOG(@"thumb:---->%@   avator------>????:%@",thumb,avator);
 //        if (credit && !self.creditLabel.superview) {
 //            [self.loginedView addSubview:self.creditLabel];
 //        }
@@ -232,6 +232,7 @@
 
 - (void)refreshViewWithIslogin:(BOOL)isLogin group:(NSInteger)group name:(NSString *)name avator:(NSString *)avator thumb:(NSString *)thumb company:(NSString *)company friend:(NSInteger)firend
 {
+    MLOG(@"%@",thumb);
     [self refreshSelfHeadWithIsLogin:YES name:name avator:avator thumb:thumb group:group company:company  money:nil lock:nil credit:nil];
 //    if (![self.privateButton superview]) {
 //        [self addSubview:self.privateButton];

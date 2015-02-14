@@ -75,7 +75,7 @@
         [imageView setContentMode:UIViewContentModeScaleAspectFill];
         imageView.clipsToBounds = YES;
         MLOG(@"%@",urlArray);
-        [imageView sd_setImageWithURL:[NSURL URLWithString:urlArray[_isNeedCycle ? (i-1+imageNum)%imageNum : i]]];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:urlArray[_isNeedCycle ? (i-1+imageNum)%imageNum : i]] placeholderImage:nil options:SDWebImageCacheMemoryOnly];
         [self.headScrollView addSubview:imageView];
         imageView.tag = i;
     }

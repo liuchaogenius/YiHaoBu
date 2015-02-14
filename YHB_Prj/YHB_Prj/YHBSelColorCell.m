@@ -94,7 +94,7 @@
     if (title.length) {
         UIImageView *imgv = self.imageViewArray[part];
         //[btn sd_setBackgroundImageWithURL:[NSURL URLWithString:urlStr] forState:UIControlStateNormal];
-        [imgv sd_setImageWithURL:[NSURL URLWithString:urlStr]];
+        [imgv sd_setImageWithURL:[NSURL URLWithString:urlStr] placeholderImage:nil options:SDWebImageCacheMemoryOnly];
         UILabel *label = self.titleLabelArray[part];
         label.text = title;
         if ([view superview]) {

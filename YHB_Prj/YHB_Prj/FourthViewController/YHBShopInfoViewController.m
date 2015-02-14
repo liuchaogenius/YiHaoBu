@@ -316,7 +316,7 @@ enum TextTag
 - (void)setData
 {
     YHBUser *user =[YHBUser sharedYHBUser];
-    [self.userImageView sd_setImageWithURL:[NSURL URLWithString:user.userInfo.avatar]];
+    [self.userImageView sd_setImageWithURL:[NSURL URLWithString:user.userInfo.avatar] placeholderImage:nil options:SDWebImageCacheMemoryOnly];
     UITextField *tf;
     tf = self.textFieldArray[TextField_Name];
     tf.text = user.userInfo.truename;

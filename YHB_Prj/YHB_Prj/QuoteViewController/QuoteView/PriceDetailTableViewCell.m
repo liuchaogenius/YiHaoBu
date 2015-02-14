@@ -77,7 +77,7 @@
 {
     self.noteView.hidden = YES;
     self.goodTitleLabel.text = aModel.company;
-    [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aModel.avatar]];
+    [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aModel.avatar] placeholderImage:nil options:SDWebImageCacheMemoryOnly];
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@", aModel.price];
     self.goodEditTimeLabel.text = aModel.adddate;
     self.typeLabel.text = aModel.typename;

@@ -242,7 +242,7 @@
 #pragma mark - 更新UI
 - (void)setUIWithStoreInfo:(YHBUserInfo *)info
 {
-    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:info.avatar]];
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:info.avatar] placeholderImage:nil options:SDWebImageCacheMemoryOnly];
     self.nameLabel.text = info.truename;
     self.companyLabel.text = info.truename;
     self.companyName.text = info.company;

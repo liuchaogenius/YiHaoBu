@@ -78,7 +78,7 @@
 {
     if (aModel.thumb)
     {
-        [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aModel.thumb] placeholderImage:[UIImage imageNamed:@"DefaultProduct"]];
+        [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aModel.thumb] placeholderImage:[UIImage imageNamed:@"DefaultProduct"] options:SDWebImageCacheMemoryOnly];
     }
     
     if (aModel.title)
@@ -192,7 +192,7 @@
     self.goodAmountLabel.hidden=YES;
     if (aImageUrl)
     {
-        [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aImageUrl]];
+        [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aImageUrl] placeholderImage:nil options:SDWebImageCacheMemoryOnly];
     }
     
     if (aTitle)

@@ -109,7 +109,7 @@
 
 - (void)setUIWithName:(NSString *)name image:(NSString *)urlstr comment:(NSString *)comment date:(NSString *)date
 {
-    [self.headImageVeiw sd_setImageWithURL:[NSURL URLWithString:urlstr]];
+    [self.headImageVeiw sd_setImageWithURL:[NSURL URLWithString:urlstr] placeholderImage:nil options:SDWebImageCacheMemoryOnly];
     self.nameLabel.text = name;
     self.commentLabel.text = comment;
     self.dateLabel.text = date;

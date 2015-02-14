@@ -151,7 +151,7 @@
     UILabel *priceLabel = self.priceLabelArray[part];
     priceLabel.text = price.length ? [NSString stringWithFormat:@"￥%@",price] : @"";
     UIImageView *imageView = self.imageViewArray[part];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:imgurl] placeholderImage:[UIImage imageNamed:@"DefualtProduct"]];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:imgurl] placeholderImage:[UIImage imageNamed:@"DefualtProduct"] options:SDWebImageCacheMemoryOnly];
 }
 
 - (void)setImage:(NSString *)imgurl title:(NSString *)title time:(NSString *)time hits:(int)hits part:(int)part
@@ -162,7 +162,7 @@
     UIImageView *imageView = self.imageViewArray[part];
     MLOG(@"%@",imgurl);
     if (imgurl.length) {
-        [imageView sd_setImageWithURL:[NSURL URLWithString:imgurl] placeholderImage:[UIImage imageNamed:@"DefualtProduct"]];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:imgurl] placeholderImage:[UIImage imageNamed:@"DefualtProduct"] options:SDWebImageCacheMemoryOnly];
     }
     
     UILabel *datelabel = self.dateLabelArray[part];

@@ -126,7 +126,7 @@
 {
     if (aModel.thumb)
     {
-        [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aModel.thumb] placeholderImage:[UIImage imageNamed:@"DefaultProduct"]];
+        [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aModel.thumb] placeholderImage:[UIImage imageNamed:@"DefaultProduct"] options:SDWebImageCacheMemoryOnly];
     }
     
     if (aModel.title)

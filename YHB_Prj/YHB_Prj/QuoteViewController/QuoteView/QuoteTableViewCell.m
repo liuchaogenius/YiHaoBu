@@ -73,7 +73,7 @@
         self.priceLabel.hidden=NO;
         self.lookQuoteBtn.hidden = YES;
         self.goodTitleLabel.text = aMeModel.title;
-        [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aMeModel.thumb]];
+        [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aMeModel.thumb] placeholderImage:nil options:SDWebImageCacheMemoryOnly];
         self.priceLabel.text = [NSString stringWithFormat:@"￥%@", aMeModel.price];
         self.goodMountLabel.text = [NSString stringWithFormat:@"求购数量 : %@", aMeModel.amount];
         self.goodEditTimeLabel.text = aMeModel.adddate;
@@ -85,7 +85,7 @@
         self.priceLabel.hidden=YES;
         self.lookQuoteBtn.hidden = NO;
         self.goodTitleLabel.text = aModel.title;
-        [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aModel.thumb]];
+        [self.goodImgView sd_setImageWithURL:[NSURL URLWithString:aModel.thumb] placeholderImage:nil options:SDWebImageCacheMemoryOnly];
         self.goodMountLabel.text = [NSString stringWithFormat:@"求购数量 : %@", aModel.amount];
         self.goodEditTimeLabel.text = aModel.adddate;
     }

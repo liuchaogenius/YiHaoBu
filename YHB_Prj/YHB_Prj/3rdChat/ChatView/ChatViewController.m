@@ -421,7 +421,7 @@
             UITableViewCell *cell = [[UITableViewCell alloc] init];
             cell.backgroundColor = [UIColor whiteColor];
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
-            [imageView sd_setImageWithURL:[NSURL URLWithString:myImgUrl] placeholderImage:[UIImage imageNamed:@"DefaultProduct"]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:myImgUrl] placeholderImage:[UIImage imageNamed:@"DefaultProduct"] options:SDWebImageCacheMemoryOnly];
             UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageView.right+10, imageView.top+5, kMainScreenWidth-90, 17)];
             titleLabel.font = kFont15;
             titleLabel.text = myTitle;

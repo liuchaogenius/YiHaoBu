@@ -62,7 +62,7 @@ NSString *const kRouterEventCommandTapEventName = @"kRouterEventCommandTapEventN
     itemTitle = [dict objectForKey:@"itemTitle"];
     
     self.titleLabel.text = itemTitle;
-    [self.itemImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"DefaultProduct"]];
+    [self.itemImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"DefaultProduct"] options:SDWebImageCacheMemoryOnly];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size

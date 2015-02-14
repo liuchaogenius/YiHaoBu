@@ -171,7 +171,7 @@ typedef enum : NSUInteger
     _productTitle.text = title;
     _priceLabel.text = [NSString stringWithFormat:@"￥%@",price];
     _numberLabel.text = [NSString stringWithFormat:@"x%@",number];
-    [_productImageView sd_setImageWithURL:[NSURL URLWithString:thumb] placeholderImage:[UIImage imageNamed:@"DefaultProduct"]];
+    [_productImageView sd_setImageWithURL:[NSURL URLWithString:thumb] placeholderImage:[UIImage imageNamed:@"DefaultProduct"] options:SDWebImageCacheMemoryOnly];
     self.numControl.number = [number doubleValue];
     self.numControl.isNumFloat = isFloat;
     _skuLabel.text = [NSString stringWithFormat:@"分类:%@",sku];

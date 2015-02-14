@@ -178,7 +178,7 @@
     _headImageView.backgroundColor = [UIColor whiteColor];
     if (self.productModel.album.count) {
         YHBAlbum *al = self.productModel.album.firstObject;
-        [_headImageView sd_setImageWithURL:[NSURL URLWithString:al.thumb]];
+        [_headImageView sd_setImageWithURL:[NSURL URLWithString:al.thumb] placeholderImage:nil options:SDWebImageCacheMemoryOnly];
     }
     
     [self.infoView addSubview:self.headImageView];

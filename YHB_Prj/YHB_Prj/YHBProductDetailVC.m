@@ -196,6 +196,7 @@
     [self.pManager getProductDetailInfoWithProductID:self.productID token:self.user.token Success:^(YHBProductDetail *model) {
         [SVProgressHUD dismiss];
         weakself.productModel = model;
+        
         [weakself refreshAddView];
         [weakself.infoView setTitle:weakself.productModel.title price:weakself.productModel.price cate:weakself.productModel.catname favorite:(int)weakself.productModel.favorite];
         [weakself creatCommentCells];
@@ -327,9 +328,9 @@
         [SVProgressHUD showWithStatus:@"" cover:YES offsetY:0];
         [self.privateManager privateOrDisPrivateWithItemID:[NSString stringWithFormat:@"%ld",(long)self.productID] privateType:private_mall token:[YHBUser sharedYHBUser].token ? :@"" Success:^{
             sender.selected = !sender.selected;
-            [SVProgressHUD dismissWithSuccess:@"关注成功"];
+            [SVProgressHUD dismiss];
         } failure:^(NSString *error) {
-            [SVProgressHUD dismissWithError:@"关注失败"];
+            [SVProgressHUD dismissWithError:error];
         }];
     }else{
         [SVProgressHUD showErrorWithStatus:@"你还没有登陆" cover:YES offsetY:0];
