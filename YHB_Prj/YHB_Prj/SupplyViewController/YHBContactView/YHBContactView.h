@@ -29,6 +29,7 @@
     NSString *storeName;
     NSString *trueName;
     NSString *avator;
+    NSString *smstext;
     int userid;
     BOOL isSupply;
     BOOL isFromMall;
@@ -36,7 +37,7 @@
 }
 
 - (instancetype)initWithFrame:(CGRect)frame isSupply:(BOOL)aBool;
-- (void)setPhoneNumber:(NSString *)aNumber storeName:(NSString *)aName itemId:(int)aItemId isVip:(int)aisVip imgUrl:(NSString *)aImgUrl Title:(NSString *)aTitle andType:(NSString *)aType userid:(int)aUserid;
+- (void)setPhoneNumber:(NSString *)aNumber storeName:(NSString *)aName itemId:(int)aItemId isVip:(int)aisVip imgUrl:(NSString *)aImgUrl Title:(NSString *)aTitle andType:(NSString *)aType userid:(int)aUserid smsText:(NSString *)text;
 //商城详情页用
 - (void)setViewForCompanyWithPhoneNumber:(NSString *)aNumber andType:(NSString *)aType userid:(int)aUserid avator:(NSString *)avatorStr truename:(NSString *)name isFromMall: (BOOL)isFrom;
 

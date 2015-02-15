@@ -197,13 +197,13 @@ typedef enum:NSUInteger{
 
 - (void)setViewForCompanyWithPhoneNumber:(NSString *)aNumber andType:(NSString *)aType userid:(int)aUserid avator:(NSString *)avatorStr truename:(NSString *)name isFromMall: (BOOL)isFrom
 {
-    [self setPhoneNumber:aNumber storeName:@"" itemId:0 isVip:0 imgUrl:@"" Title:@"" andType:aType userid:(int)aUserid];
+    [self setPhoneNumber:aNumber storeName:@"" itemId:0 isVip:0 imgUrl:@"" Title:@"" andType:aType userid:(int)aUserid smsText:@""];
     isFromMall = isFrom;
     avator = avatorStr;
     trueName = name;
 }
 
-- (void)setPhoneNumber:(NSString *)aNumber storeName:(NSString *)aName itemId:(int)aItemId isVip:(int)aisVip imgUrl:(NSString *)aImgUrl Title:(NSString *)aTitle andType:(NSString *)aType userid:(int)aUserid
+- (void)setPhoneNumber:(NSString *)aNumber storeName:(NSString *)aName itemId:(int)aItemId isVip:(int)aisVip imgUrl:(NSString *)aImgUrl Title:(NSString *)aTitle andType:(NSString *)aType userid:(int)aUserid smsText:(NSString *)text
 {
     if (aisVip==1)
     {
@@ -234,6 +234,7 @@ typedef enum:NSUInteger{
     myTitle = aTitle;
     myType = aType;
     userid = aUserid;
+    smstext = text;
 }
 
 - (void)touchBtn:(UIButton *)aBtn
@@ -251,11 +252,15 @@ typedef enum:NSUInteger{
     }
     else if(aBtn.tag==btnTypeText)
     {
+        NSString *body = smstext ? :@"";
+        [self showMessageView:body];
+        /*
         if (phoneNumber)
         {
-            NSString *myPhoneNumber = [YHBUser sharedYHBUser].userInfo.telephone;
-            NSString *body;
-            if ([myType isEqualToString:@"supply"])
+           // NSString *myPhoneNumber = [YHBUser sharedYHBUser].userInfo.telephone;
+            
+         
+            if ([myType isEqualToString:@"supply"] )
             {
                 body = [NSString stringWithFormat:@"您好，%@，我对您在快布发布的“%@”比较感兴趣，请联系%@。", storeLabel.text, myTitle, myPhoneNumber];
             }
@@ -276,8 +281,7 @@ typedef enum:NSUInteger{
                 }
                 
             }
-            [self showMessageView:body];
-        }
+        }*/
     }
     else if(aBtn.tag==btnTypeChat)
     {

@@ -30,6 +30,7 @@ NSString *const kYHBBuyDetailDataTypeid = @"typeid";
 NSString *const kYHBBuyDetailDataEdittime = @"edittime";
 NSString *const kYHBBuyDetailDataAlbum = @"album";
 NSString *const kYHBBuyDetailDataIntroduce = @"introduce";
+NSString *const kYHBBuyDetailDataSmstpl  = @"smstpl";
 
 
 @interface YHBBuyDetailData ()
@@ -61,7 +62,7 @@ NSString *const kYHBBuyDetailDataIntroduce = @"introduce";
 @synthesize edittime = _edittime;
 @synthesize album = _album;
 @synthesize introduce = _introduce;
-
+@synthesize smstpl = _smstpl;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
 {
@@ -94,6 +95,7 @@ NSString *const kYHBBuyDetailDataIntroduce = @"introduce";
             self.vip = [[self objectOrNilForKey:kYHBBuyDetailDataVip fromDictionary:dict] doubleValue];
             self.typeid = [self objectOrNilForKey:kYHBBuyDetailDataTypeid fromDictionary:dict];
             self.edittime = [self objectOrNilForKey:kYHBBuyDetailDataEdittime fromDictionary:dict];
+            self.smstpl = [self objectOrNilForKey:kYHBBuyDetailDataSmstpl fromDictionary:dict];
     NSObject *receivedYHBBuyDetailAlbum = [dict objectForKey:kYHBBuyDetailDataAlbum];
     NSMutableArray *parsedYHBBuyDetailAlbum = [NSMutableArray array];
     if ([receivedYHBBuyDetailAlbum isKindOfClass:[NSArray class]]) {
@@ -137,6 +139,7 @@ NSString *const kYHBBuyDetailDataIntroduce = @"introduce";
     [mutableDict setValue:[NSNumber numberWithDouble:self.vip] forKey:kYHBBuyDetailDataVip];
     [mutableDict setValue:self.typeid forKey:kYHBBuyDetailDataTypeid];
     [mutableDict setValue:self.edittime forKey:kYHBBuyDetailDataEdittime];
+        [mutableDict setValue:self.smstpl forKey:kYHBBuyDetailDataSmstpl];
     NSMutableArray *tempArrayForAlbum = [NSMutableArray array];
     for (NSObject *subArrayObject in self.album) {
         if([subArrayObject respondsToSelector:@selector(dictionaryRepresentation)]) {
@@ -193,6 +196,7 @@ NSString *const kYHBBuyDetailDataIntroduce = @"introduce";
     self.edittime = [aDecoder decodeObjectForKey:kYHBBuyDetailDataEdittime];
     self.album = [aDecoder decodeObjectForKey:kYHBBuyDetailDataAlbum];
     self.introduce = [aDecoder decodeObjectForKey:kYHBBuyDetailDataIntroduce];
+        self.smstpl = [aDecoder decodeObjectForKey:kYHBBuyDetailDataSmstpl];
     return self;
 }
 
@@ -220,6 +224,7 @@ NSString *const kYHBBuyDetailDataIntroduce = @"introduce";
     [aCoder encodeObject:_edittime forKey:kYHBBuyDetailDataEdittime];
     [aCoder encodeObject:_album forKey:kYHBBuyDetailDataAlbum];
     [aCoder encodeObject:_introduce forKey:kYHBBuyDetailDataIntroduce];
+    [aCoder encodeObject:_smstpl forKey:kYHBBuyDetailDataSmstpl];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -249,6 +254,7 @@ NSString *const kYHBBuyDetailDataIntroduce = @"introduce";
         copy.edittime = [self.edittime copyWithZone:zone];
         copy.album = [self.album copyWithZone:zone];
         copy.introduce = [self.introduce copyWithZone:zone];
+        copy.smstpl = [self.smstpl copyWithZone:zone];
     }
     
     return copy;

@@ -30,7 +30,7 @@ NSString *const kYHBSupplyDetailModelEdittime = @"edittime";
 NSString *const kYHBSupplyDetailModelTypeid = @"typeid";
 NSString *const kYHBSupplyDetailModelContent = @"introduce";
 NSString *const kYHBSupplyDetailModelToday = @"today";
-
+NSString *const kYHBSupplyDetailModelSmstpl  = @"smstpl";
 
 
 @interface YHBSupplyDetailModel ()
@@ -62,7 +62,7 @@ NSString *const kYHBSupplyDetailModelToday = @"today";
 @synthesize typeid = _typeid;
 @synthesize content = _content;
 @synthesize today = _today;
-
+@synthesize smstpl = _smstpl;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
 {
@@ -86,6 +86,7 @@ NSString *const kYHBSupplyDetailModelToday = @"today";
             self.hits = [[self objectOrNilForKey:kYHBSupplyDetailModelHits fromDictionary:dict] intValue];
             self.editdate = [self objectOrNilForKey:kYHBSupplyDetailModelEditdate fromDictionary:dict];
             self.truename = [self objectOrNilForKey:kYHBSupplyDetailModelTruename fromDictionary:dict];
+
     NSObject *receivedYHBSupplyDetailPic = [dict objectForKey:kYHBSupplyDetailModelPic];
     NSMutableArray *parsedYHBSupplyDetailPic = [NSMutableArray array];
     if ([receivedYHBSupplyDetailPic isKindOfClass:[NSArray class]]) {
@@ -109,7 +110,7 @@ NSString *const kYHBSupplyDetailModelToday = @"today";
             self.edittime = [self objectOrNilForKey:kYHBSupplyDetailModelEdittime fromDictionary:dict];
             self.typeid = [self objectOrNilForKey:kYHBSupplyDetailModelTypeid fromDictionary:dict];
             self.content = [self objectOrNilForKey:kYHBSupplyDetailModelContent fromDictionary:dict];
-
+            self.smstpl = [self objectOrNilForKey:kYHBSupplyDetailModelSmstpl fromDictionary:dict];
     }
     
     return self;
@@ -129,6 +130,7 @@ NSString *const kYHBSupplyDetailModelToday = @"today";
     [mutableDict setValue:[NSNumber numberWithDouble:self.hits] forKey:kYHBSupplyDetailModelHits];
     [mutableDict setValue:self.editdate forKey:kYHBSupplyDetailModelEditdate];
     [mutableDict setValue:self.truename forKey:kYHBSupplyDetailModelTruename];
+    [mutableDict setValue:self.smstpl forKey:kYHBSupplyDetailModelSmstpl];
     NSMutableArray *tempArrayForPic = [NSMutableArray array];
     for (NSObject *subArrayObject in self.pic) {
         if([subArrayObject respondsToSelector:@selector(dictionaryRepresentation)]) {
@@ -150,7 +152,7 @@ NSString *const kYHBSupplyDetailModelToday = @"today";
     [mutableDict setValue:self.edittime forKey:kYHBSupplyDetailModelEdittime];
     [mutableDict setValue:self.typeid forKey:kYHBSupplyDetailModelTypeid];
     [mutableDict setValue:self.content forKey:kYHBSupplyDetailModelContent];
-
+    
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
 
@@ -193,6 +195,7 @@ NSString *const kYHBSupplyDetailModelToday = @"today";
     self.edittime = [aDecoder decodeObjectForKey:kYHBSupplyDetailModelEdittime];
     self.typeid = [aDecoder decodeObjectForKey:kYHBSupplyDetailModelTypeid];
     self.content = [aDecoder decodeObjectForKey:kYHBSupplyDetailModelContent];
+    self.smstpl = [aDecoder decodeObjectForKey:kYHBSupplyDetailModelSmstpl];
     return self;
 }
 
@@ -219,6 +222,7 @@ NSString *const kYHBSupplyDetailModelToday = @"today";
     [aCoder encodeObject:_edittime forKey:kYHBSupplyDetailModelEdittime];
     [aCoder encodeObject:_typeid forKey:kYHBSupplyDetailModelTypeid];
     [aCoder encodeObject:_content forKey:kYHBSupplyDetailModelContent];
+    [aCoder encodeObject:_smstpl forKey:kYHBSupplyDetailModelSmstpl];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -247,6 +251,7 @@ NSString *const kYHBSupplyDetailModelToday = @"today";
         copy.edittime = [self.edittime copyWithZone:zone];
         copy.typeid = [self.typeid copyWithZone:zone];
         copy.content = [self.content copyWithZone:zone];
+        copy.smstpl = [self.smstpl copyWithZone:zone];
     }
     
     return copy;

@@ -32,6 +32,8 @@
 @property (nonatomic, strong) NSString *edittime;
 @property (nonatomic, strong) NSArray *album;
 @property (nonatomic, strong) NSString *introduce;
+@property (nonatomic, strong) NSString *smstpl;
+
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;

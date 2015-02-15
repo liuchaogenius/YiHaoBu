@@ -207,7 +207,7 @@
                  {
                      picUrl=nil;
                  }
-                 [contactView setPhoneNumber:aModel.mobile storeName:aModel.truename itemId:itemId isVip:aModel.vip imgUrl:picUrl Title:myModel.title andType:@"buy" userid:myModel.userid];
+                 [contactView setPhoneNumber:aModel.mobile storeName:aModel.truename itemId:itemId isVip:aModel.vip imgUrl:picUrl Title:myModel.title andType:@"buy" userid:myModel.userid smsText:myModel.smstpl];
              }
              [self dismissFlower];
              if (needUpload && uploadPhotoArray.count>0)

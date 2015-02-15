@@ -57,7 +57,7 @@
 - (UILabel *)priceLabel
 {
     if (!_priceLabel) {
-        _priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-15-150, self.bottom - kSmallFont-10, kMainScreenWidth-20, kSmallFont)];
+        _priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.bottom - kSmallFont-10, kMainScreenWidth-20, kSmallFont)];
         _priceLabel.textColor = [UIColor whiteColor];
         _priceLabel.font = [UIFont systemFontOfSize:kSmallFont];
         _priceLabel.textAlignment = NSTextAlignmentRight;
