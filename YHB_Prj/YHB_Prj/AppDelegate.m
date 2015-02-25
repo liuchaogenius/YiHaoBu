@@ -47,7 +47,12 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(globalResultHandle:) name:KGlobalResultMessage object:nil];
     
     //注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
-    NSString *apnsCertName = @"kuaibu_pushcert";
+    NSString *apnsCertName = nil;
+//#ifdef DEBUG
+  //  apnsCertName = @"kuaibu_pushcertDev";
+//#else
+    apnsCertName = @"kuaibu_pushcert";
+//#endif
     [[EaseMob sharedInstance] registerSDKWithAppKey:@"yibu2015#kuaibu" apnsCertName:apnsCertName];
     // 需要在注册sdk后写上该方法
     [[EaseMob sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
