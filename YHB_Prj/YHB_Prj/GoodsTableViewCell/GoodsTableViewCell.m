@@ -156,7 +156,7 @@
         self.goodEditTimeLabel.text = @"";
     }
     
-    if (aModel.vip==1)
+    if (aModel.vip>=1)
     {
         self.vipImgView.hidden=NO;
     }
