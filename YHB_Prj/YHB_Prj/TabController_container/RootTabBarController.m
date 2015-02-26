@@ -329,6 +329,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
             if (allcount > 0) {
                 //            _chatListVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%d",(int)unreadCount];
                 [[self.tabBar.items objectAtIndex:2] setBadgeValue:[NSString stringWithFormat:@"%d",(int)allcount]];
+                [self playSoundAndVibration];
             }else{
                 [[self.tabBar.items objectAtIndex:2] setBadgeValue:nil];
             }
