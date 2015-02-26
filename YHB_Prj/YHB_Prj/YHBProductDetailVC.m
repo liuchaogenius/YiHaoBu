@@ -356,7 +356,7 @@
 {
     [UMSocialWechatHandler setWXAppId:kShareWEIXINAPPID appSecret:kShareWEIXINAPPSECRET url:kWeChatOpenUrl];
     
-    [UMSocialSnsService presentSnsIconSheetView:self appKey:kUMENG_APPKEY shareText:@"#【快布】#  全球首款专业移动装饰面料交易APP上线啦！一键发布找布信息，躺着也能把生意做了！猛戳了解：http://www.51kuaibu.com/app" shareImage:[UIImage imageNamed:@"ShareIcon"] shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToWechatFavorite,nil] delegate:nil];
+    [UMSocialSnsService presentSnsIconSheetView:self appKey:kUMENG_APPKEY shareText:@"#【快布】#  全球首款专业装饰布在线交易平台上线啦！买布卖布，1键搞定！行业资讯，1手掌控！线上交易，方便快捷！猛戳了解：http://www.51kuaibu.com/app" shareImage:[UIImage imageNamed:@"ShareIcon"] shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToWechatFavorite,nil] delegate:nil];
 }
 
 #pragma mark 点击购买按钮

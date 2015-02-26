@@ -247,13 +247,18 @@ typedef enum:NSUInteger{
             UIWebView * callWebview = [[UIWebView alloc] init];
             [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
             [self.superview addSubview:callWebview];
-        }
+        }else
+            [SVProgressHUD showErrorWithStatus:@"该用户没有留下手机号" cover:YES offsetY:0];
 
     }
     else if(aBtn.tag==btnTypeText)
     {
-        NSString *body = smstext ? :@"";
-        [self showMessageView:body];
+        if (phoneNumber) {
+            NSString *body = smstext ? :@"";
+            [self showMessageView:body];
+        }else {
+            [SVProgressHUD showErrorWithStatus:@"该用户没有留下手机号" cover:YES offsetY:0];
+        }
         /*
         if (phoneNumber)
         {

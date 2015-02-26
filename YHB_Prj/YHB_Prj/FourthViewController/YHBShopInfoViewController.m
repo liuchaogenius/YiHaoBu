@@ -188,7 +188,7 @@ enum TextTag
         _cellsView.backgroundColor = [UIColor whiteColor];
         _cellsView.layer.borderColor = [kLineColor CGColor];
         _cellsView.layer.borderWidth = 0.5f;
-        NSArray *titleArray = @[@"姓       名：",@"名       称：",@"联系电话",@"我的关注：",@"地       区：",@"地       址：",@"主营产品：",@"店铺简介："];
+        NSArray *titleArray = @[@"姓       名：",@"公司名称：",@"联系电话",@"我的关注：",@"地       区：",@"地       址：",@"主营产品：",@"店铺简介："];
         CGFloat currenty = 0;
         for(int i = 0 ;i < titleArray.count; i++)
         {
@@ -332,7 +332,7 @@ enum TextTag
     tf.text = user.userInfo.address;
     
     tf = self.textFieldArray[TextField_mobile];
-    tf.text = user.userInfo.mobile;
+    tf.text = user.userInfo.telephone;
     
     tf = self.textFieldArray[TextField_company];
     tf.text = user.userInfo.company;

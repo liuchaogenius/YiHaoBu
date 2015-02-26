@@ -44,7 +44,7 @@
 - (UILabel *)star1Label
 {
     if (!_star1Label) {
-        _star1Label = [[UILabel alloc] initWithFrame:CGRectMake(self.shopImageView.right+10, self.nameLabel.bottom+10, 90, kSmallFont)];
+        _star1Label = [[UILabel alloc] initWithFrame:CGRectMake(self.shopImageView.right+10, self.nameLabel.bottom+10, 120, kSmallFont)];
         _star1Label.backgroundColor = [UIColor clearColor];
         _star1Label.textColor = [UIColor lightGrayColor];
         _star1Label.font = [UIFont systemFontOfSize:kSmallFont];

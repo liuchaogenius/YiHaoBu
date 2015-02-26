@@ -247,7 +247,7 @@
     self.companyLabel.text = info.truename;
     self.companyName.text = info.company;
     self.trueName.text = info.truename;
-    self.phoneLabel.text = info.mobile;
+    self.phoneLabel.text = info.telephone?:@"";
     self.addressLabel.text = info.address;
     self.majorProductTV.text = info.business;
     
@@ -267,7 +267,7 @@
     self.star1label.text = info.star1;
     self.star2label.text = info.star2;
     
-    [self.contactView setViewForCompanyWithPhoneNumber:self.storeInfo.telephone andType:@"mall" userid:(int)self.storeInfo.userid avator:self.storeInfo.avatar truename:self.storeInfo.truename isFromMall:self.isFromMall];
+    [self.contactView setViewForCompanyWithPhoneNumber:self.storeInfo.mobile andType:@"mall" userid:(int)self.storeInfo.userid avator:self.storeInfo.avatar truename:self.storeInfo.truename isFromMall:self.isFromMall];
 }
 
 
