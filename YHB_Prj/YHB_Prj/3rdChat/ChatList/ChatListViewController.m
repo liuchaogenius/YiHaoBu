@@ -136,6 +136,10 @@
         {
             [[YHBDataService sharedYHBDataSevice] saveSysList:syslist];
         }
+        NSIndexPath *indexpath1 = [NSIndexPath indexPathForRow:0 inSection:0];
+        NSIndexPath *indexpath2 = [NSIndexPath indexPathForRow:1 inSection:0];
+        NSArray *indexArray = [NSArray arrayWithObjects:indexpath1, indexpath2,nil];
+        [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
     } andFail:^(NSString *aStr) {
         [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
     }];
