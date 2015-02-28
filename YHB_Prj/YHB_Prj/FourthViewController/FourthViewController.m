@@ -179,7 +179,7 @@ enum Button_Type
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }else{
-                    [SVProgressHUD showErrorWithStatus:@"您未开通商城功能" cover:YES offsetY:0];
+                    [SVProgressHUD showErrorWithStatus:@"请加入VIP开通商城" cover:YES offsetY:0];
                 }
             }
                 break;
@@ -190,7 +190,7 @@ enum Button_Type
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }else{
-                    [SVProgressHUD showErrorWithStatus:@"请加入VIP开通商城" cover:YES offsetY:0];
+                    [SVProgressHUD showErrorWithStatus:@"您未开通商城功能" cover:YES offsetY:0];
                 }
                 
             }
