@@ -331,7 +331,7 @@
         {
             //类目
             LSNavigationController *navVc = [[LSNavigationController alloc] initWithRootViewController:[CategoryViewController sharedInstancetype]];
-            __weak FirstViewController *weakself = self;
+            //__weak FirstViewController *weakself = self;
             [CategoryViewController sharedInstancetype].hidesBottomBarWhenPushed = YES;
             [[CategoryViewController sharedInstancetype] cleanAll];
             [CategoryViewController sharedInstancetype].isSingleSelect = YES;

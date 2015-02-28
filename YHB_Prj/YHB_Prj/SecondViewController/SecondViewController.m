@@ -603,7 +603,11 @@ typedef enum : NSUInteger {
 - (void)shouldSearchCate : (NSNotification *)notf
 {
     YHBCatSubcate *cate = notf.userInfo[kSearchCateMessage];
-    [self.tagsArray removeAllObjects];
+    MLOG(@"tagArray------->%@",self.tagsArray);
+    //_tagsArray = nil;
+    if (self.tagsArray.count) {
+        [self.tagsArray removeAllObjects];
+    }
     [self.tagsArray addObject:cate];
     
     UIButton *btn = (UIButton *)[self.segmentView viewWithTag:Search_sell];
@@ -721,8 +725,9 @@ typedef enum : NSUInteger {
 - (void)deleteSortTagWithTag:(NSInteger)tag
 {
     [[CategoryViewController sharedInstancetype] deleteItemWithItemID:(int)tag];
-    self.tagsArray = [[[CategoryViewController sharedInstancetype] getChooseArray] copy];
-    MLOG(@"%@",self.tagsArray);
+    _tagsArray = [NSMutableArray arrayWithArray:[[CategoryViewController sharedInstancetype] getChooseArray]];
+    //self.tagsArray = [[[CategoryViewController sharedInstancetype] getChooseArray] copy];
+    MLOG(@"tagArray------->%@",self.tagsArray);
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
