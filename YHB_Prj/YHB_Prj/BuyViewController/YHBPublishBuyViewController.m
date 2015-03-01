@@ -253,7 +253,7 @@
     [editSupplyView addSubview:contentTextView];
     
     detailPlaceHolder = [[UILabel alloc] initWithFrame:contentTextView.frame];
-    detailPlaceHolder.text = @"请输入您要卖的产品的织法、成分、颜色、厚薄、弹力、手感、宽幅、克重、用途等，尽可能填写您所知道的全部信息。";
+    detailPlaceHolder.text = @"请输入您要买的产品的织法、成分、颜色、厚薄、弹力、手感、宽幅、克重、用途等，尽可能填写您所知道的全部信息。";
     detailPlaceHolder.numberOfLines = 0;
     detailPlaceHolder.font = kFont15;
     detailPlaceHolder.textColor = [UIColor lightGrayColor];
