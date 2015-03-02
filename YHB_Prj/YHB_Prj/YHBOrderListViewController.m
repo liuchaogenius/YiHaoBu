@@ -176,7 +176,7 @@
     }
 
     YHBORslist *model = self.listModel.rslist[indexPath.section];
-    [cell setUIWithStatus:(NSInteger)model.status Title:model.title price:model.price number:model.number amount:model.amount itemID:(int)model.itemid NextAction:model.naction shopID:(NSInteger)model.sellid thumb:model.thumb];
+    [cell setUIWithStatus:(NSInteger)model.status Title:model.title price:model.money number:model.number amount:model.amount itemID:(int)model.itemid NextAction:model.naction shopID:(NSInteger)model.sellid thumb:model.thumb];
     
     return cell;
 }
