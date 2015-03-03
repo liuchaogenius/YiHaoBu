@@ -96,13 +96,14 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-
+    [self.bannerView startTimer];
     self.navigationController.navigationBarHidden = YES;
     [super viewWillAppear:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [self.bannerView stopTimer];
     [SVProgressHUD dismiss];
     [super viewWillDisappear:animated];
 }
@@ -320,6 +321,7 @@
     
     self.bannerView.isNeedCycle = (imageNum>1 ? YES : NO);
     [self.bannerView resetUIWithUrlStrArray:[NSArray arrayWithArray:array]];
+    [self.bannerView scrollPages];
 }
 
 #pragma mark - Action with Delegate

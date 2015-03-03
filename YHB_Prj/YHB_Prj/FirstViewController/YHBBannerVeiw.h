@@ -24,5 +24,9 @@
 @property (weak, nonatomic) id<YHBBannerDelegate> delegate;
 
 - (void)resetUIWithUrlStrArray:(NSArray *)urlArray;
+- (void)scrollPages;
+
+- (void)stopTimer;
+- (void)startTimer;
 
 @end

@@ -115,11 +115,13 @@
     if (self.navigationController.navigationBar.hidden) {
         self.navigationController.navigationBarHidden = NO;
     }
+    [self.bannerView startTimer];
     [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [self.bannerView stopTimer];
     [SVProgressHUD dismiss];
     [super viewWillDisappear:animated];
 }
@@ -260,6 +262,7 @@
     }
     self.bannerView.isNeedCycle = (imageNum > 1 ? YES : NO);
     [self.bannerView resetUIWithUrlStrArray:[NSArray arrayWithArray:array]];
+    [self.bannerView scrollPages];
 }
 
 

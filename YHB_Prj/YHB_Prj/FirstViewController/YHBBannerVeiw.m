@@ -8,7 +8,7 @@
 
 #import "YHBBannerVeiw.h"
 #import "UIImageView+WebCache.h"
-
+#define kTimeInterval 6.0f
 @interface YHBBannerVeiw()
 
 @property (assign, nonatomic) NSInteger imageNum;
@@ -16,6 +16,7 @@
 @property (weak, nonatomic) UIPageControl *pageControl; //分页
 @property (strong, nonatomic) UIScrollView *headScrollView;
 
+@property (strong, nonatomic) NSTimer *timer;
 
 @end
 
@@ -104,6 +105,7 @@
 #pragma mark - delegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+    NSLog(@"%lf",scrollView.contentOffset.x);
     NSInteger pageNo = scrollView.contentOffset.x / kMainScreenWidth;
     
     if (self.isNeedCycle) {
@@ -133,6 +135,61 @@
         }
 //        MLOG(@"didStop");
 //        MLOG(@"x=%f,y=%f",scrollView.contentOffset.x-kMainScreenWidth*self.pageControl.currentPage,scrollView.contentOffset.y);
+    }
+    [_timer setFireDate:[NSDate dateWithTimeInterval:kTimeInterval sinceDate:[NSDate date]]];
+}
+//
+- (void)scrollPages
+{
+    if (!_timer) {
+        dispatch_after(kTimeInterval, dispatch_get_main_queue(), ^{
+            _timer = [NSTimer scheduledTimerWithTimeInterval:6.0f target:self selector:@selector(changePage) userInfo:nil repeats:YES];
+        });
+    }
+    
+    [_timer fire];
+
+}
+
+- (void)stopTimer
+{
+    [_timer setFireDate:[NSDate distantFuture]];
+}
+
+- (void)startTimer
+{
+    [_timer setFireDate:[NSDate dateWithTimeIntervalSinceNow:kTimeInterval]];
+}
+
+//换页
+- (void)changePage
+{
+    NSLog(@"click with now  %lf",self.headScrollView.contentOffset.x);
+    if (self.imageNum > 1) {
+        if (self.isNeedCycle && (self.headScrollView.contentOffset.x == (1+self.imageNum) * kMainScreenWidth)) {
+            [self.headScrollView setContentOffset:CGPointMake(kMainScreenWidth, 0) animated:NO];
+        }
+        NSInteger pageNo = (self.pageControl.currentPage +1 +(_isNeedCycle ? 1:0));
+        CGFloat offsetX = pageNo * self.headScrollView.bounds.size.width;
+        [self.headScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+        
+        //NSInteger pageNo = offsetX / kMainScreenWidth;
+        if (self.isNeedCycle) {
+            if (pageNo+1 == self.imageNum+2) {
+                pageNo = 0;
+            }else{
+                --pageNo;
+            }
+        }
+        [self.pageControl setCurrentPage:pageNo];
+    }
+}
+
+- (void)dealloc
+{
+    if (_timer) {
+        [self.timer invalidate];
+        _timer = nil;
     }
 }
 
