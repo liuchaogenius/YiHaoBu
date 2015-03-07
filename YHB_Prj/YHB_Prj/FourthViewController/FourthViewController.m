@@ -273,6 +273,7 @@ enum Button_Type
             IntroduceViewController *vc = [[IntroduceViewController alloc] init];
             [vc setUrl:[NSString stringWithFormat:@"%@file/apphtml/about.html",kYHBUrl] title:@"关于我们"];
             vc.isSysPush = YES;
+            vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
@@ -281,12 +282,14 @@ enum Button_Type
             IntroduceViewController *vc = [[IntroduceViewController alloc] init];
             [vc setUrl:[NSString stringWithFormat:@"%@file/apphtml/service.html",kYHBUrl] title:@"服务条款"];
             vc.isSysPush = YES;
+            vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case Cell_tips:
         {
             IntroduceViewController *vc = [[IntroduceViewController alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
             [vc setUrl:[NSString stringWithFormat:@"%@file/apphtml/help.html",kYHBUrl] title:@"使用帮助"];
             vc.isSysPush = YES;
             [self.navigationController pushViewController:vc animated:YES];
