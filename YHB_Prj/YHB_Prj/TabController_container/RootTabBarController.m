@@ -48,6 +48,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     FBKVOController *leftViewObserver;
     
     BOOL isGoBack;
+    BOOL isLogin;
 }
 @property (nonatomic, strong)  YHBLoginViewController *loginVC;
 @property (nonatomic, strong) LSNavigationController *loginNav;
@@ -213,6 +214,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self registerNotifications];
     [self didUnreadMessagesCountChanged];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupUntreatedApplyCount) name:@"setupUntreatedApplyCount" object:nil];
+    isLogin=YES;
     [self setupUnreadMessageCount];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupUnreadMessageCount) name:@"setupUnread" object:nil];
 //    [self setupUntreatedApplyCount];
@@ -272,59 +274,79 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         unreadCount += conversation.unreadMessagesCount;
     }
 
-    [self.netManage getPushSucc:^(NSMutableArray *aArray) {
-        NSMutableArray *pushArray = [NSMutableArray new];
-        pushArray = aArray;
-        NSMutableArray *buylist = [pushArray objectAtIndex:0];
-        NSMutableArray *syslist = [pushArray objectAtIndex:1];
-        if (buylist.count>0)
-        {
-            NSString *str = [[YHBDataService sharedYHBDataSevice] getunreadBuy];
-            if (!str)
+    if (isLogin==YES)
+    {
+        [self.netManage getPushSucc:^(NSMutableArray *aArray) {
+            NSMutableArray *pushArray = [NSMutableArray new];
+            pushArray = aArray;
+            NSMutableArray *buylist = [pushArray objectAtIndex:0];
+            NSMutableArray *syslist = [pushArray objectAtIndex:1];
+            if (buylist.count>0)
             {
-                str = @"0";
+                NSString *str = [[YHBDataService sharedYHBDataSevice] getunreadBuy];
+                if (!str)
+                {
+                    str = @"0";
+                }
+                int count = (int)buylist.count+[str intValue];
+                [[YHBDataService sharedYHBDataSevice] saveunreadBuy:[NSString stringWithFormat:@"%d", count]];
             }
-            int count = (int)buylist.count+[str intValue];
-            [[YHBDataService sharedYHBDataSevice] saveunreadBuy:[NSString stringWithFormat:@"%d", count]];
-        }
-        if (syslist.count>0)
-        {
-            NSString *str = [[YHBDataService sharedYHBDataSevice] getunreadSys];
-            if (!str)
+            if (syslist.count>0)
             {
-                str = @"0";
+                NSString *str = [[YHBDataService sharedYHBDataSevice] getunreadSys];
+                if (!str)
+                {
+                    str = @"0";
+                }
+                int count = (int)syslist.count+[str intValue];
+                [[YHBDataService sharedYHBDataSevice] saveunreadSys:[NSString stringWithFormat:@"%d", count]];
             }
-            int count = (int)syslist.count+[str intValue];
-            [[YHBDataService sharedYHBDataSevice] saveunreadSys:[NSString stringWithFormat:@"%d", count]];
-        }
-        if (buylist)
-        {
-            NSMutableArray *newBuyList = [NSMutableArray new];
-            for (YHBGetPushBuylist *model in buylist)
+            if (buylist)
             {
-                model.isread = @"NO";
-                [newBuyList addObject:model];
+                NSMutableArray *newBuyList = [NSMutableArray new];
+                for (YHBGetPushBuylist *model in buylist)
+                {
+                    model.isread = @"NO";
+                    [newBuyList addObject:model];
+                }
+                [[YHBDataService sharedYHBDataSevice] saveBuyList:newBuyList];
             }
-            [[YHBDataService sharedYHBDataSevice] saveBuyList:newBuyList];
-        }
-        if (syslist)
-        {
-            [[YHBDataService sharedYHBDataSevice] saveSysList:syslist];
-        }
-        NSString *str1 = [[YHBDataService sharedYHBDataSevice] getunreadBuy];
-        NSString *str2 = [[YHBDataService sharedYHBDataSevice] getunreadSys];
-        if (!str1)
-        {
-            str1 = @"0";
-        }
-        if (!str2)
-        {
-            str2 = @"0";
-        }
-        int count1 = [str1 intValue];
-        int count2 = [str2 intValue];
-        
-        int allcount = count1+count2+(int)unreadCount;
+            if (syslist)
+            {
+                [[YHBDataService sharedYHBDataSevice] saveSysList:syslist];
+            }
+            NSString *str1 = [[YHBDataService sharedYHBDataSevice] getunreadBuy];
+            NSString *str2 = [[YHBDataService sharedYHBDataSevice] getunreadSys];
+            if (!str1)
+            {
+                str1 = @"0";
+            }
+            if (!str2)
+            {
+                str2 = @"0";
+            }
+            int count1 = [str1 intValue];
+            int count2 = [str2 intValue];
+            
+            int allcount = count1+count2+(int)unreadCount;
+            if (_chatListVC) {
+                if (allcount > 0) {
+                    //            _chatListVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%d",(int)unreadCount];
+                    [[self.tabBar.items objectAtIndex:2] setBadgeValue:[NSString stringWithFormat:@"%d",(int)allcount]];
+                    [self playSoundAndVibration];
+                }else{
+                    [[self.tabBar.items objectAtIndex:2] setBadgeValue:nil];
+                }
+            }
+            UIApplication *application = [UIApplication sharedApplication];
+            [application setApplicationIconBadgeNumber:allcount];
+        } andFail:^(NSString *aStr) {
+            [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
+        }];
+    }
+    else
+    {
+        int allcount = (int)unreadCount;
         if (_chatListVC) {
             if (allcount > 0) {
                 //            _chatListVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%d",(int)unreadCount];
@@ -336,9 +358,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         }
         UIApplication *application = [UIApplication sharedApplication];
         [application setApplicationIconBadgeNumber:allcount];
-    } andFail:^(NSString *aStr) {
-        [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
-    }];
+    }
     
     
     
