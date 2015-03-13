@@ -28,6 +28,7 @@
 {
     UIImageView *_selectedImg;
     NSInteger _selectSkuIndex; //已选色块的编号
+    UILabel *_unitLabel;
 }
 @property (strong, nonatomic) YHBProductDetail *productModel;
 @property (strong, nonatomic) UIView *infoView;
@@ -125,6 +126,7 @@
         unit.textColor = [UIColor lightGrayColor];
         unit.font = [UIFont systemFontOfSize:kTitleFont-2];
         unit.text = @"米";
+        _unitLabel = unit;
         [_numbFooterView addSubview:unit];
     }
     return _numbFooterView;
@@ -208,6 +210,14 @@
     
     [self addSubview:self.infoView];
 }
+
+- (void)setUnit: (NSString  *)unit
+{
+    if (unit.length) {
+        _unitLabel.text = unit;
+    }
+}
+
 #pragma mark - 数据源方法
 #pragma mark 数据行数
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

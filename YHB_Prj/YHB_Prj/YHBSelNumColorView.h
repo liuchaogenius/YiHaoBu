@@ -29,4 +29,6 @@
 - (void)registerForKeyboradNotifications;
 - (void)touchQuitButton;
 
+- (void)setUnit: (NSString  *)unit;
+
 @end

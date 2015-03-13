@@ -416,6 +416,7 @@
         if (!_selView) {
             _selView = [[YHBSelNumColorView alloc] initWithProductModel:self.productModel];
             _selView.delegate = self;
+            [_selView setUnit:self.productModel.unit];
         }
         _selView.top = kMainScreenHeight;
         [_selView registerForKeyboradNotifications];

@@ -25,7 +25,7 @@
 @property (nonatomic, assign) double hits;
 @property (nonatomic, strong) NSString *editdate;
 @property (nonatomic, strong) NSString *truename;
-@property (nonatomic, strong) NSString *unit1;
+//@property (nonatomic, strong) NSString *unit1;
 @property (nonatomic, strong) NSString *addtime;
 @property (nonatomic, strong) NSString *catid;
 @property (nonatomic, strong) NSString *mobile;
