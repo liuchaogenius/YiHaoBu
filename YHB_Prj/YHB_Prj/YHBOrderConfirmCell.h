@@ -22,7 +22,7 @@
 @property (weak, nonatomic) id<YHBOrderConfirmCellDelegate> delegate;
 @property (weak, nonatomic) NSIndexPath *cellIndexPath;
 
-- (void)setUIWithTitle:(NSString *)title sku:(NSString *)sku price:(NSString *)price number:(NSString *)number isFloat:(BOOL)isFloat message:(NSString *)message Express:(NSString *)express exPrice:(NSString *)ePrice thumb:(NSString *)thumb;
+- (void)setUIWithTitle:(NSString *)title sku:(NSString *)sku price:(NSString *)price number:(NSString *)number isFloat:(BOOL)isFloat message:(NSString *)message Express:(NSString *)express exPrice:(NSString *)ePrice thumb:(NSString *)thumb unit: (NSString *)unit;
 
 //- (void)reSetNumber:(NSString *)number;
 

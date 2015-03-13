@@ -319,7 +319,7 @@
             express = model.express[0];
         }
         NSString *exPricie = [NSString stringWithFormat:@"%d",(int)[self expressPriceWithExpress:express andNum:[model.number doubleValue]]];
-        [cell setUIWithTitle:model.title sku:model.skuname price:model.price number:model.number isFloat:!(int)model.typeid message:self.messagesDic[[self expressKeyWithI:(int)indexPath.section andJ:(int)indexPath.row]] Express:express.name exPrice:exPricie thumb:model.thumb];
+        [cell setUIWithTitle:model.title sku:model.skuname price:model.price number:model.number isFloat:!(int)model.typeid message:self.messagesDic[[self expressKeyWithI:(int)indexPath.section andJ:(int)indexPath.row]] Express:express.name exPrice:exPricie thumb:model.thumb unit:model.unit];
         
         return cell;
     }else{

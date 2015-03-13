@@ -12,7 +12,7 @@
 @interface YHBOConfirmMalllist : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, assign) double typeid;
-@property (nonatomic, strong) NSString *unit1;
+@property (nonatomic, strong) NSString *unit;
 @property (nonatomic, strong) NSString *number;
 @property (nonatomic, assign) double itemid;
 @property (nonatomic, strong) NSString *price;

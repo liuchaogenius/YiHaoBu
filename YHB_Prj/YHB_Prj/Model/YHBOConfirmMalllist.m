@@ -10,7 +10,7 @@
 
 
 NSString *const kYHBOConfirmMalllistTypeid = @"typeid";
-NSString *const kYHBOConfirmMalllistUnit1 = @"unit1";
+NSString *const kYHBOConfirmMalllistUnit1 = @"unit";
 NSString *const kYHBOConfirmMalllistNumber = @"number";
 NSString *const kYHBOConfirmMalllistItemid = @"itemid";
 NSString *const kYHBOConfirmMalllistPrice = @"price";
@@ -30,7 +30,7 @@ NSString *const kYHBOConfirmMalllistSkuid = @"skuid";
 @implementation YHBOConfirmMalllist
 
 @synthesize typeid = _typeid;
-@synthesize unit1 = _unit1;
+@synthesize unit = _unit;
 @synthesize number = _number;
 @synthesize itemid = _itemid;
 @synthesize price = _price;
@@ -54,7 +54,7 @@ NSString *const kYHBOConfirmMalllistSkuid = @"skuid";
     // passed into the model class doesn't break the parsing.
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
             self.typeid = [[self objectOrNilForKey:kYHBOConfirmMalllistTypeid fromDictionary:dict] doubleValue];
-            self.unit1 = [self objectOrNilForKey:kYHBOConfirmMalllistUnit1 fromDictionary:dict];
+            self.unit = [self objectOrNilForKey:kYHBOConfirmMalllistUnit1 fromDictionary:dict];
             self.number = [self objectOrNilForKey:kYHBOConfirmMalllistNumber fromDictionary:dict];
             self.itemid = [[self objectOrNilForKey:kYHBOConfirmMalllistItemid fromDictionary:dict] doubleValue];
             self.price = [self objectOrNilForKey:kYHBOConfirmMalllistPrice fromDictionary:dict];
@@ -86,7 +86,7 @@ NSString *const kYHBOConfirmMalllistSkuid = @"skuid";
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];
     [mutableDict setValue:[NSNumber numberWithDouble:self.typeid] forKey:kYHBOConfirmMalllistTypeid];
-    [mutableDict setValue:self.unit1 forKey:kYHBOConfirmMalllistUnit1];
+    [mutableDict setValue:self.unit forKey:kYHBOConfirmMalllistUnit1];
     [mutableDict setValue:self.number forKey:kYHBOConfirmMalllistNumber];
     [mutableDict setValue:[NSNumber numberWithDouble:self.itemid] forKey:kYHBOConfirmMalllistItemid];
     [mutableDict setValue:self.price forKey:kYHBOConfirmMalllistPrice];
@@ -129,7 +129,7 @@ NSString *const kYHBOConfirmMalllistSkuid = @"skuid";
     self = [super init];
 
     self.typeid = [aDecoder decodeDoubleForKey:kYHBOConfirmMalllistTypeid];
-    self.unit1 = [aDecoder decodeObjectForKey:kYHBOConfirmMalllistUnit1];
+    self.unit = [aDecoder decodeObjectForKey:kYHBOConfirmMalllistUnit1];
     self.number = [aDecoder decodeObjectForKey:kYHBOConfirmMalllistNumber];
     self.itemid = [aDecoder decodeDoubleForKey:kYHBOConfirmMalllistItemid];
     self.price = [aDecoder decodeObjectForKey:kYHBOConfirmMalllistPrice];
@@ -145,7 +145,7 @@ NSString *const kYHBOConfirmMalllistSkuid = @"skuid";
 {
 
     [aCoder encodeDouble:_typeid forKey:kYHBOConfirmMalllistTypeid];
-    [aCoder encodeObject:_unit1 forKey:kYHBOConfirmMalllistUnit1];
+    [aCoder encodeObject:_unit forKey:kYHBOConfirmMalllistUnit1];
     [aCoder encodeObject:_number forKey:kYHBOConfirmMalllistNumber];
     [aCoder encodeDouble:_itemid forKey:kYHBOConfirmMalllistItemid];
     [aCoder encodeObject:_price forKey:kYHBOConfirmMalllistPrice];
@@ -163,7 +163,7 @@ NSString *const kYHBOConfirmMalllistSkuid = @"skuid";
     if (copy) {
 
         copy.typeid = self.typeid;
-        copy.unit1 = [self.unit1 copyWithZone:zone];
+        copy.unit = [self.unit copyWithZone:zone];
         copy.number = [self.number copyWithZone:zone];
         copy.itemid = self.itemid;
         copy.price = [self.price copyWithZone:zone];

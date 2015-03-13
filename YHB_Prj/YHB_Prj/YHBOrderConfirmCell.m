@@ -20,6 +20,7 @@ typedef enum : NSUInteger
 #define kSmallFont 12
 #define kNumCellHeight 50
 #define kLogicCellheight 40
+
 @interface YHBOrderConfirmCell()<UITextFieldDelegate,YHBNumControlDelegate>
 {
     UIImageView *_productImageView;
@@ -28,6 +29,7 @@ typedef enum : NSUInteger
     UILabel *_skuLabel;
     UILabel *_productTitle;
     UILabel *_logicLabel;
+    UILabel *_unitLabel;
 }
 @property (strong, nonatomic) UIView *productInfoCell;
 @property (strong, nonatomic) UIView *numberCell;
@@ -82,9 +84,14 @@ typedef enum : NSUInteger
         _numberCell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kNumCellHeight)];
         _numberCell.backgroundColor = [UIColor whiteColor];
         [_numberCell addSubview:[self getTitleLabelWithHeight:kNumCellHeight Title:@"购买数量"]];
+        UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth-25, 0, 25, _numberCell.height)];
+        unitLabel.font = kFont10;
+        unitLabel.textColor = [UIColor lightGrayColor];
+        _unitLabel = unitLabel;
+        [_numberCell addSubview:unitLabel];
         self.numControl = [[YHBNumControl alloc] init];
         self.numControl.numberTextfield.tag = TextFiledNumber;
-        self.numControl.right = kMainScreenWidth-10;
+        self.numControl.right = unitLabel.left-5;
         self.numControl.centerY = kNumCellHeight/2.0;
         self.numControl.delegate = self;
         [_numberCell addSubview:self.numControl];
@@ -166,7 +173,7 @@ typedef enum : NSUInteger
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)setUIWithTitle:(NSString *)title sku:(NSString *)sku price:(NSString *)price number:(NSString *)number isFloat:(BOOL)isFloat message:(NSString *)message Express:(NSString *)express exPrice:(NSString *)ePrice thumb:(NSString *)thumb
+- (void)setUIWithTitle:(NSString *)title sku:(NSString *)sku price:(NSString *)price number:(NSString *)number isFloat:(BOOL)isFloat message:(NSString *)message Express:(NSString *)express exPrice:(NSString *)ePrice thumb:(NSString *)thumb unit: (NSString *)unit
 {
     _productTitle.text = title;
     _priceLabel.text = [NSString stringWithFormat:@"￥%@",price];
@@ -177,6 +184,8 @@ typedef enum : NSUInteger
     _skuLabel.text = [NSString stringWithFormat:@"分类:%@",sku];
     self.messageTf.text = message?:@"";
     _logicLabel.text = express ? [NSString stringWithFormat:@"配送方式 ：%@  价格：%@",express,ePrice] : @"无配送方式";
+    
+    _unitLabel.text = unit?:@"";
 }
 
 - (void)reSetNumber:(NSString *)number
