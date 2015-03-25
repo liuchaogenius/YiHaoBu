@@ -227,6 +227,7 @@
             [self.netManage changeShopCartWithArray:changeItemArray andSuccBlock:^{
                 changeItemArray = [NSMutableArray new];
                 changeModelArray = [NSMutableArray new];
+//                isEdit = NO;
             } failBlock:^(NSString *aStr){
                 [SVProgressHUD showErrorWithStatus:aStr cover:YES offsetY:kMainScreenHeight/2.0];
             }];
@@ -428,14 +429,13 @@
 }
 
 #pragma mark 自己的delegate
-- (void)changeCountWithItemId:(NSString *)aItemid andCount:(float)aCount WithSection:(int)aSection row:(int)aRow isStay:(BOOL)aBool
+- (void)changeCountWithItemId:(NSString *)aItemid andCount:(float)aCount WithSection:(int)aSection row:(int)aRow isStay:(BOOL)aBool andSkuid:(NSString *)aSkuid
 {
     int j=0;
     for(int i=0; i<changeItemArray.count; i++)
     {
         NSDictionary *paramDict = [changeItemArray objectAtIndex:i];
         NSString *paramItemid = [paramDict objectForKey:@"itemid"];
-        j++;
         if ([paramItemid isEqualToString:aItemid])
         {
             if (aBool)
@@ -448,17 +448,21 @@
             {
                 [changeItemArray removeObjectAtIndex:i];
                 [changeModelArray removeObjectAtIndex:i];
-                NSDictionary *itemDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%.1f", aCount],@"number",aItemid,@"itemid", nil];
+                NSDictionary *itemDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%.1f", aCount],@"number",aItemid,@"itemid", aSkuid,@"skuid",nil];
                 NSDictionary *modelDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%.1f", aCount],@"number",[NSString stringWithFormat:@"%d", aSection],@"section",[NSString stringWithFormat:@"%d", aRow],@"row",nil];
                 [changeItemArray addObject:itemDict];
                 [changeModelArray addObject:modelDict];
                 break;
             }
         }
+        else
+        {
+            j++;
+        }
     }
     if (j==changeItemArray.count)
     {
-        NSDictionary *itemDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%.1f", aCount],@"number",aItemid,@"itemid", nil];
+        NSDictionary *itemDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%.1f", aCount],@"number",aItemid,@"itemid", aSkuid,@"skuid",nil];
         NSDictionary *modelDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%.1f", aCount],@"number",[NSString stringWithFormat:@"%d", aSection],@"section",[NSString stringWithFormat:@"%d", aRow],@"row",nil];
         [changeItemArray addObject:itemDict];
         [changeModelArray addObject:modelDict];

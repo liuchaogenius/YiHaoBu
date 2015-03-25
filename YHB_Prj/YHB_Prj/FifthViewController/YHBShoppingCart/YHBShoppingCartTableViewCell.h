@@ -13,7 +13,7 @@
 @protocol ShoppingCartCellDelegate <NSObject>
 
 - (void)touchCell:(YHBShoppingCartTableViewCell *)aCell WithSection:(int)aSection row:(int)aRow;
-- (void)changeCountWithItemId:(NSString *)aItemid andCount:(float)aCount WithSection:(int)aSection row:(int)aRow isStay:(BOOL)aBool;
+- (void)changeCountWithItemId:(NSString *)aItemid andCount:(float)aCount WithSection:(int)aSection row:(int)aRow isStay:(BOOL)aBool andSkuid:(NSString *)aSkuid;
 - (void)changeCellCount:(YHBShoppingCartTableViewCell *)aCell keyBoardHeight:(CGFloat)aHeight;
 - (void)overChangeCellCount;
 

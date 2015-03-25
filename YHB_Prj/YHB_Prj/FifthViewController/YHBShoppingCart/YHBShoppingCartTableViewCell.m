@@ -139,7 +139,7 @@
     countLabel.text = [NSString stringWithFormat:@"×%.1f", count];
     BOOL isStay = (count==[myModel.number floatValue]);
     [self.delegate changeCountWithItemId:[NSString stringWithFormat:@"%d", (int)myModel.itemid]
-                                andCount:count WithSection:self.section row:self.row isStay:isStay];
+                                andCount:count WithSection:self.section row:self.row isStay:isStay andSkuid:[NSString stringWithFormat:@"%d", (int)myModel.skuid]];
 }
 
 - (BOOL)isPureFloat:(NSString*)string
