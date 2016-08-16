@@ -61,12 +61,12 @@
 		FF2A6CA41A0F40B0001607AC /* ThreadSafeMutableArry.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2A6CA11A0F40B0001607AC /* ThreadSafeMutableArry.m */; };
 		FF2A6CA51A0F40B0001607AC /* ThreadSafeMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2A6CA31A0F40B0001607AC /* ThreadSafeMutableDictionary.m */; };
 		FF3C20011A2EE6D30081D3C7 /* LSNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3C20001A2EE6D30081D3C7 /* LSNavigationController.m */; };
-		FF3C20041A2EE7480081D3C7 /* FactoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3C20031A2EE7480081D3C7 /* FactoryModel.m */; };
 		FF5609881A3936350081BA2E /* SLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5609871A3936350081BA2E /* SLoginViewController.m */; };
 		FF560AF71A39726A0081BA2E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF560AF61A39726A0081BA2E /* Foundation.framework */; };
 		FF560AF91A3972760081BA2E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF560AF81A3972760081BA2E /* CoreGraphics.framework */; };
 		FF560AFB1A3972800081BA2E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF560AFA1A3972800081BA2E /* UIKit.framework */; };
 		FF560B401A3973940081BA2E /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FF560B3F1A3973940081BA2E /* libxml2.dylib */; };
+		FFD45A2C1D63110200D93FCC /* FactoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FFD45A2B1D63110200D93FCC /* FactoryModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,8 +194,6 @@
 		FF2A6CA31A0F40B0001607AC /* ThreadSafeMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadSafeMutableDictionary.m; sourceTree = "<group>"; };
 		FF3C1FFF1A2EE6D30081D3C7 /* LSNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LSNavigationController.h; path = ../ThirdParty/LSNavigationController/LSNavigationController.h; sourceTree = "<group>"; };
 		FF3C20001A2EE6D30081D3C7 /* LSNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LSNavigationController.m; path = ../ThirdParty/LSNavigationController/LSNavigationController.m; sourceTree = "<group>"; };
-		FF3C20021A2EE7480081D3C7 /* FactoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FactoryModel.h; sourceTree = "<group>"; };
-		FF3C20031A2EE7480081D3C7 /* FactoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FactoryModel.m; sourceTree = "<group>"; };
 		FF5609861A3936350081BA2E /* SLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLoginViewController.h; sourceTree = "<group>"; };
 		FF5609871A3936350081BA2E /* SLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLoginViewController.m; sourceTree = "<group>"; };
 		FF5609891A39371D0081BA2E /* SVCModelProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVCModelProtocol.h; sourceTree = "<group>"; };
@@ -203,6 +201,8 @@
 		FF560AF81A3972760081BA2E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		FF560AFA1A3972800081BA2E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		FF560B3F1A3973940081BA2E /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		FFD45A2A1D63110200D93FCC /* FactoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FactoryModel.h; sourceTree = "<group>"; };
+		FFD45A2B1D63110200D93FCC /* FactoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FactoryModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -304,14 +304,14 @@
 		FF2A6BFD1A0F398D001607AC /* TabController_container */ = {
 			isa = PBXGroup;
 			children = (
+				FFD45A2A1D63110200D93FCC /* FactoryModel.h */,
+				FFD45A2B1D63110200D93FCC /* FactoryModel.m */,
 				FF3C1FFF1A2EE6D30081D3C7 /* LSNavigationController.h */,
 				FF3C20001A2EE6D30081D3C7 /* LSNavigationController.m */,
 				FF2A6BFE1A0F398D001607AC /* BaseViewController.h */,
 				FF2A6BFF1A0F398D001607AC /* BaseViewController.m */,
 				FF2A6C001A0F398D001607AC /* RootTabBarController.h */,
 				FF2A6C011A0F398D001607AC /* RootTabBarController.m */,
-				FF3C20021A2EE7480081D3C7 /* FactoryModel.h */,
-				FF3C20031A2EE7480081D3C7 /* FactoryModel.m */,
 				FF5609891A39371D0081BA2E /* SVCModelProtocol.h */,
 			);
 			path = TabController_container;
@@ -681,6 +681,7 @@
 			files = (
 				FF2A6C751A0F3B7B001607AC /* UIImage+GIF.m in Sources */,
 				FF5609881A3936350081BA2E /* SLoginViewController.m in Sources */,
+				FFD45A2C1D63110200D93FCC /* FactoryModel.m in Sources */,
 				FF128B631A383EAC002DF52D /* SLButtonObject.m in Sources */,
 				FF2A6CA41A0F40B0001607AC /* ThreadSafeMutableArry.m in Sources */,
 				FF2A6C881A0F3B8A001607AC /* UIScrollView+SVInfiniteScrolling.m in Sources */,
@@ -692,7 +693,6 @@
 				FF2A6C871A0F3B8A001607AC /* DataOC.mm in Sources */,
 				FF2A6C861A0F3B8A001607AC /* DataCenterDeal.mm in Sources */,
 				FF2A6C961A0F3D06001607AC /* SecondViewController.m in Sources */,
-				FF3C20041A2EE7480081D3C7 /* FactoryModel.m in Sources */,
 				FF2A6C031A0F398D001607AC /* RootTabBarController.m in Sources */,
 				FF2A6C741A0F3B7B001607AC /* UIButton+WebCache.m in Sources */,
 				FF2A6C391A0F3B59001607AC /* FBKVOController.m in Sources */,
