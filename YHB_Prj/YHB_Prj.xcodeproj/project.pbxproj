@@ -60,7 +60,8 @@
 		FF2A6CA41A0F40B0001607AC /* ThreadSafeMutableArry.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2A6CA11A0F40B0001607AC /* ThreadSafeMutableArry.m */; };
 		FF2A6CA51A0F40B0001607AC /* ThreadSafeMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2A6CA31A0F40B0001607AC /* ThreadSafeMutableDictionary.m */; };
 		FF3C20011A2EE6D30081D3C7 /* LSNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3C20001A2EE6D30081D3C7 /* LSNavigationController.m */; };
-		FF3C20041A2EE7480081D3C7 /* FactoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3C20031A2EE7480081D3C7 /* FactoryModel.m */; };
+		FF3C20081A2F2A440081D3C7 /* GlobObserverObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3C20071A2F2A440081D3C7 /* GlobObserverObject.m */; };
+		FF3C200B1A2F2B330081D3C7 /* NotifyFactoryObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3C200A1A2F2B330081D3C7 /* NotifyFactoryObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,8 +187,10 @@
 		FF2A6CA31A0F40B0001607AC /* ThreadSafeMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadSafeMutableDictionary.m; sourceTree = "<group>"; };
 		FF3C1FFF1A2EE6D30081D3C7 /* LSNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LSNavigationController.h; path = ../ThirdParty/LSNavigationController/LSNavigationController.h; sourceTree = "<group>"; };
 		FF3C20001A2EE6D30081D3C7 /* LSNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LSNavigationController.m; path = ../ThirdParty/LSNavigationController/LSNavigationController.m; sourceTree = "<group>"; };
-		FF3C20021A2EE7480081D3C7 /* FactoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FactoryModel.h; sourceTree = "<group>"; };
-		FF3C20031A2EE7480081D3C7 /* FactoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FactoryModel.m; sourceTree = "<group>"; };
+		FF3C20061A2F2A440081D3C7 /* GlobObserverObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobObserverObject.h; sourceTree = "<group>"; };
+		FF3C20071A2F2A440081D3C7 /* GlobObserverObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobObserverObject.m; sourceTree = "<group>"; };
+		FF3C20091A2F2B330081D3C7 /* NotifyFactoryObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotifyFactoryObject.h; sourceTree = "<group>"; };
+		FF3C200A1A2F2B330081D3C7 /* NotifyFactoryObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotifyFactoryObject.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,8 +281,10 @@
 				FF2A6BFF1A0F398D001607AC /* BaseViewController.m */,
 				FF2A6C001A0F398D001607AC /* RootTabBarController.h */,
 				FF2A6C011A0F398D001607AC /* RootTabBarController.m */,
-				FF3C20021A2EE7480081D3C7 /* FactoryModel.h */,
-				FF3C20031A2EE7480081D3C7 /* FactoryModel.m */,
+				FF3C20061A2F2A440081D3C7 /* GlobObserverObject.h */,
+				FF3C20071A2F2A440081D3C7 /* GlobObserverObject.m */,
+				FF3C20091A2F2B330081D3C7 /* NotifyFactoryObject.h */,
+				FF3C200A1A2F2B330081D3C7 /* NotifyFactoryObject.m */,
 			);
 			path = TabController_container;
 			sourceTree = "<group>";
@@ -638,6 +643,7 @@
 				FF2A6C751A0F3B7B001607AC /* UIImage+GIF.m in Sources */,
 				FF2A6CA41A0F40B0001607AC /* ThreadSafeMutableArry.m in Sources */,
 				FF2A6C881A0F3B8A001607AC /* UIScrollView+SVInfiniteScrolling.m in Sources */,
+				FF3C200B1A2F2B330081D3C7 /* NotifyFactoryObject.m in Sources */,
 				FF2A6C3A1A0F3B59001607AC /* NSData+Base64.m in Sources */,
 				FF2A6C2F1A0F3B50001607AC /* AFURLConnectionOperation.m in Sources */,
 				FF2A6C331A0F3B50001607AC /* UIImageView+AFNetworking.m in Sources */,
@@ -646,7 +652,6 @@
 				FF2A6C871A0F3B8A001607AC /* DataOC.mm in Sources */,
 				FF2A6C861A0F3B8A001607AC /* DataCenterDeal.mm in Sources */,
 				FF2A6C961A0F3D06001607AC /* SecondViewController.m in Sources */,
-				FF3C20041A2EE7480081D3C7 /* FactoryModel.m in Sources */,
 				FF2A6C031A0F398D001607AC /* RootTabBarController.m in Sources */,
 				FF2A6C741A0F3B7B001607AC /* UIButton+WebCache.m in Sources */,
 				FF2A6C391A0F3B59001607AC /* FBKVOController.m in Sources */,
@@ -665,6 +670,7 @@
 				FF2A6C781A0F3B7B001607AC /* UIImageView+HighlightedWebCache.m in Sources */,
 				FF2A6C2A1A0F3B50001607AC /* AFHTTPRequestOperation.m in Sources */,
 				FF2A6C321A0F3B50001607AC /* NetManager.m in Sources */,
+				FF3C20081A2F2A440081D3C7 /* GlobObserverObject.m in Sources */,
 				FF2A6BE01A0F3780001607AC /* main.m in Sources */,
 				FF2A6C311A0F3B50001607AC /* MyHttpClient.m in Sources */,
 				FF2A6C7A1A0F3B7B001607AC /* UIView+WebCacheOperation.m in Sources */,

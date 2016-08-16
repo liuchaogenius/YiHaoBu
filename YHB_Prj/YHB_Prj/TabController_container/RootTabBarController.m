@@ -14,14 +14,10 @@
 
 @interface RootTabBarController ()
 {
-    LSNavigationController *firstNav;
-    LSNavigationController *secondNav;
-    LSNavigationController *thirdNav;
-    LSNavigationController *fourthNav;
-    LSNavigationController *fifthNav;
     
     NSInteger newSelectIndex;
     NSInteger oldSelectIndex;
+    NSMutableArray *navArry;
     FBKVOController *loginObserver;
     FBKVOController *leftViewObserver;
     
@@ -44,37 +40,34 @@
 
 - (void)initNotifyRegister
 {
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushLeftView) name:kLeftViewPushMessage object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popLeftView) name:kLeftViewPopMessage object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLoginViewController:) name:kLoginForUserMessage object:nil];
+    [NotifyFactoryObject registerLoginMsgNotify:self action:@selector(showLoginViewController:)];
 }
 
 - (void)initTabViewController
 {
-    UIViewController* firstVC = [[FactoryModel shareFactoryModel] getFirstViewController];
-    firstNav = [[LSNavigationController alloc] initWithRootViewController:firstVC];
-    
-    UIViewController* secondVC = [[FactoryModel shareFactoryModel] getSecondViewController];
-    secondNav = [[LSNavigationController alloc] initWithRootViewController:secondVC];
-    
-    UIViewController* thirdVC = [[FactoryModel shareFactoryModel] getThirdViewController];
-    thirdNav = [[LSNavigationController alloc] initWithRootViewController:thirdVC];
-    
-    UIViewController* fourthVC = [[FactoryModel shareFactoryModel] getFourthViewController];
-    fourthNav = [[LSNavigationController alloc] initWithRootViewController:fourthVC];
+    NSArray *arry = [[FactoryModel shareFactoryModel] getTabbarArrys];
+    navArry = [NSMutableArray arrayWithCapacity:0];
+    if(arry && arry.count>0)
+    {
+        for(UIViewController *vc in arry)
+        {
+            LSNavigationController *nav = [[LSNavigationController alloc] initWithRootViewController:vc];
+            [navArry addObject:nav];
+        }
+    }
 
-    self.viewControllers = @[firstNav,secondNav,thirdNav,fourthNav];
+    self.viewControllers = navArry;
 }
 
 - (void)initTabBarItem
 {
     //[[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:[NSString stringWithFormat:@"TabBarItem_sel"]]];
-    if(kSystemVersion<7.0)
+    //if(kSystemVersion<7.0)
     {
         UIImage *img = [[UIImage imageNamed:@"tabbarBG"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
         [[UITabBar appearance] setBackgroundImage:img];
     }
-    for(int i=0; i<4;i++)
+    for(int i=0; i<navArry.count;i++)
     {
         UITabBarItem *tabBarItem = self.tabBar.items[i];
         UIImage *norimg = [UIImage imageNamed:[NSString stringWithFormat:@"TabBarItem_nor_%d",i+1]];
@@ -99,11 +92,6 @@
     MLOG(@"tabbarHeight=%f",self.tabBar.frame.size.height);
 
 }
-
-//- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
-//{
-//    tabBar.selectedItem.title = @" ";
-//}
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
