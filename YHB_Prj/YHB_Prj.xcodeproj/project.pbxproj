@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF128B631A383EAC002DF52D /* SLButtonObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF128B621A383EAC002DF52D /* SLButtonObject.m */; };
 		FF2A6BE01A0F3780001607AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2A6BDF1A0F3780001607AC /* main.m */; };
 		FF2A6BE31A0F3780001607AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2A6BE21A0F3780001607AC /* AppDelegate.m */; };
 		FF2A6BE51A0F3780001607AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF2A6BE41A0F3780001607AC /* Images.xcassets */; };
@@ -60,8 +61,12 @@
 		FF2A6CA41A0F40B0001607AC /* ThreadSafeMutableArry.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2A6CA11A0F40B0001607AC /* ThreadSafeMutableArry.m */; };
 		FF2A6CA51A0F40B0001607AC /* ThreadSafeMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2A6CA31A0F40B0001607AC /* ThreadSafeMutableDictionary.m */; };
 		FF3C20011A2EE6D30081D3C7 /* LSNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3C20001A2EE6D30081D3C7 /* LSNavigationController.m */; };
-		FF3C20081A2F2A440081D3C7 /* GlobObserverObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3C20071A2F2A440081D3C7 /* GlobObserverObject.m */; };
-		FF3C200B1A2F2B330081D3C7 /* NotifyFactoryObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3C200A1A2F2B330081D3C7 /* NotifyFactoryObject.m */; };
+		FF3C20041A2EE7480081D3C7 /* FactoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3C20031A2EE7480081D3C7 /* FactoryModel.m */; };
+		FF5609881A3936350081BA2E /* SLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5609871A3936350081BA2E /* SLoginViewController.m */; };
+		FF560AF71A39726A0081BA2E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF560AF61A39726A0081BA2E /* Foundation.framework */; };
+		FF560AF91A3972760081BA2E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF560AF81A3972760081BA2E /* CoreGraphics.framework */; };
+		FF560AFB1A3972800081BA2E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF560AFA1A3972800081BA2E /* UIKit.framework */; };
+		FF560B401A3973940081BA2E /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FF560B3F1A3973940081BA2E /* libxml2.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +80,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FF128B611A383EAC002DF52D /* SLButtonObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLButtonObject.h; sourceTree = "<group>"; };
+		FF128B621A383EAC002DF52D /* SLButtonObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLButtonObject.m; sourceTree = "<group>"; };
 		FF2A6BDA1A0F3780001607AC /* YHB_Prj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YHB_Prj.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF2A6BDE1A0F3780001607AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF2A6BDF1A0F3780001607AC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -187,10 +194,15 @@
 		FF2A6CA31A0F40B0001607AC /* ThreadSafeMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadSafeMutableDictionary.m; sourceTree = "<group>"; };
 		FF3C1FFF1A2EE6D30081D3C7 /* LSNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LSNavigationController.h; path = ../ThirdParty/LSNavigationController/LSNavigationController.h; sourceTree = "<group>"; };
 		FF3C20001A2EE6D30081D3C7 /* LSNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LSNavigationController.m; path = ../ThirdParty/LSNavigationController/LSNavigationController.m; sourceTree = "<group>"; };
-		FF3C20061A2F2A440081D3C7 /* GlobObserverObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobObserverObject.h; sourceTree = "<group>"; };
-		FF3C20071A2F2A440081D3C7 /* GlobObserverObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobObserverObject.m; sourceTree = "<group>"; };
-		FF3C20091A2F2B330081D3C7 /* NotifyFactoryObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotifyFactoryObject.h; sourceTree = "<group>"; };
-		FF3C200A1A2F2B330081D3C7 /* NotifyFactoryObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotifyFactoryObject.m; sourceTree = "<group>"; };
+		FF3C20021A2EE7480081D3C7 /* FactoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FactoryModel.h; sourceTree = "<group>"; };
+		FF3C20031A2EE7480081D3C7 /* FactoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FactoryModel.m; sourceTree = "<group>"; };
+		FF5609861A3936350081BA2E /* SLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLoginViewController.h; sourceTree = "<group>"; };
+		FF5609871A3936350081BA2E /* SLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLoginViewController.m; sourceTree = "<group>"; };
+		FF5609891A39371D0081BA2E /* SVCModelProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVCModelProtocol.h; sourceTree = "<group>"; };
+		FF560AF61A39726A0081BA2E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FF560AF81A3972760081BA2E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		FF560AFA1A3972800081BA2E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		FF560B3F1A3973940081BA2E /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +210,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF560B401A3973940081BA2E /* libxml2.dylib in Frameworks */,
+				FF560AFB1A3972800081BA2E /* UIKit.framework in Frameworks */,
+				FF560AF91A3972760081BA2E /* CoreGraphics.framework in Frameworks */,
+				FF560AF71A39726A0081BA2E /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -211,9 +227,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FF128B601A383A8C002DF52D /* SLUikit */ = {
+			isa = PBXGroup;
+			children = (
+				FF128B611A383EAC002DF52D /* SLButtonObject.h */,
+				FF128B621A383EAC002DF52D /* SLButtonObject.m */,
+			);
+			path = SLUikit;
+			sourceTree = "<group>";
+		};
 		FF2A6BD11A0F3780001607AC = {
 			isa = PBXGroup;
 			children = (
+				FF560B3F1A3973940081BA2E /* libxml2.dylib */,
+				FF560AFA1A3972800081BA2E /* UIKit.framework */,
+				FF560AF81A3972760081BA2E /* CoreGraphics.framework */,
+				FF560AF61A39726A0081BA2E /* Foundation.framework */,
 				FF2A6BDC1A0F3780001607AC /* YHB_Prj */,
 				FF2A6BF01A0F3780001607AC /* YHB_PrjTests */,
 				FF2A6BDB1A0F3780001607AC /* Products */,
@@ -281,10 +310,9 @@
 				FF2A6BFF1A0F398D001607AC /* BaseViewController.m */,
 				FF2A6C001A0F398D001607AC /* RootTabBarController.h */,
 				FF2A6C011A0F398D001607AC /* RootTabBarController.m */,
-				FF3C20061A2F2A440081D3C7 /* GlobObserverObject.h */,
-				FF3C20071A2F2A440081D3C7 /* GlobObserverObject.m */,
-				FF3C20091A2F2B330081D3C7 /* NotifyFactoryObject.h */,
-				FF3C200A1A2F2B330081D3C7 /* NotifyFactoryObject.m */,
+				FF3C20021A2EE7480081D3C7 /* FactoryModel.h */,
+				FF3C20031A2EE7480081D3C7 /* FactoryModel.m */,
+				FF5609891A39371D0081BA2E /* SVCModelProtocol.h */,
 			);
 			path = TabController_container;
 			sourceTree = "<group>";
@@ -292,6 +320,7 @@
 		FF2A6C041A0F39E3001607AC /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				FF128B601A383A8C002DF52D /* SLUikit */,
 				FF3C1FFE1A2EE6D30081D3C7 /* LSNavigationController */,
 				FF2A6C8A1A0F3B9F001607AC /* ThreadSafeDict */,
 				FF2A6C7B1A0F3B8A001607AC /* SVPullToRefresh */,
@@ -480,6 +509,7 @@
 		FF2A6C8B1A0F3C58001607AC /* UIParty */ = {
 			isa = PBXGroup;
 			children = (
+				FF5609851A3936350081BA2E /* login_model */,
 				FF2A6C8C1A0F3CC9001607AC /* FifthViewController */,
 				FF2A6C8D1A0F3CC9001607AC /* FourthViewController */,
 				FF2A6C8E1A0F3CC9001607AC /* ThirdViewController */,
@@ -539,6 +569,15 @@
 			children = (
 			);
 			path = LSNavigationController;
+			sourceTree = "<group>";
+		};
+		FF5609851A3936350081BA2E /* login_model */ = {
+			isa = PBXGroup;
+			children = (
+				FF5609861A3936350081BA2E /* SLoginViewController.h */,
+				FF5609871A3936350081BA2E /* SLoginViewController.m */,
+			);
+			path = login_model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -641,9 +680,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF2A6C751A0F3B7B001607AC /* UIImage+GIF.m in Sources */,
+				FF5609881A3936350081BA2E /* SLoginViewController.m in Sources */,
+				FF128B631A383EAC002DF52D /* SLButtonObject.m in Sources */,
 				FF2A6CA41A0F40B0001607AC /* ThreadSafeMutableArry.m in Sources */,
 				FF2A6C881A0F3B8A001607AC /* UIScrollView+SVInfiniteScrolling.m in Sources */,
-				FF3C200B1A2F2B330081D3C7 /* NotifyFactoryObject.m in Sources */,
 				FF2A6C3A1A0F3B59001607AC /* NSData+Base64.m in Sources */,
 				FF2A6C2F1A0F3B50001607AC /* AFURLConnectionOperation.m in Sources */,
 				FF2A6C331A0F3B50001607AC /* UIImageView+AFNetworking.m in Sources */,
@@ -652,6 +692,7 @@
 				FF2A6C871A0F3B8A001607AC /* DataOC.mm in Sources */,
 				FF2A6C861A0F3B8A001607AC /* DataCenterDeal.mm in Sources */,
 				FF2A6C961A0F3D06001607AC /* SecondViewController.m in Sources */,
+				FF3C20041A2EE7480081D3C7 /* FactoryModel.m in Sources */,
 				FF2A6C031A0F398D001607AC /* RootTabBarController.m in Sources */,
 				FF2A6C741A0F3B7B001607AC /* UIButton+WebCache.m in Sources */,
 				FF2A6C391A0F3B59001607AC /* FBKVOController.m in Sources */,
@@ -670,7 +711,6 @@
 				FF2A6C781A0F3B7B001607AC /* UIImageView+HighlightedWebCache.m in Sources */,
 				FF2A6C2A1A0F3B50001607AC /* AFHTTPRequestOperation.m in Sources */,
 				FF2A6C321A0F3B50001607AC /* NetManager.m in Sources */,
-				FF3C20081A2F2A440081D3C7 /* GlobObserverObject.m in Sources */,
 				FF2A6BE01A0F3780001607AC /* main.m in Sources */,
 				FF2A6C311A0F3B50001607AC /* MyHttpClient.m in Sources */,
 				FF2A6C7A1A0F3B7B001607AC /* UIView+WebCacheOperation.m in Sources */,

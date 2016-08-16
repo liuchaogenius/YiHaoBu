@@ -7,6 +7,7 @@
 //
 
 #import "FirstViewController.h"
+#import "SLButtonObject.h"
 
 @interface FirstViewController ()
 
@@ -17,6 +18,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    UIButton *button = [SLButtonObject buildSLButton];
+    [self.view addSubview:button];
 }
 
 - (void)didReceiveMemoryWarning {

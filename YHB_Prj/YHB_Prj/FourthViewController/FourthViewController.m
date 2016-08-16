@@ -33,5 +33,8 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+- (void)dealloc
+{
+    MLOG(@"dealloc");
+}
 @end

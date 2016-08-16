@@ -14,10 +14,14 @@
 
 @interface RootTabBarController ()
 {
+    LSNavigationController *firstNav;
+    LSNavigationController *secondNav;
+    LSNavigationController *thirdNav;
+    LSNavigationController *fourthNav;
+    LSNavigationController *fifthNav;
     
     NSInteger newSelectIndex;
     NSInteger oldSelectIndex;
-    NSMutableArray *navArry;
     FBKVOController *loginObserver;
     FBKVOController *leftViewObserver;
     
@@ -35,39 +39,34 @@
     isGoBack = NO;
     [self initTabViewController];
     [self initTabBarItem];
-    [self initNotifyRegister];
-}
-
-- (void)initNotifyRegister
-{
-    [NotifyFactoryObject registerLoginMsgNotify:self action:@selector(showLoginViewController:)];
 }
 
 - (void)initTabViewController
 {
-    NSArray *arry = [[FactoryModel shareFactoryModel] getTabbarArrys];
-    navArry = [NSMutableArray arrayWithCapacity:0];
-    if(arry && arry.count>0)
-    {
-        for(UIViewController *vc in arry)
-        {
-            LSNavigationController *nav = [[LSNavigationController alloc] initWithRootViewController:vc];
-            [navArry addObject:nav];
-        }
-    }
+    UIViewController* firstVC = [[FactoryModel shareFactoryModel] getFirstViewController];
+    firstNav = [[LSNavigationController alloc] initWithRootViewController:firstVC];
+    
+    UIViewController* secondVC = [[FactoryModel shareFactoryModel] getSecondViewController];
+    secondNav = [[LSNavigationController alloc] initWithRootViewController:secondVC];
+    
+    UIViewController* thirdVC = [[FactoryModel shareFactoryModel] getThirdViewController];
+    thirdNav = [[LSNavigationController alloc] initWithRootViewController:thirdVC];
+    
+    UIViewController* fourthVC = [[FactoryModel shareFactoryModel] getFourthViewController];
+    fourthNav = [[LSNavigationController alloc] initWithRootViewController:fourthVC];
 
-    self.viewControllers = navArry;
+    self.viewControllers = @[firstNav,secondNav,thirdNav,fourthNav];
 }
 
 - (void)initTabBarItem
 {
     //[[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:[NSString stringWithFormat:@"TabBarItem_sel"]]];
-    //if(kSystemVersion<7.0)
+    if(kSystemVersion<7.0)
     {
         UIImage *img = [[UIImage imageNamed:@"tabbarBG"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
         [[UITabBar appearance] setBackgroundImage:img];
     }
-    for(int i=0; i<navArry.count;i++)
+    for(int i=0; i<4;i++)
     {
         UITabBarItem *tabBarItem = self.tabBar.items[i];
         UIImage *norimg = [UIImage imageNamed:[NSString stringWithFormat:@"TabBarItem_nor_%d",i+1]];
@@ -90,7 +89,6 @@
     }
     
     MLOG(@"tabbarHeight=%f",self.tabBar.frame.size.height);
-
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
@@ -106,55 +104,6 @@
     newSelectIndex = tabBarController.selectedIndex;
 }
 
-
-#pragma mark show login
-- (void)showLoginViewController:(NSNotification *)aNotification
-{
-    
-//    if(aNotification.object)
-//    {
-//        isGoBack = [[aNotification object] boolValue]; ///yes为goback  其他的不处理
-//    }
-//    __weak RootTabBarController *weakself = self;
-//    if (![HbhUser sharedHbhUser].isLogin)
-//    {
-//        if(!self.loginVC)
-//        {
-//            self.loginVC = [[HbhLoginViewController alloc] init];
-//        }
-//        if(!self.loginNav)
-//        {
-//            self.loginNav = [[UINavigationController alloc] initWithRootViewController:self.loginVC];
-//            
-//        }
-//
-//        [self presentViewController:self.loginNav animated:YES completion:^{
-//            
-//        }];
-//        if(!loginObserver)
-//        {
-//            loginObserver = [[FBKVOController alloc] initWithObserver:self];
-//        }
-//        [loginObserver observe:self.loginVC keyPath:@"type" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change) {
-//            int type = [[change objectForKey:@"new"] intValue];
-//            if(type == eLoginSucc)
-//            {
-//
-//            }
-//            else if(type == eLoginBack)
-//            {
-//                if(isGoBack)
-//                {
-//                    weakself.selectedIndex = oldSelectIndex;
-//                    isGoBack = NO;
-//                }
-//            }
-//            [weakself.loginNav dismissViewControllerAnimated:YES completion:^{
-//                
-//            }];
-//        }];
-//    }
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
